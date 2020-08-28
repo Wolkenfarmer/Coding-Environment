@@ -19,7 +19,6 @@ import javafx.stage.Stage;
 /**
  * @author Wolkenfarmer
  * @version 0.1
- * @since 28.08.2020
 */
 
 public class Main extends Application{
@@ -28,15 +27,34 @@ public class Main extends Application{
 	private static Label label;
 	private static ArrayList<String> input = new ArrayList<String>();
 
-	
+	/**
+	 * Reference to the window-height for the entire program.
+	 */
 	public static double stageHeight;
+	/**
+	 * Reference to the window-width for the entire program.
+	 */
 	public static double stageWidth;
+	/**
+	 * Unified font for big labels in the center of a scene (e.g. "loading...") 
+	 */
 	public static Font fCenter = Font.font("Arial", FontWeight.SEMI_BOLD, FontPosture.ITALIC, 80);
 
+	/**
+	 * Main method of the program calling launch.
+	 * Starts the application by calling launch(args) which calls up start.
+	 * @param args Used for calling launch (javafx Application)
+	 * @see #start(Stage)
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}
 
+	/**
+	 * (Builds) and starts the javafx application.
+	 * Creates the stage (window) for the program and shows a temporary loading-screen.
+	 * @param stage Makes up the window and is required for a javafx application.
+	 */
 	public void start(Stage stage) throws Exception {
 		root = new BorderPane();
 		root.setBackground(Background.EMPTY);
@@ -82,4 +100,11 @@ public class Main extends Application{
         );
 	}
 
+	/**
+	 * Just to test whether private methods get included or not.
+	 * @return wuff
+	 */
+	private String test() {
+		return "wuff";
+	}
 }
