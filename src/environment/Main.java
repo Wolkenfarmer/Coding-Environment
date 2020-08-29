@@ -17,14 +17,33 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 /**
+ * Main class hosting the javafx Application.
+ * Gets called on start of the program and is the base for the javafx application.
+ * Links up to the homepage scene and provides some basic styles / layouts for the entire program (like fonts or backgrounds).
  * @author Wolkenfarmer
- * @version 0.1
+ * @version 1.0
 */
 
 public class Main extends Application{
+	/**
+	 * Layout-group to contain the {@link #label} and start up the {@link #loadingScene}
+	 * @see	 <a href="https://www.educba.com/javafx-applications/">Javafx Application basic structure</a>
+	*/
 	private static BorderPane root;
+	/**
+	 * Scene for starting up the stage while homepage is still loading
+	 * @see	 <a href="https://www.educba.com/javafx-applications/">Javafx Application basic structure</a>
+	*/
 	private static Scene loadingScene;
+	/**
+	 * Displaying "loading ..."
+	 */
 	private static Label label;
+	/**
+	 * Input handling.
+	 * This ArrayList gets filled / used in {@link #start(Stage)} by the scene listeners. 
+	 * In this scene it's only used for a short cut to close the program (Esc).
+	 */
 	private static ArrayList<String> input = new ArrayList<String>();
 
 	/**
@@ -44,6 +63,7 @@ public class Main extends Application{
 	 * Main method of the program calling launch.
 	 * Starts the application by calling launch(args) which calls up start.
 	 * @param args Used for calling launch (javafx Application)
+	 * @see <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/application/Application.html">Javafx Application documentation</a>
 	 * @see #start(Stage)
 	 */
 	public static void main(String[] args) {
@@ -54,6 +74,8 @@ public class Main extends Application{
 	 * (Builds) and starts the javafx application.
 	 * Creates the stage (window) for the program and shows a temporary loading-screen.
 	 * @param stage Makes up the window and is required for a javafx application.
+	 * @see <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/application/Application.html#start-javafx.stage.Stage-">
+	 * Javafx Application start() documentation</a>
 	 */
 	public void start(Stage stage) throws Exception {
 		root = new BorderPane();
@@ -98,13 +120,5 @@ public class Main extends Application{
                 }
             }
         );
-	}
-
-	/**
-	 * Just to test whether private methods get included or not.
-	 * @return wuff
-	 */
-	private String test() {
-		return "wuff";
 	}
 }
