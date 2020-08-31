@@ -21,6 +21,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 /**
@@ -81,7 +82,7 @@ public class Main extends Application{
 	static ArrayList<String> input = new ArrayList<String>();
 	
 	/** Unified referenceable font for the layout of each page.*/
-	static Font fHeadline = new Font("Arial", 40);
+	static Font fHeadline = Font.font("Arial", FontWeight.BOLD, 50);
 	/** Unified referenceable font for the layout of each page.*/
     static Font fSubheadline = new Font("Arial", 35);
     /** Unified referenceable font for the layout of each page.*/
@@ -143,60 +144,56 @@ public class Main extends Application{
 		
 		// listener
 		// Keyboard input handling
-		scene.setOnKeyPressed(
-            new EventHandler<KeyEvent>() {
-                public void handle(KeyEvent e) {
-                    String code = e.getCode().toString();
-                    if (!input.contains(code)) input.add(code);
+		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent e) {
+                String code = e.getCode().toString();
+                if (!input.contains(code)) input.add(code);
+            }
+        });
+		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent e) {
+                if (input.contains("ESCAPE")) {
+                	Platform.exit();
                 }
             }
-    	);
-		scene.setOnKeyReleased(
-            new EventHandler<KeyEvent>() {
-                public void handle(KeyEvent e) {
-                    if (input.contains("ESCAPE")) {
-                    	Platform.exit();
-                    }
-                }
-            }
-        );
+        });
 		
 		// scroll bar
-				scrollbar.addEventHandler(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
-					public void handle(MouseEvent e) {
-						if(e.getY() > 0 && e.getY() < scene.getHeight()) {
-							double i = (contentHeight - scene.getHeight()) * (e.getY() / scene.getHeight());
-							if (e.getY() < (scene.getHeight() / 2)) {
-								i = i - ((((contentHeight - scene.getHeight()) * 0.5) - i) * (1 / (scene.getHeight() * 0.02)));
-							} else {
-								i = i + ((i - ((contentHeight - scene.getHeight()) * 0.5)) * (1 / (scene.getHeight() * 0.02)));
-							}
-							scrollbar.setValue(i);
-							if (scrollbar.getValue() < 0) {
-								scrollbar.setValue(0);
-							} else if (scrollbar.getValue() > (contentHeight - scene.getHeight())) {
-								scrollbar.setValue(contentHeight - scene.getHeight());
-							}
-						}
+		scrollbar.addEventHandler(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e) {
+				if(e.getY() > 0 && e.getY() < scene.getHeight()) {
+					double i = (contentHeight - scene.getHeight()) * (e.getY() / scene.getHeight());
+					if (e.getY() < (scene.getHeight() / 2)) {
+						i = i - ((((contentHeight - scene.getHeight()) * 0.5) - i) * (1 / (scene.getHeight() * 0.02)));
+					} else {
+						i = i + ((i - ((contentHeight - scene.getHeight()) * 0.5)) * (1 / (scene.getHeight() * 0.02)));
 					}
-				});		
-				scrollbar.valueProperty().addListener(new ChangeListener<Number>() {
-				    public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
-				    	root.setLayoutY(-scrollbar.getValue());
-				    }
-				});
-				scene.addEventHandler(ScrollEvent.SCROLL, new EventHandler<ScrollEvent>() {
-					public void handle(ScrollEvent e) {				
-						if (scrollbar.isVisible()) {
-							scrollbar.setValue(scrollbar.getValue() - e.getDeltaY());
-							if (scrollbar.getValue() < 0) {
-								scrollbar.setValue(0);
-							} else if (scrollbar.getValue() > (contentHeight - scene.getHeight())) {
-								scrollbar.setValue(contentHeight - scene.getHeight());
-							}
-						}
+					scrollbar.setValue(i);
+					if (scrollbar.getValue() < 0) {
+						scrollbar.setValue(0);
+					} else if (scrollbar.getValue() > (contentHeight - scene.getHeight())) {
+						scrollbar.setValue(contentHeight - scene.getHeight());
 					}
-				});		
+				}
+			}
+		});		
+		scrollbar.valueProperty().addListener(new ChangeListener<Number>() {
+		    public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
+		    	root.setLayoutY(-scrollbar.getValue());
+		    }
+		});
+		scene.addEventHandler(ScrollEvent.SCROLL, new EventHandler<ScrollEvent>() {
+			public void handle(ScrollEvent e) {				
+				if (scrollbar.isVisible()) {
+					scrollbar.setValue(scrollbar.getValue() - e.getDeltaY());
+					if (scrollbar.getValue() < 0) {
+						scrollbar.setValue(0);
+					} else if (scrollbar.getValue() > (contentHeight - scene.getHeight())) {
+						scrollbar.setValue(contentHeight - scene.getHeight());
+					}
+				}
+			}
+		});		
 		
 		
 		new Homepage(root);
