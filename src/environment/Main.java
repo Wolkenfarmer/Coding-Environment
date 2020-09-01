@@ -63,6 +63,8 @@ public class Main extends Application{
 	 * EventHandler and Listener with its calculations are in {@link #start(Stage)}.
 	 */
 	static ScrollBar scrollbar;
+	static Scene dummyScene;
+	static Group dummyRoot;
 	/**
 	 * Reference to the window-height for the entire program. 
 	 * This useful for the layout-calculations of the pages' contents.
@@ -133,6 +135,7 @@ public class Main extends Application{
 		sbRoot = new Group();
 		root = new Group();
 		scene = new Scene(sbRoot, Color.grayRgb(40));
+		dummyScene = new Scene(dummyRoot = new Group());
         
 		stage = new Stage();
 		stage.setTitle("Source / Channel Coding Environment");

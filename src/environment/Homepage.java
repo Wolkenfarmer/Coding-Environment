@@ -1,15 +1,9 @@
 package environment;
 
-import javafx.application.Platform;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -17,17 +11,12 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-import javafx.scene.text.TextBoundsType;
 
 /**
  * The homepage of the application with access to every part of the program. 
  * @author Wolkenfarmer
  */
 public class Homepage {
-	Scene dummyScene;
-	Group dummyRoot;
 	HBox hbHeadline;
 		Label lHeadline;
 		Region rHeadlineSpacer;
@@ -39,14 +28,39 @@ public class Homepage {
 		Pane pSetModel;
 			Button bSetModSource;
 				VBox vbSetModSouContent;
-					Label lSetModSouConName;
+					HBox hbSetModSouConName;
+						Label lSetModSouConName;
 					Line lSetModSouConDiffer;
 					Label lSetModSouConSelectedItemHead;
 					Label lSetModSouConSelectedItem;
 			Button bSetModEncoder;
+				VBox vbSetModEncContent;
+					HBox hbSetModEncConName;
+						Label lSetModEncConName;
+					Line lSetModEncConDiffer;
+					Label lSetModEncConSelectedItemHead;
+					Label lSetModEncConSelectedItem;
 			Button bSetModNoise;
+				VBox vbSetModNoiContent;
+					HBox hbSetModNoiConName;
+						Label lSetModNoiConName;
+					Line lSetModNoiConDiffer;
+					Label lSetModNoiConSelectedItemHead;
+					Label lSetModNoiConSelectedItem;
 			Button bSetModDecoder;
+				VBox vbSetModDecContent;
+					HBox hbSetModDecConName;
+						Label lSetModDecConName;
+					Line lSetModDecConDiffer;
+					Label lSetModDecConSelectedItemHead;
+					Label lSetModDecConSelectedItem;
 			Button bSetModDestination;
+				VBox vbSetModDesContent;
+					HBox hbSetModDesConName;
+						Label lSetModDesConName;
+					Line lSetModDesConDiffer;
+					Label lSetModDesConSelectedItemHead;
+					Label lSetModDesConSelectedItem;
 	Group gResults;
 	Group gButtons;
 	
@@ -58,7 +72,6 @@ public class Homepage {
 		double pos1 = Main.stageWidth / 8;
 		double pos7 = Main.stageWidth / 8 * 7;
 		double contentWidth = pos7 - pos1;
-		dummyScene = new Scene(dummyRoot = new Group());
 		
 		hbHeadline = new HBox();
 		hbHeadline.setLayoutX(pos1);
@@ -101,49 +114,13 @@ public class Homepage {
 			
 			pSetModel = new Pane();
 			pSetModel.setLayoutY(60);
-				double modelRelationWidth = contentWidth / 13;
-				double modelButtonWidth = modelRelationWidth * 2;
-				
-				bSetModSource = new Button();
-				bSetModSource.setLayoutX(0);
-				bSetModSource.setPrefWidth(modelButtonWidth);
-				bSetModSource.setBackground(Main.baNormalButton);
-				bSetModSource.setBorder(Main.boNormalWhite);
-					vbSetModSouContent = new VBox();
-					vbSetModSouContent.setSpacing(10);
-						lSetModSouConName = new Label();
-						lSetModSouConName.setText("information source");
-						lSetModSouConName.setTextFill(Color.WHITESMOKE);
-						lSetModSouConName.setFont(Main.fNormalText);
-						lSetModSouConName.setWrapText(true);
-						lSetModSouConName.setTextAlignment(TextAlignment.CENTER);
-						lSetModSouConName.setPrefHeight(calcHeightLabel(lSetModSouConName, modelButtonWidth));
-						
-						lSetModSouConDiffer = new Line();
-						lSetModSouConDiffer.setStroke(Color.WHITESMOKE);
-						lSetModSouConDiffer.setEndX(modelButtonWidth - 40);
-						lSetModSouConDiffer.setTranslateX(8);
-						
-						lSetModSouConSelectedItemHead = new Label();
-						lSetModSouConSelectedItemHead.setText("selected item:");
-						lSetModSouConSelectedItemHead.setTextFill(Color.WHITESMOKE);
-						lSetModSouConSelectedItemHead.setFont(Main.fSmallText);
-						lSetModSouConSelectedItemHead.setWrapText(true);
-						lSetModSouConSelectedItemHead.setPrefHeight(calcHeightLabel(lSetModSouConSelectedItemHead, modelButtonWidth));
-						
-						lSetModSouConSelectedItem = new Label();
-						lSetModSouConSelectedItem.setText("nothing selected");
-						lSetModSouConSelectedItem.setTextFill(Color.INDIANRED);
-						lSetModSouConSelectedItem.setFont(Main.fSmallTextItalic);
-						lSetModSouConSelectedItem.setWrapText(true);
-						lSetModSouConSelectedItem.setPadding(new Insets(-5, 0, 0, 10));
-						lSetModSouConSelectedItem.setPrefHeight(calcHeightLabel(lSetModSouConSelectedItem, modelButtonWidth));
-					vbSetModSouContent.getChildren().addAll(lSetModSouConName, lSetModSouConDiffer, 
-							lSetModSouConSelectedItemHead, lSetModSouConSelectedItem);
-				bSetModSource.setGraphic(vbSetModSouContent);
-				bSetModSource.setPrefHeight(calcHeight(vbSetModSouContent) + 20);
-				System.out.println(calcHeight(vbSetModSouContent));
-			pSetModel.getChildren().addAll(bSetModSource);
+				ModelFactory cSetModelFactory = new ModelFactory(contentWidth); 
+				bSetModSource = cSetModelFactory.buildButton(0, 0, "information source");
+				bSetModEncoder = cSetModelFactory.buildButton(3, 0, "encoder");
+				bSetModNoise = cSetModelFactory.buildButton(5.5f, 2, "noise source");
+				bSetModDecoder = cSetModelFactory.buildButton(8, 0, "decoder");
+				bSetModDestination = cSetModelFactory.buildButton(11, 0, "destination");
+			pSetModel.getChildren().addAll(bSetModSource, bSetModEncoder, bSetModNoise, bSetModDecoder, bSetModDestination);
 		pSettings.getChildren().addAll(lSetHeadline, pSetModel);
 		
 		
@@ -155,23 +132,22 @@ public class Homepage {
         if (Main.scene.getHeight() >= Main.contentHeight) {Main.scrollbar.setVisible(false);}
 	}
 	
+	
 	public double calcHeight(Region r) {
-		dummyRoot.getChildren().add(r);
-		dummyRoot.applyCss();
-		dummyRoot.layout();
-		dummyRoot.getChildren().remove(r);
+		Main.dummyRoot.getChildren().add(r);
+		Main.dummyRoot.applyCss();
+		Main.dummyRoot.layout();
+		Main.dummyRoot.getChildren().remove(r);
 		return r.getHeight();
 	}
 	
 	public double calcHeightLabel(Label l, double parentWidth) {
-		dummyRoot.getChildren().add(l);
-		dummyRoot.applyCss();
-		dummyRoot.layout();
+		Main.dummyRoot.getChildren().add(l);
+		Main.dummyRoot.applyCss();
+		Main.dummyRoot.layout();
 		double lines = Math.ceil(l.getWidth() / (parentWidth - 10));
-		System.out.println(l.getFont().getSize() / 2);
-		double height = (l.getHeight() * lines) + ((l.getLineSpacing() + (l.getFont().getSize() / 2)) * (lines - 1));
-		dummyRoot.getChildren().remove(l);
+		double height = (l.getHeight() * lines) + ((l.getLineSpacing() + (l.getFont().getSize() * 1.2)) * (lines - 1));
+		Main.dummyRoot.getChildren().remove(l);
 		return height;
 	}
-
 }
