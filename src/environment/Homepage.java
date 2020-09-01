@@ -91,11 +91,11 @@ public class Homepage {
 			pSetModel = new Pane();
 			pSetModel.setLayoutY(60);
 				ModelFactory cSetModelFactory = new ModelFactory(contentWidth); 
-				bSetModSource = cSetModelFactory.buildButton(0, 0, "information source");
-				bSetModEncoder = cSetModelFactory.buildButton(3, 0, "encoder");
-				bSetModNoise = cSetModelFactory.buildButton(5.5f, 2, "noise source");
-				bSetModDecoder = cSetModelFactory.buildButton(8, 0, "decoder");
-				bSetModDestination = cSetModelFactory.buildButton(11, 0, "destination");
+				bSetModSource = cSetModelFactory.buildButton(0, 0, "information source", true);
+				bSetModEncoder = cSetModelFactory.buildButton(3, 0, "encoder", true);
+				bSetModNoise = cSetModelFactory.buildButton(5.5f, 2, "noise source", true);
+				bSetModDecoder = cSetModelFactory.buildButton(8, 0, "decoder", true);
+				bSetModDestination = cSetModelFactory.buildButton(11, 0, "destination", false);
 			pSetModel.getChildren().addAll(bSetModSource, bSetModEncoder, bSetModNoise, bSetModDecoder, bSetModDestination);
 		pSettings.getChildren().addAll(lSetHeadline, pSetModel);
 		

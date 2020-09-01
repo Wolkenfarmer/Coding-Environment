@@ -24,13 +24,14 @@ public class ModelFactory {
 		Line lConDiffer;
 		Label lConSelectedItemHead;
 		Label lConSelectedItem;
+		Label lConSub;
 
 	public ModelFactory(double contentWidth) {
 		modelZoneWidth = contentWidth / 13;
 		modelButtonWidth = modelZoneWidth * 2;
 	}
 	
-	public Button buildButton(float layoutZoneX, float layoutZoneY, String conName) {
+	public Button buildButton(float layoutZoneX, float layoutZoneY, String conName, boolean selectableItems) {
 		b = new Button();
 		b.setLayoutX(layoutZoneX * modelZoneWidth);
 		b.setLayoutY(layoutZoneY * 50);
@@ -55,22 +56,35 @@ public class ModelFactory {
 				lConDiffer.setEndX(modelButtonWidth - 40);
 				lConDiffer.setTranslateX(8);
 				
-				lConSelectedItemHead = new Label();
-				lConSelectedItemHead.setText("selected item:");
-				lConSelectedItemHead.setTextFill(Color.WHITESMOKE);
-				lConSelectedItemHead.setFont(Main.fSmallText);
-				lConSelectedItemHead.setWrapText(true);
-				lConSelectedItemHead.setPrefHeight(Main.calcHeightLabel(lConSelectedItemHead, modelButtonWidth));
+				if (selectableItems) {
+					lConSelectedItemHead = new Label();
+					lConSelectedItemHead.setText("selected item:");
+					lConSelectedItemHead.setTextFill(Color.WHITESMOKE);
+					lConSelectedItemHead.setFont(Main.fSmallText);
+					lConSelectedItemHead.setWrapText(true);
+					lConSelectedItemHead.setPrefHeight(Main.calcHeightLabel(lConSelectedItemHead, modelButtonWidth));
+					
+					lConSelectedItem = new Label();
+					lConSelectedItem.setText("nothing selected");
+					lConSelectedItem.setTextFill(Color.INDIANRED);
+					lConSelectedItem.setFont(Main.fSmallTextItalic);
+					lConSelectedItem.setWrapText(true);
+					lConSelectedItem.setPadding(new Insets(-5, 0, 0, 10));
+					lConSelectedItem.setPrefHeight(Main.calcHeightLabel(lConSelectedItem, modelButtonWidth));
+					
+					vbContent.getChildren().addAll(hbConName, lConDiffer, lConSelectedItemHead, lConSelectedItem);
+				} else {
+					lConSub = new Label();
+					lConSub.setText("compare in- & output");
+					lConSub.setTextFill(Color.WHITESMOKE);
+					lConSub.setFont(Main.fSmallText);
+					lConSub.setWrapText(true);
+					lConSub.setPrefHeight(Main.calcHeightLabel(lConSub, modelButtonWidth));
+					
+					vbContent.getChildren().addAll(hbConName, lConDiffer, lConSub);
+				}
 				
-				lConSelectedItem = new Label();
-				lConSelectedItem.setText("nothing selected");
-				lConSelectedItem.setTextFill(Color.INDIANRED);
-				lConSelectedItem.setFont(Main.fSmallTextItalic);
-				lConSelectedItem.setWrapText(true);
-				lConSelectedItem.setPadding(new Insets(-5, 0, 0, 10));
-				lConSelectedItem.setPrefHeight(Main.calcHeightLabel(lConSelectedItem, modelButtonWidth));
-			vbContent.getChildren().addAll(hbConName, lConDiffer, 
-					lConSelectedItemHead, lConSelectedItem);
+				
 		b.setGraphic(vbContent);
 		b.setPrefHeight(Main.calcHeight(((Region) vbContent)) + 20);
 		
