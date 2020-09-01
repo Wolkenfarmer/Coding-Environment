@@ -46,7 +46,7 @@ public class ModelFactory {
 					lConName.setFont(Main.fNormalText);
 					lConName.setWrapText(true);
 					lConName.setTextAlignment(TextAlignment.CENTER);
-					lConName.setPrefHeight(calcHeightLabel(lConName, modelButtonWidth));
+					lConName.setPrefHeight(Main.calcHeightLabel(lConName, modelButtonWidth));
 				hbConName.getChildren().add(lConName);
 				hbConName.setAlignment(Pos.CENTER);
 				
@@ -60,7 +60,7 @@ public class ModelFactory {
 				lConSelectedItemHead.setTextFill(Color.WHITESMOKE);
 				lConSelectedItemHead.setFont(Main.fSmallText);
 				lConSelectedItemHead.setWrapText(true);
-				lConSelectedItemHead.setPrefHeight(calcHeightLabel(lConSelectedItemHead, modelButtonWidth));
+				lConSelectedItemHead.setPrefHeight(Main.calcHeightLabel(lConSelectedItemHead, modelButtonWidth));
 				
 				lConSelectedItem = new Label();
 				lConSelectedItem.setText("nothing selected");
@@ -68,30 +68,12 @@ public class ModelFactory {
 				lConSelectedItem.setFont(Main.fSmallTextItalic);
 				lConSelectedItem.setWrapText(true);
 				lConSelectedItem.setPadding(new Insets(-5, 0, 0, 10));
-				lConSelectedItem.setPrefHeight(calcHeightLabel(lConSelectedItem, modelButtonWidth));
+				lConSelectedItem.setPrefHeight(Main.calcHeightLabel(lConSelectedItem, modelButtonWidth));
 			vbContent.getChildren().addAll(hbConName, lConDiffer, 
 					lConSelectedItemHead, lConSelectedItem);
 		b.setGraphic(vbContent);
-		b.setPrefHeight(calcHeight(vbContent) + 20);
+		b.setPrefHeight(Main.calcHeight(((Region) vbContent)) + 20);
 		
 		return b;
-	}
-	
-	public double calcHeight(Region r) {
-		Main.dummyRoot.getChildren().add(r);
-		Main.dummyRoot.applyCss();
-		Main.dummyRoot.layout();
-		Main.dummyRoot.getChildren().remove(r);
-		return r.getHeight();
-	}
-	
-	public double calcHeightLabel(Label l, double parentWidth) {
-		Main.dummyRoot.getChildren().add(l);
-		Main.dummyRoot.applyCss();
-		Main.dummyRoot.layout();
-		double lines = Math.ceil(l.getWidth() / (parentWidth - 20));
-		double height = (l.getHeight() * lines) + ((l.getLineSpacing() + (l.getFont().getSize() * 1.2)) * (lines - 1));
-		Main.dummyRoot.getChildren().remove(l);
-		return height;
 	}
 }

@@ -1,16 +1,18 @@
 package environment;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 
 /**
  * The homepage of the application with access to every part of the program. 
@@ -27,42 +29,16 @@ public class Homepage {
 		Label lSetHeadline;
 		Pane pSetModel;
 			Button bSetModSource;
-				VBox vbSetModSouContent;
-					HBox hbSetModSouConName;
-						Label lSetModSouConName;
-					Line lSetModSouConDiffer;
-					Label lSetModSouConSelectedItemHead;
-					Label lSetModSouConSelectedItem;
 			Button bSetModEncoder;
-				VBox vbSetModEncContent;
-					HBox hbSetModEncConName;
-						Label lSetModEncConName;
-					Line lSetModEncConDiffer;
-					Label lSetModEncConSelectedItemHead;
-					Label lSetModEncConSelectedItem;
 			Button bSetModNoise;
-				VBox vbSetModNoiContent;
-					HBox hbSetModNoiConName;
-						Label lSetModNoiConName;
-					Line lSetModNoiConDiffer;
-					Label lSetModNoiConSelectedItemHead;
-					Label lSetModNoiConSelectedItem;
 			Button bSetModDecoder;
-				VBox vbSetModDecContent;
-					HBox hbSetModDecConName;
-						Label lSetModDecConName;
-					Line lSetModDecConDiffer;
-					Label lSetModDecConSelectedItemHead;
-					Label lSetModDecConSelectedItem;
 			Button bSetModDestination;
-				VBox vbSetModDesContent;
-					HBox hbSetModDesConName;
-						Label lSetModDesConName;
-					Line lSetModDesConDiffer;
-					Label lSetModDesConSelectedItemHead;
-					Label lSetModDesConSelectedItem;
 	Group gResults;
 	Group gButtons;
+	
+	EventHandler<ActionEvent> evEnDecoderPressed;
+	EventHandler<MouseEvent> evEnDecoderEntered;
+	EventHandler<MouseEvent> evEnDecoderExited;
 	
 	/**
 	 * Builds the homepage of the application.
@@ -123,8 +99,9 @@ public class Homepage {
 			pSetModel.getChildren().addAll(bSetModSource, bSetModEncoder, bSetModNoise, bSetModDecoder, bSetModDestination);
 		pSettings.getChildren().addAll(lSetHeadline, pSetModel);
 		
-		
 		root.getChildren().addAll(hbHeadline, pSettings);
+		addButtonListener();
+		
 		
 		Main.contentHeight = lHeadline.getLayoutY() + pos1 / 3;
 		Main.scrollbar.setMax(Main.contentHeight - Main.scene.getHeight());
@@ -133,21 +110,75 @@ public class Homepage {
 	}
 	
 	
-	public double calcHeight(Region r) {
-		Main.dummyRoot.getChildren().add(r);
-		Main.dummyRoot.applyCss();
-		Main.dummyRoot.layout();
-		Main.dummyRoot.getChildren().remove(r);
-		return r.getHeight();
-	}
-	
-	public double calcHeightLabel(Label l, double parentWidth) {
-		Main.dummyRoot.getChildren().add(l);
-		Main.dummyRoot.applyCss();
-		Main.dummyRoot.layout();
-		double lines = Math.ceil(l.getWidth() / (parentWidth - 10));
-		double height = (l.getHeight() * lines) + ((l.getLineSpacing() + (l.getFont().getSize() * 1.2)) * (lines - 1));
-		Main.dummyRoot.getChildren().remove(l);
-		return height;
+	private void addButtonListener() {
+		bSetModSource.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent t) {
+				System.out.println("bSetModSource got pressed!");
+	        }
+	    });
+		bSetModSource.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e) {
+				bSetModSource.setBackground(Main.baNormalFocusedButton);
+			}
+	    });
+		bSetModSource.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e) {
+				bSetModSource.setBackground(Main.baNormalButton);
+			}
+		});
+		
+		bSetModEncoder.setOnAction(evEnDecoderPressed = new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent t) {
+				System.out.println("bSetModEncoder or bSetModDecoder got pressed!");
+	        }
+	    });
+		bSetModEncoder.addEventHandler(MouseEvent.MOUSE_ENTERED, evEnDecoderEntered = new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e) {
+				bSetModEncoder.setBackground(Main.baNormalFocusedButton);
+				bSetModDecoder.setBackground(Main.baNormalFocusedButton);
+			}
+	    });
+		bSetModEncoder.addEventHandler(MouseEvent.MOUSE_EXITED, evEnDecoderExited = new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e) {
+				bSetModEncoder.setBackground(Main.baNormalButton);
+				bSetModDecoder.setBackground(Main.baNormalButton);
+			}
+		});
+		
+		bSetModDecoder.setOnAction(evEnDecoderPressed);
+		bSetModDecoder.addEventHandler(MouseEvent.MOUSE_ENTERED, evEnDecoderEntered);
+		bSetModDecoder.addEventHandler(MouseEvent.MOUSE_EXITED, evEnDecoderExited);
+		
+		bSetModNoise.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent t) {
+				System.out.println("bSetModNoise got pressed!");
+	        }
+	    });
+		bSetModNoise.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e) {
+				bSetModNoise.setBackground(Main.baNormalFocusedButton);
+			}
+	    });
+		bSetModNoise.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e) {
+				bSetModNoise.setBackground(Main.baNormalButton);
+			}
+		});
+		
+		bSetModDestination.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent t) {
+				System.out.println("bSetModDestination got pressed!");
+	        }
+	    });
+		bSetModDestination.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e) {
+				bSetModDestination.setBackground(Main.baNormalFocusedButton);
+			}
+	    });
+		bSetModDestination.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e) {
+				bSetModDestination.setBackground(Main.baNormalButton);
+			}
+		});
 	}
 }

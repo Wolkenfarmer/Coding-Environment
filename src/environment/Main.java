@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -22,6 +23,7 @@ import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -212,5 +214,24 @@ public class Main extends Application{
 		
 		
 		new Homepage(root);
+	}
+	
+	
+	public static double calcHeight(Region r) {
+		Main.dummyRoot.getChildren().add(r);
+		Main.dummyRoot.applyCss();
+		Main.dummyRoot.layout();
+		Main.dummyRoot.getChildren().remove(r);
+		return r.getHeight();
+	}
+	
+	public static double calcHeightLabel(Label l, double parentWidth) {
+		Main.dummyRoot.getChildren().add(l);
+		Main.dummyRoot.applyCss();
+		Main.dummyRoot.layout();
+		double lines = Math.ceil(l.getWidth() / (parentWidth - 20));
+		double height = (l.getHeight() * lines) + ((l.getLineSpacing() + (l.getFont().getSize() * 1.2)) * (lines - 1));
+		Main.dummyRoot.getChildren().remove(l);
+		return height;
 	}
 }
