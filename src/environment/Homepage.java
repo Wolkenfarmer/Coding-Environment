@@ -15,33 +15,58 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 /**
- * The homepage of the application with access to every part of the program. 
+ * The homepage of the application with access to every part of the program.
+ * This class builds the UI of the Homepage with the help of {@link environment.ModelFactory} for elemts of the model of settings.
  * @author Wolkenfarmer
  */
 public class Homepage {
+	/** Layout container for the headline elements {@link #lHeadline}, {@link #rHeadlineSpacer} and {@link #vbHeadline}.*/
 	HBox hbHeadline;
+		/** Label which displays the headline "Source / Channel Coding Environment". It's part of {@link #hbHeadline}.*/
 		Label lHeadline;
+		/** A spacer for the right-hand-side-layout of {@link #vbHeadline}. It's part of {@link #hbHeadline}.*/
 		Region rHeadlineSpacer;
+		/** Layout container for the headline elements on the right side. 
+		 * Contains {@link #bSetModSource}, {@link #bSetModEncoder}, {@link #bSetModNoise}, {@link #bSetModDecoder} and {@link #bSetModDestination} 
+		 * and is part of {@link #hbHeadline}.*/
 		VBox vbHeadline;
+			/** Label which displays the current version of this program. It's part of {@link #vbHeadline} and this again of {@link #hbHeadline}.*/
 			Label lHeadlineVersion;
+			/** Label which displays developer of this program. It's part of {@link #vbHeadline} and this again of {@link #hbHeadline}.*/
 			Label lHeadlineBy;
+	/** Layout container for the settings elements {@link #lSetHeadline} and {@link #pSetModel}.*/
 	Pane pSettings;
+		/** Label which displays the subheadline "Settings". It's part of {@link #pSettings}.*/
 		Label lSetHeadline;
+		/** Layout container for the elements of the model in {@link #pSettings}. 
+		 * Contains {@link #bSetModSource}, {@link #bSetModEncoder}, {@link #bSetModNoise}, {@link #bSetModDecoder} and {@link #bSetModDestination} */
 		Pane pSetModel;
+			/** Information source button of the model in settings. It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
 			Button bSetModSource;
+			/** Encoder button of the model in settings. It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
 			Button bSetModEncoder;
+			/** Noise source button of the model in settings. It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
 			Button bSetModNoise;
+			/** Decoder button of the model in settings. It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
 			Button bSetModDecoder;
+			/** Destination button of the model in settings. It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
 			Button bSetModDestination;
+	/** Layout container for the results elements.*/
 	Group gResults;
+	/** Layout container for the buttons (at the bottom of the page).*/
 	Group gButtons;
 	
+	/** Unified EventHandler for {@link #bSetModDecoder} and {@link #bSetModEncoder}.*/
 	EventHandler<ActionEvent> evEnDecoderPressed;
+	/** Unified EventHandler for {@link #bSetModDecoder} and {@link #bSetModEncoder}.*/
 	EventHandler<MouseEvent> evEnDecoderEntered;
+	/** Unified EventHandler for {@link #bSetModDecoder} and {@link #bSetModEncoder}.*/
 	EventHandler<MouseEvent> evEnDecoderExited;
 	
 	/**
 	 * Builds the homepage of the application.
+	 * For the building of the buttons in the model in settings {@link environment.ModelFactory} is used.
+	 * Ultimately, the height of the content gets calculated and the scrollbar accordingly updated.
 	 * @param root A group to attach it's layout parts to.
 	 */
 	public Homepage(Group root) {
@@ -110,6 +135,9 @@ public class Homepage {
 	}
 	
 	
+	/**
+	 * Adds the listener to the Buttons of {@link environment.Homepage}. 
+	 */
 	private void addButtonListener() {
 		bSetModSource.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent t) {

@@ -34,7 +34,8 @@ import javafx.stage.Stage;
  * Main class hosting the javafx Application.
  * Gets called on start of the program and is the base for the javafx application.
  * Builds the stage (window) with some basic setup like FullScreen-Mode or the {@link #scrollbar} along with its calculations.
- * In addition, this class provides the program with some basic layouts like the headline font {@link #fHeadline}. 
+ * In addition, this class provides the program with some basic layouts like the headline font {@link #fHeadline}.
+ * Ultimately, {@link environment.Homepage} gets called.
  * @author Wolkenfarmer
  * @version 1.0
 */
@@ -65,7 +66,18 @@ public class Main extends Application{
 	 * EventHandler and Listener with its calculations are in {@link #start(Stage)}.
 	 */
 	static ScrollBar scrollbar;
+	/**
+	 * A dummyScene in order to calculate the dimensions of layout objects while building. 
+	 * The scene gets connected with {@link #dummyRoot} in {@link #start(Stage)}. 
+	 * This scene is needed for {@link #calcHeight(Region)} and {@link #calcHeightLabel(Label, double)} 
+	 * in order to be able to applyCSS and layout() the given objects without having to attach them to {@link #scene} 
+	 * where the entire page is added to.
+	 */
 	static Scene dummyScene;
+	/**
+	 * A dummyRoot for the {@link #dummyScene} in order to calculate the dimensions of layout objects while building.
+	 * This is needed to setup the scene.
+	 */
 	static Group dummyRoot;
 	/**
 	 * Reference to the window-height for the entire program. 
@@ -217,6 +229,15 @@ public class Main extends Application{
 	}
 	
 	
+	/**
+	 * Calculates the Height of a given Region.
+	 * JavaFX layout calculations just work by applying CSS and a layout pass, which occures usually after a page is finished building.
+	 * Therefore, the region gets temporarily attached to {@link #dummyScene} (instead of {@link #scene}) 
+	 * in order to get the height before the page is finished building.
+	 * This is necessary because the height is relevant to continue building the page.
+	 * @param r The region (or subclass of it) of which the height gets calculated.
+	 * @return Returns the height of the region.
+	 */
 	public static double calcHeight(Region r) {
 		Main.dummyRoot.getChildren().add(r);
 		Main.dummyRoot.applyCss();
@@ -225,6 +246,22 @@ public class Main extends Application{
 		return r.getHeight();
 	}
 	
+	/**
+	 * Calculates the Height of a given Label.
+	 * JavaFX layout calculations just work by applying CSS and a layout pass, which occures usually after a page is finished building.
+	 * Therefore, the label gets temporarily attached to {@link #dummyScene} (instead of {@link #scene}) 
+	 * in order to get the height before the page is finished building. 
+	 * For this to work firstly the width of the label with its content gets calculated and then divided by the parent Objects width to get the 
+	 * number of lines. Then the height of one individual line gets muliplied with it. In addition, an approximation for the distance of each line
+	 * gets added. This is necessary because the height is relevant to continue building the page.
+	 * <p>
+	 * Note: This calculation is _not_ exact and is based on approximations, because neither the insets nor the padding of the parent or the label
+	 * give back the exact spacing between them. Ultimately, there is no known way to get the spacing between each individual line in pixel depending
+	 * on it's size.
+	 * @param l The label of which the height gets calculated.
+	 * @param parentWidth The width of the parent object in order to calculate the nubmer of lines.
+	 * @return Returns the height of a label
+	 */
 	public static double calcHeightLabel(Label l, double parentWidth) {
 		Main.dummyRoot.getChildren().add(l);
 		Main.dummyRoot.applyCss();
