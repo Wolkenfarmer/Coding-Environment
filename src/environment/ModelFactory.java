@@ -23,6 +23,7 @@ public class ModelFactory {
 	/** The width of a button in {@link environment.Homepage#pSetModel}. 
 	 * This gets calculated in {@link #ModelFactory(double)} and used in {@link #buildButton(float, float, String, boolean)}.*/
 	static double modelButtonWidth;
+	static double modelZoneHeight = 50;
 	
 	/** The button which is to be build. Contains {@link #vbContent} as it's labeling / content.*/
 	Button b;
@@ -48,6 +49,7 @@ public class ModelFactory {
 		 * or {@link #lConSelectedItemHead} and {@link #lConSelectedItem}. It's part of {@link #vbContent}.*/
 		Label lConSub;
 
+	Arrow r;
 		
 	/**
 	 * Constructor of the class which devides the given contentWidth into different zones for the obejcts.
@@ -72,7 +74,7 @@ public class ModelFactory {
 	public Button buildButton(float layoutZoneX, float layoutZoneY, String conName, boolean selectableItems) {
 		b = new Button();
 		b.setLayoutX(layoutZoneX * modelZoneWidth);
-		b.setLayoutY(layoutZoneY * 50);
+		b.setLayoutY(layoutZoneY * modelZoneHeight);
 		b.setPrefWidth(modelButtonWidth);
 		b.setBackground(Main.baNormalButton);
 		b.setBorder(Main.boNormalWhite);
@@ -127,5 +129,16 @@ public class ModelFactory {
 		b.setPrefHeight(Main.calcHeight(((Region) vbContent)) + 20);
 		
 		return b;
+	}
+	
+	
+	public Arrow buildRelation(float layoutZoneX, float layoutZoneY, short zoneLenght, String name) {
+		double startX = layoutZoneX * modelZoneWidth + 5;
+		double startY = layoutZoneY * modelZoneHeight;
+		double endX = layoutZoneX * modelZoneWidth + zoneLenght * modelZoneWidth -5;
+		double endY = startY;
+		
+		r = new Arrow(startX, startY, endX, endY, 10, 10, name);
+		return r.getArrow();
 	}
 }

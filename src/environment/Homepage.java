@@ -51,6 +51,9 @@ public class Homepage {
 			Button bSetModDecoder;
 			/** Destination button of the model in settings. It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
 			Button bSetModDestination;
+			Group gSetModRelSoToEn;
+			Group gSetModRelEnToDe;
+			Group gSetModRelDeToDe;
 	/** Layout container for the results elements.*/
 	Group gResults;
 	/** Layout container for the buttons (at the bottom of the page).*/
@@ -121,7 +124,13 @@ public class Homepage {
 				bSetModNoise = cSetModelFactory.buildButton(5.5f, 2, "noise source", true);
 				bSetModDecoder = cSetModelFactory.buildButton(8, 0, "decoder", true);
 				bSetModDestination = cSetModelFactory.buildButton(11, 0, "destination", false);
-			pSetModel.getChildren().addAll(bSetModSource, bSetModEncoder, bSetModNoise, bSetModDecoder, bSetModDestination);
+				
+				gSetModRelSoToEn = cSetModelFactory.buildRelation(2, 1, ((short) 1), "message");
+				gSetModRelEnToDe = cSetModelFactory.buildRelation(5, 1, ((short) 3), "signal / channel");
+				gSetModRelDeToDe = cSetModelFactory.buildRelation(10, 1, ((short) 1), "message");
+				
+			pSetModel.getChildren().addAll(bSetModSource, bSetModEncoder, bSetModNoise, bSetModDecoder, bSetModDestination, 
+					gSetModRelSoToEn, gSetModRelEnToDe, gSetModRelDeToDe);
 		pSettings.getChildren().addAll(lSetHeadline, pSetModel);
 		
 		root.getChildren().addAll(hbHeadline, pSettings);
