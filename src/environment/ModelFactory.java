@@ -124,14 +124,23 @@ public class ModelFactory {
 					vbContent.getChildren().addAll(hbConName, lConDiffer, lConSub);
 				}
 				
-				
 		b.setGraphic(vbContent);
 		b.setPrefHeight(Main.calcHeight(((Region) vbContent)) + 20);
 		
 		return b;
 	}
 	
-	
+	/**
+	 * Builds the buttons for {@link environment.Homepage#pSetModel}. 
+	 * It uses {@link environment.Arrow#getArrow(double, double, double, double, double, double, boolean, String)} to create the arrow.
+	 * This method calculates the values to create the arrow via the class and returns it.
+	 * @param layoutZoneX Defines the x coordinate of the start of the arrow multiplied by {@link #modelZoneWidth}.
+	 * @param layoutZoneY Defines the y coordinate of the start of the arrow multiplied by {@link #modelZoneHeight}.
+	 * @param lenght Defines the lenght of the arrow multiplied by either {@link #modelZoneWidth} or {@link #modelZoneHeight}.
+	 * @param vertical Defines whether the arrow should be displayed horizontal (from left to right) or vertical (from bottom to top).
+	 * @param name The discription of the arrow which will be displayed above it (only if horizontal).
+	 * @return Returns the finished relation.
+	 */
 	public Arrow buildRelation(float layoutZoneX, float layoutZoneY, short lenght, boolean vertical, String name) {
 		double startX, startY, endX, endY;
 		if (vertical) {
@@ -146,7 +155,7 @@ public class ModelFactory {
 			endY = startY;
 		}
 		
-		r = new Arrow(startX, startY, endX, endY, 10, 10, vertical, name);
-		return r.getArrow();
+		Arrow a = new Arrow();
+		return a.getArrow(startX, startY, endX, endY, 10, 10, vertical, name);
 	}
 }

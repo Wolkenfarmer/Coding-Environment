@@ -41,19 +41,28 @@ public class Homepage {
 		/** Layout container for the elements of the model in {@link #pSettings}. 
 		 * Contains {@link #bSetModSource}, {@link #bSetModEncoder}, {@link #bSetModNoise}, {@link #bSetModDecoder} and {@link #bSetModDestination} */
 		Pane pSetModel;
-			/** Information source button of the model in settings. It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
+			/** Information source button of the model in settings. 
+			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
 			Button bSetModSource;
-			/** Encoder button of the model in settings. It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
+			/** Encoder button of the model in settings. 
+			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
 			Button bSetModEncoder;
-			/** Noise source button of the model in settings. It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
+			/** Noise source button of the model in settings. 
+			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
 			Button bSetModNoise;
-			/** Decoder button of the model in settings. It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
+			/** Decoder button of the model in settings. 
+			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
 			Button bSetModDecoder;
-			/** Destination button of the model in settings. It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
+			/** Destination button of the model in settings. 
+			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
 			Button bSetModDestination;
+			/** Relation for the model in settings. Connects {@link #bSetModSource} with {@link #bSetModEncoder}.*/
 			Group gSetModRelSoToEn;
+			/** Relation for the model in settings. Connects {@link #bSetModEncoder} with {@link #bSetModDecoder}.*/
 			Group gSetModRelEnToDe;
+			/** Relation for the model in settings. Connects {@link #bSetModDecoder} with {@link #bSetModDestination}.*/
 			Group gSetModRelDeToDe;
+			/** Relation for the model in settings. Connects {@link #bSetModNoise} with {@link #gSetModRelEnToDe}.*/
 			Group gSetModRelNoToCh;
 	/** Layout container for the results elements.*/
 	Group gResults;
