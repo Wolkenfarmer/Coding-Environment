@@ -16,7 +16,7 @@ import javafx.scene.paint.Color;
 
 /**
  * The homepage of the application with access to every part of the program.
- * This class builds the UI of the Homepage with the help of {@link environment.ModelFactory} for elemts of the model of settings.
+ * This class builds the UI of the Homepage with the help of {@link environment.ModelFactory} for elements of the model of settings.
  * @author Wolkenfarmer
  */
 public class Homepage {
@@ -54,6 +54,7 @@ public class Homepage {
 			Group gSetModRelSoToEn;
 			Group gSetModRelEnToDe;
 			Group gSetModRelDeToDe;
+			Group gSetModRelNoToCh;
 	/** Layout container for the results elements.*/
 	Group gResults;
 	/** Layout container for the buttons (at the bottom of the page).*/
@@ -125,12 +126,13 @@ public class Homepage {
 				bSetModDecoder = cSetModelFactory.buildButton(8, 0, "decoder", true);
 				bSetModDestination = cSetModelFactory.buildButton(11, 0, "destination", false);
 				
-				gSetModRelSoToEn = cSetModelFactory.buildRelation(2, 1, ((short) 1), "message");
-				gSetModRelEnToDe = cSetModelFactory.buildRelation(5, 1, ((short) 3), "signal / channel");
-				gSetModRelDeToDe = cSetModelFactory.buildRelation(10, 1, ((short) 1), "message");
+				gSetModRelSoToEn = cSetModelFactory.buildRelation(2, 1, ((short) 1), false, "message");
+				gSetModRelEnToDe = cSetModelFactory.buildRelation(5, 1, ((short) 3), false, "signal / channel");
+				gSetModRelDeToDe = cSetModelFactory.buildRelation(10, 1, ((short) 1), false, "message");
+				gSetModRelNoToCh = cSetModelFactory.buildRelation(6.5f, 2, ((short) 1), true, "");
 				
 			pSetModel.getChildren().addAll(bSetModSource, bSetModEncoder, bSetModNoise, bSetModDecoder, bSetModDestination, 
-					gSetModRelSoToEn, gSetModRelEnToDe, gSetModRelDeToDe);
+					gSetModRelSoToEn, gSetModRelEnToDe, gSetModRelDeToDe, gSetModRelNoToCh);
 		pSettings.getChildren().addAll(lSetHeadline, pSetModel);
 		
 		root.getChildren().addAll(hbHeadline, pSettings);

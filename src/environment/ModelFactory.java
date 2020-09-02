@@ -132,13 +132,21 @@ public class ModelFactory {
 	}
 	
 	
-	public Arrow buildRelation(float layoutZoneX, float layoutZoneY, short zoneLenght, String name) {
-		double startX = layoutZoneX * modelZoneWidth + 5;
-		double startY = layoutZoneY * modelZoneHeight;
-		double endX = layoutZoneX * modelZoneWidth + zoneLenght * modelZoneWidth -5;
-		double endY = startY;
+	public Arrow buildRelation(float layoutZoneX, float layoutZoneY, short lenght, boolean vertical, String name) {
+		double startX, startY, endX, endY;
+		if (vertical) {
+			startX = layoutZoneX * modelZoneWidth;
+			startY = layoutZoneY * modelZoneHeight - 5;
+			endX = startX;
+			endY = layoutZoneY * modelZoneHeight - lenght * modelZoneHeight +5;
+		} else {
+			startX = layoutZoneX * modelZoneWidth + 5;
+			startY = layoutZoneY * modelZoneHeight;
+			endX = layoutZoneX * modelZoneWidth + lenght * modelZoneWidth -5;
+			endY = startY;
+		}
 		
-		r = new Arrow(startX, startY, endX, endY, 10, 10, name);
+		r = new Arrow(startX, startY, endX, endY, 10, 10, vertical, name);
 		return r.getArrow();
 	}
 }
