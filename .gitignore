@@ -1,6 +1,7 @@
 /.gradle/
 /.settings/
 /bin/
+/doc/
 /*.project
 
 # Compiled class file
