@@ -144,14 +144,16 @@ public class Homepage {
 					gSetModRelSoToEn, gSetModRelEnToDe, gSetModRelDeToDe, gSetModRelNoToCh);
 		pSettings.getChildren().addAll(lSetHeadline, pSetModel);
 		
-		root.getChildren().addAll(hbHeadline, pSettings);
-		addButtonListener();
 		
 		
-		Main.contentHeight = lHeadline.getLayoutY() + pos1 / 3;
+		Main.contentHeight = pSettings.getLayoutY() + Main.calcHeight(pSettings) + pos1 / 3;
 		Main.scrollbar.setMax(Main.contentHeight - Main.scene.getHeight());
 		Main.scrollbar.setBlockIncrement(Main.contentHeight);
         if (Main.scene.getHeight() >= Main.contentHeight) {Main.scrollbar.setVisible(false);}
+        
+        
+        root.getChildren().addAll(hbHeadline, pSettings);
+        addButtonListener();
 	}
 	
 	

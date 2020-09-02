@@ -239,10 +239,10 @@ public class Main extends Application{
 	 * @return Returns the height of the region.
 	 */
 	public static double calcHeight(Region r) {
-		Main.dummyRoot.getChildren().add(r);
-		Main.dummyRoot.applyCss();
-		Main.dummyRoot.layout();
-		Main.dummyRoot.getChildren().remove(r);
+		dummyRoot.getChildren().add(r);
+		dummyRoot.applyCss();
+		dummyRoot.layout();
+		dummyRoot.getChildren().remove(r);
 		return r.getHeight();
 	}
 	
@@ -263,12 +263,12 @@ public class Main extends Application{
 	 * @return Returns the height of a label
 	 */
 	public static double calcHeightLabel(Label l, double parentWidth) {
-		Main.dummyRoot.getChildren().add(l);
-		Main.dummyRoot.applyCss();
-		Main.dummyRoot.layout();
+		dummyRoot.getChildren().add(l);
+		dummyRoot.applyCss();
+		dummyRoot.layout();
 		double lines = Math.ceil(l.getWidth() / (parentWidth - 20));
-		double height = (l.getHeight() * lines) + ((l.getLineSpacing() + (l.getFont().getSize() * 1.2)) * (lines - 1));
-		Main.dummyRoot.getChildren().remove(l);
+		double height = (l.getHeight() * lines) + (l.getLineSpacing() + (l.getFont().getSize()) * (lines - 1));
+		dummyRoot.getChildren().remove(l);
 		return height;
 	}
 }

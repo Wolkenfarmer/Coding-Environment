@@ -73,7 +73,7 @@ public class Arrow extends Group {
     		headR.setEndY(endY - (widthHead / 2));
     		
     		hbDescription = new HBox();
-    		hbDescription.setPrefWidth(endX - startX - lenghtHead);
+    		hbDescription.setPrefWidth(endX - startX);
     		hbDescription.setLayoutX(startX);
     		hbDescription.setLayoutY(startY - 25);
     		description = new Label(name);
