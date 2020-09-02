@@ -121,6 +121,14 @@ public class Main extends Application{
     static Background baGreenButton = new Background (new BackgroundFill(Color.rgb(0, 90, 0), crNormal,  null));
 	/** Unified referenceable button background (focused) for layouts.*/
     static Background baGreenFocusedButton = new Background (new BackgroundFill(Color.rgb(0, 70, 0), crNormal,  null));
+    /** Unified referenceable button background for layouts.*/
+    static Background baBrownButton = new Background (new BackgroundFill(Color.rgb(100, 50 , 0), crNormal,  null));
+	/** Unified referenceable button background (focused) for layouts.*/
+    static Background baBrownFocusedButton = new Background (new BackgroundFill(Color.rgb(80, 30, 0), crNormal,  null));
+    /** Unified referenceable button background for layouts.*/
+    static Background baPurpleButton = new Background (new BackgroundFill(Color.rgb(90, 0 , 60), crNormal,  null));
+	/** Unified referenceable button background (focused) for layouts.*/
+    static Background baPurpleFocusedButton = new Background (new BackgroundFill(Color.rgb(70, 30, 40), crNormal,  null));
 	/** Unified referenceable Border for layouts.*/
     static Border boNormalWhite = new Border(new BorderStroke(Color.WHITESMOKE, BorderStrokeStyle.SOLID, crNormal, BorderWidths.DEFAULT));
 
@@ -223,7 +231,6 @@ public class Main extends Application{
 				}
 			}
 		});		
-		
 		
 		new Homepage(root);
 	}
