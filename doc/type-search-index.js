@@ -1,1 +1,0 @@
-typeSearchIndex = [{"p":"environment","l":"Arrow"},{"p":"environment","l":"Homepage"},{"p":"environment","l":"Main"},{"p":"environment","l":"ModelFactory"}]
