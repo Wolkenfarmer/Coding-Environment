@@ -28,6 +28,7 @@ import javafx.util.Callback;
  * @author Wolkenfarmer
  */
 public class Homepage {
+	int distanceToSubheading = 60;
 	/** Layout container for the headline elements {@link #lHeadline}, {@link #rHeadlineSpacer} and {@link #vbHeadline}.*/
 	HBox hbHeadline;
 		/** Label which displays the headline "Source / Channel Coding Environment". It's part of {@link #hbHeadline}.*/
@@ -151,7 +152,7 @@ public class Homepage {
 			lSetHeading.setFont(Main.fSubheadline);
 			
 			pSetModel = new Pane();
-			pSetModel.setLayoutY(60);
+			pSetModel.setLayoutY(distanceToSubheading);
 				ModelFactory cSetModelFactory = new ModelFactory(contentWidth); 
 				bSetModSource = cSetModelFactory.buildButton(0, 0, "information source", true);
 				bSetModEncoder = cSetModelFactory.buildButton(3, 0, "encoder", true);
@@ -180,7 +181,7 @@ public class Homepage {
 			
 			
 			tvResTable = new TableView<String[]>();
-			tvResTable.setLayoutY(60);
+			tvResTable.setLayoutY(distanceToSubheading);
 			tvResTable.setPrefHeight(Main.stageHeight - pResults.getLayoutY() - tvResTable.getLayoutY() - pos1 / 3);
 			tvResTable.setMinHeight(250 - tvResTable.getLayoutY());							// Minimum height -> ends with pControls
 			tvResTable.setPrefWidth(Main.stageWidth / 2);
@@ -200,7 +201,7 @@ public class Homepage {
 			    
 			    tvResTabValue = new TableColumn<>("Value");
 			    tvResTabValue.setResizable(false);
-			    tvResTabValue.prefWidthProperty().bind(tvResTable.widthProperty().subtract(tvResTabDescription.getPrefWidth() + 16));
+			    tvResTabValue.prefWidthProperty().bind(tvResTable.widthProperty().subtract(tvResTabDescription.getPrefWidth() + 18));
 			    tvResTabValue.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<String[], String>, ObservableValue<String>>() {
 			        public ObservableValue<String> call(TableColumn.CellDataFeatures<String[], String> p) {
 			            String[] x = p.getValue();
@@ -234,7 +235,7 @@ public class Homepage {
 			
 			vbConButtons = new VBox();
 			vbConButtons.setPrefWidth(pControls.getPrefWidth());
-			vbConButtons.setLayoutY(60);
+			vbConButtons.setLayoutY(distanceToSubheading);
 			vbConButtons.setSpacing(20);
 				bConButRun = new Button();
 				bConButRun.setPrefWidth(vbConButtons.getPrefWidth() - 1);

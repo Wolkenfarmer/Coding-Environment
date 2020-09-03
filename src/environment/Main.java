@@ -157,8 +157,9 @@ public class Main extends Application{
 		sbRoot = new Group();
 		root = new Group();
 		scene = new Scene(sbRoot, Color.grayRgb(40));
+		scene.getStylesheets().add("css/tableView.css");
 		dummyScene = new Scene(dummyRoot = new Group());
-        
+		        
 		stage = new Stage();
 		stage.setTitle("Source / Channel Coding Environment");
 		stage.setFullScreen(true);
