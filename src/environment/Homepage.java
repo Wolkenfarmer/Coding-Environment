@@ -24,45 +24,44 @@ import javafx.util.Callback;
 
 /**
  * The homepage of the application with access to every part of the program.
- * This class builds the UI of the Homepage with the help of {@link environment.ModelFactory} for elements of the model of settings.
+ * See {@link #Homepage(Group)} for more information.
  * @author Wolkenfarmer
  */
 public class Homepage {
 	int distanceToSubheading = 60;
-	/** Layout container for the headline elements {@link #lHeadline}, {@link #rHeadlineSpacer} and {@link #vbHeadline}.*/
+	/** Layout container for the headline segment on the homepage. Contains {@link #lHeadline}, {@link #rHeadlineSpacer} and {@link #vbHeadline}.*/
 	HBox hbHeadline;
 		/** Label which displays the headline "Source / Channel Coding Environment". It's part of {@link #hbHeadline}.*/
 		Label lHeadline;
 		/** A spacer for the right-hand-side-layout of {@link #vbHeadline}. It's part of {@link #hbHeadline}.*/
 		Region rHeadlineSpacer;
 		/** Layout container for the headline elements on the right side. 
-		 * Contains {@link #bSetModSource}, {@link #bSetModEncoder}, {@link #bSetModNoise}, {@link #bSetModDecoder} and {@link #bSetModDestination} 
-		 * and is part of {@link #hbHeadline}.*/
+		 * Contains {@link #lHeadlineVersion} and {@link #lHeadlineVersion} and is part of {@link #hbHeadline}.*/
 		VBox vbHeadline;
 			/** Label which displays the current version of this program. It's part of {@link #vbHeadline} and this again of {@link #hbHeadline}.*/
 			Label lHeadlineVersion;
 			/** Label which displays developer of this program. It's part of {@link #vbHeadline} and this again of {@link #hbHeadline}.*/
 			Label lHeadlineBy;
-	/** Layout container for the settings elements {@link #lSetHeading} and {@link #pSetModel}.*/
+	/** Layout container for the settings segment on the homepage. Contains {@link #lSetHeading} and {@link #pSetModel}.*/
 	Pane pSettings;
-		/** Label which displays the subheadline "Settings". It's part of {@link #pSettings}.*/
+		/** Label which displays the sub-heading "Settings". It's part of {@link #pSettings}.*/
 		Label lSetHeading;
 		/** Layout container for the elements of the model in {@link #pSettings}. 
 		 * Contains {@link #bSetModSource}, {@link #bSetModEncoder}, {@link #bSetModNoise}, {@link #bSetModDecoder} and {@link #bSetModDestination} */
 		Pane pSetModel;
-			/** Information source button of the model in settings. 
+			/** Information source button of the model in settings. Uses {@link environment.Main#baNormalButton} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
 			Button bSetModSource;
-			/** Encoder button of the model in settings. 
+			/** Encoder button of the model in settings. Uses {@link environment.Main#baNormalButton} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
 			Button bSetModEncoder;
-			/** Noise source button of the model in settings. 
+			/** Noise source button of the model in settings. Uses {@link environment.Main#baNormalButton} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
 			Button bSetModNoise;
-			/** Decoder button of the model in settings. 
+			/** Decoder button of the model in settings. Uses {@link environment.Main#baNormalButton} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
 			Button bSetModDecoder;
-			/** Destination button of the model in settings. 
+			/** Destination button of the model in settings. Uses {@link environment.Main#baNormalButton} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
 			Button bSetModDestination;
 			/** Relation for the model in settings. Connects {@link #bSetModSource} with {@link #bSetModEncoder}.*/
@@ -73,25 +72,50 @@ public class Homepage {
 			Group gSetModRelDeToDe;
 			/** Relation for the model in settings. Connects {@link #bSetModNoise} with {@link #gSetModRelEnToDe}.*/
 			Group gSetModRelNoToCh;
-	/** Layout container for the results elements.*/
+	/** Layout container for the results segment on the homepage. Contains {@link #lResHeading} and {@link #tvResTable}.*/
 	Pane pResults;
+		/** Label which displays the sub-heading "Last Results". It's part of {@link #pResults}.*/
 		Label lResHeading;
+		/** The table displaying the last result below {@link #lResHeading}. 
+		 * It gets the result from TODO
+		 * The stylesheet tableView.css, which is added to {@link environment.Main#scene} specifies the look the this table.
+		 * Contains {@link #tvResTabDescription} and {@link #tvResTabValue} and is part of {@link #pResults}.*/
 		TableView<String[]> tvResTable;
+			/** The first column of {@link #tvResTable} displaying the descriptions of the values.*/
 			TableColumn<String[], String> tvResTabDescription;
+			/** The first column of {@link #tvResTable} displaying the values to the descriptions.*/
 			TableColumn<String[], String> tvResTabValue;
-	/** Layout container for the buttons (at the bottom of the page).*/
+	/** Layout container for the controls segment on the homepage. Contains {@link #lConHeading} and {@link #vbConButtons}.*/
 	Pane pControls;
+		/** Label which displays the sub-heading "Controls". It's part of {@link #pControls}.*/
 		Label lConHeading;
+		/** Layout container for the buttons below {@link #lConHeading}. 
+		 * Contains {@link #bConButRun}, {@link #bConButSaveResult} and {@link #bConButHelp} and is part of {@link #pControls}.*/
 		VBox vbConButtons;
+			/** The run button of the controls segment. Uses {@link environment.Main#baGreenButton} as background.
+			 * Contains {@link #hbConButRun} and is part of {@link #vbConButtons}. Links up to TODO*/
 			Button bConButRun;
+				/** Layout container for the buttons description. This is needed in order to align the heading the center of the button. 
+				 * Contains {@link #lConButRun} and is part of {@link #bConButRun}.*/
 				HBox hbConButRun;
-				Label lConButRun;
-			Button bConButSaveResults;
-				HBox hbConButSaveResults;
-				Label lConButSaveResults;
+					/** Label which displays {@link #bConButRun}'s description "Run". It's part of {@link #hbConButRun}.*/
+					Label lConButRun;
+			/** The save last results button of the controls segment. Uses {@link environment.Main#baBrownButton} as background.
+			 * Contains {@link #hbConButSaveResult} and is part of {@link #vbConButtons}. Links up to TODO*/
+			Button bConButSaveResult;
+				/** Layout container for the buttons description. This is needed in order to align the heading the center of the button. 
+				 * Contains {@link #lConButSaveResult} and is part of {@link #bConButSaveResult}.*/
+				HBox hbConButSaveResult;
+					/** Label which displays {@link #bConButSaveResult}'s description "Save last result". It's part of {@link #hbConButSaveResult}.*/
+					Label lConButSaveResult;
+			/** The help button of the controls segment. Uses {@link environment.Main#baPurpleButton} as background.
+			 * Contains {@link #hbConButHelp} and is part of {@link #vbConButtons}. Links up to TODO*/
 			Button bConButHelp;
+				/** Layout container for the buttons description. This is needed in order to align the heading the center of the button. 
+				 * Contains {@link #lConButHelp} and is part of {@link #bConButHelp}.*/
 				HBox hbConButHelp;
-				Label lConButHelp;
+					/** Label which displays {@link #bConButHelp}'s description "Help". It's part of {@link #hbConButHelp}.*/
+					Label lConButHelp;
 	
 	
 	/** Unified EventHandler for {@link #bSetModDecoder} and {@link #bSetModEncoder}.*/
@@ -103,8 +127,12 @@ public class Homepage {
 	
 	/**
 	 * Builds the homepage of the application.
-	 * For the building of the buttons in the model in settings {@link environment.ModelFactory} is used.
-	 * Ultimately, the height of the content gets calculated and the scrollbar accordingly updated.
+	 * This constructor uses {@link environment.ModelFactory#buildButton(float, float, String, boolean)} for the buttons 
+	 * and {@link environment.ModelFactory#buildRelation(float, float, short, boolean, String)} for the relations in {@link #pSetModel}.
+	 * The homepage gets scaled accordingly to {@link environment.Main#stageHeight} and {@link environment.Main#stageWidth}.
+	 * Normally, the height of {@link #pResults} gets calculated in order to not exceed the screen size, 
+	 * but if the screen is too small to even fit {@link #pControls} on it, the controls height will be the minimum height of results 
+	 * and {@link environment.Main#scrollbar} will be displayed.
 	 * @param root A group to attach it's layout parts to.
 	 */
 	public Homepage(Group root) {
@@ -253,21 +281,21 @@ public class Homepage {
 					hbConButRun.setAlignment(Pos.CENTER);
 				bConButRun.setGraphic(hbConButRun);
 				
-				bConButSaveResults = new Button();
-				bConButSaveResults.setPrefWidth(vbConButtons.getPrefWidth() - 1);
-				bConButSaveResults.setPrefHeight(50);
-				bConButSaveResults.setBackground(Main.baBrownButton);
-				bConButSaveResults.setBorder(Main.boNormalWhite);
-					hbConButSaveResults = new HBox();
-						lConButSaveResults = new Label();
-						lConButSaveResults.setText("Save last results");
-						lConButSaveResults.setTextFill(Color.WHITESMOKE);
-						lConButSaveResults.setFont(Main.fNormalText);
-						lConButSaveResults.setWrapText(false);
-						lConButSaveResults.setTextAlignment(TextAlignment.CENTER);
-					hbConButSaveResults.getChildren().add(lConButSaveResults);
-					hbConButSaveResults.setAlignment(Pos.CENTER);
-				bConButSaveResults.setGraphic(hbConButSaveResults);
+				bConButSaveResult = new Button();
+				bConButSaveResult.setPrefWidth(vbConButtons.getPrefWidth() - 1);
+				bConButSaveResult.setPrefHeight(50);
+				bConButSaveResult.setBackground(Main.baBrownButton);
+				bConButSaveResult.setBorder(Main.boNormalWhite);
+					hbConButSaveResult = new HBox();
+						lConButSaveResult = new Label();
+						lConButSaveResult.setText("Save last result");
+						lConButSaveResult.setTextFill(Color.WHITESMOKE);
+						lConButSaveResult.setFont(Main.fNormalText);
+						lConButSaveResult.setWrapText(false);
+						lConButSaveResult.setTextAlignment(TextAlignment.CENTER);
+					hbConButSaveResult.getChildren().add(lConButSaveResult);
+					hbConButSaveResult.setAlignment(Pos.CENTER);
+				bConButSaveResult.setGraphic(hbConButSaveResult);
 				
 				bConButHelp = new Button();
 				bConButHelp.setPrefWidth(vbConButtons.getPrefWidth() - 1);
@@ -284,7 +312,7 @@ public class Homepage {
 					hbConButHelp.getChildren().add(lConButHelp);
 					hbConButHelp.setAlignment(Pos.CENTER);
 				bConButHelp.setGraphic(hbConButHelp);
-			vbConButtons.getChildren().addAll(bConButRun, bConButSaveResults, bConButHelp);
+			vbConButtons.getChildren().addAll(bConButRun, bConButSaveResult, bConButHelp);
 	    pControls.getChildren().addAll(lConHeading, vbConButtons);
 		
 		
@@ -301,6 +329,8 @@ public class Homepage {
 	
 	/**
 	 * Adds the listener to the Buttons of {@link environment.Homepage}. 
+	 * They individually change the background of the button depending on whether the mouse hover over it or not 
+	 * and define the action of the button when clicked.
 	 */
 	private void addButtonListener() {
 		// Model
@@ -392,19 +422,19 @@ public class Homepage {
 			}
 		});
 		
-		bConButSaveResults.setOnAction(new EventHandler<ActionEvent>() {
+		bConButSaveResult.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent t) {
 				System.out.println("bConButSaveResults got pressed!");
 	        }
 	    });
-		bConButSaveResults.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+		bConButSaveResult.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {
-				bConButSaveResults.setBackground(Main.baBrownFocusedButton);
+				bConButSaveResult.setBackground(Main.baBrownFocusedButton);
 			}
 	    });
-		bConButSaveResults.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+		bConButSaveResult.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {
-				bConButSaveResults.setBackground(Main.baBrownButton);
+				bConButSaveResult.setBackground(Main.baBrownButton);
 			}
 		});
 		

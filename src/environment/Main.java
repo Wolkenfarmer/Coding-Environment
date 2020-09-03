@@ -43,12 +43,15 @@ import javafx.stage.Stage;
 public class Main extends Application{
 	/**
 	 * The Scene for the {@link #start(Stage)}.
-	 * @see	 <a href="https://www.educba.com/javafx-applications/">Javafx Application basic structure</a>
+	 * Uses the stylesheets in src\css.
+	 * @see	<a href="https://www.educba.com/javafx-applications/">Javafx Application basic structure</a>
+	 * @see <a href="https://stackoverflow.com/questions/33938811/styling-a-tableview-in-css-javafx">
+	 * Stylesheet tableView.css mostly taken from Chris</a>
 	 */
 	static Scene scene;
 	/**
 	 * Layout-group to contains the {@link #scrollbar} and start up the {@link #scene}. 
-	 * This layout-group need to be seperate from {@link #root}, 
+	 * This layout-group need to be separate from {@link #root}, 
 	 * because root gets moved along it's y-axis while scrolling / using the scrollbar, 
 	 * while the scrollbar itself should not move in sbRoot.
 	 * @see	 <a href="https://www.educba.com/javafx-applications/">Javafx Application basic structure</a>
@@ -56,7 +59,7 @@ public class Main extends Application{
 	static Group sbRoot;
 	/**
 	 * Layout-group to contain the content of the pages (like {@link environment.Homepage}).
-	 * This layout-group need to be seperate from {@link #sbRoot}, 
+	 * This layout-group need to be separate from {@link #sbRoot}, 
 	 * because root gets moved along it's y-axis while scrolling / using the {@link #scrollbar}, 
 	 * while the scrollbar itself should not move in sbRoot.
 	*/
@@ -117,24 +120,24 @@ public class Main extends Application{
     static Background baNormalButton = new Background (new BackgroundFill(Color.rgb(90, 90, 90), crNormal,  null));
 	/** Unified referenceable button background (focused) for layouts.*/
     static Background baNormalFocusedButton = new Background (new BackgroundFill(Color.rgb(70, 70, 70), crNormal,  null));
-	/** Unified referenceable button background for layouts.*/
+	/** Unified referenceable button background (green) for layouts.*/
     static Background baGreenButton = new Background (new BackgroundFill(Color.rgb(0, 90, 0), crNormal,  null));
-	/** Unified referenceable button background (focused) for layouts.*/
+	/** Unified referenceable button background (green, focused) for layouts.*/
     static Background baGreenFocusedButton = new Background (new BackgroundFill(Color.rgb(0, 70, 0), crNormal,  null));
-    /** Unified referenceable button background for layouts.*/
+    /** Unified referenceable button background (brown) for layouts.*/
     static Background baBrownButton = new Background (new BackgroundFill(Color.rgb(100, 50 , 0), crNormal,  null));
-	/** Unified referenceable button background (focused) for layouts.*/
+	/** Unified referenceable button background (brown, focused) for layouts.*/
     static Background baBrownFocusedButton = new Background (new BackgroundFill(Color.rgb(80, 30, 0), crNormal,  null));
-    /** Unified referenceable button background for layouts.*/
+    /** Unified referenceable button background (purple) for layouts.*/
     static Background baPurpleButton = new Background (new BackgroundFill(Color.rgb(90, 0 , 60), crNormal,  null));
-	/** Unified referenceable button background (focused) for layouts.*/
+	/** Unified referenceable button background (purple, focused) for layouts.*/
     static Background baPurpleFocusedButton = new Background (new BackgroundFill(Color.rgb(70, 30, 40), crNormal,  null));
 	/** Unified referenceable Border for layouts.*/
     static Border boNormalWhite = new Border(new BorderStroke(Color.WHITESMOKE, BorderStrokeStyle.SOLID, crNormal, BorderWidths.DEFAULT));
 
 	/**
 	 * Main method of the program calling launch.
-	 * Starts the application by calling launch(args) which calls up start.
+	 * Starts the application by calling {@link #launch(String...)} which calls up start. 
 	 * @param args Used for calling launch (javafx Application)
 	 * @see <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/application/Application.html">Javafx Application documentation</a>
 	 * @see #start(Stage)
@@ -239,7 +242,7 @@ public class Main extends Application{
 	
 	/**
 	 * Calculates the Height of a given Region.
-	 * JavaFX layout calculations just work by applying CSS and a layout pass, which occures usually after a page is finished building.
+	 * JavaFX layout calculations just work by applying CSS and a layout pass, which occurs usually after a page is finished building.
 	 * Therefore, the region gets temporarily attached to {@link #dummyScene} (instead of {@link #scene}) 
 	 * in order to get the height before the page is finished building.
 	 * This is necessary because the height is relevant to continue building the page.
@@ -256,18 +259,18 @@ public class Main extends Application{
 	
 	/**
 	 * Calculates the Height of a given Label.
-	 * JavaFX layout calculations just work by applying CSS and a layout pass, which occures usually after a page is finished building.
+	 * JavaFX layout calculations just work by applying CSS and a layout pass, which occurs usually after a page is finished building.
 	 * Therefore, the label gets temporarily attached to {@link #dummyScene} (instead of {@link #scene}) 
 	 * in order to get the height before the page is finished building. 
 	 * For this to work firstly the width of the label with its content gets calculated and then divided by the parent Objects width to get the 
-	 * number of lines. Then the height of one individual line gets muliplied with it. In addition, an approximation for the distance of each line
+	 * number of lines. Then the height of one individual line gets multiplied by it. In addition, an approximation for the distance of each line
 	 * gets added. This is necessary because the height is relevant to continue building the page.
 	 * <p>
 	 * Note: This calculation is _not_ exact and is based on approximations, because neither the insets nor the padding of the parent or the label
 	 * give back the exact spacing between them. Ultimately, there is no known way to get the spacing between each individual line in pixel depending
 	 * on it's size.
 	 * @param l The label of which the height gets calculated.
-	 * @param parentWidth The width of the parent object in order to calculate the nubmer of lines.
+	 * @param parentWidth The width of the parent object in order to calculate the number of lines.
 	 * @return Returns the height of a label
 	 */
 	public static double calcHeightLabel(Label l, double parentWidth) {
