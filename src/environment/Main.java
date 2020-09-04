@@ -128,9 +128,9 @@ public class Main extends Application{
 	/** Unified referenceable corner radius for layouts.*/
 	static CornerRadii crNormal = new CornerRadii(10);
 	/** Unified referenceable button background for layouts.*/
-    static Background baNormalButton = new Background (new BackgroundFill(Color.rgb(90, 90, 90), crNormal,  null));
+    static Background baNormalButton = new Background (new BackgroundFill(Color.grayRgb(90), crNormal,  null));
 	/** Unified referenceable button background (focused) for layouts.*/
-    static Background baNormalFocusedButton = new Background (new BackgroundFill(Color.rgb(70, 70, 70), crNormal,  null));
+    static Background baNormalFocusedButton = new Background (new BackgroundFill(Color.grayRgb(70), crNormal,  null));
 	/** Unified referenceable button background (green) for layouts.*/
     static Background baGreenButton = new Background (new BackgroundFill(Color.rgb(0, 90, 0), crNormal,  null));
 	/** Unified referenceable button background (green, focused) for layouts.*/
@@ -258,6 +258,14 @@ public class Main extends Application{
 	}
 	
 	
+	static double calcWidth(Region r) {
+		dummyRoot.getChildren().add(r);
+		dummyRoot.applyCss();
+		dummyRoot.layout();
+		dummyRoot.getChildren().remove(r);
+		return r.getWidth();
+	}
+	
 	/**
 	 * Calculates the Height of a given Region.
 	 * JavaFX layout calculations just work by applying CSS and a layout pass, which occurs usually after a page is finished building.
@@ -274,6 +282,7 @@ public class Main extends Application{
 		dummyRoot.getChildren().remove(r);
 		return r.getHeight();
 	}
+	
 	
 	/**
 	 * Calculates the Height of a given Label.
@@ -299,5 +308,13 @@ public class Main extends Application{
 		double height = (l.getHeight() * lines) + (l.getLineSpacing() + (l.getFont().getSize()) * (lines - 1));
 		dummyRoot.getChildren().remove(l);
 		return height;
+	}
+	
+	static double calcWidthLabel(Label l) {
+		dummyRoot.getChildren().add(l);
+		dummyRoot.applyCss();
+		dummyRoot.layout();
+		dummyRoot.getChildren().remove(l);
+		return l.getWidth();
 	}
 }

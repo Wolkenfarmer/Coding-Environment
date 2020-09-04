@@ -179,17 +179,17 @@ public class Homepage {
 			
 			pSetModel = new Pane();
 			pSetModel.setLayoutY(Main.distanceToSubheading);
-				ModelFactory cSetModelFactory = new ModelFactory(Main.contentWidth); 
-				bSetModSource = cSetModelFactory.buildButton(0, 0, "information source", true);
-				bSetModEncoder = cSetModelFactory.buildButton(3, 0, "encoder", true);
-				bSetModNoise = cSetModelFactory.buildButton(5.5f, 2, "noise source", true);
-				bSetModDecoder = cSetModelFactory.buildButton(8, 0, "decoder", true);
-				bSetModDestination = cSetModelFactory.buildButton(11, 0, "destination", false);
+				ModelFactory cSetModFactory = new ModelFactory(Main.contentWidth); 
+				bSetModSource = cSetModFactory.buildButton(0, 0, "information source", true);
+				bSetModEncoder = cSetModFactory.buildButton(3, 0, "encoder", true);
+				bSetModNoise = cSetModFactory.buildButton(5.5f, 2, "noise source", true);
+				bSetModDecoder = cSetModFactory.buildButton(8, 0, "decoder", true);
+				bSetModDestination = cSetModFactory.buildButton(11, 0, "destination", false);
 				
-				gSetModRelSoToEn = cSetModelFactory.buildRelation(2, 1, ((short) 1), false, "message");
-				gSetModRelEnToDe = cSetModelFactory.buildRelation(5, 1, ((short) 3), false, "signal / channel");
-				gSetModRelDeToDe = cSetModelFactory.buildRelation(10, 1, ((short) 1), false, "message");
-				gSetModRelNoToCh = cSetModelFactory.buildRelation(6.5f, 2, ((short) 1), true, "");
+				gSetModRelSoToEn = cSetModFactory.buildRelation(2, 1, ((short) 1), false, "message");
+				gSetModRelEnToDe = cSetModFactory.buildRelation(5, 1, ((short) 3), false, "signal / channel");
+				gSetModRelDeToDe = cSetModFactory.buildRelation(10, 1, ((short) 1), false, "message");
+				gSetModRelNoToCh = cSetModFactory.buildRelation(6.5f, 2, ((short) 1), true, "");
 			pSetModel.getChildren().addAll(bSetModSource, bSetModEncoder, bSetModNoise, bSetModDecoder, bSetModDestination, 
 					gSetModRelSoToEn, gSetModRelEnToDe, gSetModRelDeToDe, gSetModRelNoToCh);
 		pSettings.getChildren().addAll(lSetHeading, pSetModel);

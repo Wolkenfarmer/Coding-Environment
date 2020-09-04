@@ -12,42 +12,42 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.TextAlignment;
 
 /**
- * Seperate class to build the buttons and relations of the model in settings in {@link environment.Homepage}.
+ * Separate class to build the buttons and relations of the model in settings in {@link environment.Homepage}.
  * @author Wolkenfarmer
  * @see environment.Homepage#pSetModel
  */
 public class ModelFactory {
 	/** The width of a zone in {@link environment.Homepage#pSetModel}. 
 	 * This gets calculated in {@link #ModelFactory(double)} and used in {@link #buildButton(float, float, String, boolean)}.*/
-	static double modelZoneWidth;
+	private static double modelZoneWidth;
 	/** The width of a button in {@link environment.Homepage#pSetModel}. 
 	 * This gets calculated in {@link #ModelFactory(double)} and used in {@link #buildButton(float, float, String, boolean)}.*/
-	static double modelButtonWidth;
-	static double modelZoneHeight = 50;
+	private static double modelButtonWidth;
+	private static double modelZoneHeight = 50;
 	
 	/** The button which is to be build. Contains {@link #vbContent} as it's labeling / content.*/
-	Button b;
+	private Button b;
 	/** Layout container for the buttons labeling / content. 
 	 * Contains {@link #hbConName}, {@link #lConDiffer} and either {@link #lConSelectedItemHead} and {@link #lConSelectedItem} or {@link #lConSub}
 	 * and is part of {@link #b}.*/
-	VBox vbContent;
+	private VBox vbContent;
 		/** Layout container for the buttons heading.
 		 * This is needed in order to align the heading the center of the button even when the heading is just one line. 
 		 * Contains {@link #lConName} and is part of {@link #vbContent}.*/
-		HBox hbConName;
+		private HBox hbConName;
 			/** Label which displays the heading of {@link #b}. It's part of {@link #hbConName}.*/
-			Label lConName;
+			private Label lConName;
 		/** A line to differ between {@link #lConName} and the rest of {@link #b}'s content. It's part of {@link #vbContent}.*/
-		Line lConDiffer;
+		private Line lConDiffer;
 		/** Label which displays "Selected item:" on {@link #b}. Either this and {@link #lConSelectedItem} get displayed or {@link #lConSub}.
 		 * It's part of {@link #vbContent}.*/
-		Label lConSelectedItemHead;
+		private Label lConSelectedItemHead;
 		/** Label which displays the selected item on {@link #b}. Either this and {@link #lConSelectedItemHead} get displayed or {@link #lConSub}.
 		 * It's part of {@link #vbContent}.*/
-		Label lConSelectedItem;
+		private Label lConSelectedItem;
 		/** Label which displays "compare in- and output" on {@link #b}. Either this gets displayed 
 		 * or {@link #lConSelectedItemHead} and {@link #lConSelectedItem}. It's part of {@link #vbContent}.*/
-		Label lConSub;
+		private Label lConSub;
 
 	Arrow r;
 		
@@ -125,7 +125,7 @@ public class ModelFactory {
 				}
 				
 		b.setGraphic(vbContent);
-		b.setPrefHeight(Main.calcHeight(((Region) vbContent)) + 20);
+		b.setPrefHeight(Main.calcHeight(vbContent) + 20);
 		
 		return b;
 	}
@@ -136,22 +136,22 @@ public class ModelFactory {
 	 * This method calculates the values to create the arrow via the class and returns it.
 	 * @param layoutZoneX Defines the x coordinate of the start of the arrow multiplied by {@link #modelZoneWidth}.
 	 * @param layoutZoneY Defines the y coordinate of the start of the arrow multiplied by {@link #modelZoneHeight}.
-	 * @param lenght Defines the lenght of the arrow multiplied by either {@link #modelZoneWidth} or {@link #modelZoneHeight}.
+	 * @param lenght Defines the length of the arrow multiplied by either {@link #modelZoneWidth} or {@link #modelZoneHeight}.
 	 * @param vertical Defines whether the arrow should be displayed horizontal (from left to right) or vertical (from bottom to top).
-	 * @param name The discription of the arrow which will be displayed above it (only if horizontal).
+	 * @param name The description of the arrow which will be displayed above it (only if horizontal).
 	 * @return Returns the finished relation.
 	 */
 	public Arrow buildRelation(float layoutZoneX, float layoutZoneY, short lenght, boolean vertical, String name) {
 		double startX, startY, endX, endY;
 		if (vertical) {
 			startX = layoutZoneX * modelZoneWidth;
-			startY = layoutZoneY * modelZoneHeight - 5;
-			endX = startX;
-			endY = layoutZoneY * modelZoneHeight - lenght * modelZoneHeight +5;
-		} else {
-			startX = layoutZoneX * modelZoneWidth + 5;
 			startY = layoutZoneY * modelZoneHeight;
-			endX = layoutZoneX * modelZoneWidth + lenght * modelZoneWidth -5;
+			endX = startX;
+			endY = layoutZoneY * modelZoneHeight - lenght * modelZoneHeight;
+		} else {
+			startX = layoutZoneX * modelZoneWidth;
+			startY = layoutZoneY * modelZoneHeight;
+			endX = layoutZoneX * modelZoneWidth + lenght * modelZoneWidth;
 			endY = startY;
 		}
 		

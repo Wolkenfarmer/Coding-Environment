@@ -36,37 +36,36 @@ public class Arrow extends Group {
      * @param startY Defines the x-Coordinate of the start.
      * @param endX Defines the x-Coordinate of the end.
      * @param endY Defines the y-Coordinate of the end.
-     * @param lenghtHead Defines the lenght of the head.
+     * @param lenghtHead Defines the length of the head.
      * @param widthHead Defines the width of the head.
      * @param vertical Defines whether the arrow should be displayed horizontal (from left to right) or vertical (from bottom to top).
-     * @param name The discription of the arrow which will be displayed above it (only if horizontal).
+     * @param name The description of the arrow which will be displayed above it (only if horizontal).
      * @return Returns the finished arrow.
      */
     public Arrow getArrow(double startX, double startY, double endX, double endY, double lenghtHead, double widthHead, boolean vertical, String name) {
     	line = new Line();
-    	line.setStartX(startX);
-    	line.setStartY(startY);
-    	line.setEndX(endX);
-    	line.setEndY(endY);
     	line.setStroke(Color.WHITESMOKE);
-    	    	
     	headL = new Line();
-    	headL.setStartX(endX);
-    	headL.setStartY(endY);
     	headL.setStroke(Color.WHITESMOKE);
-    	
     	headR = new Line();
-    	headR.setStartX(endX);
-    	headR.setStartY(endY);
     	headR.setStroke(Color.WHITESMOKE);
-    	
-    	
-    	if (vertical) {
+    	    	
+       	if (vertical) {
+       		line.setStartX(startX);
+        	line.setStartY(startY - 5);
+        	line.setEndX(endX);
+        	line.setEndY(endY + 5);
+        	
     		headL.setEndY(endY + lenghtHead);
     		headL.setEndX(endX + (widthHead / 2));
     		headR.setEndY(endY + lenghtHead);
     		headR.setEndX(endX - (widthHead / 2));
     	} else {
+    		line.setStartX(startX + 5);
+        	line.setStartY(startY);
+        	line.setEndX(endX - 5);
+        	line.setEndY(endY);
+        	
     		headL.setEndX(endX - lenghtHead);
     		headL.setEndY(endY + (widthHead / 2));
     		headR.setEndX(endX - lenghtHead);
@@ -83,7 +82,13 @@ public class Arrow extends Group {
     		hbDescription.setAlignment(Pos.CENTER);
     		this.getChildren().add(hbDescription);
     	}
+    	
+    	headL.setStartX(line.getEndX());
+    	headL.setStartY(line.getEndY());
+    	headR.setStartX(line.getEndX());
+    	headR.setStartY(line.getEndY());
         
+    	
         this.getChildren().addAll(line, headL, headR);
         return this;
     }
