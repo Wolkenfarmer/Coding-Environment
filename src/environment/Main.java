@@ -97,17 +97,28 @@ public class Main extends Application{
 	 * This value gets calculated / get overwritten for each page in order for the {@link #scrollbar} to compute its movement space correctly.
 	 */
 	static double contentHeight;
+	static double pos1;
+	static double pos7;
+	static double contentWidth;
+	
 	/**
 	 * Input handling.
 	 * This ArrayList gets filled / used in {@link #start(Stage)} by the scene listeners. 
 	 * In this scene it's only used for a short cut to close the program (Esc).
 	 */
 	static ArrayList<String> input = new ArrayList<String>();
+	static EventHandler<KeyEvent> standardKeyReleasedListener;
 	
+	/** Standard distance from the sub-headings to the content below them.*/
+	static int distanceToHeading = 80;
+	/** Standard distance from the sub-headings to the content below them.*/
+	static int distanceToSubheading = 60;
 	/** Unified referenceable font for layouts.*/
 	static Font fHeadline = Font.font("Arial", FontWeight.BOLD, 50);
 	/** Unified referenceable font for layouts.*/
-    static Font fSubheadline = new Font("Arial", 35);
+	static Font fHeading = new Font("Arial", 50);
+	/** Unified referenceable font for layouts.*/
+    static Font fSubheading = new Font("Arial", 35);
     /** Unified referenceable font for layouts.*/
     static Font fNormalText = new Font("Arial", 20);
     /** Unified referenceable font for layouts.*/
@@ -135,6 +146,9 @@ public class Main extends Application{
 	/** Unified referenceable Border for layouts.*/
     static Border boNormalWhite = new Border(new BorderStroke(Color.WHITESMOKE, BorderStrokeStyle.SOLID, crNormal, BorderWidths.DEFAULT));
 
+    static Homepage homepage;
+    public static SourcePage sourcePage;
+    
 	/**
 	 * Main method of the program calling launch.
 	 * Starts the application by calling {@link #launch(String...)} which calls up start. 
@@ -174,6 +188,10 @@ public class Main extends Application{
 		stageHeight = stage.getHeight();
 		System.out.println("Stage size: " + stageWidth + " * " + stageHeight);
 		
+		pos1 = stageWidth / 8;
+		pos7 = stageWidth / 8 * 7;
+		contentWidth = pos7 - pos1;
+		
 		scrollbar = new ScrollBar();
         scrollbar.setOrientation(Orientation.VERTICAL);
         scrollbar.setMin(0);
@@ -191,7 +209,7 @@ public class Main extends Application{
                 if (!input.contains(code)) input.add(code);
             }
         });
-		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+		scene.setOnKeyReleased(standardKeyReleasedListener = new EventHandler<KeyEvent>() {
             public void handle(KeyEvent e) {
                 if (input.contains("ESCAPE")) {
                 	Platform.exit();
@@ -236,7 +254,7 @@ public class Main extends Application{
 			}
 		});		
 		
-		new Homepage(root);
+		homepage = new Homepage(root);
 	}
 	
 	
@@ -249,7 +267,7 @@ public class Main extends Application{
 	 * @param r The region (or subclass of it) of which the height gets calculated.
 	 * @return Returns the height of the region.
 	 */
-	public static double calcHeight(Region r) {
+	static double calcHeight(Region r) {
 		dummyRoot.getChildren().add(r);
 		dummyRoot.applyCss();
 		dummyRoot.layout();
@@ -273,7 +291,7 @@ public class Main extends Application{
 	 * @param parentWidth The width of the parent object in order to calculate the number of lines.
 	 * @return Returns the height of a label
 	 */
-	public static double calcHeightLabel(Label l, double parentWidth) {
+	static double calcHeightLabel(Label l, double parentWidth) {
 		dummyRoot.getChildren().add(l);
 		dummyRoot.applyCss();
 		dummyRoot.layout();

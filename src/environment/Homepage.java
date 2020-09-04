@@ -28,102 +28,102 @@ import javafx.util.Callback;
  * @author Wolkenfarmer
  */
 public class Homepage {
-	int distanceToSubheading = 60;
-	/** Layout container for the headline segment on the homepage. Contains {@link #lHeadline}, {@link #rHeadlineSpacer} and {@link #vbHeadline}.*/
-	HBox hbHeadline;
-		/** Label which displays the headline "Source / Channel Coding Environment". It's part of {@link #hbHeadline}.*/
-		Label lHeadline;
-		/** A spacer for the right-hand-side-layout of {@link #vbHeadline}. It's part of {@link #hbHeadline}.*/
-		Region rHeadlineSpacer;
+	private static Group root;
+	/** Layout container for the headline segment. Contains {@link #lHeadline}, {@link #rHeadlineSpacer} and {@link #vbHeadline}.*/
+	private static HBox hbHeading;
+		/** Label which displays the headline "Source / Channel Coding Environment". It's part of {@link #hbHeading}.*/
+		private static Label lHeadline;
+		/** A spacer for the right-hand-side-layout of {@link #vbHeadline}. It's part of {@link #hbHeading}.*/
+		private static Region rHeadlineSpacer;
 		/** Layout container for the headline elements on the right side. 
-		 * Contains {@link #lHeadlineVersion} and {@link #lHeadlineVersion} and is part of {@link #hbHeadline}.*/
-		VBox vbHeadline;
-			/** Label which displays the current version of this program. It's part of {@link #vbHeadline} and this again of {@link #hbHeadline}.*/
-			Label lHeadlineVersion;
-			/** Label which displays developer of this program. It's part of {@link #vbHeadline} and this again of {@link #hbHeadline}.*/
-			Label lHeadlineBy;
-	/** Layout container for the settings segment on the homepage. Contains {@link #lSetHeading} and {@link #pSetModel}.*/
-	Pane pSettings;
+		 * Contains {@link #lHeadlineVersion} and {@link #lHeadlineVersion} and is part of {@link #hbHeading}.*/
+		private static VBox vbHeadline;
+			/** Label which displays the current version of this program. It's part of {@link #vbHeadline} and this again of {@link #hbHeading}.*/
+			private static Label lHeadlineVersion;
+			/** Label which displays developer of this program. It's part of {@link #vbHeadline} and this again of {@link #hbHeading}.*/
+			private static Label lHeadlineBy;
+	/** Layout container for the settings segment. Contains {@link #lSetHeading} and {@link #pSetModel}.*/
+	private static Pane pSettings;
 		/** Label which displays the sub-heading "Settings". It's part of {@link #pSettings}.*/
-		Label lSetHeading;
+		private static Label lSetHeading;
 		/** Layout container for the elements of the model in {@link #pSettings}. 
 		 * Contains {@link #bSetModSource}, {@link #bSetModEncoder}, {@link #bSetModNoise}, {@link #bSetModDecoder} and {@link #bSetModDestination} */
-		Pane pSetModel;
+		private static Pane pSetModel;
 			/** Information source button of the model in settings. Uses {@link environment.Main#baNormalButton} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
-			Button bSetModSource;
+			private static Button bSetModSource;
 			/** Encoder button of the model in settings. Uses {@link environment.Main#baNormalButton} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
-			Button bSetModEncoder;
+			private static Button bSetModEncoder;
 			/** Noise source button of the model in settings. Uses {@link environment.Main#baNormalButton} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
-			Button bSetModNoise;
+			private static Button bSetModNoise;
 			/** Decoder button of the model in settings. Uses {@link environment.Main#baNormalButton} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
-			Button bSetModDecoder;
+			private static Button bSetModDecoder;
 			/** Destination button of the model in settings. Uses {@link environment.Main#baNormalButton} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
-			Button bSetModDestination;
+			private static Button bSetModDestination;
 			/** Relation for the model in settings. Connects {@link #bSetModSource} with {@link #bSetModEncoder}.*/
-			Group gSetModRelSoToEn;
+			private static Group gSetModRelSoToEn;
 			/** Relation for the model in settings. Connects {@link #bSetModEncoder} with {@link #bSetModDecoder}.*/
-			Group gSetModRelEnToDe;
+			private static Group gSetModRelEnToDe;
 			/** Relation for the model in settings. Connects {@link #bSetModDecoder} with {@link #bSetModDestination}.*/
-			Group gSetModRelDeToDe;
+			private static Group gSetModRelDeToDe;
 			/** Relation for the model in settings. Connects {@link #bSetModNoise} with {@link #gSetModRelEnToDe}.*/
-			Group gSetModRelNoToCh;
-	/** Layout container for the results segment on the homepage. Contains {@link #lResHeading} and {@link #tvResTable}.*/
-	Pane pResults;
+			private static Group gSetModRelNoToCh;
+	/** Layout container for the results segment. Contains {@link #lResHeading} and {@link #tvResTable}.*/
+	private static Pane pResults;
 		/** Label which displays the sub-heading "Last Results". It's part of {@link #pResults}.*/
-		Label lResHeading;
+		private static Label lResHeading;
 		/** The table displaying the last result below {@link #lResHeading}. 
 		 * It gets the result from TODO
 		 * The stylesheet tableView.css, which is added to {@link environment.Main#scene} specifies the look the this table.
 		 * Contains {@link #tvResTabDescription} and {@link #tvResTabValue} and is part of {@link #pResults}.*/
-		TableView<String[]> tvResTable;
+		private static TableView<String[]> tvResTable;
 			/** The first column of {@link #tvResTable} displaying the descriptions of the values.*/
-			TableColumn<String[], String> tvResTabDescription;
+			private static TableColumn<String[], String> tvResTabDescription;
 			/** The first column of {@link #tvResTable} displaying the values to the descriptions.*/
-			TableColumn<String[], String> tvResTabValue;
-	/** Layout container for the controls segment on the homepage. Contains {@link #lConHeading} and {@link #vbConButtons}.*/
-	Pane pControls;
+			private static TableColumn<String[], String> tvResTabValue;
+	/** Layout container for the controls segment. Contains {@link #lConHeading} and {@link #vbConButtons}.*/
+	private static Pane pControls;
 		/** Label which displays the sub-heading "Controls". It's part of {@link #pControls}.*/
-		Label lConHeading;
+		private static Label lConHeading;
 		/** Layout container for the buttons below {@link #lConHeading}. 
 		 * Contains {@link #bConButRun}, {@link #bConButSaveResult} and {@link #bConButHelp} and is part of {@link #pControls}.*/
-		VBox vbConButtons;
+		private static VBox vbConButtons;
 			/** The run button of the controls segment. Uses {@link environment.Main#baGreenButton} as background.
 			 * Contains {@link #hbConButRun} and is part of {@link #vbConButtons}. Links up to TODO*/
-			Button bConButRun;
+			private static Button bConButRun;
 				/** Layout container for the buttons description. This is needed in order to align the heading the center of the button. 
 				 * Contains {@link #lConButRun} and is part of {@link #bConButRun}.*/
-				HBox hbConButRun;
+				private static HBox hbConButRun;
 					/** Label which displays {@link #bConButRun}'s description "Run". It's part of {@link #hbConButRun}.*/
-					Label lConButRun;
+					private static Label lConButRun;
 			/** The save last results button of the controls segment. Uses {@link environment.Main#baBrownButton} as background.
 			 * Contains {@link #hbConButSaveResult} and is part of {@link #vbConButtons}. Links up to TODO*/
-			Button bConButSaveResult;
+			private static Button bConButSaveResult;
 				/** Layout container for the buttons description. This is needed in order to align the heading the center of the button. 
 				 * Contains {@link #lConButSaveResult} and is part of {@link #bConButSaveResult}.*/
-				HBox hbConButSaveResult;
+				private static HBox hbConButSaveResult;
 					/** Label which displays {@link #bConButSaveResult}'s description "Save last result". It's part of {@link #hbConButSaveResult}.*/
-					Label lConButSaveResult;
+					private static Label lConButSaveResult;
 			/** The help button of the controls segment. Uses {@link environment.Main#baPurpleButton} as background.
 			 * Contains {@link #hbConButHelp} and is part of {@link #vbConButtons}. Links up to TODO*/
-			Button bConButHelp;
+			private static Button bConButHelp;
 				/** Layout container for the buttons description. This is needed in order to align the heading the center of the button. 
 				 * Contains {@link #lConButHelp} and is part of {@link #bConButHelp}.*/
-				HBox hbConButHelp;
+				private static HBox hbConButHelp;
 					/** Label which displays {@link #bConButHelp}'s description "Help". It's part of {@link #hbConButHelp}.*/
-					Label lConButHelp;
+					private static Label lConButHelp;
 	
 	
 	/** Unified EventHandler for {@link #bSetModDecoder} and {@link #bSetModEncoder}.*/
-	EventHandler<ActionEvent> evEnDecoderPressed;
+	private static EventHandler<ActionEvent> evEnDecoderPressed;
 	/** Unified EventHandler for {@link #bSetModDecoder} and {@link #bSetModEncoder}.*/
-	EventHandler<MouseEvent> evEnDecoderEntered;
+	private static EventHandler<MouseEvent> evEnDecoderEntered;
 	/** Unified EventHandler for {@link #bSetModDecoder} and {@link #bSetModEncoder}.*/
-	EventHandler<MouseEvent> evEnDecoderExited;
+	private static EventHandler<MouseEvent> evEnDecoderExited;
 	
 	/**
 	 * Builds the homepage of the application.
@@ -135,15 +135,13 @@ public class Homepage {
 	 * and {@link environment.Main#scrollbar} will be displayed.
 	 * @param root A group to attach it's layout parts to.
 	 */
-	public Homepage(Group root) {
-		double pos1 = Main.stageWidth / 8;
-		double pos7 = Main.stageWidth / 8 * 7;
-		double contentWidth = pos7 - pos1;
+	public Homepage(Group parent) {
+		root = parent;
 		
-		hbHeadline = new HBox();
-		hbHeadline.setLayoutX(pos1);
-		hbHeadline.setLayoutY(pos1 / 3);
-		hbHeadline.setPrefWidth(contentWidth);
+		hbHeading = new HBox();
+		hbHeading.setLayoutX(Main.pos1);
+		hbHeading.setLayoutY(Main.pos1 / 3);
+		hbHeading.setPrefWidth(Main.contentWidth);
 			lHeadline = new Label();
 			lHeadline.setText("Source / Channel Coding Environment");
 			lHeadline.setTextFill(Color.WHITESMOKE);
@@ -167,21 +165,21 @@ public class Homepage {
 				lHeadlineBy.setFont(Main.fSmallText);
 				lHeadlineBy.setAlignment(Pos.BOTTOM_RIGHT);
 			vbHeadline.getChildren().addAll(lHeadlineVersion, lHeadlineBy);
-		hbHeadline.getChildren().addAll(lHeadline, rHeadlineSpacer, vbHeadline);
+		hbHeading.getChildren().addAll(lHeadline, rHeadlineSpacer, vbHeadline);
 		
 		
 		pSettings = new Pane();
-		pSettings.setLayoutX(pos1);
-		pSettings.setLayoutY(hbHeadline.getLayoutY() + Main.calcHeight(hbHeadline) + 50);
-		pSettings.setPrefWidth(contentWidth);
+		pSettings.setLayoutX(Main.pos1);
+		pSettings.setLayoutY(hbHeading.getLayoutY() + Main.distanceToHeading);
+		pSettings.setPrefWidth(Main.contentWidth);
 			lSetHeading = new Label();
 			lSetHeading.setText("Settings");
 			lSetHeading.setTextFill(Color.WHITESMOKE);
-			lSetHeading.setFont(Main.fSubheadline);
+			lSetHeading.setFont(Main.fSubheading);
 			
 			pSetModel = new Pane();
-			pSetModel.setLayoutY(distanceToSubheading);
-				ModelFactory cSetModelFactory = new ModelFactory(contentWidth); 
+			pSetModel.setLayoutY(Main.distanceToSubheading);
+				ModelFactory cSetModelFactory = new ModelFactory(Main.contentWidth); 
 				bSetModSource = cSetModelFactory.buildButton(0, 0, "information source", true);
 				bSetModEncoder = cSetModelFactory.buildButton(3, 0, "encoder", true);
 				bSetModNoise = cSetModelFactory.buildButton(5.5f, 2, "noise source", true);
@@ -198,19 +196,19 @@ public class Homepage {
 		
 		
 		pResults = new Pane();
-		pResults.setLayoutX(pos1);
+		pResults.setLayoutX(Main.pos1);
 		pResults.setLayoutY(pSettings.getLayoutY() + Main.calcHeight(pSettings) + 50);
-		pResults.setPrefWidth(contentWidth);
+		pResults.setPrefWidth(Main.contentWidth);
 			lResHeading = new Label();
 			lResHeading.setText("Last Results");
 			lResHeading.setTextFill(Color.WHITESMOKE);
-			lResHeading.setFont(Main.fSubheadline);
+			lResHeading.setFont(Main.fSubheading);
 			pResults.getChildren().add(lResHeading);
 			
 			
 			tvResTable = new TableView<String[]>();
-			tvResTable.setLayoutY(distanceToSubheading);
-			tvResTable.setPrefHeight(Main.stageHeight - pResults.getLayoutY() - tvResTable.getLayoutY() - pos1 / 3);
+			tvResTable.setLayoutY(Main.distanceToSubheading);
+			tvResTable.setPrefHeight(Main.stageHeight - pResults.getLayoutY() - tvResTable.getLayoutY() - Main.pos1 / 3);
 			tvResTable.setMinHeight(250 - tvResTable.getLayoutY());							// Minimum height -> ends with pControls
 			tvResTable.setPrefWidth(Main.stageWidth / 2);
 			    tvResTabDescription = new TableColumn<>("Description");
@@ -259,11 +257,11 @@ public class Homepage {
 			lConHeading = new Label();
 			lConHeading.setText("Controls");
 			lConHeading.setTextFill(Color.WHITESMOKE);
-			lConHeading.setFont(Main.fSubheadline);			
+			lConHeading.setFont(Main.fSubheading);			
 			
 			vbConButtons = new VBox();
 			vbConButtons.setPrefWidth(pControls.getPrefWidth());
-			vbConButtons.setLayoutY(distanceToSubheading);
+			vbConButtons.setLayoutY(Main.distanceToSubheading);
 			vbConButtons.setSpacing(20);
 				bConButRun = new Button();
 				bConButRun.setPrefWidth(vbConButtons.getPrefWidth() - 1);
@@ -316,14 +314,14 @@ public class Homepage {
 	    pControls.getChildren().addAll(lConHeading, vbConButtons);
 		
 		
-		Main.contentHeight = pResults.getLayoutY() + Main.calcHeight(pResults) + pos1 / 3;
+		Main.contentHeight = pResults.getLayoutY() + Main.calcHeight(pResults) + Main.pos1 / 3;
 		Main.scrollbar.setMax(Main.contentHeight - Main.scene.getHeight());
 		Main.scrollbar.setBlockIncrement(Main.contentHeight);
         if (Main.scene.getHeight() >= Main.contentHeight) {Main.scrollbar.setVisible(false);}
         
         
-        root.getChildren().addAll(hbHeadline, pSettings, pResults, pControls);
         addButtonListener();
+        root.getChildren().addAll(hbHeading, pSettings, pResults, pControls);
 	}
 	
 	
@@ -337,6 +335,12 @@ public class Homepage {
 		bSetModSource.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent t) {
 				System.out.println("bSetModSource got pressed!");
+				root.getChildren().removeAll(hbHeading, pSettings, pResults, pControls);
+				if (Main.sourcePage == null) {
+					Main.sourcePage = new SourcePage(root);
+				} else {
+					Main.sourcePage.reload(root);
+				}
 	        }
 	    });
 		bSetModSource.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
@@ -453,5 +457,12 @@ public class Homepage {
 				bConButHelp.setBackground(Main.baPurpleButton);
 			}
 		});
+	}
+	
+	
+	void reload(Group parent) {
+		root = parent;
+		root.getChildren().addAll(hbHeading, pSettings, pResults, pControls);
+		Main.scene.setOnKeyReleased(Main.standardKeyReleasedListener);
 	}
 }
