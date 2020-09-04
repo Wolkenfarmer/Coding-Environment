@@ -2,6 +2,7 @@ package environment;
 
 import java.util.ArrayList;
 
+import infSources.UserInput;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -122,21 +123,23 @@ public class Main extends Application{
 	/** Unified referenceable font for layouts.*/
     static Font fSubheading = new Font("Arial", 35);
     /** Unified referenceable font for layouts.*/
-    static Font fNormalText = new Font("Arial", 20);
+    public static Font fNormalText = new Font("Arial", 20);
     /** Unified referenceable font for layouts.*/
-	static Font fSmallText = new Font("Arial", 15);
+    public static Font fNormallTextItalic = Font.font("Arial", FontPosture.ITALIC, 20);
+    /** Unified referenceable font for layouts.*/
+    public static Font fSmallText = new Font("Arial", 15);
 	/** Unified referenceable font for layouts.*/
-	static Font fSmallTextItalic = Font.font("Arial", FontPosture.ITALIC, 15);
+    public static Font fSmallTextItalic = Font.font("Arial", FontPosture.ITALIC, 15);
 	/** Unified referenceable corner radius for layouts.*/
-	static CornerRadii crNormal = new CornerRadii(10);
+    public static CornerRadii crNormal = new CornerRadii(10);
 	/** Unified referenceable button background for layouts.*/
-    static Background baNormalButton = new Background (new BackgroundFill(Color.grayRgb(90), crNormal,  null));
+    public static Background baNormalButton = new Background (new BackgroundFill(Color.grayRgb(90), crNormal,  null));
 	/** Unified referenceable button background (focused) for layouts.*/
-    static Background baNormalFocusedButton = new Background (new BackgroundFill(Color.grayRgb(70), crNormal,  null));
+    public static Background baNormalFocusedButton = new Background (new BackgroundFill(Color.grayRgb(70), crNormal,  null));
 	/** Unified referenceable button background (green) for layouts.*/
-    static Background baGreenButton = new Background (new BackgroundFill(Color.rgb(0, 90, 0), crNormal,  null));
+    public static Background baGreenButton = new Background (new BackgroundFill(Color.rgb(0, 90, 0), crNormal,  null));
 	/** Unified referenceable button background (green, focused) for layouts.*/
-    static Background baGreenFocusedButton = new Background (new BackgroundFill(Color.rgb(0, 70, 0), crNormal,  null));
+    public static Background baGreenFocusedButton = new Background (new BackgroundFill(Color.rgb(0, 70, 0), crNormal,  null));
     /** Unified referenceable button background (brown) for layouts.*/
     static Background baBrownButton = new Background (new BackgroundFill(Color.rgb(100, 50 , 0), crNormal,  null));
 	/** Unified referenceable button background (brown, focused) for layouts.*/
@@ -150,6 +153,8 @@ public class Main extends Application{
 
     static Homepage homepage;
     public static SourcePage sourcePage;
+    
+    static UserInput infSource_UserInput = new UserInput();
     
 	/**
 	 * Main method of the program calling launch.

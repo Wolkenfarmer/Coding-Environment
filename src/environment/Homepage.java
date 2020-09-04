@@ -51,13 +51,13 @@ public class Homepage {
 		private static Pane pSetModel;
 			/** Information source button of the model in settings. Uses {@link environment.Main#baNormalButton} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
-			private static Button bSetModSource;
+			static Button bSetModSource;
 			/** Encoder button of the model in settings. Uses {@link environment.Main#baNormalButton} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
-			private static Button bSetModEncoder;
+			static Button bSetModEncoder;
 			/** Noise source button of the model in settings. Uses {@link environment.Main#baNormalButton} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
-			private static Button bSetModNoise;
+			static Button bSetModNoise;
 			/** Decoder button of the model in settings. Uses {@link environment.Main#baNormalButton} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
 			private static Button bSetModDecoder;
@@ -198,7 +198,7 @@ public class Homepage {
 		pResults = new Pane();
 		pResults.setLayoutX(Main.pos1);
 		pResults.setLayoutY(pSettings.getLayoutY() + Main.calcHeight(pSettings) + Main.distanceToSegment);
-		pResults.setPrefWidth(Main.contentWidth);
+		pResults.setPrefWidth(Main.stageWidth / 2);
 			lResHeading = new Label();
 			lResHeading.setText("Last Results");
 			lResHeading.setTextFill(Color.WHITESMOKE);
@@ -335,7 +335,7 @@ public class Homepage {
 		bSetModSource.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent t) {
 				System.out.println("bSetModSource got pressed!");
-				root.getChildren().removeAll(hbHeading, pSettings, pResults, pControls);
+				root.getChildren().clear();
 				if (Main.sourcePage == null) {
 					Main.sourcePage = new SourcePage(root);
 				} else {

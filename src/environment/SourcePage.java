@@ -1,5 +1,9 @@
 package environment;
 
+import java.util.Arrays;
+
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -7,15 +11,19 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
+import javafx.util.Callback;
 
 /**
  * @author Wolkenfarmer
@@ -50,6 +58,16 @@ public class SourcePage {
 			private static Button bConButBook;
 				private static HBox hbOptButSaveBook;
 					private static Label lOptButBook;
+	private static Pane pInformation;
+		private static Label lInfHeading;
+		private static Pane pInfContent;
+			private static Label lInfConDefault;
+			
+	private static EventHandler<MouseEvent> evButEntered;
+	private static EventHandler<MouseEvent> evButExited;
+	private static EventHandler<MouseEvent> evSelEntered;
+	private static EventHandler<MouseEvent> evSelExited;
+
 				
 
 	public SourcePage(Group parent) {
@@ -129,6 +147,7 @@ public class SourcePage {
 							lConSelectedItem.setPrefHeight(Main.calcHeightLabel(lConSelectedItem, 
 									Main.stageWidth / 2 - (hbOveModSouContent.getSpacing() + hbOveModSouContent.getPadding().getLeft() * 2)
 									- vbOveModSouSelectedItem.getPrefWidth()));
+							lConSelectedItem.setPrefWidth(Main.calcWidthLabel(lConSelectedItem) + 20);
 						vbOveModSouSelectedItem.getChildren().addAll(lConSelectedItemHead, lConSelectedItem);
 						vbOveModSouSelectedItem.setAlignment(Pos.CENTER_LEFT);
 						
@@ -213,9 +232,33 @@ public class SourcePage {
 				bConButBook.setGraphic(hbOptButSaveBook);
 			vbOptButtons.getChildren().addAll(bOptButUserInput, bConButBook);
 	    pOptions.getChildren().addAll(lOptHeading, vbOptButtons);
+	    	    
+	    
+	    
+	    pInformation = new Pane();
+		pInformation.setLayoutX(Main.pos1 * 3);
+		pInformation.setLayoutY(pOptions.getLayoutY());
+		pInformation.setPrefWidth(Main.stageWidth / 2);
+			lInfHeading = new Label();
+			lInfHeading.setText("Information");
+			lInfHeading.setTextFill(Color.WHITESMOKE);
+			lInfHeading.setFont(Main.fSubheading);
+			
+			pInfContent = new Pane();
+			pInfContent.setLayoutY(Main.distanceToSubheading);
+			pInfContent.setPrefHeight(Main.stageHeight - pInformation.getLayoutY() - pInfContent.getLayoutY() - Main.pos1 / 3);
+			pInfContent.setMinHeight(250 - pInfContent.getLayoutY());					// Minimum height -> would end with 3. button of pOptions
+			pInfContent.setPrefWidth(Main.stageWidth / 2);
+				lInfConDefault = new Label();
+				lInfConDefault.setText("No option picked");
+				lInfConDefault.setTextFill(Color.INDIANRED);
+				lInfConDefault.setFont(Main.fNormallTextItalic);
+			pInfContent.getChildren().add(lInfConDefault);
+		pInformation.getChildren().addAll(lInfHeading, pInfContent);
+	    
 		
 		addListener();
-		root.getChildren().addAll(tfHeading, pOverview, pOptions);
+		root.getChildren().addAll(tfHeading, pOverview, pOptions, pInformation);
 	}
 	
 	
@@ -223,50 +266,82 @@ public class SourcePage {
 		Main.scene.setOnKeyReleased(keyReleasedListener = new EventHandler<KeyEvent>() {
             public void handle(KeyEvent e) {
                 if (Main.input.contains("ESCAPE")) {
-                	root.getChildren().removeAll(tfHeading, pOverview, pOptions);
+                	root.getChildren().clear();
                 	Main.homepage.reload(root);
                 }
             }
         });
 		
 		// button listener
+		
 		bOptButUserInput.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent t) {
 				System.out.println("bOptButUserInput got pressed!");
+				bOptButUserInput.setBackground(Main.baGreenFocusedButton);
+				bConButBook.setBackground(Main.baNormalButton);
+				bOptButUserInput.setOnMouseEntered(evSelEntered);
+				bOptButUserInput.setOnMouseExited(evSelExited);
+				bConButBook.setOnMouseEntered(evButEntered);
+				bConButBook.setOnMouseExited(evButExited);
+				
+				lInfHeading.setText("Information \\  User Input");
+				lConSelectedItem.setText("User Input");
+				Homepage.bSetModSource.setText("User Input");
+				pInfContent.getChildren().clear();
+				Main.infSource_UserInput.showUI(pInfContent);
 	        }
 	    });
-		bOptButUserInput.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent e) {
-				bOptButUserInput.setBackground(Main.baNormalFocusedButton);
-			}
-	    });
-		bOptButUserInput.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent e) {
-				bOptButUserInput.setBackground(Main.baNormalButton);
-			}
-		});
 		
 		bConButBook.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent t) {
 				System.out.println("bConButBook got pressed!");
+				bOptButUserInput.setBackground(Main.baNormalButton);
+				bConButBook.setBackground(Main.baGreenFocusedButton);
+				bOptButUserInput.setOnMouseEntered(evButEntered);
+				bOptButUserInput.setOnMouseExited(evButExited);
+				bConButBook.setOnMouseEntered(evSelEntered);
+				bConButBook.setOnMouseExited(evSelExited);
+				
+				lInfHeading.setText("Information \\  Random digit book");
+				lConSelectedItem.setText("Random digit book");
+				Homepage.bSetModSource.setText("Random digit book");
+				pInfContent.getChildren().clear();
 	        }
 	    });
-		bConButBook.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+		
+		
+		evButEntered = new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {
-				bConButBook.setBackground(Main.baNormalFocusedButton);
+				((Region) e.getSource()).setBackground(Main.baNormalFocusedButton);
 			}
-	    });
-		bConButBook.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+		};
+		evButExited = new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {
-				bConButBook.setBackground(Main.baNormalButton);
+				((Region) e.getSource()).setBackground(Main.baNormalButton);
 			}
-		});
+		};
+		
+		evSelEntered = new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e) {
+				((Region) e.getSource()).setBackground(Main.baGreenFocusedButton);
+			}
+		};
+		evSelExited = new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e) {
+				((Region) e.getSource()).setBackground(Main.baGreenButton);
+			}
+		};
+		
+		bOptButUserInput.setOnMouseEntered(evButEntered);
+		bOptButUserInput.setOnMouseExited(evButExited);
+		bConButBook.setOnMouseEntered(evButEntered);
+		bConButBook.setOnMouseExited(evButExited);
 	}
 	
 	
 	void reload(Group parent) {
 		root = parent;
-		root.getChildren().addAll(tfHeading, pOverview, pOptions);
+		root.getChildren().addAll(tfHeading, pOverview, pOptions, pInformation);
 		Main.scene.setOnKeyReleased(keyReleasedListener);
 	}
 }

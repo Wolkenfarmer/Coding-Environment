@@ -1,5 +1,7 @@
 package environment;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -42,9 +44,6 @@ public class ModelFactory {
 		/** Label which displays "Selected item:" on {@link #b}. Either this and {@link #lConSelectedItem} get displayed or {@link #lConSub}.
 		 * It's part of {@link #vbContent}.*/
 		private Label lConSelectedItemHead;
-		/** Label which displays the selected item on {@link #b}. Either this and {@link #lConSelectedItemHead} get displayed or {@link #lConSub}.
-		 * It's part of {@link #vbContent}.*/
-		private Label lConSelectedItem;
 		/** Label which displays "compare in- and output" on {@link #b}. Either this gets displayed 
 		 * or {@link #lConSelectedItemHead} and {@link #lConSelectedItem}. It's part of {@link #vbContent}.*/
 		private Label lConSub;
@@ -72,6 +71,10 @@ public class ModelFactory {
 	 * @return Returns the finished button.
 	 */
 	public Button buildButton(float layoutZoneX, float layoutZoneY, String conName, boolean selectableItems) {
+		/** Label which displays the selected item on {@link #b}. Either this and {@link #lConSelectedItemHead} get displayed or {@link #lConSub}.
+		 * It's part of {@link #vbContent}.*/
+		Label lConSelectedItem;
+		
 		b = new Button();
 		b.setLayoutX(layoutZoneX * modelZoneWidth);
 		b.setLayoutY(layoutZoneY * modelZoneHeight);
@@ -88,6 +91,7 @@ public class ModelFactory {
 					lConName.setWrapText(true);
 					lConName.setTextAlignment(TextAlignment.CENTER);
 					lConName.setPrefHeight(Main.calcHeightLabel(lConName, modelButtonWidth));
+					lConName.setPrefWidth(modelButtonWidth - 10);
 				hbConName.getChildren().add(lConName);
 				hbConName.setAlignment(Pos.CENTER);
 				
@@ -111,6 +115,13 @@ public class ModelFactory {
 					lConSelectedItem.setWrapText(true);
 					lConSelectedItem.setPadding(new Insets(-5, 0, 0, 10));
 					lConSelectedItem.setPrefHeight(Main.calcHeightLabel(lConSelectedItem, modelButtonWidth));
+					
+					b.textProperty().addListener(new ChangeListener<String>() {
+						public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+							lConSelectedItem.setText(newValue);
+							b.setText("");
+						}
+					});
 					
 					vbContent.getChildren().addAll(hbConName, lConDiffer, lConSelectedItemHead, lConSelectedItem);
 				} else {
