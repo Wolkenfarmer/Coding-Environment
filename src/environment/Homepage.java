@@ -197,7 +197,7 @@ public class Homepage {
 		
 		pResults = new Pane();
 		pResults.setLayoutX(Main.pos1);
-		pResults.setLayoutY(pSettings.getLayoutY() + Main.calcHeight(pSettings) + 50);
+		pResults.setLayoutY(pSettings.getLayoutY() + Main.calcHeight(pSettings) + Main.distanceToSegment);
 		pResults.setPrefWidth(Main.contentWidth);
 			lResHeading = new Label();
 			lResHeading.setText("Last Results");
@@ -320,7 +320,7 @@ public class Homepage {
         if (Main.scene.getHeight() >= Main.contentHeight) {Main.scrollbar.setVisible(false);}
         
         
-        addButtonListener();
+        addListener();
         root.getChildren().addAll(hbHeading, pSettings, pResults, pControls);
 	}
 	
@@ -330,7 +330,7 @@ public class Homepage {
 	 * They individually change the background of the button depending on whether the mouse hover over it or not 
 	 * and define the action of the button when clicked.
 	 */
-	private void addButtonListener() {
+	private void addListener() {
 		// Model
 		bSetModSource.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent t) {

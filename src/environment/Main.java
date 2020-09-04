@@ -109,10 +109,12 @@ public class Main extends Application{
 	static ArrayList<String> input = new ArrayList<String>();
 	static EventHandler<KeyEvent> standardKeyReleasedListener;
 	
-	/** Standard distance from the sub-headings to the content below them.*/
+	/** Standard distance from sub-headings to the content below them.*/
 	static int distanceToHeading = 80;
-	/** Standard distance from the sub-headings to the content below them.*/
+	/** Standard distance from sub-headings to the content below them.*/
 	static int distanceToSubheading = 60;
+	/** Standard distance from segments to one another.*/
+	static int distanceToSegment = 50;
 	/** Unified referenceable font for layouts.*/
 	static Font fHeadline = Font.font("Arial", FontWeight.BOLD, 50);
 	/** Unified referenceable font for layouts.*/

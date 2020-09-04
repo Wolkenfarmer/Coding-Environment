@@ -1,5 +1,6 @@
 package environment;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -7,9 +8,9 @@ import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -40,6 +41,15 @@ public class SourcePage {
 				private static VBox vbOveModDecHeading;
 					private static Label lOveModDecHeading;
 			private static Arrow a;
+	private static Pane pOptions;
+		private static Label lOptHeading;
+		private static VBox vbOptButtons;
+			private static Button bOptButUserInput;
+				private static HBox hbOptButUserInput;
+					private static Label lOptButUserInput;
+			private static Button bConButBook;
+				private static HBox hbOptButSaveBook;
+					private static Label lOptButBook;
 				
 
 	public SourcePage(Group parent) {
@@ -61,6 +71,7 @@ public class SourcePage {
 			lHeaHere.setFont(Main.fHeading);
 			lHeaHere.setAlignment(Pos.CENTER_LEFT);
 		tfHeading.getChildren().addAll(lHeaHome, lHeaHere);
+		
 		
 		
 		pOverview = new Pane();
@@ -155,21 +166,107 @@ public class SourcePage {
 		pOverview.getChildren().addAll(lOveHeading, pOveModel);
 		
 		
+		
+		pOptions = new Pane();
+		pOptions.setLayoutX(Main.pos1);
+		pOptions.setLayoutY(pOverview.getLayoutY() + Main.calcHeight(pOverview) + Main.distanceToSegment);
+		pOptions.setPrefWidth(Main.stageWidth / 8 * 1.5);
+			lOptHeading = new Label();
+			lOptHeading.setText("Options");
+			lOptHeading.setTextFill(Color.WHITESMOKE);
+			lOptHeading.setFont(Main.fSubheading);			
+			
+			vbOptButtons = new VBox();
+			vbOptButtons.setPrefWidth(pOptions.getPrefWidth());
+			vbOptButtons.setLayoutY(Main.distanceToSubheading);
+			vbOptButtons.setSpacing(20);
+				bOptButUserInput = new Button();
+				bOptButUserInput.setPrefWidth(vbOptButtons.getPrefWidth() - 1);
+				bOptButUserInput.setPrefHeight(50);
+				bOptButUserInput.setBackground(Main.baNormalButton);
+				bOptButUserInput.setBorder(Main.boNormalWhite);
+					hbOptButUserInput = new HBox();
+						lOptButUserInput = new Label();
+						lOptButUserInput.setText("User Input");
+						lOptButUserInput.setTextFill(Color.WHITESMOKE);
+						lOptButUserInput.setFont(Main.fNormalText);
+						lOptButUserInput.setWrapText(false);
+						lOptButUserInput.setTextAlignment(TextAlignment.CENTER);
+					hbOptButUserInput.getChildren().add(lOptButUserInput);
+					hbOptButUserInput.setAlignment(Pos.CENTER);
+				bOptButUserInput.setGraphic(hbOptButUserInput);
+				
+				bConButBook = new Button();
+				bConButBook.setPrefWidth(vbOptButtons.getPrefWidth() - 1);
+				bConButBook.setPrefHeight(50);
+				bConButBook.setBackground(Main.baNormalButton);
+				bConButBook.setBorder(Main.boNormalWhite);
+					hbOptButSaveBook = new HBox();
+						lOptButBook = new Label();
+						lOptButBook.setText("Random digit book");
+						lOptButBook.setTextFill(Color.WHITESMOKE);
+						lOptButBook.setFont(Main.fNormalText);
+						lOptButBook.setWrapText(false);
+						lOptButBook.setTextAlignment(TextAlignment.CENTER);
+					hbOptButSaveBook.getChildren().add(lOptButBook);
+					hbOptButSaveBook.setAlignment(Pos.CENTER);
+				bConButBook.setGraphic(hbOptButSaveBook);
+			vbOptButtons.getChildren().addAll(bOptButUserInput, bConButBook);
+	    pOptions.getChildren().addAll(lOptHeading, vbOptButtons);
+		
+		addListener();
+		root.getChildren().addAll(tfHeading, pOverview, pOptions);
+	}
+	
+	
+	private void addListener() {
 		Main.scene.setOnKeyReleased(keyReleasedListener = new EventHandler<KeyEvent>() {
             public void handle(KeyEvent e) {
                 if (Main.input.contains("ESCAPE")) {
-                	root.getChildren().removeAll(tfHeading, pOverview);
+                	root.getChildren().removeAll(tfHeading, pOverview, pOptions);
                 	Main.homepage.reload(root);
                 }
             }
         });
 		
-		root.getChildren().addAll(tfHeading, pOverview);
+		// button listener
+		bOptButUserInput.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent t) {
+				System.out.println("bOptButUserInput got pressed!");
+	        }
+	    });
+		bOptButUserInput.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e) {
+				bOptButUserInput.setBackground(Main.baNormalFocusedButton);
+			}
+	    });
+		bOptButUserInput.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e) {
+				bOptButUserInput.setBackground(Main.baNormalButton);
+			}
+		});
+		
+		bConButBook.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent t) {
+				System.out.println("bConButBook got pressed!");
+	        }
+	    });
+		bConButBook.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e) {
+				bConButBook.setBackground(Main.baNormalFocusedButton);
+			}
+	    });
+		bConButBook.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e) {
+				bConButBook.setBackground(Main.baNormalButton);
+			}
+		});
 	}
+	
 	
 	void reload(Group parent) {
 		root = parent;
-		root.getChildren().addAll(tfHeading, pOverview);
+		root.getChildren().addAll(tfHeading, pOverview, pOptions);
 		Main.scene.setOnKeyReleased(keyReleasedListener);
 	}
 }
