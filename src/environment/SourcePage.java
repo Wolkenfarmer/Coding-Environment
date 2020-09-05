@@ -1,9 +1,6 @@
 package environment;
 
-import java.util.Arrays;
-
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
+import infSources.UserInput;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -11,65 +8,115 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
-import javafx.util.Callback;
 
 /**
+ * The information source page (a sub-page of {@link Homepage}).
+ * The information source for the communication experiment can be set here.
+ * See {@link #SourcePage(Group)} for more information about the UI.
  * @author Wolkenfarmer
  */
 public class SourcePage {
+	/** Layout container representing the given root from {@link Homepage} to attach the GUI-elements to.
+	 * It's content ({@link #tfHeading}, {@link #pOverview}, {@link #pOptions}, {@link #pInformation}) gets build in {@link #SourcePage(Group)}.
+	 * When loading another page it's content gets first removed and then the layout container will be given to the other class.
+	 * When reloading the page {@link #reload(Group)} will be used to re-attach the content to the root.*/
 	private static Group root;
-	private static EventHandler<KeyEvent> keyReleasedListener;
+	/** Layout container for the heading segment. Contains {@link #lHeaHome} and {@link #lHeaHere}.*/
 	private static TextFlow tfHeading;
+		/** Label which displays the heading segment "SCCE \  " (bold). It's part of {@link #tfHeading}.*/
 		private static Label lHeaHome;
+		/** Label which displays the heading segment "Information source" (not bold). It's part of {@link #tfHeading}.*/
 		private static Label lHeaHere;
+	/** Layout container for the overview segment. Contains {@link #lOveHeading} and {@link #pOveModel}.*/
 	private static Pane pOverview;
+		/** Label which displays the sub-heading "Overview". It's part of {@link #pOverview}.*/
 		private static Label lOveHeading;
+		/** Layout container for the overview model. Contains {@link #bOveModSource}, {@link #bOveModEncoder} and {@link #aOveModRelation} 
+		 * and is part of {@link #pOverview}.*/
 		private static Pane pOveModel;
+			/** The button showing the source in the overview. It's used as a better rectangle. Contains {@link #hbOveModSouContent} 
+			 * and is part of {@link #pOveModel}.*/
 			private static Button bOveModSource;
+				/** Layout container for the content of the information source button. Contains {@link #vbOveModSouConHeading}, 
+				 * {@link #liOveModSouConDiffer} and {@link #vbOveModSouSelectedItem} and is part of {@link #bOveModSource}.*/
 				private static HBox hbOveModSouContent;
+					/** Layout container for the heading of the information source button. Contains {@link #lOveModSouConHeading}
+					 * and is part of {@link #hbOveModSouContent}.*/
 					private static VBox vbOveModSouConHeading;
+						/** Label displaying the button's heading "Information source". It's part of {@link #vbOveModSouConHeading}.*/
 						private static Label lOveModSouConHeading;
-					private static Line lOveModSouConDiffer;
+					/** A line to differ between {@link #vbOveModSouConHeading} and {@link #vbOveModSouSelectedItem} 
+					 * inside of {@link #bOveModSource}. It's part of {@link #hbOveModSouContent}.*/
+					private static Line liOveModSouConDiffer;
+					/** Layout container for the selected item section of the information source button. Contains {@link #lConSelectedItemHead}
+					 * and {@link #lConSelectedItem} and is part of {@link #hbOveModSouContent}.*/
 					private static VBox vbOveModSouSelectedItem;
+						/** Label displaying the the selected item section's head "selected item:" of the information source button. 
+						 * It's part of {@link #vbOveModSouSelectedItem}.*/
 						private static Label lConSelectedItemHead;
+						/** Label displaying the the selected item section's selection of the information source button. 
+						 * By default, "nothing selected" will be displayed, but gets updated to the currently picked information source.
+						 * It's part of {@link #vbOveModSouSelectedItem}.*/
 						private static Label lConSelectedItem;
-			private static Button bOveModDecoder;
-				private static VBox vbOveModDecHeading;
-					private static Label lOveModDecHeading;
-			private static Arrow a;
+			/** The button showing the encoder in the overview. It's used as a better rectangle. Contains {@link #vbOveModEncHeading} 
+			 * and is part of {@link #pOveModel}.*/
+			private static Button bOveModEncoder;
+				/** Layout container for the content of encoder button. Contains {@link #lOveModEncHeading} and is part of {@link #bOveModEncoder}.*/
+				private static VBox vbOveModEncHeading;
+					/** Label displaying the button's heading "Encoder". It's part of {@link #vbOveModEncHeading}.*/
+					private static Label lOveModEncHeading;
+			/** Relation for the model in overview. Connects {@link #bOveModSource} with {@link #bOveModEncoder} and is part of {@link #pOveModel}.*/
+			private static Arrow aOveModRelation;
+	/** Layout container for the options segment. Displays the different information sources.
+	 * Contains {@link #lOptHeading} and {@link #vbOptButtons}.*/
 	private static Pane pOptions;
+		/** Label which displays the sub-heading "Options". It's part of {@link #pOptions}.*/
 		private static Label lOptHeading;
+		/** Layout container for the buttons of options. Contains {@link #bOptButUserInput} and {@link #bOptButBook} 
+		 * and is part of {@link #pOptions}.*/
 		private static VBox vbOptButtons;
+			/** The button showing the user input option under options. Contains {@link #hbOptButUserInput} and is part of {@link #vbOptButtons}.*/
 			private static Button bOptButUserInput;
+				/** Layout container for the content of user input button. 
+				 * Contains {@link #lOptButUserInput} and is part of {@link #bOptButUserInput}.*/
 				private static HBox hbOptButUserInput;
+					/** Label displaying the button's heading "User Input". It's part of {@link #hbOptButUserInput}.*/
 					private static Label lOptButUserInput;
-			private static Button bConButBook;
-				private static HBox hbOptButSaveBook;
+			/** The button showing the random digit book option under options. Contains {@link #hbOptButBook} and is 
+			 * part of {@link #vbOptButtons}.*/
+			private static Button bOptButBook;
+				/** Layout container for the content of random digit book button. 
+				 * Contains {@link #lOptButBook} and is part of {@link #bOptButBook}.*/
+				private static HBox hbOptButBook;
+					/** Label displaying the button's heading "Random digit book". It's part of {@link #hbOptButBook}.*/
 					private static Label lOptButBook;
+	/** Layout container for the information segment. Displays the information of the picked information source in {@link #pOptions}.
+	 * Contains {@link #lInfHeading} and {@link #pInfContent}.*/
 	private static Pane pInformation;
+		/** Label which displays the sub-heading "Information" by default, but gets updated to fit the currently picked information source. 
+		 * It's part of {@link #pInformation}.*/
 		private static Label lInfHeading;
+		/** Layout container for the information content elements. Contains {@link #lInfConDefault} by default,
+		 * but gets updated by the currently picked information source. It's part of {@link #pInformation}.*/
 		private static Pane pInfContent;
+			/** Label which displays "No option picked". It's part of {@link #pInfContent}.*/
 			private static Label lInfConDefault;
 			
-	private static EventHandler<MouseEvent> evButEntered;
-	private static EventHandler<MouseEvent> evButExited;
-	private static EventHandler<MouseEvent> evSelEntered;
-	private static EventHandler<MouseEvent> evSelExited;
-
-				
-
+	/**
+	 * Builds the information source page of the application.
+	 * The information source page gets scaled accordingly to {@link Main#stageHeight} and {@link Main#stageWidth}.
+	 * Normally, the height of {@link #pInformation} gets calculated in order to not exceed the screen's size, 
+	 * but if the screen is too small to even fit {@link #pOptions} (for 3 buttons) on it, 
+	 * the controls height will be the minimum height of results and {@link Main#scrollbar} will be displayed.
+	 * @param parent Layout container to attach it's layout parts to.
+	 */
 	public SourcePage(Group parent) {
 		root = parent;
 		
@@ -123,8 +170,8 @@ public class SourcePage {
 						vbOveModSouConHeading.getChildren().add(lOveModSouConHeading);
 						vbOveModSouConHeading.setAlignment(Pos.CENTER_LEFT);
 						
-						lOveModSouConDiffer = new Line();
-						lOveModSouConDiffer.setStroke(Color.WHITESMOKE);
+						liOveModSouConDiffer = new Line();
+						liOveModSouConDiffer.setStroke(Color.WHITESMOKE);
 						
 						vbOveModSouSelectedItem = new VBox();
 						vbOveModSouSelectedItem.setMaxWidth(bOveModSource.getMaxWidth() / 3 * 2 - 
@@ -154,34 +201,34 @@ public class SourcePage {
 						bOveModSource.setPrefWidth(bOveModSource.getMaxWidth() 
 								- ((vbOveModSouConHeading.getMaxWidth() - Main.calcWidth(vbOveModSouConHeading))
 								+ (vbOveModSouSelectedItem.getMaxWidth() - Main.calcWidth(vbOveModSouSelectedItem))));
-					hbOveModSouContent.getChildren().addAll(vbOveModSouConHeading, lOveModSouConDiffer, vbOveModSouSelectedItem);	
+					hbOveModSouContent.getChildren().addAll(vbOveModSouConHeading, liOveModSouConDiffer, vbOveModSouSelectedItem);	
 					double sourceButtonContentHeight = Main.calcHeight(hbOveModSouContent);
-					lOveModSouConDiffer.setEndY(sourceButtonContentHeight - 10);
+					liOveModSouConDiffer.setEndY(sourceButtonContentHeight - 10);
 				bOveModSource.setGraphic(hbOveModSouContent);
 			
 				
-				bOveModDecoder = new Button();
-				bOveModDecoder.setBackground(Main.baNormalButton);
-				bOveModDecoder.setBorder(Main.boNormalWhite);
-				bOveModDecoder.setMaxWidth(Main.stageWidth - Main.calcWidth(bOveModSource) - Main.stageWidth / 16);
-					vbOveModDecHeading = new VBox();
-						lOveModDecHeading = new Label();
-						lOveModDecHeading.setText("Decoder");
-						lOveModDecHeading.setTextFill(Color.WHITESMOKE);
-						lOveModDecHeading.setFont(Main.fNormalText);
-						lOveModDecHeading.setWrapText(true);
-						lOveModDecHeading.setTextAlignment(TextAlignment.CENTER);
-						lOveModDecHeading.setPrefHeight(Main.calcHeightLabel(lOveModDecHeading, bOveModDecoder.getMaxWidth()));
-					vbOveModDecHeading.getChildren().add(lOveModDecHeading);
-					vbOveModDecHeading.setAlignment(Pos.CENTER_LEFT);
-				bOveModDecoder.setPrefHeight(Main.calcHeight(bOveModSource) + 1);
-				bOveModDecoder.setGraphic(vbOveModDecHeading);
-				bOveModDecoder.setLayoutX(Main.pos1 * 6 - Main.calcWidth(bOveModDecoder));
+				bOveModEncoder = new Button();
+				bOveModEncoder.setBackground(Main.baNormalButton);
+				bOveModEncoder.setBorder(Main.boNormalWhite);
+				bOveModEncoder.setMaxWidth(Main.stageWidth - Main.calcWidth(bOveModSource) - Main.stageWidth / 16);
+					vbOveModEncHeading = new VBox();
+						lOveModEncHeading = new Label();
+						lOveModEncHeading.setText("Encoder");
+						lOveModEncHeading.setTextFill(Color.WHITESMOKE);
+						lOveModEncHeading.setFont(Main.fNormalText);
+						lOveModEncHeading.setWrapText(true);
+						lOveModEncHeading.setTextAlignment(TextAlignment.CENTER);
+						lOveModEncHeading.setPrefHeight(Main.calcHeightLabel(lOveModEncHeading, bOveModEncoder.getMaxWidth()));
+					vbOveModEncHeading.getChildren().add(lOveModEncHeading);
+					vbOveModEncHeading.setAlignment(Pos.CENTER_LEFT);
+				bOveModEncoder.setPrefHeight(Main.calcHeight(bOveModSource) + 1);
+				bOveModEncoder.setGraphic(vbOveModEncHeading);
+				bOveModEncoder.setLayoutX(Main.pos1 * 6 - Main.calcWidth(bOveModEncoder));
 				
-				a = new Arrow();
+				aOveModRelation = new Arrow();
 				double yArrow = Main.calcHeight(bOveModSource) / 2;
-				a = a.getArrow(Main.calcWidth(bOveModSource), yArrow, bOveModDecoder.getLayoutX(), yArrow, 20, 15, false, "message");
-			pOveModel.getChildren().addAll(bOveModSource, a, bOveModDecoder);
+				aOveModRelation = aOveModRelation.getArrow(Main.calcWidth(bOveModSource), yArrow, bOveModEncoder.getLayoutX(), yArrow, 20, 15, false, "message");
+			pOveModel.getChildren().addAll(bOveModSource, aOveModRelation, bOveModEncoder);
 		pOverview.getChildren().addAll(lOveHeading, pOveModel);
 		
 		
@@ -215,22 +262,22 @@ public class SourcePage {
 					hbOptButUserInput.setAlignment(Pos.CENTER);
 				bOptButUserInput.setGraphic(hbOptButUserInput);
 				
-				bConButBook = new Button();
-				bConButBook.setPrefWidth(vbOptButtons.getPrefWidth() - 1);
-				bConButBook.setPrefHeight(50);
-				bConButBook.setBackground(Main.baNormalButton);
-				bConButBook.setBorder(Main.boNormalWhite);
-					hbOptButSaveBook = new HBox();
+				bOptButBook = new Button();
+				bOptButBook.setPrefWidth(vbOptButtons.getPrefWidth() - 1);
+				bOptButBook.setPrefHeight(50);
+				bOptButBook.setBackground(Main.baNormalButton);
+				bOptButBook.setBorder(Main.boNormalWhite);
+					hbOptButBook = new HBox();
 						lOptButBook = new Label();
 						lOptButBook.setText("Random digit book");
 						lOptButBook.setTextFill(Color.WHITESMOKE);
 						lOptButBook.setFont(Main.fNormalText);
 						lOptButBook.setWrapText(false);
 						lOptButBook.setTextAlignment(TextAlignment.CENTER);
-					hbOptButSaveBook.getChildren().add(lOptButBook);
-					hbOptButSaveBook.setAlignment(Pos.CENTER);
-				bConButBook.setGraphic(hbOptButSaveBook);
-			vbOptButtons.getChildren().addAll(bOptButUserInput, bConButBook);
+					hbOptButBook.getChildren().add(lOptButBook);
+					hbOptButBook.setAlignment(Pos.CENTER);
+				bOptButBook.setGraphic(hbOptButBook);
+			vbOptButtons.getChildren().addAll(bOptButUserInput, bOptButBook);
 	    pOptions.getChildren().addAll(lOptHeading, vbOptButtons);
 	    	    
 	    
@@ -262,45 +309,49 @@ public class SourcePage {
 	}
 	
 	
+	/**
+	 * Adds the listener to the Buttons of {@link SourcePage} and sets {@link Main#krlBackHome} as key released listener. 
+	 * They individually change the background of the buttons depending on whether the mouse hovers over it or not 
+	 * and define the action of the buttons when clicked.
+	 * This could also be done in {@link #SourcePage(Group)} but for a better to look at program it's in a separate method.
+	 */
 	private void addListener() {
-		Main.scene.setOnKeyReleased(keyReleasedListener = new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent e) {
-                if (Main.input.contains("ESCAPE")) {
-                	root.getChildren().clear();
-                	Main.homepage.reload(root);
-                }
-            }
-        });
+		Main.scene.setOnKeyReleased(Main.krlBackHome);
 		
 		// button listener
-		
 		bOptButUserInput.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent t) {
 				System.out.println("bOptButUserInput got pressed!");
 				bOptButUserInput.setBackground(Main.baGreenFocusedButton);
-				bConButBook.setBackground(Main.baNormalButton);
-				bOptButUserInput.setOnMouseEntered(evSelEntered);
-				bOptButUserInput.setOnMouseExited(evSelExited);
-				bConButBook.setOnMouseEntered(evButEntered);
-				bConButBook.setOnMouseExited(evButExited);
+				bOptButBook.setBackground(Main.baNormalButton);
+				bOptButUserInput.setOnMouseEntered(Main.evButGreEntered);
+				bOptButUserInput.setOnMouseExited(Main.evButGreExited);
+				bOptButBook.setOnMouseEntered(Main.evButEntered);
+				bOptButBook.setOnMouseExited(Main.evButExited);
 				
 				lInfHeading.setText("Information \\  User Input");
 				lConSelectedItem.setText("User Input");
 				Homepage.bSetModSource.setText("User Input");
 				pInfContent.getChildren().clear();
-				Main.infSource_UserInput.showUI(pInfContent);
+				
+				if (UserInput.builtUI) {
+					Main.infSource_UserInput.reloadUI(pInfContent);
+				} else {
+					Main.infSource_UserInput.buildUI(pInfContent);
+				}
+				
 	        }
 	    });
 		
-		bConButBook.setOnAction(new EventHandler<ActionEvent>() {
+		bOptButBook.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent t) {
 				System.out.println("bConButBook got pressed!");
 				bOptButUserInput.setBackground(Main.baNormalButton);
-				bConButBook.setBackground(Main.baGreenFocusedButton);
-				bOptButUserInput.setOnMouseEntered(evButEntered);
-				bOptButUserInput.setOnMouseExited(evButExited);
-				bConButBook.setOnMouseEntered(evSelEntered);
-				bConButBook.setOnMouseExited(evSelExited);
+				bOptButBook.setBackground(Main.baGreenFocusedButton);
+				bOptButUserInput.setOnMouseEntered(Main.evButEntered);
+				bOptButUserInput.setOnMouseExited(Main.evButExited);
+				bOptButBook.setOnMouseEntered(Main.evButGreEntered);
+				bOptButBook.setOnMouseExited(Main.evButGreExited);
 				
 				lInfHeading.setText("Information \\  Random digit book");
 				lConSelectedItem.setText("Random digit book");
@@ -309,39 +360,23 @@ public class SourcePage {
 	        }
 	    });
 		
-		
-		evButEntered = new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent e) {
-				((Region) e.getSource()).setBackground(Main.baNormalFocusedButton);
-			}
-		};
-		evButExited = new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent e) {
-				((Region) e.getSource()).setBackground(Main.baNormalButton);
-			}
-		};
-		
-		evSelEntered = new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent e) {
-				((Region) e.getSource()).setBackground(Main.baGreenFocusedButton);
-			}
-		};
-		evSelExited = new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent e) {
-				((Region) e.getSource()).setBackground(Main.baGreenButton);
-			}
-		};
-		
-		bOptButUserInput.setOnMouseEntered(evButEntered);
-		bOptButUserInput.setOnMouseExited(evButExited);
-		bConButBook.setOnMouseEntered(evButEntered);
-		bConButBook.setOnMouseExited(evButExited);
+		bOptButUserInput.setOnMouseEntered(Main.evButEntered);
+		bOptButUserInput.setOnMouseExited(Main.evButExited);
+		bOptButBook.setOnMouseEntered(Main.evButEntered);
+		bOptButBook.setOnMouseExited(Main.evButExited);
 	}
 	
 	
+	/**
+	 * Reloads the source page. Re-attaches the page's elements ({@link #tfHeading}, {@link #pOverview}, {@link #pOptions}, {@link #pInformation})
+	 * and {@link Main#krlBackHome}.
+	 * This method gets called by the {@link Homepage homepage}, when the page is already not null and {@link Homepage#bSetModSource} gets pressed.
+	 * @param parent Layout container to attach it's layout parts to.
+	 */
 	void reload(Group parent) {
+		System.out.println("test");
 		root = parent;
 		root.getChildren().addAll(tfHeading, pOverview, pOptions, pInformation);
-		Main.scene.setOnKeyReleased(keyReleasedListener);
+		Main.scene.setOnKeyReleased(Main.krlBackHome);
 	}
 }

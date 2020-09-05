@@ -23,15 +23,19 @@ public class ModelFactory {
 	 * This gets calculated in {@link #ModelFactory(double)} and used in {@link #buildButton(float, float, String, boolean)}.*/
 	private static double modelZoneWidth;
 	/** The width of a button in {@link environment.Homepage#pSetModel}. 
-	 * This gets calculated in {@link #ModelFactory(double)} and used in {@link #buildButton(float, float, String, boolean)}.*/
+	 * This gets calculated in {@link #ModelFactory(double)} and 
+	 * used in {@link #buildButton(float, float, String, boolean)} and {@link #buildRelation(float, float, short, boolean, String)}.*/
 	private static double modelButtonWidth;
+	/** The height of a zone in {@link environment.Homepage#pSetModel}. 
+	 * This gets used in {@link #buildButton(float, float, String, boolean)} and {@link #buildRelation(float, float, short, boolean, String)}.*/
 	private static double modelZoneHeight = 50;
 	
 	/** The button which is to be build. Contains {@link #vbContent} as it's labeling / content.*/
 	private Button b;
 	/** Layout container for the buttons labeling / content. 
-	 * Contains {@link #hbConName}, {@link #lConDiffer} and either {@link #lConSelectedItemHead} and {@link #lConSelectedItem} or {@link #lConSub}
-	 * and is part of {@link #b}.*/
+	 * Contains {@link #hbConName}, {@link #liConDiffer} and either {@link #lConSelectedItemHead} and lConSelectedItem 
+	 * (gets declared in {@link #buildButton(float, float, String, boolean)} because otherwise it wouldn't be possible to change the selected Item
+	 * via the button's listener) or {@link #lConSub} and is part of {@link #b}.*/
 	private VBox vbContent;
 		/** Layout container for the buttons heading.
 		 * This is needed in order to align the heading the center of the button even when the heading is just one line. 
@@ -40,15 +44,14 @@ public class ModelFactory {
 			/** Label which displays the heading of {@link #b}. It's part of {@link #hbConName}.*/
 			private Label lConName;
 		/** A line to differ between {@link #lConName} and the rest of {@link #b}'s content. It's part of {@link #vbContent}.*/
-		private Line lConDiffer;
-		/** Label which displays "Selected item:" on {@link #b}. Either this and {@link #lConSelectedItem} get displayed or {@link #lConSub}.
-		 * It's part of {@link #vbContent}.*/
+		private Line liConDiffer;
+		/** Label which displays "Selected item:" on {@link #b}. Either this and lConSelectedItem (see {@link #vbContent} for more information)
+		 * get displayed or {@link #lConSub}. It's part of {@link #vbContent}.*/
 		private Label lConSelectedItemHead;
 		/** Label which displays "compare in- and output" on {@link #b}. Either this gets displayed 
-		 * or {@link #lConSelectedItemHead} and {@link #lConSelectedItem}. It's part of {@link #vbContent}.*/
+		 * or {@link #lConSelectedItemHead} and lConSelectedItem (see {@link #vbContent} for more information). It's part of {@link #vbContent}.*/
 		private Label lConSub;
 
-	Arrow r;
 		
 	/**
 	 * Constructor of the class which devides the given contentWidth into different zones for the obejcts.
@@ -72,6 +75,7 @@ public class ModelFactory {
 	 */
 	public Button buildButton(float layoutZoneX, float layoutZoneY, String conName, boolean selectableItems) {
 		/** Label which displays the selected item on {@link #b}. Either this and {@link #lConSelectedItemHead} get displayed or {@link #lConSub}.
+		 * It needs to be dined inside the method in order to change it's text from {@link environment.SourcePage} via {@link environment.Homepage}.
 		 * It's part of {@link #vbContent}.*/
 		Label lConSelectedItem;
 		
@@ -95,10 +99,10 @@ public class ModelFactory {
 				hbConName.getChildren().add(lConName);
 				hbConName.setAlignment(Pos.CENTER);
 				
-				lConDiffer = new Line();
-				lConDiffer.setStroke(Color.WHITESMOKE);
-				lConDiffer.setEndX(modelButtonWidth - 40);
-				lConDiffer.setTranslateX(8);
+				liConDiffer = new Line();
+				liConDiffer.setStroke(Color.WHITESMOKE);
+				liConDiffer.setEndX(modelButtonWidth - 40);
+				liConDiffer.setTranslateX(8);
 				
 				if (selectableItems) {
 					lConSelectedItemHead = new Label();
@@ -123,7 +127,7 @@ public class ModelFactory {
 						}
 					});
 					
-					vbContent.getChildren().addAll(hbConName, lConDiffer, lConSelectedItemHead, lConSelectedItem);
+					vbContent.getChildren().addAll(hbConName, liConDiffer, lConSelectedItemHead, lConSelectedItem);
 				} else {
 					lConSub = new Label();
 					lConSub.setText("compare in- & output");
@@ -132,7 +136,7 @@ public class ModelFactory {
 					lConSub.setWrapText(true);
 					lConSub.setPrefHeight(Main.calcHeightLabel(lConSub, modelButtonWidth));
 					
-					vbContent.getChildren().addAll(hbConName, lConDiffer, lConSub);
+					vbContent.getChildren().addAll(hbConName, liConDiffer, lConSub);
 				}
 				
 		b.setGraphic(vbContent);

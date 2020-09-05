@@ -24,10 +24,14 @@ import javafx.util.Callback;
 
 /**
  * The homepage of the application with access to every part of the program.
- * See {@link #Homepage(Group)} for more information.
+ * See {@link #Homepage(Group)} for more information about the UI.
  * @author Wolkenfarmer
  */
 public class Homepage {
+	/** Layout container representing the given root from {@link environment.Main} to attach the GUI-elements to.
+	 * It's content ({@link #hbHeading}, {@link #pSettings}, {@link #pControls}, {@link #pResults}) gets build in {@link #Homepage(Group)}.
+	 * When loading another page it's content gets first removed and then the layout container will be given to the other class.
+	 * When reloading the page {@link #reload(Group)} will be used to re-attach the content to the root.*/
 	private static Group root;
 	/** Layout container for the headline segment. Contains {@link #lHeadline}, {@link #rHeadlineSpacer} and {@link #vbHeadline}.*/
 	private static HBox hbHeading;
@@ -78,8 +82,8 @@ public class Homepage {
 		private static Label lResHeading;
 		/** The table displaying the last result below {@link #lResHeading}. 
 		 * It gets the result from TODO
-		 * The stylesheet tableView.css, which is added to {@link environment.Main#scene} specifies the look the this table.
-		 * Contains {@link #tvResTabDescription} and {@link #tvResTabValue} and is part of {@link #pResults}.*/
+		 * Contains {@link #tvResTabDescription} and {@link #tvResTabValue} and is part of {@link #pResults}.
+		 * @see css */
 		private static TableView<String[]> tvResTable;
 			/** The first column of {@link #tvResTable} displaying the descriptions of the values.*/
 			private static TableColumn<String[], String> tvResTabDescription;
@@ -117,7 +121,6 @@ public class Homepage {
 					/** Label which displays {@link #bConButHelp}'s description "Help". It's part of {@link #hbConButHelp}.*/
 					private static Label lConButHelp;
 	
-	
 	/** Unified EventHandler for {@link #bSetModDecoder} and {@link #bSetModEncoder}.*/
 	private static EventHandler<ActionEvent> evEnDecoderPressed;
 	/** Unified EventHandler for {@link #bSetModDecoder} and {@link #bSetModEncoder}.*/
@@ -125,15 +128,16 @@ public class Homepage {
 	/** Unified EventHandler for {@link #bSetModDecoder} and {@link #bSetModEncoder}.*/
 	private static EventHandler<MouseEvent> evEnDecoderExited;
 	
+	
 	/**
 	 * Builds the homepage of the application.
-	 * This constructor uses {@link environment.ModelFactory#buildButton(float, float, String, boolean)} for the buttons 
-	 * and {@link environment.ModelFactory#buildRelation(float, float, short, boolean, String)} for the relations in {@link #pSetModel}.
-	 * The homepage gets scaled accordingly to {@link environment.Main#stageHeight} and {@link environment.Main#stageWidth}.
-	 * Normally, the height of {@link #pResults} gets calculated in order to not exceed the screen size, 
+	 * This constructor uses {@link ModelFactory#buildButton(float, float, String, boolean)} for the buttons 
+	 * and {@link ModelFactory#buildRelation(float, float, short, boolean, String)} for the relations in {@link #pSetModel}.
+	 * The homepage gets scaled accordingly to {@link Main#stageHeight} and {@link Main#stageWidth}.
+	 * Normally, the height of {@link #pResults} gets calculated in order to not exceed the screen's size, 
 	 * but if the screen is too small to even fit {@link #pControls} on it, the controls height will be the minimum height of results 
-	 * and {@link environment.Main#scrollbar} will be displayed.
-	 * @param root A group to attach it's layout parts to.
+	 * and {@link Main#scrollbar} will be displayed.
+	 * @param parent Layout container to attach it's layout parts to.
 	 */
 	public Homepage(Group parent) {
 		root = parent;
@@ -326,9 +330,10 @@ public class Homepage {
 	
 	
 	/**
-	 * Adds the listener to the Buttons of {@link environment.Homepage}. 
-	 * They individually change the background of the button depending on whether the mouse hover over it or not 
+	 * Adds the listener to the Buttons of {@link Homepage}. 
+	 * They individually change the background of the button depending on whether the mouse hovers over it or not 
 	 * and define the action of the button when clicked.
+	 * This could also be done in {@link #Homepage(Group)} but for a better to look at program it's in a separate method.
 	 */
 	private void addListener() {
 		// Model
@@ -343,70 +348,48 @@ public class Homepage {
 				}
 	        }
 	    });
-		bSetModSource.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent e) {
-				bSetModSource.setBackground(Main.baNormalFocusedButton);
-			}
-	    });
-		bSetModSource.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent e) {
-				bSetModSource.setBackground(Main.baNormalButton);
-			}
-		});
 		
 		bSetModEncoder.setOnAction(evEnDecoderPressed = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent t) {
 				System.out.println("bSetModEncoder or bSetModDecoder got pressed!");
 	        }
 	    });
-		bSetModEncoder.addEventHandler(MouseEvent.MOUSE_ENTERED, evEnDecoderEntered = new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent e) {
-				bSetModEncoder.setBackground(Main.baNormalFocusedButton);
-				bSetModDecoder.setBackground(Main.baNormalFocusedButton);
-			}
-	    });
-		bSetModEncoder.addEventHandler(MouseEvent.MOUSE_EXITED, evEnDecoderExited = new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent e) {
-				bSetModEncoder.setBackground(Main.baNormalButton);
-				bSetModDecoder.setBackground(Main.baNormalButton);
-			}
-		});
-		
-		bSetModDecoder.setOnAction(evEnDecoderPressed);
-		bSetModDecoder.addEventHandler(MouseEvent.MOUSE_ENTERED, evEnDecoderEntered);
-		bSetModDecoder.addEventHandler(MouseEvent.MOUSE_EXITED, evEnDecoderExited);
 		
 		bSetModNoise.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent t) {
 				System.out.println("bSetModNoise got pressed!");
 	        }
 	    });
-		bSetModNoise.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent e) {
-				bSetModNoise.setBackground(Main.baNormalFocusedButton);
-			}
-	    });
-		bSetModNoise.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent e) {
-				bSetModNoise.setBackground(Main.baNormalButton);
-			}
-		});
 		
 		bSetModDestination.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent t) {
 				System.out.println("bSetModDestination got pressed!");
 	        }
 	    });
-		bSetModDestination.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+		
+		bSetModEncoder.setOnMouseEntered(evEnDecoderEntered = new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {
-				bSetModDestination.setBackground(Main.baNormalFocusedButton);
-			}
-	    });
-		bSetModDestination.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent e) {
-				bSetModDestination.setBackground(Main.baNormalButton);
+				bSetModEncoder.setBackground(Main.baNormalFocusedButton);
+				bSetModDecoder.setBackground(Main.baNormalFocusedButton);
 			}
 		});
+		bSetModEncoder.setOnMouseExited(evEnDecoderExited = new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e) {
+				bSetModEncoder.setBackground(Main.baNormalButton);
+				bSetModDecoder.setBackground(Main.baNormalButton);
+			}
+		});
+		
+		bSetModSource.setOnMouseEntered(Main.evButEntered);
+		bSetModSource.setOnMouseExited(Main.evButExited);
+		bSetModNoise.setOnMouseEntered(Main.evButEntered);
+		bSetModNoise.setOnMouseExited(Main.evButExited);
+		bSetModDestination.setOnMouseEntered(Main.evButEntered);
+		bSetModDestination.setOnMouseExited(Main.evButExited);
+		
+		bSetModDecoder.setOnAction(evEnDecoderPressed);
+		bSetModDecoder.addEventHandler(MouseEvent.MOUSE_ENTERED, evEnDecoderEntered);
+		bSetModDecoder.addEventHandler(MouseEvent.MOUSE_EXITED, evEnDecoderExited);
 		
 		
 		//Controls
@@ -415,28 +398,20 @@ public class Homepage {
 				System.out.println("bConButRun got pressed!");
 	        }
 	    });
-		bConButRun.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent e) {
-				bConButRun.setBackground(Main.baGreenFocusedButton);
-			}
-	    });
-		bConButRun.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent e) {
-				bConButRun.setBackground(Main.baGreenButton);
-			}
-		});
+		bConButRun.setOnMouseEntered(Main.evButGreEntered);
+		bConButRun.setOnMouseExited(Main.evButGreExited);
 		
 		bConButSaveResult.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent t) {
 				System.out.println("bConButSaveResults got pressed!");
 	        }
 	    });
-		bConButSaveResult.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+		bConButSaveResult.setOnMouseEntered(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {
 				bConButSaveResult.setBackground(Main.baBrownFocusedButton);
 			}
 	    });
-		bConButSaveResult.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+		bConButSaveResult.setOnMouseExited(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {
 				bConButSaveResult.setBackground(Main.baBrownButton);
 			}
@@ -447,12 +422,12 @@ public class Homepage {
 				System.out.println("bConButHelp got pressed!");
 	        }
 	    });
-		bConButHelp.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+		bConButHelp.setOnMouseEntered(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {
 				bConButHelp.setBackground(Main.baPurpleFocusedButton);
 			}
 	    });
-		bConButHelp.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+		bConButHelp.setOnMouseExited(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {
 				bConButHelp.setBackground(Main.baPurpleButton);
 			}
@@ -460,9 +435,15 @@ public class Homepage {
 	}
 	
 	
+	/**
+	 * Reloads the homepage. Re-attaches the page's elements ({@link #hbHeading}, {@link #pSettings}, {@link #pResults}, {@link #pControls})
+	 * and {@link environment.Main#krlClose}.
+	 * This method gets called by the other pages when they get closed.
+	 * @param parent Layout container to attach it's layout parts to.
+	 */
 	void reload(Group parent) {
 		root = parent;
 		root.getChildren().addAll(hbHeading, pSettings, pResults, pControls);
-		Main.scene.setOnKeyReleased(Main.standardKeyReleasedListener);
+		Main.scene.setOnKeyReleased(Main.krlClose);
 	}
 }

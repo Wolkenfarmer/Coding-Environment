@@ -32,22 +32,19 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 /**
- * Main class hosting the javafx Application.
- * Gets called on start of the program and is the base for the javafx application.
+ * Main class hosting the JavaFX Application.
+ * Gets called on start of the program and is the base for the JavaFX application.
  * Builds the stage (window) with some basic setup like FullScreen-Mode or the {@link #scrollbar} along with its calculations.
  * In addition, this class provides the program with some basic layouts like the headline font {@link #fHeadline}.
  * Ultimately, {@link environment.Homepage} gets called.
  * @author Wolkenfarmer
  * @version 1.0
 */
-
 public class Main extends Application{
 	/**
 	 * The Scene for the {@link #start(Stage)}.
-	 * Uses the stylesheets in src\css.
+	 * Uses the stylesheets from {@link css}.
 	 * @see	<a href="https://www.educba.com/javafx-applications/">Javafx Application basic structure</a>
-	 * @see <a href="https://stackoverflow.com/questions/33938811/styling-a-tableview-in-css-javafx">
-	 * Stylesheet tableView.css mostly taken from Chris</a>
 	 */
 	static Scene scene;
 	/**
@@ -85,30 +82,33 @@ public class Main extends Application{
 	static Group dummyRoot;
 	/**
 	 * Reference to the window-height for the entire program. 
-	 * This useful for the layout-calculations of the pages' contents.
+	 * This gets used for the layout-calculations of the pages' contents.
 	 */
 	static double stageHeight;
 	/**
 	 * Reference to the window-width for the entire program.
-	 * This useful for the layout-calculations of the pages' contents.
+	 * This gets used for the layout-calculations of the pages' contents.
 	 */
 	static double stageWidth;
-	/**
-	 * Describes the height of content of each page. 
-	 * This value gets calculated / get overwritten for each page in order for the {@link #scrollbar} to compute its movement space correctly.
-	 */
+	/** Describes the height of content of each page. 
+	 * This value gets calculated / get overwritten for each page in order for the {@link #scrollbar} to compute its movement space correctly.*/
 	static double contentHeight;
+	/** Describes the layoutX from where the content of the pages start. This gets used for the layout-calculations of the pages' contents.*/
 	static double pos1;
+	/** Describes the layoutX from where the content of the pages end. This gets used for the layout-calculations of the pages' contents.*/
 	static double pos7;
+	/** Describes width of the content of the pages. This gets used for the layout-calculations of the pages' contents.*/
 	static double contentWidth;
 	
-	/**
-	 * Input handling.
-	 * This ArrayList gets filled / used in {@link #start(Stage)} by the scene listeners. 
-	 * In this scene it's only used for a short cut to close the program (Esc).
-	 */
+	/** Input handling. This ArrayList gets filled / used in {@link #start(Stage)} by the scene listeners.*/
 	static ArrayList<String> input = new ArrayList<String>();
-	static EventHandler<KeyEvent> standardKeyReleasedListener;
+	/** Input handling. This unified event handler checks {@link #input} for (Esc) and closes the program when pressed.
+	 * This event handler is only used for {@link environment.Homepage}.
+	 * @see environment.Homepage#reload(Group) */
+	static EventHandler<KeyEvent> krlClose;
+	/** Input handling. This event handler checks {@link #input} for (Esc) and passes back to {@link Homepage} when pressed.
+	 * This event handler is used for the direct sub-pages of {@link Homepage}.*/
+	static EventHandler<KeyEvent> krlBackHome;
 	
 	/** Standard distance from sub-headings to the content below them.*/
 	static int distanceToHeading = 80;
@@ -150,11 +150,23 @@ public class Main extends Application{
     static Background baPurpleFocusedButton = new Background (new BackgroundFill(Color.rgb(70, 30, 40), crNormal,  null));
 	/** Unified referenceable Border for layouts.*/
     static Border boNormalWhite = new Border(new BorderStroke(Color.WHITESMOKE, BorderStrokeStyle.SOLID, crNormal, BorderWidths.DEFAULT));
+    /** Unified referenceable event handler for changing the background of a normal button when the mouse enters it.*/
+    static EventHandler<MouseEvent> evButEntered;
+    /** Unified referenceable event handler for changing the background of a normal button when the mouse exits it.*/
+	static EventHandler<MouseEvent> evButExited;
+	/** Unified referenceable event handler for changing the background of a green button when the mouse enters it.*/
+	static EventHandler<MouseEvent> evButGreEntered;
+	/** Unified referenceable event handler for changing the background of a green button when the mouse exits it.*/
+	static EventHandler<MouseEvent> evButGreExited;
 
+    /** Static reference to the homepage in order for the pages to have simple access to one another. Gets initialized in {@link #start(Stage)}.*/
     static Homepage homepage;
+    /** Static reference to the source page in order for the pages to have simple access to one another.*/
     public static SourcePage sourcePage;
     
+    /** Static reference to the information source "User Input" in order for {@link environment.SourcePage} and TODO to have simple access to it.*/
     static UserInput infSource_UserInput = new UserInput();
+    
     
 	/**
 	 * Main method of the program calling launch.
@@ -216,13 +228,21 @@ public class Main extends Application{
                 if (!input.contains(code)) input.add(code);
             }
         });
-		scene.setOnKeyReleased(standardKeyReleasedListener = new EventHandler<KeyEvent>() {
+		scene.setOnKeyReleased(krlClose = new EventHandler<KeyEvent>() {
             public void handle(KeyEvent e) {
                 if (input.contains("ESCAPE")) {
                 	Platform.exit();
                 }
             }
         });
+		krlBackHome = new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent e) {
+                if (Main.input.contains("ESCAPE")) {
+                	root.getChildren().clear();
+                	Main.homepage.reload(root);
+                }
+            }
+        };
 		
 		// scroll bar
 		scrollbar.addEventHandler(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
@@ -261,10 +281,41 @@ public class Main extends Application{
 			}
 		});		
 		
+		
+		evButEntered = new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e) {
+				((Region) e.getSource()).setBackground(Main.baNormalFocusedButton);
+			}
+		};
+		evButExited = new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e) {
+				((Region) e.getSource()).setBackground(Main.baNormalButton);
+			}
+		};
+		evButGreEntered = new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e) {
+				((Region) e.getSource()).setBackground(Main.baGreenFocusedButton);
+			}
+		};
+		evButGreExited = new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e) {
+				((Region) e.getSource()).setBackground(Main.baGreenButton);
+			}
+		};
+		
 		homepage = new Homepage(root);
 	}
 	
 	
+	/**
+	 * Calculates the width of a given Region.
+	 * JavaFX layout calculations just work by applying CSS and a layout pass, which occurs usually after a page is finished building.
+	 * Therefore, the region gets temporarily attached to {@link #dummyScene} (instead of {@link #scene}) 
+	 * in order to get the width before the page is finished building.
+	 * This is necessary because the width is sometimes relevant to continue building the page.
+	 * @param r The region (or subclass of it) of which the width gets calculated.
+	 * @return Returns the width of the region.
+	 */
 	static double calcWidth(Region r) {
 		dummyRoot.getChildren().add(r);
 		dummyRoot.applyCss();
@@ -274,11 +325,11 @@ public class Main extends Application{
 	}
 	
 	/**
-	 * Calculates the Height of a given Region.
+	 * Calculates the height of a given Region.
 	 * JavaFX layout calculations just work by applying CSS and a layout pass, which occurs usually after a page is finished building.
 	 * Therefore, the region gets temporarily attached to {@link #dummyScene} (instead of {@link #scene}) 
 	 * in order to get the height before the page is finished building.
-	 * This is necessary because the height is relevant to continue building the page.
+	 * This is necessary because the height is sometimes relevant to continue building the page.
 	 * @param r The region (or subclass of it) of which the height gets calculated.
 	 * @return Returns the height of the region.
 	 */
@@ -292,20 +343,37 @@ public class Main extends Application{
 	
 	
 	/**
-	 * Calculates the Height of a given Label.
+	 * Calculates the width of a given Label.
+	 * JavaFX layout calculations just work by applying CSS and a layout pass, which occurs usually after a page is finished building.
+	 * Therefore, the label gets temporarily attached to {@link #dummyScene} (instead of {@link #scene}) 
+	 * in order to get the width before the page is finished building. 
+	 * This is necessary because the width is sometimes relevant to continue building the page.
+	 * @param l The label of which the height gets calculated.
+	 * @return Returns the width of a label.
+	 */
+	static double calcWidthLabel(Label l) {
+		dummyRoot.getChildren().add(l);
+		dummyRoot.applyCss();
+		dummyRoot.layout();
+		dummyRoot.getChildren().remove(l);
+		return l.getWidth();
+	}
+	
+	/**
+	 * Calculates the height of a given Label.
 	 * JavaFX layout calculations just work by applying CSS and a layout pass, which occurs usually after a page is finished building.
 	 * Therefore, the label gets temporarily attached to {@link #dummyScene} (instead of {@link #scene}) 
 	 * in order to get the height before the page is finished building. 
 	 * For this to work firstly the width of the label with its content gets calculated and then divided by the parent Objects width to get the 
 	 * number of lines. Then the height of one individual line gets multiplied by it. In addition, an approximation for the distance of each line
-	 * gets added. This is necessary because the height is relevant to continue building the page.
+	 * gets added. This is necessary because the height is sometimes relevant to continue building the page.
 	 * <p>
 	 * Note: This calculation is _not_ exact and is based on approximations, because neither the insets nor the padding of the parent or the label
 	 * give back the exact spacing between them. Ultimately, there is no known way to get the spacing between each individual line in pixel depending
 	 * on it's size.
 	 * @param l The label of which the height gets calculated.
 	 * @param parentWidth The width of the parent object in order to calculate the number of lines.
-	 * @return Returns the height of a label
+	 * @return Returns the height of a label.
 	 */
 	static double calcHeightLabel(Label l, double parentWidth) {
 		dummyRoot.getChildren().add(l);
@@ -315,13 +383,5 @@ public class Main extends Application{
 		double height = (l.getHeight() * lines) + (l.getLineSpacing() + (l.getFont().getSize()) * (lines - 1));
 		dummyRoot.getChildren().remove(l);
 		return height;
-	}
-	
-	static double calcWidthLabel(Label l) {
-		dummyRoot.getChildren().add(l);
-		dummyRoot.applyCss();
-		dummyRoot.layout();
-		dummyRoot.getChildren().remove(l);
-		return l.getWidth();
 	}
 }

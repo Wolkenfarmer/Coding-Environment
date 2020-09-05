@@ -1,6 +1,3 @@
-/**
- * 
- */
 package environment;
 
 import javafx.geometry.Pos;
