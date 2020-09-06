@@ -1,7 +1,5 @@
 package environment;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -20,21 +18,22 @@ import javafx.scene.text.TextAlignment;
  */
 public class ModelFactory {
 	/** The width of a zone in {@link environment.Homepage#pSetModel}. 
-	 * This gets calculated in {@link #ModelFactory(double)} and used in {@link #buildButton(float, float, String, boolean)}.*/
+	 * This gets calculated in {@link #ModelFactory(double)} and 
+	 * used in {@link #buildButton(float, float, byte)} and {@link #buildRelation(float, float, short, boolean, String)}.*/
 	private static double modelZoneWidth;
 	/** The width of a button in {@link environment.Homepage#pSetModel}. 
 	 * This gets calculated in {@link #ModelFactory(double)} and 
-	 * used in {@link #buildButton(float, float, String, boolean)} and {@link #buildRelation(float, float, short, boolean, String)}.*/
+	 * used in {@link #buildButton(float, float, byte)}.*/
 	private static double modelButtonWidth;
 	/** The height of a zone in {@link environment.Homepage#pSetModel}. 
-	 * This gets used in {@link #buildButton(float, float, String, boolean)} and {@link #buildRelation(float, float, short, boolean, String)}.*/
+	 * This gets used in {@link #buildButton(float, float, byte)} and {@link #buildRelation(float, float, short, boolean, String)}.*/
 	private static double modelZoneHeight = 50;
 	
 	/** The button which is to be build. Contains {@link #vbContent} as it's labeling / content.*/
 	private Button b;
 	/** Layout container for the buttons labeling / content. 
 	 * Contains {@link #hbConName}, {@link #liConDiffer} and either {@link #lConSelectedItemHead} and lConSelectedItem 
-	 * (gets declared in {@link #buildButton(float, float, String, boolean)} because otherwise it wouldn't be possible to change the selected Item
+	 * (gets declared in {@link #buildButton(float, float, byte)} because otherwise it wouldn't be possible to change the selected Item
 	 * via the button's listener) or {@link #lConSub} and is part of {@link #b}.*/
 	private VBox vbContent;
 		/** Layout container for the buttons heading.
@@ -48,13 +47,16 @@ public class ModelFactory {
 		/** Label which displays "Selected item:" on {@link #b}. Either this and lConSelectedItem (see {@link #vbContent} for more information)
 		 * get displayed or {@link #lConSub}. It's part of {@link #vbContent}.*/
 		private Label lConSelectedItemHead;
+		/** Label which displays the selected item on {@link #b}. Either this and {@link #lConSelectedItemHead} get displayed or {@link #lConSub}.
+		 * It's part of {@link #vbContent}.*/
+		private Label lConSelectedItem;
 		/** Label which displays "compare in- and output" on {@link #b}. Either this gets displayed 
 		 * or {@link #lConSelectedItemHead} and lConSelectedItem (see {@link #vbContent} for more information). It's part of {@link #vbContent}.*/
 		private Label lConSub;
 
 		
 	/**
-	 * Constructor of the class which devides the given contentWidth into different zones for the obejcts.
+	 * Constructor of the class which divides the given contentWidth into different zones for the objects.
 	 * @param contentWidth Gives the width of the parent object.
 	 */
 	public ModelFactory(double contentWidth) {
@@ -68,17 +70,11 @@ public class ModelFactory {
 	 * for some of it's calculations.
 	 * @param layoutZoneX Defines the layoutX multiplied by {@link #modelZoneWidth}.
 	 * @param layoutZoneY Defines the layoutY multiplied by 50.
-	 * @param conName Sets the heading of the button.
-	 * @param selectableItems Defines whether the button should be able to present selected items like {@link environment.Homepage#bSetModSource} or
-	 * not like {@link environment.Homepage#bSetModDestination}.
+	 * @param type Specifies which button will be build, because each button of {@link Homepage#pSetModel} needs it's own {@link #lConName} text
+	 * and {@link #lConSelectedItem} text source (or even no at all).
 	 * @return Returns the finished button.
 	 */
-	public Button buildButton(float layoutZoneX, float layoutZoneY, String conName, boolean selectableItems) {
-		/** Label which displays the selected item on {@link #b}. Either this and {@link #lConSelectedItemHead} get displayed or {@link #lConSub}.
-		 * It needs to be dined inside the method in order to change it's text from {@link environment.SourcePage} via {@link environment.Homepage}.
-		 * It's part of {@link #vbContent}.*/
-		Label lConSelectedItem;
-		
+	public Button buildButton(float layoutZoneX, float layoutZoneY, byte type) {
 		b = new Button();
 		b.setLayoutX(layoutZoneX * modelZoneWidth);
 		b.setLayoutY(layoutZoneY * modelZoneHeight);
@@ -89,22 +85,40 @@ public class ModelFactory {
 			vbContent.setSpacing(10);
 				hbConName = new HBox();
 					lConName = new Label();
-					lConName.setText(conName);
+					switch (type) {
+					case 0:
+						lConName.setText("information source");
+						break;
+					case 1:
+						lConName.setText("encoder");
+						break;
+					case 2:
+						lConName.setText("noise source");
+						break;
+					case 3:
+						lConName.setText("decoder");
+						break;
+					case 4:
+						lConName.setText("destination");
+						break;
+					default:
+						lConName.setText("button type not found");
+					}
 					lConName.setTextFill(Color.WHITESMOKE);
 					lConName.setFont(Main.fNormalText);
 					lConName.setWrapText(true);
 					lConName.setTextAlignment(TextAlignment.CENTER);
 					lConName.setPrefHeight(Main.calcHeightLabel(lConName, modelButtonWidth));
 					lConName.setPrefWidth(modelButtonWidth - 10);
+					lConName.setAlignment(Pos.CENTER);
 				hbConName.getChildren().add(lConName);
-				hbConName.setAlignment(Pos.CENTER);
 				
 				liConDiffer = new Line();
 				liConDiffer.setStroke(Color.WHITESMOKE);
 				liConDiffer.setEndX(modelButtonWidth - 40);
 				liConDiffer.setTranslateX(8);
 				
-				if (selectableItems) {
+				if (type != 4) {
 					lConSelectedItemHead = new Label();
 					lConSelectedItemHead.setText("selected item:");
 					lConSelectedItemHead.setTextFill(Color.WHITESMOKE);
@@ -114,18 +128,39 @@ public class ModelFactory {
 					
 					lConSelectedItem = new Label();
 					lConSelectedItem.setText("nothing selected");
+					switch (type) {
+					case 0:	
+						switch (SourcePage.selectedSource) {
+						case 0:
+							lConSelectedItem.setText("nothing selected");
+							break;
+						case 1:
+							lConSelectedItem.setText("user input");
+							break;
+						case 2:
+							lConSelectedItem.setText("random digit book");
+							break;
+						default:
+							lConSelectedItem.setText("source type not found");
+						}
+						break;
+					case 1:
+						lConSelectedItem.setText("TODO");
+						break;
+					case 2:
+						lConSelectedItem.setText("TODO");
+						break;
+					case 3:
+						lConSelectedItem.setText("TODO");
+						break;
+					default:
+						lConSelectedItem.setText("button type not found");
+					}
 					lConSelectedItem.setTextFill(Color.INDIANRED);
 					lConSelectedItem.setFont(Main.fSmallTextItalic);
 					lConSelectedItem.setWrapText(true);
 					lConSelectedItem.setPadding(new Insets(-5, 0, 0, 10));
 					lConSelectedItem.setPrefHeight(Main.calcHeightLabel(lConSelectedItem, modelButtonWidth));
-					
-					b.textProperty().addListener(new ChangeListener<String>() {
-						public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-							lConSelectedItem.setText(newValue);
-							b.setText("");
-						}
-					});
 					
 					vbContent.getChildren().addAll(hbConName, liConDiffer, lConSelectedItemHead, lConSelectedItem);
 				} else {

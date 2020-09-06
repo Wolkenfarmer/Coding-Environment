@@ -104,11 +104,15 @@ public class Main extends Application{
 	static ArrayList<String> input = new ArrayList<String>();
 	/** Input handling. This unified event handler checks {@link #input} for (Esc) and closes the program when pressed.
 	 * This event handler is only used for {@link environment.Homepage}.
-	 * @see environment.Homepage#reload(Group) */
+	 * @see environment.Homepage#reload(Group, boolean) */
 	static EventHandler<KeyEvent> krlClose;
 	/** Input handling. This event handler checks {@link #input} for (Esc) and passes back to {@link Homepage} when pressed.
 	 * This event handler is used for the direct sub-pages of {@link Homepage}.*/
 	static EventHandler<KeyEvent> krlBackHome;
+	/** Boolean which defines whether {@link Homepage#pSetModel} has to be rebuild on the next call of the page or not. 
+	 * Gets changed to true if there is a setup-change of the communication experiment from {@link SourcePage}, ... TODO and back to false
+	 * when {@link #krlBackHome reloading the page}.*/
+		static boolean boUpdateSettingsModelHomepage;
 	
 	/** Standard distance from sub-headings to the content below them.*/
 	static int distanceToHeading = 80;
@@ -193,11 +197,11 @@ public class Main extends Application{
 		sbRoot = new Group();
 		root = new Group();
 		scene = new Scene(sbRoot, Color.grayRgb(40));
-		scene.getStylesheets().add("css/tableView.css");
+		scene.getStylesheets().addAll("css/tableView.css", "css/scrollbar.css");
 		dummyScene = new Scene(dummyRoot = new Group());
 		        
 		stage = new Stage();
-		stage.setTitle("Source / Channel Coding Environment");
+		stage.setTitle("Coding Environment");
 		stage.setFullScreen(true);
 		stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 		stage.setResizable(false);   
@@ -239,7 +243,8 @@ public class Main extends Application{
             public void handle(KeyEvent e) {
                 if (Main.input.contains("ESCAPE")) {
                 	root.getChildren().clear();
-                	Main.homepage.reload(root);
+                	Main.homepage.reload(root, boUpdateSettingsModelHomepage);
+                	boUpdateSettingsModelHomepage = false;
                 }
             }
         };
@@ -379,9 +384,28 @@ public class Main extends Application{
 		dummyRoot.getChildren().add(l);
 		dummyRoot.applyCss();
 		dummyRoot.layout();
-		double lines = Math.ceil(l.getWidth() / (parentWidth - 20));
+		double lines = Math.ceil(l.getWidth() / (parentWidth - 10));
 		double height = (l.getHeight() * lines) + (l.getLineSpacing() + (l.getFont().getSize()) * (lines - 1));
 		dummyRoot.getChildren().remove(l);
 		return height;
+	}
+	
+	
+	/**
+	 * Updates {@link #scrollbar} when loading another page. Firstly resets the layout of {@link #root}, 
+	 * secondly calculates the new {@link #contentHeight}, then sets the new values for the scrollbar and lastly sets 
+	 * it's visibility (appears only if the content height is bigger than the screen's height.
+	 * @param lastObject The last layout object on the page in order to calculate the {@link #contentHeight}.
+	 */
+	static void updateScrollbar(Region lastObject) {
+		root.setLayoutY(0);
+		contentHeight = lastObject.getLayoutY() + calcHeight(lastObject) + pos1 / 3;
+		scrollbar.setMax(contentHeight - scene.getHeight());
+		scrollbar.setBlockIncrement(contentHeight);
+        if (scene.getHeight() >= contentHeight) {
+        	scrollbar.setVisible(false);
+        } else {
+        	scrollbar.setVisible(true);
+        }
 	}
 }

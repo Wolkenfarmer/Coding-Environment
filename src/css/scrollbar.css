@@ -1,0 +1,9 @@
+.scroll-bar:vertical,
+.scroll-bar:vertical > .track,
+.scroll-bar:vertical > .track-background, 
+.scroll-bar:horizontal,
+.scroll-bar:horizontal > .track,
+.scroll-bar:horizontal > .track-background {
+    -fx-background-color: transparent;
+    -fx-border-color: rgba(245, 245, 245, 0.5);
+}

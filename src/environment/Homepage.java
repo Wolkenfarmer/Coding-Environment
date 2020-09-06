@@ -31,11 +31,11 @@ public class Homepage {
 	/** Layout container representing the given root from {@link environment.Main} to attach the GUI-elements to.
 	 * It's content ({@link #hbHeading}, {@link #pSettings}, {@link #pControls}, {@link #pResults}) gets build in {@link #Homepage(Group)}.
 	 * When loading another page it's content gets first removed and then the layout container will be given to the other class.
-	 * When reloading the page {@link #reload(Group)} will be used to re-attach the content to the root.*/
+	 * When reloading the page {@link #reload(Group, boolean)} will be used to re-attach the content to the root.*/
 	private static Group root;
 	/** Layout container for the headline segment. Contains {@link #lHeadline}, {@link #rHeadlineSpacer} and {@link #vbHeadline}.*/
 	private static HBox hbHeading;
-		/** Label which displays the headline "Source / Channel Coding Environment". It's part of {@link #hbHeading}.*/
+		/** Label which displays the headline "Coding Environment". It's part of {@link #hbHeading}.*/
 		private static Label lHeadline;
 		/** A spacer for the right-hand-side-layout of {@link #vbHeadline}. It's part of {@link #hbHeading}.*/
 		private static Region rHeadlineSpacer;
@@ -54,7 +54,7 @@ public class Homepage {
 		 * Contains {@link #bSetModSource}, {@link #bSetModEncoder}, {@link #bSetModNoise}, {@link #bSetModDecoder} and {@link #bSetModDestination} */
 		private static Pane pSetModel;
 			/** Information source button of the model in settings. Uses {@link environment.Main#baNormalButton} as background.
-			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
+			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to {@link SourcePage}.*/
 			static Button bSetModSource;
 			/** Encoder button of the model in settings. Uses {@link environment.Main#baNormalButton} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
@@ -64,7 +64,7 @@ public class Homepage {
 			static Button bSetModNoise;
 			/** Decoder button of the model in settings. Uses {@link environment.Main#baNormalButton} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
-			private static Button bSetModDecoder;
+			static Button bSetModDecoder;
 			/** Destination button of the model in settings. Uses {@link environment.Main#baNormalButton} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
 			private static Button bSetModDestination;
@@ -128,10 +128,14 @@ public class Homepage {
 	/** Unified EventHandler for {@link #bSetModDecoder} and {@link #bSetModEncoder}.*/
 	private static EventHandler<MouseEvent> evEnDecoderExited;
 	
+	/** Reference to the model factory for building the {@link ModelFactory#buildButton(float, float, byte) buttons} 
+	 * and {@link ModelFactory#buildRelation(float, float, short, boolean, String) relations} in {@link #pSetModel}.*/
+	private static ModelFactory cSetModFactory;
+	
 	
 	/**
 	 * Builds the homepage of the application.
-	 * This constructor uses {@link ModelFactory#buildButton(float, float, String, boolean)} for the buttons 
+	 * This constructor uses {@link ModelFactory#buildButton(float, float, byte)} for the buttons 
 	 * and {@link ModelFactory#buildRelation(float, float, short, boolean, String)} for the relations in {@link #pSetModel}.
 	 * The homepage gets scaled accordingly to {@link Main#stageHeight} and {@link Main#stageWidth}.
 	 * Normally, the height of {@link #pResults} gets calculated in order to not exceed the screen's size, 
@@ -147,7 +151,7 @@ public class Homepage {
 		hbHeading.setLayoutY(Main.pos1 / 3);
 		hbHeading.setPrefWidth(Main.contentWidth);
 			lHeadline = new Label();
-			lHeadline.setText("Source / Channel Coding Environment");
+			lHeadline.setText("Coding Environment");
 			lHeadline.setTextFill(Color.WHITESMOKE);
 			lHeadline.setFont(Main.fHeadline);
 			lHeadline.setAlignment(Pos.CENTER_LEFT);
@@ -183,12 +187,12 @@ public class Homepage {
 			
 			pSetModel = new Pane();
 			pSetModel.setLayoutY(Main.distanceToSubheading);
-				ModelFactory cSetModFactory = new ModelFactory(Main.contentWidth); 
-				bSetModSource = cSetModFactory.buildButton(0, 0, "information source", true);
-				bSetModEncoder = cSetModFactory.buildButton(3, 0, "encoder", true);
-				bSetModNoise = cSetModFactory.buildButton(5.5f, 2, "noise source", true);
-				bSetModDecoder = cSetModFactory.buildButton(8, 0, "decoder", true);
-				bSetModDestination = cSetModFactory.buildButton(11, 0, "destination", false);
+				cSetModFactory = new ModelFactory(Main.contentWidth); 
+				bSetModSource = cSetModFactory.buildButton(0, 0, (byte) 0);
+				bSetModEncoder = cSetModFactory.buildButton(3, 0, (byte) 1);
+				bSetModNoise = cSetModFactory.buildButton(5.5f, 2, (byte) 2);
+				bSetModDecoder = cSetModFactory.buildButton(8, 0, (byte) 3);
+				bSetModDestination = cSetModFactory.buildButton(11, 0, (byte) 4);
 				
 				gSetModRelSoToEn = cSetModFactory.buildRelation(2, 1, ((short) 1), false, "message");
 				gSetModRelEnToDe = cSetModFactory.buildRelation(5, 1, ((short) 3), false, "signal / channel");
@@ -231,7 +235,7 @@ public class Homepage {
 			    
 			    tvResTabValue = new TableColumn<>("Value");
 			    tvResTabValue.setResizable(false);
-			    tvResTabValue.prefWidthProperty().bind(tvResTable.widthProperty().subtract(tvResTabDescription.getPrefWidth() + 18));
+			    tvResTabValue.prefWidthProperty().bind(tvResTable.widthProperty().subtract(tvResTabDescription.getPrefWidth() + 20));
 			    tvResTabValue.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<String[], String>, ObservableValue<String>>() {
 			        public ObservableValue<String> call(TableColumn.CellDataFeatures<String[], String> p) {
 			            String[] x = p.getValue();
@@ -316,27 +320,72 @@ public class Homepage {
 				bConButHelp.setGraphic(hbConButHelp);
 			vbConButtons.getChildren().addAll(bConButRun, bConButSaveResult, bConButHelp);
 	    pControls.getChildren().addAll(lConHeading, vbConButtons);
-		
-		
-		Main.contentHeight = pResults.getLayoutY() + Main.calcHeight(pResults) + Main.pos1 / 3;
-		Main.scrollbar.setMax(Main.contentHeight - Main.scene.getHeight());
-		Main.scrollbar.setBlockIncrement(Main.contentHeight);
-        if (Main.scene.getHeight() >= Main.contentHeight) {Main.scrollbar.setVisible(false);}
         
         
-        addListener();
+        addSettingsListener();
+        addControlsListener();
+        Main.updateScrollbar(pControls);
         root.getChildren().addAll(hbHeading, pSettings, pResults, pControls);
 	}
 	
 	
 	/**
-	 * Adds the listener to the Buttons of {@link Homepage}. 
-	 * They individually change the background of the button depending on whether the mouse hovers over it or not 
-	 * and define the action of the button when clicked.
+	 * Adds the listener to the buttons of {@link #pControls}. 
+	 * They individually change the background of the buttons depending on whether the mouse hovers over it or not 
+	 * and define the action of the buttons when clicked.
 	 * This could also be done in {@link #Homepage(Group)} but for a better to look at program it's in a separate method.
 	 */
-	private void addListener() {
-		// Model
+	private void addControlsListener() {
+		bConButRun.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent t) {
+				System.out.println("bConButRun got pressed!");
+	        }
+	    });
+		bConButRun.setOnMouseEntered(Main.evButGreEntered);
+		bConButRun.setOnMouseExited(Main.evButGreExited);
+		
+		bConButSaveResult.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent t) {
+				System.out.println("bConButSaveResults got pressed!");
+	        }
+	    });
+		bConButSaveResult.setOnMouseEntered(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e) {
+				bConButSaveResult.setBackground(Main.baBrownFocusedButton);
+			}
+	    });
+		bConButSaveResult.setOnMouseExited(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e) {
+				bConButSaveResult.setBackground(Main.baBrownButton);
+			}
+		});
+		
+		bConButHelp.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent t) {
+				System.out.println("bConButHelp got pressed!");
+	        }
+	    });
+		bConButHelp.setOnMouseEntered(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e) {
+				bConButHelp.setBackground(Main.baPurpleFocusedButton);
+			}
+	    });
+		bConButHelp.setOnMouseExited(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e) {
+				bConButHelp.setBackground(Main.baPurpleButton);
+			}
+		});
+	}
+	
+	
+	/**
+	 * Adds the listener to the buttons of {@link #pSettings}. 
+	 * They individually change the background of the buttons depending on whether the mouse hovers over it or not 
+	 * and define the action of the buttons when clicked.
+	 * In order to be able to rebuild the settings section individually if an update occurred (see {@link Main#boUpdateSettingsModelHomepage}),
+	 * this method is separate from {@link #addControlsListener()}.
+	 */
+	private void addSettingsListener() {
 		bSetModSource.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent t) {
 				System.out.println("bSetModSource got pressed!");
@@ -390,59 +439,41 @@ public class Homepage {
 		bSetModDecoder.setOnAction(evEnDecoderPressed);
 		bSetModDecoder.addEventHandler(MouseEvent.MOUSE_ENTERED, evEnDecoderEntered);
 		bSetModDecoder.addEventHandler(MouseEvent.MOUSE_EXITED, evEnDecoderExited);
-		
-		
-		//Controls
-		bConButRun.setOnAction(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent t) {
-				System.out.println("bConButRun got pressed!");
-	        }
-	    });
-		bConButRun.setOnMouseEntered(Main.evButGreEntered);
-		bConButRun.setOnMouseExited(Main.evButGreExited);
-		
-		bConButSaveResult.setOnAction(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent t) {
-				System.out.println("bConButSaveResults got pressed!");
-	        }
-	    });
-		bConButSaveResult.setOnMouseEntered(new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent e) {
-				bConButSaveResult.setBackground(Main.baBrownFocusedButton);
-			}
-	    });
-		bConButSaveResult.setOnMouseExited(new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent e) {
-				bConButSaveResult.setBackground(Main.baBrownButton);
-			}
-		});
-		
-		bConButHelp.setOnAction(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent t) {
-				System.out.println("bConButHelp got pressed!");
-	        }
-	    });
-		bConButHelp.setOnMouseEntered(new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent e) {
-				bConButHelp.setBackground(Main.baPurpleFocusedButton);
-			}
-	    });
-		bConButHelp.setOnMouseExited(new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent e) {
-				bConButHelp.setBackground(Main.baPurpleButton);
-			}
-		});
 	}
 	
 	
 	/**
 	 * Reloads the homepage. Re-attaches the page's elements ({@link #hbHeading}, {@link #pSettings}, {@link #pResults}, {@link #pControls})
 	 * and {@link environment.Main#krlClose}.
-	 * This method gets called by the other pages when they get closed.
+	 * Rebuilds the buttons of {@link #pSetModel} if changes on the communication experiment setup were made.
+	 * In addition, {@link Main#updateScrollbar(Region)} gets called (see {@link #Homepage(Group)} for more information relating to it's view-cases).
+	 * This method gets called by the sub-pages when they get closed.
 	 * @param parent Layout container to attach it's layout parts to.
+	 * @param updateSettingsModel Defines whether changes on the communication experiment setup were made and the buttons have to be revuild or not.
 	 */
-	void reload(Group parent) {
+	void reload(Group parent, boolean updateSettingsModel) {
 		root = parent;
+		
+		if (updateSettingsModel) {
+			pSettings.getChildren().remove(pSetModel);
+			pSetModel.getChildren().removeAll(bSetModSource, bSetModEncoder, bSetModNoise, bSetModDecoder, bSetModDestination);
+			
+			bSetModSource = cSetModFactory.buildButton(0, 0, (byte) 0);
+			bSetModEncoder = cSetModFactory.buildButton(3, 0, (byte) 1);
+			bSetModNoise = cSetModFactory.buildButton(5.5f, 2, (byte) 2);
+			bSetModDecoder = cSetModFactory.buildButton(8, 0, (byte) 3);
+			bSetModDestination = cSetModFactory.buildButton(11, 0, (byte) 4);
+			
+			addSettingsListener();
+			pSetModel.getChildren().addAll(bSetModSource, bSetModEncoder, bSetModNoise, bSetModDecoder, bSetModDestination);
+			pSettings.getChildren().add(pSetModel);
+			
+			pResults.setLayoutY(pSettings.getLayoutY() + Main.calcHeight(pSettings) + Main.distanceToSegment);
+			tvResTable.setPrefHeight(Main.stageHeight - pResults.getLayoutY() - tvResTable.getLayoutY() - Main.pos1 / 3);
+			pControls.setLayoutY(pResults.getLayoutY());
+		}
+		
+		Main.updateScrollbar(pControls);
 		root.getChildren().addAll(hbHeading, pSettings, pResults, pControls);
 		Main.scene.setOnKeyReleased(Main.krlClose);
 	}

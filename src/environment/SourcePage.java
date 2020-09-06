@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -23,6 +24,13 @@ import javafx.scene.text.TextFlow;
  * @author Wolkenfarmer
  */
 public class SourcePage {
+	/**
+	 * Saves the selected information source for further use in environment. This byte specifies the displayed text in 
+	 * {@link Homepage#bSetModSource} and {@link #lConSelectedItem}.
+	 *  
+	 */
+	static byte selectedSource = 0;
+	
 	/** Layout container representing the given root from {@link Homepage} to attach the GUI-elements to.
 	 * It's content ({@link #tfHeading}, {@link #pOverview}, {@link #pOptions}, {@link #pInformation}) gets build in {@link #SourcePage(Group)}.
 	 * When loading another page it's content gets first removed and then the layout container will be given to the other class.
@@ -30,7 +38,7 @@ public class SourcePage {
 	private static Group root;
 	/** Layout container for the heading segment. Contains {@link #lHeaHome} and {@link #lHeaHere}.*/
 	private static TextFlow tfHeading;
-		/** Label which displays the heading segment "SCCE \  " (bold). It's part of {@link #tfHeading}.*/
+		/** Label which displays the heading segment "CE \  " (bold). It's part of {@link #tfHeading}.*/
 		private static Label lHeaHome;
 		/** Label which displays the heading segment "Information source" (not bold). It's part of {@link #tfHeading}.*/
 		private static Label lHeaHere;
@@ -113,8 +121,8 @@ public class SourcePage {
 	 * Builds the information source page of the application.
 	 * The information source page gets scaled accordingly to {@link Main#stageHeight} and {@link Main#stageWidth}.
 	 * Normally, the height of {@link #pInformation} gets calculated in order to not exceed the screen's size, 
-	 * but if the screen is too small to even fit {@link #pOptions} (for 3 buttons) on it, 
-	 * the controls height will be the minimum height of results and {@link Main#scrollbar} will be displayed.
+	 * but if the screen is too small to even fit {@link #pOptions} on it, 
+	 * the options height will be the minimum height of the information segment and {@link Main#scrollbar} will be displayed.
 	 * @param parent Layout container to attach it's layout parts to.
 	 */
 	public SourcePage(Group parent) {
@@ -125,7 +133,7 @@ public class SourcePage {
 		tfHeading.setLayoutY(Main.pos1 / 3);
 		tfHeading.setPrefWidth(Main.contentWidth);
 			lHeaHome = new Label();
-			lHeaHome.setText("SCCE \\  ");
+			lHeaHome.setText("CE \\  ");
 			lHeaHome.setTextFill(Color.WHITESMOKE);
 			lHeaHome.setFont(Main.fHeadline);
 			lHeaHome.setAlignment(Pos.CENTER_LEFT);
@@ -150,62 +158,7 @@ public class SourcePage {
 			
 			pOveModel = new Pane();
 			pOveModel.setLayoutY(Main.distanceToSubheading);
-				bOveModSource = new Button();
-				bOveModSource.setBackground(Main.baNormalButton);
-				bOveModSource.setBorder(Main.boNormalWhite);
-				bOveModSource.setMaxWidth(Main.stageWidth / 2);
-					hbOveModSouContent = new HBox();
-					hbOveModSouContent.setSpacing(20);
-					hbOveModSouContent.setPadding(new Insets(5));
-						vbOveModSouConHeading = new VBox();
-						vbOveModSouConHeading.setMaxWidth(Main.stageWidth / 2 / 3);
-							lOveModSouConHeading = new Label();
-							lOveModSouConHeading.setText("Information Source");
-							lOveModSouConHeading.setTextFill(Color.WHITESMOKE);
-							lOveModSouConHeading.setFont(Main.fNormalText);
-							lOveModSouConHeading.setWrapText(true);
-							lOveModSouConHeading.setTextAlignment(TextAlignment.CENTER);
-							lOveModSouConHeading.setPrefHeight(Main.calcHeightLabel(lOveModSouConHeading, vbOveModSouConHeading.getMaxWidth()));
-							lOveModSouConHeading.setPrefWidth(Main.calcWidthLabel(lOveModSouConHeading) + 20);
-						vbOveModSouConHeading.getChildren().add(lOveModSouConHeading);
-						vbOveModSouConHeading.setAlignment(Pos.CENTER_LEFT);
-						
-						liOveModSouConDiffer = new Line();
-						liOveModSouConDiffer.setStroke(Color.WHITESMOKE);
-						
-						vbOveModSouSelectedItem = new VBox();
-						vbOveModSouSelectedItem.setMaxWidth(bOveModSource.getMaxWidth() / 3 * 2 - 
-								(hbOveModSouContent.getSpacing() + hbOveModSouContent.getPadding().getLeft() * 2));
-							lConSelectedItemHead = new Label();
-							lConSelectedItemHead.setText("selected item:");
-							lConSelectedItemHead.setTextFill(Color.WHITESMOKE);
-							lConSelectedItemHead.setFont(Main.fSmallText);
-							lConSelectedItemHead.setWrapText(true);
-							lConSelectedItemHead.setPrefHeight(Main.calcHeightLabel(lConSelectedItemHead, 
-									Main.stageWidth / 2 - (hbOveModSouContent.getSpacing() + hbOveModSouContent.getPadding().getLeft() * 2)
-									- vbOveModSouSelectedItem.getPrefWidth()));
-							
-							lConSelectedItem = new Label();
-							lConSelectedItem.setText("nothing selected");
-							lConSelectedItem.setTextFill(Color.INDIANRED);
-							lConSelectedItem.setFont(Main.fSmallTextItalic);
-							lConSelectedItem.setWrapText(true);
-							lConSelectedItem.setPadding(new Insets(0, 0, 0, 10));
-							lConSelectedItem.setPrefHeight(Main.calcHeightLabel(lConSelectedItem, 
-									Main.stageWidth / 2 - (hbOveModSouContent.getSpacing() + hbOveModSouContent.getPadding().getLeft() * 2)
-									- vbOveModSouSelectedItem.getPrefWidth()));
-							lConSelectedItem.setPrefWidth(Main.calcWidthLabel(lConSelectedItem) + 20);
-						vbOveModSouSelectedItem.getChildren().addAll(lConSelectedItemHead, lConSelectedItem);
-						vbOveModSouSelectedItem.setAlignment(Pos.CENTER_LEFT);
-						
-						bOveModSource.setPrefWidth(bOveModSource.getMaxWidth() 
-								- ((vbOveModSouConHeading.getMaxWidth() - Main.calcWidth(vbOveModSouConHeading))
-								+ (vbOveModSouSelectedItem.getMaxWidth() - Main.calcWidth(vbOveModSouSelectedItem))));
-					hbOveModSouContent.getChildren().addAll(vbOveModSouConHeading, liOveModSouConDiffer, vbOveModSouSelectedItem);	
-					double sourceButtonContentHeight = Main.calcHeight(hbOveModSouContent);
-					liOveModSouConDiffer.setEndY(sourceButtonContentHeight - 10);
-				bOveModSource.setGraphic(hbOveModSouContent);
-			
+				buildOveSourceButton("nothing selected");
 				
 				bOveModEncoder = new Button();
 				bOveModEncoder.setBackground(Main.baNormalButton);
@@ -225,9 +178,7 @@ public class SourcePage {
 				bOveModEncoder.setGraphic(vbOveModEncHeading);
 				bOveModEncoder.setLayoutX(Main.pos1 * 6 - Main.calcWidth(bOveModEncoder));
 				
-				aOveModRelation = new Arrow();
-				double yArrow = Main.calcHeight(bOveModSource) / 2;
-				aOveModRelation = aOveModRelation.getArrow(Main.calcWidth(bOveModSource), yArrow, bOveModEncoder.getLayoutX(), yArrow, 20, 15, false, "message");
+				buildOveArrow();
 			pOveModel.getChildren().addAll(bOveModSource, aOveModRelation, bOveModEncoder);
 		pOverview.getChildren().addAll(lOveHeading, pOveModel);
 		
@@ -281,7 +232,6 @@ public class SourcePage {
 	    pOptions.getChildren().addAll(lOptHeading, vbOptButtons);
 	    	    
 	    
-	    
 	    pInformation = new Pane();
 		pInformation.setLayoutX(Main.pos1 * 3);
 		pInformation.setLayoutY(pOptions.getLayoutY());
@@ -294,17 +244,17 @@ public class SourcePage {
 			pInfContent = new Pane();
 			pInfContent.setLayoutY(Main.distanceToSubheading);
 			pInfContent.setPrefHeight(Main.stageHeight - pInformation.getLayoutY() - pInfContent.getLayoutY() - Main.pos1 / 3);
-			pInfContent.setMinHeight(250 - pInfContent.getLayoutY());					// Minimum height -> would end with 3. button of pOptions
-			pInfContent.setPrefWidth(Main.stageWidth / 2);
+			pInfContent.setMinHeight(180 - pInfContent.getLayoutY());					// Minimum height -> would end with 3. button of pOptions
 				lInfConDefault = new Label();
 				lInfConDefault.setText("No option picked");
 				lInfConDefault.setTextFill(Color.INDIANRED);
 				lInfConDefault.setFont(Main.fNormallTextItalic);
 			pInfContent.getChildren().add(lInfConDefault);
 		pInformation.getChildren().addAll(lInfHeading, pInfContent);
-	    
+		
 		
 		addListener();
+		Main.updateScrollbar(pInformation);
 		root.getChildren().addAll(tfHeading, pOverview, pOptions, pInformation);
 	}
 	
@@ -318,7 +268,6 @@ public class SourcePage {
 	private void addListener() {
 		Main.scene.setOnKeyReleased(Main.krlBackHome);
 		
-		// button listener
 		bOptButUserInput.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent t) {
 				System.out.println("bOptButUserInput got pressed!");
@@ -329,17 +278,21 @@ public class SourcePage {
 				bOptButBook.setOnMouseEntered(Main.evButEntered);
 				bOptButBook.setOnMouseExited(Main.evButExited);
 				
-				lInfHeading.setText("Information \\  User Input");
-				lConSelectedItem.setText("User Input");
-				Homepage.bSetModSource.setText("User Input");
-				pInfContent.getChildren().clear();
+				lInfHeading.setText("Information \\  User input");
+				pOveModel.getChildren().removeAll(bOveModSource, aOveModRelation);
+				buildOveSourceButton("user input");
+				buildOveArrow();
+				pOveModel.getChildren().addAll(bOveModSource, aOveModRelation);
 				
+				pInfContent.getChildren().clear();
 				if (UserInput.builtUI) {
 					Main.infSource_UserInput.reloadUI(pInfContent);
 				} else {
 					Main.infSource_UserInput.buildUI(pInfContent);
 				}
 				
+				selectedSource = 1;
+				Main.boUpdateSettingsModelHomepage = true;
 	        }
 	    });
 		
@@ -354,9 +307,15 @@ public class SourcePage {
 				bOptButBook.setOnMouseExited(Main.evButGreExited);
 				
 				lInfHeading.setText("Information \\  Random digit book");
-				lConSelectedItem.setText("Random digit book");
-				Homepage.bSetModSource.setText("Random digit book");
+				pOveModel.getChildren().removeAll(bOveModSource, aOveModRelation);
+				buildOveSourceButton("random digit book");
+				buildOveArrow();
+				pOveModel.getChildren().addAll(bOveModSource, aOveModRelation);
+				
 				pInfContent.getChildren().clear();
+				
+				selectedSource = 2;
+				Main.boUpdateSettingsModelHomepage = true;
 	        }
 	    });
 		
@@ -368,15 +327,99 @@ public class SourcePage {
 	
 	
 	/**
+	 * Builds / instantiates the source button of {@link #pOveModel}. This is a separate method from {@link #SourcePage(Group)} in order 
+	 * to be able to separately re-build the model if an information source gets chosen.
+	 * This method gets called by the constructor and the buttons event handler from {@link #vbOptButtons} (see {@link #addListener()}). 
+	 * @param selectedItem Defines the text to be displayed as selected information source item.
+	 */
+	private void buildOveSourceButton(String selectedItem) {
+		bOveModSource = new Button();
+		bOveModSource.setBackground(Main.baNormalButton);
+		bOveModSource.setBorder(Main.boNormalWhite);
+		bOveModSource.setMaxWidth(Main.stageWidth / 2);
+			hbOveModSouContent = new HBox();
+			hbOveModSouContent.setSpacing(20);
+			hbOveModSouContent.setPadding(new Insets(5));
+				vbOveModSouConHeading = new VBox();
+				vbOveModSouConHeading.setMaxWidth(Main.stageWidth / 2 / 3);
+					lOveModSouConHeading = new Label();
+					lOveModSouConHeading.setText("Information Source");
+					lOveModSouConHeading.setTextFill(Color.WHITESMOKE);
+					lOveModSouConHeading.setFont(Main.fNormalText);
+					lOveModSouConHeading.setWrapText(true);
+					lOveModSouConHeading.setTextAlignment(TextAlignment.CENTER);
+					lOveModSouConHeading.setPrefHeight(Main.calcHeightLabel(lOveModSouConHeading, vbOveModSouConHeading.getMaxWidth()));
+					lOveModSouConHeading.setPrefWidth(Main.calcWidthLabel(lOveModSouConHeading) + 20);
+				vbOveModSouConHeading.getChildren().add(lOveModSouConHeading);
+				vbOveModSouConHeading.setAlignment(Pos.CENTER_LEFT);
+				
+				liOveModSouConDiffer = new Line();
+				liOveModSouConDiffer.setStroke(Color.WHITESMOKE);
+				
+				vbOveModSouSelectedItem = new VBox();
+				vbOveModSouSelectedItem.setMaxWidth(bOveModSource.getMaxWidth() / 3 * 2 - 
+						(hbOveModSouContent.getSpacing() + hbOveModSouContent.getPadding().getLeft() * 2));
+					lConSelectedItemHead = new Label();
+					lConSelectedItemHead.setText("selected item:");
+					lConSelectedItemHead.setTextFill(Color.WHITESMOKE);
+					lConSelectedItemHead.setFont(Main.fSmallText);
+					lConSelectedItemHead.setWrapText(true);
+					lConSelectedItemHead.setPrefHeight(Main.calcHeightLabel(lConSelectedItemHead, 
+							Main.stageWidth / 2 - (hbOveModSouContent.getSpacing() + hbOveModSouContent.getPadding().getLeft() * 2)
+							- vbOveModSouConHeading.getMaxWidth()));
+					lConSelectedItemHead.setPrefWidth(Main.calcWidthLabel(lConSelectedItemHead) + 20);
+					lConSelectedItemHead.setMaxWidth(Main.stageWidth / 2 - (hbOveModSouContent.getSpacing() + 
+							hbOveModSouContent.getPadding().getLeft() * 2) - vbOveModSouConHeading.getMaxWidth());
+					
+					
+					lConSelectedItem = new Label();
+					lConSelectedItem.setText(selectedItem);
+					lConSelectedItem.setTextFill(Color.INDIANRED);
+					lConSelectedItem.setFont(Main.fSmallTextItalic);
+					lConSelectedItem.setWrapText(true);
+					lConSelectedItem.setPadding(new Insets(0, 0, 0, 10));
+					lConSelectedItem.setPrefHeight(Main.calcHeightLabel(lConSelectedItem, 
+							Main.stageWidth / 2 - (hbOveModSouContent.getSpacing() + hbOveModSouContent.getPadding().getLeft() * 2)
+							- vbOveModSouConHeading.getMaxWidth()));
+					lConSelectedItem.setPrefWidth(Main.calcWidthLabel(lConSelectedItem) + 20);
+					lConSelectedItem.setMaxWidth(Main.stageWidth / 2 - (hbOveModSouContent.getSpacing() + 
+							hbOveModSouContent.getPadding().getLeft() * 2) - vbOveModSouConHeading.getMaxWidth());
+				vbOveModSouSelectedItem.getChildren().addAll(lConSelectedItemHead, lConSelectedItem);
+				vbOveModSouSelectedItem.setAlignment(Pos.CENTER_LEFT);
+				
+				bOveModSource.setPrefWidth(bOveModSource.getMaxWidth() 
+						- ((vbOveModSouConHeading.getMaxWidth() - Main.calcWidth(vbOveModSouConHeading))
+						+ (vbOveModSouSelectedItem.getMaxWidth() - Main.calcWidth(vbOveModSouSelectedItem))));
+			hbOveModSouContent.getChildren().addAll(vbOveModSouConHeading, liOveModSouConDiffer, vbOveModSouSelectedItem);	
+			liOveModSouConDiffer.setEndY(Main.calcHeight(hbOveModSouContent) - 10);
+		bOveModSource.setGraphic(hbOveModSouContent);
+	}
+	
+	/**
+	 * Builds / instantiates the arrow from {@link Arrow#getArrow(double, double, double, double, double, double, boolean, String)}
+	 * for {@link #pOveModel}. This is a separate method from {@link #SourcePage(Group)} in order to be able to separately re-build the model
+	 * if an information source gets chosen.
+	 * This method gets called by the constructor and the buttons event handler from {@link #vbOptButtons} (see {@link #addListener()}). 
+	 */
+	private void buildOveArrow() {
+		aOveModRelation = new Arrow();
+		double yArrow = Main.calcHeight(bOveModSource) / 2;
+		aOveModRelation = aOveModRelation.getArrow(Main.calcWidth(bOveModSource), yArrow, bOveModEncoder.getLayoutX(), yArrow, 
+				20, 15, false, "message");
+	}
+	
+	
+	/**
 	 * Reloads the source page. Re-attaches the page's elements ({@link #tfHeading}, {@link #pOverview}, {@link #pOptions}, {@link #pInformation})
-	 * and {@link Main#krlBackHome}.
+	 * and {@link Main#krlBackHome}. In addition, {@link Main#updateScrollbar(Region)} gets called 
+	 * (see {@link #SourcePage(Group)} for more information relating to it's view-cases).
 	 * This method gets called by the {@link Homepage homepage}, when the page is already not null and {@link Homepage#bSetModSource} gets pressed.
 	 * @param parent Layout container to attach it's layout parts to.
 	 */
 	void reload(Group parent) {
-		System.out.println("test");
 		root = parent;
+		Main.updateScrollbar(pInformation);
 		root.getChildren().addAll(tfHeading, pOverview, pOptions, pInformation);
-		Main.scene.setOnKeyReleased(Main.krlBackHome);
+		Main.scene.setOnKeyReleased(Main.krlBackHome);		
 	}
 }
