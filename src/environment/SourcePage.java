@@ -25,24 +25,26 @@ import javafx.scene.text.TextFlow;
  */
 public class SourcePage {
 	/**
-	 * Saves the selected information source for further use in environment. This byte specifies the displayed text in 
-	 * {@link Homepage#bSetModSource} and {@link #lConSelectedItem}.
-	 *  
+	 * Saves the selected information source for further use in the environment. This byte specifies the displayed text in 
+	 * {@link Homepage#bSetModSource} and {@link #lConSelectedItem}. <br>
+	 * 0: No option picked
+	 * 1: {@link infSources.UserInput user input}
+	 * 2: random digit book
 	 */
-	static byte selectedSource = 0;
+	static byte selectedOption = 0;
 	
 	/** Layout container representing the given root from {@link Homepage} to attach the GUI-elements to.
 	 * It's content ({@link #tfHeading}, {@link #pOverview}, {@link #pOptions}, {@link #pInformation}) gets build in {@link #SourcePage(Group)}.
 	 * When loading another page it's content gets first removed and then the layout container will be given to the other class.
 	 * When reloading the page {@link #reload(Group)} will be used to re-attach the content to the root.*/
 	private static Group root;
-	/** Layout container for the heading segment. Contains {@link #lHeaHome} and {@link #lHeaHere}.*/
+	/** Layout container for the heading segment. Contains {@link #lHeaHome} and {@link #lHeaHere} and gets added to {@link #root}.*/
 	private static TextFlow tfHeading;
 		/** Label which displays the heading segment "CE \  " (bold). It's part of {@link #tfHeading}.*/
 		private static Label lHeaHome;
 		/** Label which displays the heading segment "Information source" (not bold). It's part of {@link #tfHeading}.*/
 		private static Label lHeaHere;
-	/** Layout container for the overview segment. Contains {@link #lOveHeading} and {@link #pOveModel}.*/
+	/** Layout container for the overview segment. Contains {@link #lOveHeading} and {@link #pOveModel} and gets added to {@link #root}.*/
 	private static Pane pOverview;
 		/** Label which displays the sub-heading "Overview". It's part of {@link #pOverview}.*/
 		private static Label lOveHeading;
@@ -83,7 +85,7 @@ public class SourcePage {
 			/** Relation for the model in overview. Connects {@link #bOveModSource} with {@link #bOveModEncoder} and is part of {@link #pOveModel}.*/
 			private static Arrow aOveModRelation;
 	/** Layout container for the options segment. Displays the different information sources.
-	 * Contains {@link #lOptHeading} and {@link #vbOptButtons}.*/
+	 * Contains {@link #lOptHeading} and {@link #vbOptButtons} and gets added to {@link #root}.*/
 	private static Pane pOptions;
 		/** Label which displays the sub-heading "Options". It's part of {@link #pOptions}.*/
 		private static Label lOptHeading;
@@ -106,7 +108,7 @@ public class SourcePage {
 					/** Label displaying the button's heading "Random digit book". It's part of {@link #hbOptButBook}.*/
 					private static Label lOptButBook;
 	/** Layout container for the information segment. Displays the information of the picked information source in {@link #pOptions}.
-	 * Contains {@link #lInfHeading} and {@link #pInfContent}.*/
+	 * Contains {@link #lInfHeading} and {@link #pInfContent} and gets added to {@link #root}.*/
 	private static Pane pInformation;
 		/** Label which displays the sub-heading "Information" by default, but gets updated to fit the currently picked information source. 
 		 * It's part of {@link #pInformation}.*/
@@ -114,8 +116,9 @@ public class SourcePage {
 		/** Layout container for the information content elements. Contains {@link #lInfConDefault} by default,
 		 * but gets updated by the currently picked information source. It's part of {@link #pInformation}.*/
 		private static Pane pInfContent;
-			/** Label which displays "No option picked". It's part of {@link #pInfContent}.*/
+			/** Label which displays "No option picked" if {@link #selectedOption} == 0. It's part of {@link #pInfContent}.*/
 			private static Label lInfConDefault;
+			
 			
 	/**
 	 * Builds the information source page of the application.
@@ -291,7 +294,7 @@ public class SourcePage {
 					Main.infSource_UserInput.buildUI(pInfContent);
 				}
 				
-				selectedSource = 1;
+				selectedOption = 1;
 				Main.boUpdateSettingsModelHomepage = true;
 	        }
 	    });
@@ -314,7 +317,7 @@ public class SourcePage {
 				
 				pInfContent.getChildren().clear();
 				
-				selectedSource = 2;
+				selectedOption = 2;
 				Main.boUpdateSettingsModelHomepage = true;
 	        }
 	    });

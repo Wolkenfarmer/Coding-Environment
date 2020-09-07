@@ -33,7 +33,8 @@ public class Homepage {
 	 * When loading another page it's content gets first removed and then the layout container will be given to the other class.
 	 * When reloading the page {@link #reload(Group, boolean)} will be used to re-attach the content to the root.*/
 	private static Group root;
-	/** Layout container for the headline segment. Contains {@link #lHeadline}, {@link #rHeadlineSpacer} and {@link #vbHeadline}.*/
+	/** Layout container for the headline segment. 
+	 * Contains {@link #lHeadline}, {@link #rHeadlineSpacer} and {@link #vbHeadline} and gets added to {@link #root}.*/
 	private static HBox hbHeading;
 		/** Label which displays the headline "Coding Environment". It's part of {@link #hbHeading}.*/
 		private static Label lHeadline;
@@ -46,7 +47,7 @@ public class Homepage {
 			private static Label lHeadlineVersion;
 			/** Label which displays developer of this program. It's part of {@link #vbHeadline} and this again of {@link #hbHeading}.*/
 			private static Label lHeadlineBy;
-	/** Layout container for the settings segment. Contains {@link #lSetHeading} and {@link #pSetModel}.*/
+	/** Layout container for the settings segment. Contains {@link #lSetHeading} and {@link #pSetModel} and gets added to {@link #root}.*/
 	private static Pane pSettings;
 		/** Label which displays the sub-heading "Settings". It's part of {@link #pSettings}.*/
 		private static Label lSetHeading;
@@ -76,7 +77,7 @@ public class Homepage {
 			private static Group gSetModRelDeToDe;
 			/** Relation for the model in settings. Connects {@link #bSetModNoise} with {@link #gSetModRelEnToDe}.*/
 			private static Group gSetModRelNoToCh;
-	/** Layout container for the results segment. Contains {@link #lResHeading} and {@link #tvResTable}.*/
+	/** Layout container for the results segment. Contains {@link #lResHeading} and {@link #tvResTable} and gets added to {@link #root}.*/
 	private static Pane pResults;
 		/** Label which displays the sub-heading "Last Results". It's part of {@link #pResults}.*/
 		private static Label lResHeading;
@@ -89,7 +90,7 @@ public class Homepage {
 			private static TableColumn<String[], String> tvResTabDescription;
 			/** The first column of {@link #tvResTable} displaying the values to the descriptions.*/
 			private static TableColumn<String[], String> tvResTabValue;
-	/** Layout container for the controls segment. Contains {@link #lConHeading} and {@link #vbConButtons}.*/
+	/** Layout container for the controls segment. Contains {@link #lConHeading} and {@link #vbConButtons} and gets added to {@link #root}.*/
 	private static Pane pControls;
 		/** Label which displays the sub-heading "Controls". It's part of {@link #pControls}.*/
 		private static Label lConHeading;
@@ -401,6 +402,12 @@ public class Homepage {
 		bSetModEncoder.setOnAction(evEnDecoderPressed = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent t) {
 				System.out.println("bSetModEncoder or bSetModDecoder got pressed!");
+				root.getChildren().clear();
+				if (Main.enDecoderPage == null) {
+					Main.enDecoderPage = new EnDecoderPage(root);
+				} else {
+					Main.enDecoderPage.reload(root);
+				}
 	        }
 	    });
 		

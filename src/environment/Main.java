@@ -166,7 +166,9 @@ public class Main extends Application{
     /** Static reference to the homepage in order for the pages to have simple access to one another. Gets initialized in {@link #start(Stage)}.*/
     static Homepage homepage;
     /** Static reference to the source page in order for the pages to have simple access to one another.*/
-    public static SourcePage sourcePage;
+    static SourcePage sourcePage;
+    /** Static reference to the en- / decoder page in order for the pages to have simple access to one another.*/
+    static EnDecoderPage enDecoderPage;
     
     /** Static reference to the information source "User Input" in order for {@link environment.SourcePage} and TODO to have simple access to it.*/
     static UserInput infSource_UserInput = new UserInput();
