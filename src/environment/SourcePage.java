@@ -165,7 +165,7 @@ public class SourcePage {
 				
 				bOveModEncoder = new Button();
 				bOveModEncoder.setBackground(Main.baNormalButton);
-				bOveModEncoder.setBorder(Main.boNormalWhite);
+				bOveModEncoder.setBorder(Main.boNormal);
 				bOveModEncoder.setMaxWidth(Main.stageWidth - Main.calcWidth(bOveModSource) - Main.stageWidth / 16);
 					vbOveModEncHeading = new VBox();
 						lOveModEncHeading = new Label();
@@ -204,7 +204,7 @@ public class SourcePage {
 				bOptButUserInput.setPrefWidth(vbOptButtons.getPrefWidth() - 1);
 				bOptButUserInput.setPrefHeight(50);
 				bOptButUserInput.setBackground(Main.baNormalButton);
-				bOptButUserInput.setBorder(Main.boNormalWhite);
+				bOptButUserInput.setBorder(Main.boNormal);
 					hbOptButUserInput = new HBox();
 						lOptButUserInput = new Label();
 						lOptButUserInput.setText("User Input");
@@ -220,7 +220,7 @@ public class SourcePage {
 				bOptButBook.setPrefWidth(vbOptButtons.getPrefWidth() - 1);
 				bOptButBook.setPrefHeight(50);
 				bOptButBook.setBackground(Main.baNormalButton);
-				bOptButBook.setBorder(Main.boNormalWhite);
+				bOptButBook.setBorder(Main.boNormal);
 					hbOptButBook = new HBox();
 						lOptButBook = new Label();
 						lOptButBook.setText("Random digit book");
@@ -338,7 +338,7 @@ public class SourcePage {
 	private void buildOveSourceButton(String selectedItem) {
 		bOveModSource = new Button();
 		bOveModSource.setBackground(Main.baNormalButton);
-		bOveModSource.setBorder(Main.boNormalWhite);
+		bOveModSource.setBorder(Main.boNormal);
 		bOveModSource.setMaxWidth(Main.stageWidth / 2);
 			hbOveModSouContent = new HBox();
 			hbOveModSouContent.setSpacing(20);

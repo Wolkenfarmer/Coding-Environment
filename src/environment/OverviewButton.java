@@ -22,7 +22,7 @@ public class OverviewButton extends Button {
 	public OverviewButton(double width, String heading, String selectedItem) {
 		this.setPrefWidth(width);
 		this.setBackground(Main.baNormalButton);
-		this.setBorder(Main.boNormalWhite);
+		this.setBorder(Main.boNormal);
 			vbContent = new VBox();
 			vbContent.setSpacing(5);
 				lHeading = new Label();

@@ -2,10 +2,14 @@ package environment;
 
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 
 /**
@@ -72,29 +76,19 @@ public class EnDecoderPage {
 			/** Relation for the model in overview. Connects either {@link #bOveModDecoder} or {@link #bOveModPostdecoder} with 
 			 * the end of {@link #pOveModel} and is part of {@link #pOveModel}.*/
 			private static Arrow aOveModRelDeTo;
-//	/** Layout container for the options segment. Displays the different en- / decoder.
-//	 * Contains {@link #lOptHeading} and {@link #vbOptButtons} and gets added to {@link #root}.*/
-//	private static Pane pOptions;
-//		/** Label which displays the sub-heading "Options". It's part of {@link #pOptions}.*/
-//		private static Label lOptHeading;
-//		/** Layout container for the buttons of options. Contains {@link #bOptButGallager} and {@link #bOptButTODO} 
-//		 * and is part of {@link #pOptions}.*/
-//		private static VBox vbOptButtons;
-//			/** The button showing the Gallager-Code option under options. Contains {@link #hbOptButGallager} and is part of {@link #vbOptButtons}.*/
-//			private static Button bOptButGallager;
-//				/** Layout container for the content of Gallager-Code button. 
-//				 * Contains {@link #lOptButGallager} and is part of {@link #bOptButGallager}.*/
-//				private static HBox hbOptButGallager;
-//					/** Label displaying the button's heading "Gallager-Code". It's part of {@link #hbOptButGallager}.*/
-//					private static Label lOptButGallager;
-//			/** The button showing the TODO option under options. Contains {@link #hbOptButTODO} and is 
-//			 * part of {@link #vbOptButtons}.*/
-//			private static Button bOptButTODO;
-//				/** Layout container for the content of TODO button. 
-//				 * Contains {@link #lOptButTODO} and is part of {@link #bOptButTODO}.*/
-//				private static HBox hbOptButTODO;
-//					/** Label displaying the button's heading "TODO". It's part of {@link #hbOptButTODO}.*/
-//					private static Label lOptButTODO;
+	/** Layout container for the options segment. Displays the different en- / decoder.
+	 * Contains {@link #lOptHeading} and {@link #vbOptButtons} and gets added to {@link #root}.*/
+	private static Pane pOptions;
+		/** Label which displays the sub-heading "Options". It's part of {@link #pOptions}.*/
+		private static Label lOptHeading;
+		/** Layout container for the buttons of options. Contains {@link #bOptButGallager} and {@link #bOptButTODO} 
+		 * and is part of {@link #pOptions}.*/
+		private static VBox vbOptButtons;
+			/** The button showing the Gallager-Code option under options. It's part of {@link #vbOptButtons}.*/
+			private static OptionsButton bOptButGallager;
+			/** The button showing the TODO option under options. It's 
+			 * part of {@link #vbOptButtons}.*/
+			private static OptionsButton bOptButTODO;
 //	/** Layout container for the information segment. Displays the information of the picked en- / decoder in {@link #pOptions}.
 //	 * Contains {@link #lInfHeading} and {@link #pInfContent} and gets added to {@link #root}.*/
 //	private static Pane pInformation;
@@ -152,9 +146,28 @@ public class EnDecoderPage {
 		pOverview.getChildren().addAll(lOveHeading, pOveModel);
 		
 		
+		pOptions = new Pane();
+		pOptions.setLayoutX(Main.pos1);
+		pOptions.setLayoutY(pOverview.getLayoutY() + Main.calcHeight(pOverview) + Main.distanceToSegment);
+		pOptions.setPrefWidth(Main.stageWidth / 8 * 1.5);
+			lOptHeading = new Label();
+			lOptHeading.setText("Options");
+			lOptHeading.setTextFill(Color.WHITESMOKE);
+			lOptHeading.setFont(Main.fSubheading);			
+			
+			vbOptButtons = new VBox();
+			vbOptButtons.setPrefWidth(pOptions.getPrefWidth());
+			vbOptButtons.setLayoutY(Main.distanceToSubheading);
+			vbOptButtons.setSpacing(20);
+				bOptButGallager = new OptionsButton(pOptions.getPrefWidth(), "Gallager-Code");
+				bOptButTODO = new OptionsButton(pOptions.getPrefWidth(), "TODO");
+			vbOptButtons.getChildren().addAll(bOptButGallager, bOptButTODO);
+	    pOptions.getChildren().addAll(lOptHeading, vbOptButtons);
+		
+		
 		addListener();
 		Main.updateScrollbar(pOverview);
-		root.getChildren().addAll(tfHeading, pOverview);
+		root.getChildren().addAll(tfHeading, pOverview, pOptions);
 	}
 	
 	
@@ -319,7 +332,7 @@ public class EnDecoderPage {
 	void reload(Group parent) {
 		root = parent;
 		Main.updateScrollbar(tfHeading);
-		root.getChildren().addAll(tfHeading, pOverview);
+		root.getChildren().addAll(tfHeading, pOverview, pOptions);
 		Main.scene.setOnKeyReleased(Main.krlBackHome);		
 	}
 }

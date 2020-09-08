@@ -80,7 +80,7 @@ public class ModelFactory {
 		b.setLayoutY(layoutZoneY * modelZoneHeight);
 		b.setPrefWidth(modelButtonWidth);
 		b.setBackground(Main.baNormalButton);
-		b.setBorder(Main.boNormalWhite);
+		b.setBorder(Main.boNormal);
 			vbContent = new VBox();
 			vbContent.setSpacing(10);
 				hbConName = new HBox();

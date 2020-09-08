@@ -153,7 +153,9 @@ public class Main extends Application{
 	/** Unified referenceable button background (purple, focused) for layouts.*/
     static Background baPurpleFocusedButton = new Background (new BackgroundFill(Color.rgb(70, 30, 40), crNormal,  null));
 	/** Unified referenceable Border for layouts.*/
-    static Border boNormalWhite = new Border(new BorderStroke(Color.WHITESMOKE, BorderStrokeStyle.SOLID, crNormal, BorderWidths.DEFAULT));
+    static Border boNormal = new Border(new BorderStroke(Color.WHITESMOKE, BorderStrokeStyle.SOLID, crNormal, BorderWidths.DEFAULT));
+    /** Unified referenceable Border for layouts.*/
+    static Border boSelected = new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, crNormal, new BorderWidths(4)));
     /** Unified referenceable event handler for changing the background of a normal button when the mouse enters it.*/
     static EventHandler<MouseEvent> evButEntered;
     /** Unified referenceable event handler for changing the background of a normal button when the mouse exits it.*/
@@ -162,6 +164,10 @@ public class Main extends Application{
 	static EventHandler<MouseEvent> evButGreEntered;
 	/** Unified referenceable event handler for changing the background of a green button when the mouse exits it.*/
 	static EventHandler<MouseEvent> evButGreExited;
+	/** Unified referenceable event handler for changing the background of a brown button when the mouse enters it.*/
+	static EventHandler<MouseEvent> evButBroEntered;
+	/** Unified referenceable event handler for changing the background of a brown button when the mouse exits it.*/
+	static EventHandler<MouseEvent> evButBroExited;
 
     /** Static reference to the homepage in order for the pages to have simple access to one another. Gets initialized in {@link #start(Stage)}.*/
     static Homepage homepage;
@@ -307,6 +313,16 @@ public class Main extends Application{
 		evButGreExited = new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {
 				((Region) e.getSource()).setBackground(Main.baGreenButton);
+			}
+		};
+		evButBroEntered = new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e) {
+				((Region) e.getSource()).setBackground(Main.baBrownFocusedButton);
+			}
+		};
+		evButBroExited = new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e) {
+				((Region) e.getSource()).setBackground(Main.baBrownButton);
 			}
 		};
 		

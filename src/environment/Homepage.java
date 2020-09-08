@@ -276,7 +276,7 @@ public class Homepage {
 				bConButRun.setPrefWidth(vbConButtons.getPrefWidth() - 1);
 				bConButRun.setPrefHeight(50);
 				bConButRun.setBackground(Main.baGreenButton);
-				bConButRun.setBorder(Main.boNormalWhite);
+				bConButRun.setBorder(Main.boNormal);
 					hbConButRun = new HBox();
 						lConButRun = new Label();
 						lConButRun.setText("Run");
@@ -292,7 +292,7 @@ public class Homepage {
 				bConButSaveResult.setPrefWidth(vbConButtons.getPrefWidth() - 1);
 				bConButSaveResult.setPrefHeight(50);
 				bConButSaveResult.setBackground(Main.baBrownButton);
-				bConButSaveResult.setBorder(Main.boNormalWhite);
+				bConButSaveResult.setBorder(Main.boNormal);
 					hbConButSaveResult = new HBox();
 						lConButSaveResult = new Label();
 						lConButSaveResult.setText("Save last result");
@@ -308,7 +308,7 @@ public class Homepage {
 				bConButHelp.setPrefWidth(vbConButtons.getPrefWidth() - 1);
 				bConButHelp.setPrefHeight(50);
 				bConButHelp.setBackground(Main.baPurpleButton);
-				bConButHelp.setBorder(Main.boNormalWhite);
+				bConButHelp.setBorder(Main.boNormal);
 					hbConButHelp = new HBox();
 						lConButHelp = new Label();
 						lConButHelp.setText("Help");
