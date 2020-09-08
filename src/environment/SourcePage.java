@@ -288,10 +288,10 @@ public class SourcePage {
 				pOveModel.getChildren().addAll(bOveModSource, aOveModRelation);
 				
 				pInfContent.getChildren().clear();
-				if (UserInput.builtUI) {
-					Main.infSource_UserInput.reloadUI(pInfContent);
+				if (UserInput.getBuiltGuiDeprecated()) {
+					Main.infSource_UserInput.reloadGui(pInfContent);
 				} else {
-					Main.infSource_UserInput.buildUI(pInfContent);
+					Main.infSource_UserInput.buildGui(pInfContent);
 				}
 				
 				selectedOption = 1;

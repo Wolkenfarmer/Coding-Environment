@@ -1,15 +1,12 @@
 package environment;
 
+import infSources.UserInput;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 
@@ -17,11 +14,9 @@ import javafx.scene.text.TextAlignment;
  * @author Wolkenfarmer
  */
 public class OptionsButton extends Button {
-	private byte mode;
-	/** Layout container for the content of the options' button button. 
-	 * Contains {@link #lOptButGallager}.*/
+	/** Layout container for the content of the options' button button. Contains {@link #l}.*/
 	private HBox hb;
-		/** Label displaying the button's heading. It's part of {@link #hbOptButGallager}.*/
+		/** Label displaying the button's heading. It's part of {@link #hb}.*/
 		private Label l;
 		
 	public OptionsButton(double width, String heading) {
@@ -42,12 +37,26 @@ public class OptionsButton extends Button {
 		this.setPrefHeight(hb.getPrefHeight() + 10);
 		this.setGraphic(hb);
 		this.setMode((byte) 0);
-		
-		
+	}
+	
+	
+	public void setOnActionW(ExperimentElement reference, InformationSegment guiContainer) {
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent t) {
-				System.out.println("Options Button: " + heading + " got pressed!");
+				System.out.println("Options Button: " + l.getText() + " got pressed!");
 				
+				for (int i = 0; i < EnDecoderPage.vbOptButtons.getChildren().size(); i++) {
+					((OptionsButton) EnDecoderPage.vbOptButtons.getChildren().get(i)).setSelected(false);
+				}
+				((OptionsButton) t.getSource()).setSelected(true);
+				
+				guiContainer.getContent().getChildren().clear();
+				
+				if (reference.getBuiltGui()) {
+					reference.reloadGui(guiContainer.getContent());
+				} else {
+					reference.buildGui(guiContainer.getContent());
+				}				
 	        }
 	    });
 	}

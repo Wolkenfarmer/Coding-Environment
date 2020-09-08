@@ -2,6 +2,8 @@ package environment;
 
 import java.util.ArrayList;
 
+import enDecoder.Gallager;
+import enDecoder.Mock;
 import infSources.UserInput;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -178,6 +180,10 @@ public class Main extends Application{
     
     /** Static reference to the information source "User Input" in order for {@link environment.SourcePage} and TODO to have simple access to it.*/
     static UserInput infSource_UserInput = new UserInput();
+    /** Static reference to the en- / decoder "Gallager-Code" in order for {@link environment.EnDecoderPage} and TODO to have simple access to it.*/
+    static Gallager enDecoder_Gallager = new Gallager();
+    /** Static reference to the en- / decoder "Mock" in order for {@link environment.EnDecoderPage} and TODO to have simple access to it.*/
+    static Mock enDecoder_Mock = new Mock();
     
     
 	/**

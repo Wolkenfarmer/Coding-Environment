@@ -83,23 +83,15 @@ public class EnDecoderPage {
 		private static Label lOptHeading;
 		/** Layout container for the buttons of options. Contains {@link #bOptButGallager} and {@link #bOptButTODO} 
 		 * and is part of {@link #pOptions}.*/
-		private static VBox vbOptButtons;
+		static VBox vbOptButtons;
 			/** The button showing the Gallager-Code option under options. It's part of {@link #vbOptButtons}.*/
 			private static OptionsButton bOptButGallager;
 			/** The button showing the TODO option under options. It's 
 			 * part of {@link #vbOptButtons}.*/
 			private static OptionsButton bOptButTODO;
-//	/** Layout container for the information segment. Displays the information of the picked en- / decoder in {@link #pOptions}.
-//	 * Contains {@link #lInfHeading} and {@link #pInfContent} and gets added to {@link #root}.*/
-//	private static Pane pInformation;
-//		/** Label which displays the sub-heading "Information" by default, but gets updated to fit the currently picked en- / decoder. 
-//		 * It's part of {@link #pInformation}.*/
-//		private static Label lInfHeading;
-//		/** Layout container for the information content elements. Contains {@link #lInfConDefault} by default,
-//		 * but gets updated by the currently picked en- / decoder. It's part of {@link #pInformation}.*/
-//		private static Pane pInfContent;
-//			/** Label which displays "No option picked" if {@link #selectedEnDecoder} == 0. It's part of {@link #pInfContent}.*/
-//			private static Label lInfConDefault;
+	/** Layout container for the information segment. Displays the information of the picked en- / decoder in {@link #pOptions}.
+	 * Contains {@link #lInfHeading} and {@link #pInfContent} and gets added to {@link #root}.*/
+	private static InformationSegment pInformation;
 			
 	
 	/**
@@ -163,11 +155,16 @@ public class EnDecoderPage {
 				bOptButTODO = new OptionsButton(pOptions.getPrefWidth(), "TODO");
 			vbOptButtons.getChildren().addAll(bOptButGallager, bOptButTODO);
 	    pOptions.getChildren().addAll(lOptHeading, vbOptButtons);
+	    
+	    
+	    pInformation = new InformationSegment(Main.pos1 * 3, pOptions.getLayoutY(), Main.calcHeight(pOptions));
+		    bOptButGallager.setOnActionW(Main.enDecoder_Gallager, pInformation);
+		    bOptButTODO.setOnActionW(Main.enDecoder_Mock, pInformation);
 		
 		
 		addListener();
-		Main.updateScrollbar(pOverview);
-		root.getChildren().addAll(tfHeading, pOverview, pOptions);
+		Main.updateScrollbar(pOptions);
+		root.getChildren().addAll(tfHeading, pOverview, pOptions, pInformation);
 	}
 	
 	
@@ -331,8 +328,8 @@ public class EnDecoderPage {
 	 */
 	void reload(Group parent) {
 		root = parent;
-		Main.updateScrollbar(tfHeading);
-		root.getChildren().addAll(tfHeading, pOverview, pOptions);
+		Main.updateScrollbar(pOptions);
+		root.getChildren().addAll(tfHeading, pOverview, pOptions, pInformation);
 		Main.scene.setOnKeyReleased(Main.krlBackHome);		
 	}
 }
