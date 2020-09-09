@@ -19,21 +19,7 @@ import javafx.scene.text.TextFlow;
  * @author Wolkenfarmer
  */
 public class EnDecoderPage {
-	/**
-	 * Saves the selected encoder / decoder for further use in the environment. This byte specifies the displayed text in 
-	 * {@link Homepage#bSetModSource} and {@link #bOveModEncoder} / {@link #bOveModDecoder}. <br>
-	 * 0: No option picked
-	 * 1: Gallager-Code
-	 * 2: example 2
-	 */
-	static byte selectedEnDecoder = 1;
-	/**
-	 * Saves the selected pre-en- / post-decoder for further use in the environment. This byte specifies the displayed text in 
-	 * {@link Homepage#bSetModSource} and {@link #bOveModPreencoder} / {@link #bOveModPostdecoder}. <br>
-	 * 0: No option picked
-	 * 1: String to byte[]
-	 */
-	static byte selectedPrePost = 1;
+	
 	
 	/** Layout container representing the given root from {@link Homepage} to attach the GUI-elements to.
 	 * It's content ({@link #tfHeading}, {@link #pOverview}, {@link #pOptions}, {@link #pInformation}) gets build in {@link #EnDecoderPage(Group)}.
@@ -151,15 +137,15 @@ public class EnDecoderPage {
 			vbOptButtons.setPrefWidth(pOptions.getPrefWidth());
 			vbOptButtons.setLayoutY(Main.distanceToSubheading);
 			vbOptButtons.setSpacing(20);
-				bOptButGallager = new OptionsButton(pOptions.getPrefWidth(), "Gallager-Code");
-				bOptButTODO = new OptionsButton(pOptions.getPrefWidth(), "TODO");
+				bOptButGallager = new OptionsButton(pOptions.getPrefWidth(), Main.enDecoder_Gallager.getName());
+				bOptButTODO = new OptionsButton(pOptions.getPrefWidth(), Main.enDecoder_Mock.getName());
 			vbOptButtons.getChildren().addAll(bOptButGallager, bOptButTODO);
 	    pOptions.getChildren().addAll(lOptHeading, vbOptButtons);
 	    
 	    
-	    pInformation = new InformationSegment(Main.pos1 * 3, pOptions.getLayoutY(), Main.calcHeight(pOptions));
-		    bOptButGallager.setOnActionW(Main.enDecoder_Gallager, pInformation);
-		    bOptButTODO.setOnActionW(Main.enDecoder_Mock, pInformation);
+	    pInformation = new InformationSegment((byte) 1, Main.pos1 * 3, pOptions.getLayoutY(), Main.calcHeight(pOptions));
+		    bOptButGallager.setOnActionW(Main.enDecoder_Gallager, (byte) 1, pInformation, bOveModEncoder, bOveModDecoder);
+		    bOptButTODO.setOnActionW(Main.enDecoder_Mock, (byte) 2, pInformation, bOveModEncoder, bOveModDecoder);
 		
 		
 		addListener();
@@ -179,7 +165,7 @@ public class EnDecoderPage {
 		pOveModel.getChildren().clear();
 		
 		String currentlySelectedEnDecoder;
-		switch (selectedEnDecoder) {
+		switch (Main.selectedEnDecoder) {
 		case 0:
 			currentlySelectedEnDecoder = "nothing selected";
 			break;
@@ -194,7 +180,7 @@ public class EnDecoderPage {
 		}
 		
 		
-		if (selectedPrePost == 0) {
+		if (Main.selectedPrePost == 0) {
 			double segmentWidth = pOverview.getPrefWidth() / 8;
 			
 			bOveModEncoder = new OverviewButton(segmentWidth * 2, "Encoder", currentlySelectedEnDecoder);
@@ -211,7 +197,7 @@ public class EnDecoderPage {
 			double segmentWidth = pOverview.getPrefWidth() / 14;
 			String currentlySelectedPrePost;
 			String currentPrePostProtocol;
-			switch (selectedPrePost) {
+			switch (Main.selectedPrePost) {
 			case 0:
 				currentlySelectedPrePost = "nothing selected";
 				currentPrePostProtocol = "-";
@@ -258,62 +244,6 @@ public class EnDecoderPage {
 	
 	private void addListener() {
 		Main.scene.setOnKeyReleased(Main.krlBackHome);
-		
-//		bOptButUserInput.setOnAction(new EventHandler<ActionEvent>() {
-//			public void handle(ActionEvent t) {
-//				System.out.println("bOptButUserInput got pressed!");
-//				bOptButUserInput.setBackground(Main.baGreenFocusedButton);
-//				bOptButBook.setBackground(Main.baNormalButton);
-//				bOptButUserInput.setOnMouseEntered(Main.evButGreEntered);
-//				bOptButUserInput.setOnMouseExited(Main.evButGreExited);
-//				bOptButBook.setOnMouseEntered(Main.evButEntered);
-//				bOptButBook.setOnMouseExited(Main.evButExited);
-//				
-//				lInfHeading.setText("Information \\  User input");
-//				pOveModel.getChildren().removeAll(bOveModSource, aOveModRelation);
-//				buildOveSourceButton("user input");
-//				buildOveArrow();
-//				pOveModel.getChildren().addAll(bOveModSource, aOveModRelation);
-//				
-//				pInfContent.getChildren().clear();
-//				if (UserInput.builtUI) {
-//					Main.infSource_UserInput.reloadUI(pInfContent);
-//				} else {
-//					Main.infSource_UserInput.buildUI(pInfContent);
-//				}
-//				
-//				selectedOption = 1;
-//				Main.boUpdateSettingsModelHomepage = true;
-//	        }
-//	    });
-//		
-//		bOptButBook.setOnAction(new EventHandler<ActionEvent>() {
-//			public void handle(ActionEvent t) {
-//				System.out.println("bConButBook got pressed!");
-//				bOptButUserInput.setBackground(Main.baNormalButton);
-//				bOptButBook.setBackground(Main.baGreenFocusedButton);
-//				bOptButUserInput.setOnMouseEntered(Main.evButEntered);
-//				bOptButUserInput.setOnMouseExited(Main.evButExited);
-//				bOptButBook.setOnMouseEntered(Main.evButGreEntered);
-//				bOptButBook.setOnMouseExited(Main.evButGreExited);
-//				
-//				lInfHeading.setText("Information \\  Random digit book");
-//				pOveModel.getChildren().removeAll(bOveModSource, aOveModRelation);
-//				buildOveSourceButton("random digit book");
-//				buildOveArrow();
-//				pOveModel.getChildren().addAll(bOveModSource, aOveModRelation);
-//				
-//				pInfContent.getChildren().clear();
-//				
-//				selectedOption = 2;
-//				Main.boUpdateSettingsModelHomepage = true;
-//	        }
-//	    });
-//		
-//		bOptButUserInput.setOnMouseEntered(Main.evButEntered);
-//		bOptButUserInput.setOnMouseExited(Main.evButExited);
-//		bOptButBook.setOnMouseEntered(Main.evButEntered);
-//		bOptButBook.setOnMouseExited(Main.evButExited);
 	}
 	
 	

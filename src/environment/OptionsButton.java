@@ -1,6 +1,5 @@
 package environment;
 
-import infSources.UserInput;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -40,22 +39,29 @@ public class OptionsButton extends Button {
 	}
 	
 	
-	public void setOnActionW(ExperimentElement reference, InformationSegment guiContainer) {
+	public void setOnActionW(ExperimentElement reference, byte refNumber, InformationSegment infSegment, 
+			OverviewButton oveButton1, OverviewButton oveButton2) {
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent t) {
 				System.out.println("Options Button: " + l.getText() + " got pressed!");
+				
+				infSegment.setSaveAddReference(reference, (OptionsButton) t.getSource());
 				
 				for (int i = 0; i < EnDecoderPage.vbOptButtons.getChildren().size(); i++) {
 					((OptionsButton) EnDecoderPage.vbOptButtons.getChildren().get(i)).setSelected(false);
 				}
 				((OptionsButton) t.getSource()).setSelected(true);
 				
-				guiContainer.getContent().getChildren().clear();
+				oveButton1.setSelectedItem(reference.getName());
+				if (oveButton2 != null) {
+					oveButton2.setSelectedItem(reference.getName());
+				}
 				
+				infSegment.getContent().getChildren().clear();
 				if (reference.getBuiltGui()) {
-					reference.reloadGui(guiContainer.getContent());
+					reference.reloadGui(infSegment.getContent());
 				} else {
-					reference.buildGui(guiContainer.getContent());
+					reference.buildGui(infSegment.getContent());
 				}				
 	        }
 	    });

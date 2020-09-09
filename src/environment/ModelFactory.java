@@ -145,12 +145,22 @@ public class ModelFactory {
 						}
 						break;
 					case 1:
-						lConSelectedItem.setText("TODO");
+					case 3:
+						switch (Main.selectedEnDecoder) {
+						case 0:
+							lConSelectedItem.setText("nothing selected");
+							break;
+						case 1:
+							lConSelectedItem.setText("Gallager-Code");
+							break;
+						case 2:
+							lConSelectedItem.setText("Mock");
+							break;
+						default:
+							lConSelectedItem.setText("en- / decoder type not found");
+						}
 						break;
 					case 2:
-						lConSelectedItem.setText("TODO");
-						break;
-					case 3:
 						lConSelectedItem.setText("TODO");
 						break;
 					default:

@@ -1,5 +1,7 @@
 package environment;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,11 +15,12 @@ import javafx.scene.text.TextAlignment;
  * @author Wolkenfarmer
  */
 public class InformationSegment extends Pane{
-	private static HBox hbHeading;
+	private byte refType;
+	private HBox hbHeading;
 		/** Label which displays the sub-heading "Information" by default, but gets updated to fit the currently picked en- / decoder. 
 		 * It's part of {@link #pInformation}.*/
-		private static Label lHeading;
-		private static Button bHeaSav;
+		private Label lHeading;
+		private Button bHeaSav;
 			/** Layout container for the content of the options' button button. Contains {@link #lHeaSavContent}.*/
 			private HBox hbHeaSavContent;
 				/** Label displaying the button's heading. It's part of {@link #hbHeaSavContent}.*/
@@ -28,7 +31,8 @@ public class InformationSegment extends Pane{
 		private static Label lInfConDefault;
 
 	
-	public InformationSegment(double layoutX, double layoutY, double minHeight) {
+	public InformationSegment(byte refType, double layoutX, double layoutY, double minHeight) {
+		this.refType = refType;
 		this.setLayoutX(layoutX);
 		this.setLayoutY(layoutY);
 		this.setPrefWidth(Main.stageWidth / 2);
@@ -68,7 +72,7 @@ public class InformationSegment extends Pane{
 				lInfConDefault.setTextFill(Color.INDIANRED);
 				lInfConDefault.setFont(Main.fNormallTextItalic);
 			pInfContent.getChildren().add(lInfConDefault);
-			this.getChildren().addAll(bHeaSav, lHeading, pInfContent);
+		this.getChildren().addAll(bHeaSav, lHeading, pInfContent);
 	}
 	
 	
@@ -77,8 +81,42 @@ public class InformationSegment extends Pane{
 	}
 	
 	
-	public Pane getContent() {
-		return pInfContent;
-		
+	public void setSaveAddReference(ExperimentElement reference, OptionsButton button) {
+		bHeaSav.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent t) {
+				System.out.println("\"Save & add\" got pressed!");
+				
+				switch (refType) {
+				case 0: // information source
+					break;
+				case 1: // EnDecoder					
+					if (reference.getType() == 0) {
+						Main.selectedEnDecoder = reference.getIndex();
+					} else {
+						Main.selectedPrePost = reference.getIndex();
+					}
+					
+					
+					for (int i = 0; i < EnDecoderPage.vbOptButtons.getChildren().size(); i++) {
+						((OptionsButton) EnDecoderPage.vbOptButtons.getChildren().get(i)).setMode((byte) 0);
+					}
+					button.setMode((byte) 1);
+					break;
+				case 2: // PrePost
+					break;
+				case 3: // noise source
+					break;
+				default:
+					System.out.println("Type not found");
+				}
+				
+				pInfContent.getChildren().clear();
+				
+				Main.boUpdateSettingsModelHomepage = true;
+	        }
+	    });
 	}
+	
+	
+	public Pane getContent() {return pInfContent;}
 }

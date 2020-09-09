@@ -11,6 +11,7 @@ import javafx.scene.text.TextAlignment;
  * @author Wolkenfarmer
  */
 public class OverviewButton extends Button {
+	private double width;
 	/** Layout container for the content of the button. 
 	 * Contains {@link #lOveModEnDeHeading} and is part of {@link #bOveModEnDecoder}.*/
 	private VBox vbContent;
@@ -40,8 +41,8 @@ public class OverviewButton extends Button {
 				lSelectedItem.setWrapText(true);
 				lSelectedItem.setTextAlignment(TextAlignment.CENTER);
 				lSelectedItem.setAlignment(Pos.CENTER);
-			width = width - 6;
-			vbContent.setPrefHeight(Main.calcHeightLabel(lHeading, width) + Main.calcHeightLabel(lSelectedItem, width) + vbContent.getSpacing() + 8);
+			this.width = width - 6;
+			vbContent.setPrefHeight(Main.calcHeightLabel(lHeading, this.width) + Main.calcHeightLabel(lSelectedItem, this.width) + vbContent.getSpacing() + 8);
 			vbContent.getChildren().addAll(lHeading, lSelectedItem);
 			vbContent.setAlignment(Pos.CENTER);
 		this.setPrefHeight(vbContent.getPrefHeight() + 2);
@@ -50,5 +51,13 @@ public class OverviewButton extends Button {
 	
 	public double getHeightW() {
 		return this.getPrefHeight();
+	}
+	
+	public void setSelectedItem(String selectedItem) {
+		lSelectedItem.setText(selectedItem);
+		vbContent.setPrefHeight(Main.calcHeightLabel(lHeading, width) + Main.calcHeightLabel(lSelectedItem, width) + vbContent.getSpacing() + 8);
+		vbContent.getChildren().addAll(lHeading, lSelectedItem);
+		this.setPrefHeight(vbContent.getPrefHeight() + 2);
+		this.setGraphic(vbContent);
 	}
 }

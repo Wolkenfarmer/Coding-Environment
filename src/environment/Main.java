@@ -178,6 +178,23 @@ public class Main extends Application{
     /** Static reference to the en- / decoder page in order for the pages to have simple access to one another.*/
     static EnDecoderPage enDecoderPage;
     
+    /**
+	 * Saves the selected encoder / decoder for further use in the environment. This byte specifies the displayed text in 
+	 * {@link Homepage#bSetModSource} and {@link #bOveModEncoder} / {@link #bOveModDecoder}. <br>
+	 * 0: No option picked
+	 * 1: Gallager-Code
+	 * 2: Mock (1)
+	 */
+	static byte selectedEnDecoder = 0;
+	/**
+	 * Saves the selected pre-en- / post-decoder for further use in the environment. This byte specifies the displayed text in 
+	 * {@link Homepage#bSetModSource} and {@link #bOveModPreencoder} / {@link #bOveModPostdecoder}. <br>
+	 * 0: No option picked
+	 * 1: String to byte[]
+	 * 2: Mock (2)
+	 */
+	static byte selectedPrePost = 0;
+    
     /** Static reference to the information source "User Input" in order for {@link environment.SourcePage} and TODO to have simple access to it.*/
     static UserInput infSource_UserInput = new UserInput();
     /** Static reference to the en- / decoder "Gallager-Code" in order for {@link environment.EnDecoderPage} and TODO to have simple access to it.*/

@@ -10,6 +10,13 @@ import javafx.scene.paint.Color;
  *
  */
 public class Gallager implements ExperimentElement {
+	private static String name = "Gallager-Code";
+	private static byte index = 1;
+	/**
+	 * 0: en- / decoder
+	 * 1: pre- / post-
+	 */
+	private static byte type = 0;
 	/** Layout container representing the given root from {@link environment.SourcePage#pInfContent} to attach the GUI-elements to.
 	 * It's content ({@link #tfUserText}) gets build in {@link #buildGui(Pane)}.
 	 * When loading another page it's content gets first removed and then the layout container will be given to the other class.
@@ -40,5 +47,13 @@ public class Gallager implements ExperimentElement {
 	}
 	
 	
+	public void save() {
+		System.out.println(name + " saved!");
+	}
+	
+	
 	public boolean getBuiltGui() {return builtGui;}
+	public String getName() {return name;}
+	public byte getIndex() {return index;}
+	public byte getType() {return type;}
 }
