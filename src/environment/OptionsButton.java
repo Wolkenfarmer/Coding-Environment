@@ -13,6 +13,7 @@ import javafx.scene.text.TextAlignment;
  * @author Wolkenfarmer
  */
 public class OptionsButton extends Button {
+	private byte currentMode = 0;
 	/** Layout container for the content of the options' button button. Contains {@link #l}.*/
 	private HBox hb;
 		/** Label displaying the button's heading. It's part of {@link #hb}.*/
@@ -74,16 +75,19 @@ public class OptionsButton extends Button {
 			this.setBackground(Main.baNormalButton);
 			this.setOnMouseEntered(Main.evButEntered);
 			this.setOnMouseExited(Main.evButExited);
+			currentMode = 0;
 			break;
 		case 1:
 			this.setBackground(Main.baGreenButton);
 			this.setOnMouseEntered(Main.evButGreEntered);
 			this.setOnMouseExited(Main.evButGreExited);
+			currentMode = 1;
 			break;
 		case 2:
 			this.setBackground(Main.baBrownButton);
 			this.setOnMouseEntered(Main.evButBroEntered);
 			this.setOnMouseExited(Main.evButBroExited);
+			currentMode = 2;
 			break;
 		default:
 			System.out.println("Options Button \"" + l.getText() + "\": Mode \"" + mode + "\" not specified");
@@ -98,4 +102,7 @@ public class OptionsButton extends Button {
 			this.setBorder(Main.boNormal);
 		}
 	}
+	
+	
+	public byte getMode() {return currentMode;}
 }

@@ -31,10 +31,12 @@ public class Gallager implements ExperimentElement {
 		root = parent;
 		
 		mock = new Label();
-		mock.setText("Galleger-Code-Gui has been loaded!");
+		mock.setText("Galleger-Code-Gui has been loaded!\n"
+				+ "Can only be set as en-/decoder.");
 		mock.setFont(environment.Main.fNormalText);
 		mock.setTextFill(Color.WHITESMOKE);
 		mock.setPrefWidth(root.getPrefWidth());
+		mock.setWrapText(true);
         
         builtGui = true;
         root.getChildren().add(mock);

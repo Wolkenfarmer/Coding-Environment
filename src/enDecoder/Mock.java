@@ -4,7 +4,11 @@
 package enDecoder;
 
 import environment.ExperimentElement;
+import environment.Main;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
@@ -24,31 +28,57 @@ public class Mock implements ExperimentElement {
 	/** Shows whether the UI has yet to be build ({@link #builtGui}) or is already build and has only to be re-attached ({@link #reloadGui(Pane)}).*/
 	public static boolean builtGui;
 	private static Label mock;
+	private static ToggleGroup tgEnDePrePost;
+	private static RadioButton rbEnDe;
+	private static RadioButton rbPrePost;
 	
 
 	public void buildGui(Pane parent) {
 		root = parent;
 		
 		mock = new Label();
-		mock.setText("Mock-Gui has been loaded!");
+		mock.setText("Mock-Gui has been loaded!\n"
+				+ "Can be set as en- / decoder as well as pre-encoder / post-decoder.");
 		mock.setFont(environment.Main.fNormalText);
 		mock.setTextFill(Color.WHITESMOKE);
 		mock.setPrefWidth(root.getPrefWidth());
+		mock.setWrapText(true);
+		
+		tgEnDePrePost = new ToggleGroup();
+			rbEnDe = new RadioButton("En- / decoder");
+	        rbEnDe.setToggleGroup(tgEnDePrePost);
+	        rbEnDe.setFont(Main.fNormalText);
+	        rbEnDe.setLayoutY(100);
+	        rbEnDe.setTextFill(Color.WHITESMOKE);
+	        rbEnDe.setAlignment(Pos.TOP_LEFT);
+	        rbEnDe.setSelected(true);
+	         
+	        rbPrePost = new RadioButton("Pre-encoder / post-decoder");
+	        rbPrePost.setToggleGroup(tgEnDePrePost);
+	        rbPrePost.setFont(Main.fNormalText);
+	        rbPrePost.setLayoutY(140);
+	        rbPrePost.setTextFill(Color.WHITESMOKE);
+	        rbPrePost.setAlignment(Pos.TOP_LEFT);
         
         builtGui = true;
-        root.getChildren().add(mock);
+        root.getChildren().addAll(mock, rbEnDe, rbPrePost);
 		
 	}
 
 
 	public void reloadGui(Pane parent) {
 		root = parent;
-		root.getChildren().add(mock);
+		root.getChildren().addAll(mock, rbEnDe, rbPrePost);
 	}
 	
 	
 	public void save() {
 		System.out.println(name + " saved!");
+		if (tgEnDePrePost.getSelectedToggle() == rbEnDe) {
+			type = 0;
+		} else {
+			type = 1;
+		}
 	}
 	
 	

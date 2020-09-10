@@ -14,7 +14,7 @@ import javafx.scene.text.TextAlignment;
 /**
  * @author Wolkenfarmer
  */
-public class InformationSegment extends Pane{
+public class InformationSegment extends Pane {
 	private byte refType;
 	private HBox hbHeading;
 		/** Label which displays the sub-heading "Information" by default, but gets updated to fit the currently picked en- / decoder. 
@@ -66,6 +66,7 @@ public class InformationSegment extends Pane{
 			pInfContent = new Pane();
 			pInfContent.setLayoutY(Main.distanceToSubheading);
 			pInfContent.setPrefHeight(Main.stageHeight - this.getLayoutY() - pInfContent.getLayoutY() - Main.pos1 / 3);
+			pInfContent.setPrefWidth(this.getPrefWidth());
 			pInfContent.setMinHeight(minHeight - pInfContent.getLayoutY());
 				lInfConDefault = new Label();
 				lInfConDefault.setText("No option picked");
@@ -85,33 +86,38 @@ public class InformationSegment extends Pane{
 		bHeaSav.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent t) {
 				System.out.println("\"Save & add\" got pressed!");
+				reference.save();
 				
 				switch (refType) {
 				case 0: // information source
 					break;
-				case 1: // EnDecoder					
+				case 1: // EnDecoder	
 					if (reference.getType() == 0) {
 						Main.selectedEnDecoder = reference.getIndex();
+						
+						for (int i = 0; i < EnDecoderPage.vbOptButtons.getChildren().size(); i++) {
+							if (((OptionsButton) EnDecoderPage.vbOptButtons.getChildren().get(i)).getMode() == 1) {
+								((OptionsButton) EnDecoderPage.vbOptButtons.getChildren().get(i)).setMode((byte) 0);
+							}
+						}
+						button.setMode((byte) 1);
 					} else {
 						Main.selectedPrePost = reference.getIndex();
+						
+						for (int i = 0; i < EnDecoderPage.vbOptButtons.getChildren().size(); i++) {
+							if (((OptionsButton) EnDecoderPage.vbOptButtons.getChildren().get(i)).getMode() == 2) {
+								((OptionsButton) EnDecoderPage.vbOptButtons.getChildren().get(i)).setMode((byte) 0);
+							}
+						}
+						button.setMode((byte) 2);
 					}
-					
-					
-					for (int i = 0; i < EnDecoderPage.vbOptButtons.getChildren().size(); i++) {
-						((OptionsButton) EnDecoderPage.vbOptButtons.getChildren().get(i)).setMode((byte) 0);
-					}
-					button.setMode((byte) 1);
 					break;
-				case 2: // PrePost
-					break;
-				case 3: // noise source
+				case 2: // noise source
 					break;
 				default:
 					System.out.println("Type not found");
 				}
-				
-				pInfContent.getChildren().clear();
-				
+								
 				Main.boUpdateSettingsModelHomepage = true;
 	        }
 	    });
