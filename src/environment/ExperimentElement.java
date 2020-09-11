@@ -11,6 +11,7 @@ public interface ExperimentElement {
 	public void save();
 	public boolean getBuiltGui();
 	public String getName();
+	public String getProtocol();
 	public byte getIndex();
 	public byte getType();
 }

@@ -41,7 +41,7 @@ public class OverviewButton extends Button {
 				lSelectedItem.setWrapText(true);
 				lSelectedItem.setTextAlignment(TextAlignment.CENTER);
 				lSelectedItem.setAlignment(Pos.CENTER);
-			this.width = width - 6;
+			this.width = width - 10;
 			vbContent.setPrefHeight(Main.calcHeightLabel(lHeading, this.width) + Main.calcHeightLabel(lSelectedItem, this.width) + vbContent.getSpacing() + 8);
 			vbContent.getChildren().addAll(lHeading, lSelectedItem);
 			vbContent.setAlignment(Pos.CENTER);
@@ -56,6 +56,17 @@ public class OverviewButton extends Button {
 	public void setSelectedItem(String selectedItem) {
 		lSelectedItem.setText(selectedItem);
 		vbContent.setPrefHeight(Main.calcHeightLabel(lHeading, width) + Main.calcHeightLabel(lSelectedItem, width) + vbContent.getSpacing() + 8);
+		vbContent.getChildren().addAll(lHeading, lSelectedItem);
+		this.setPrefHeight(vbContent.getPrefHeight() + 2);
+		this.setGraphic(vbContent);
+	}
+	
+	public void rebuild(double width, String heading, String selectedItem) {
+		this.setPrefWidth(width);
+		lHeading.setText(heading);
+		lSelectedItem.setText(selectedItem);
+		this.width = width - 10;
+		vbContent.setPrefHeight(Main.calcHeightLabel(lHeading, this.width) + Main.calcHeightLabel(lSelectedItem, this.width) + vbContent.getSpacing() + 8);
 		vbContent.getChildren().addAll(lHeading, lSelectedItem);
 		this.setPrefHeight(vbContent.getPrefHeight() + 2);
 		this.setGraphic(vbContent);

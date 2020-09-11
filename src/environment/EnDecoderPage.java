@@ -2,14 +2,11 @@ package environment;
 
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 
 /**
@@ -18,22 +15,16 @@ import javafx.scene.text.TextFlow;
  * See {@link #EnDecoderPage(Group)} for more information about the UI.
  * @author Wolkenfarmer
  */
-public class EnDecoderPage {
-	
-	
-	/** Layout container representing the given root from {@link Homepage} to attach the GUI-elements to.
-	 * It's content ({@link #tfHeading}, {@link #pOverview}, {@link #pOptions}, {@link #pInformation}) gets build in {@link #EnDecoderPage(Group)}.
-	 * When loading another page it's content gets first removed and then the layout container will be given to the other class.
-	 * When reloading the page {@link #reload(Group)} will be used to re-attach the content to the root.*/
-	private static Group root;
-	/** Layout container for the heading segment. Contains {@link #lHeaHome} and {@link #lHeaHere} and gets added to {@link #root}.*/
-	private static TextFlow tfHeading;
+public class EnDecoderPage extends SettingsPage {
+	static boolean ovePrePostDisplaying;
+	private double segmentWidthEnDe;
+	private double segmentWidthPrePost;
+	// Heading
 		/** Label which displays the heading segment "CE \  " (bold). It's part of {@link #tfHeading}.*/
 		private static Label lHeaHome;
 		/** Label which displays the heading segment "En- / Decoder" (not bold). It's part of {@link #tfHeading}.*/
 		private static Label lHeaHere;
-	/** Layout container for the overview segment. Contains {@link #lOveHeading} and {@link #pOveModel} and gets added to {@link #root}.*/
-	private static Pane pOverview;
+	// Overview
 		/** Label which displays the sub-heading "Overview". It's part of {@link #pOverview}.*/
 		private static Label lOveHeading;
 		/** Layout container for the overview model. Contains TODO 
@@ -62,22 +53,14 @@ public class EnDecoderPage {
 			/** Relation for the model in overview. Connects either {@link #bOveModDecoder} or {@link #bOveModPostdecoder} with 
 			 * the end of {@link #pOveModel} and is part of {@link #pOveModel}.*/
 			private static Arrow aOveModRelDeTo;
-	/** Layout container for the options segment. Displays the different en- / decoder.
-	 * Contains {@link #lOptHeading} and {@link #vbOptButtons} and gets added to {@link #root}.*/
-	private static Pane pOptions;
-		/** Label which displays the sub-heading "Options". It's part of {@link #pOptions}.*/
-		private static Label lOptHeading;
-		/** Layout container for the buttons of options. Contains {@link #bOptButGallager} and {@link #bOptButTODO} 
-		 * and is part of {@link #pOptions}.*/
-		static VBox vbOptButtons;
-			/** The button showing the Gallager-Code option under options. It's part of {@link #vbOptButtons}.*/
-			private static OptionsButton bOptButGallager;
-			/** The button showing the TODO option under options. It's 
-			 * part of {@link #vbOptButtons}.*/
-			private static OptionsButton bOptButTODO;
-	/** Layout container for the information segment. Displays the information of the picked en- / decoder in {@link #pOptions}.
-	 * Contains {@link #lInfHeading} and {@link #pInfContent} and gets added to {@link #root}.*/
-	private static InformationSegment pInformation;
+	// Options
+		/** The button showing the Gallager-Code option under options. It's part of {@link #vbOptButtons}.*/
+		private static OptionsButton bOptButGallager;
+		/** The button showing the TODO option under options. It's 
+		 * part of {@link #vbOptButtons}.*/
+		private static OptionsButton bOptButMock;
+		private static OptionsButton bOptButStringToByte;
+	// Information
 			
 	
 	/**
@@ -118,9 +101,92 @@ public class EnDecoderPage {
 			lOveHeading.setTextFill(Color.WHITESMOKE);
 			lOveHeading.setFont(Main.fSubheading);
 			
+			segmentWidthEnDe = pOverview.getPrefWidth() / 8;
+			segmentWidthPrePost = pOverview.getPrefWidth() / 14;
+			
 			pOveModel = new Pane();
 			pOveModel.setLayoutY(Main.distanceToSubheading);
-			buildOverviewModel();
+				String currentlySelectedEnDecoder;
+				switch (Main.selectedEnDecoder) {
+				case 0:
+					currentlySelectedEnDecoder = "nothing selected";
+					break;
+				case 1:
+					currentlySelectedEnDecoder = Main.enDecoder_Gallager.getName();
+					break;
+				case 2:
+					currentlySelectedEnDecoder = Main.enDecoder_Mock.getName();
+					break;
+				default:
+					currentlySelectedEnDecoder = "En- / decoder not found";
+				}
+				
+				bOveModPreencoder = new OverviewButton(segmentWidthPrePost * 2, "Pre-encoder", "");
+				bOveModPreencoder.setLayoutX(segmentWidthPrePost);
+				bOveModPostdecoder = new OverviewButton(segmentWidthPrePost * 2, "Post-decoder", "");
+				bOveModPostdecoder.setLayoutX(segmentWidthPrePost * 11);
+				
+				
+				if (Main.selectedPrePost == 0) {
+					bOveModEncoder = new OverviewButton(segmentWidthEnDe * 2, "Encoder", currentlySelectedEnDecoder);
+					bOveModEncoder.setLayoutX(segmentWidthEnDe);
+					bOveModDecoder = new OverviewButton(segmentWidthEnDe * 2, "Decoder", currentlySelectedEnDecoder);
+					bOveModDecoder.setLayoutX(segmentWidthEnDe * 5);
+					
+					double y = bOveModEncoder.getHeightW() / 2;
+					aOveModRelToEn = new Arrow().getArrow(0, y, segmentWidthEnDe, y, 15, 10, false, "message");
+					aOveModRelEnToDe = new Arrow().getArrow(segmentWidthEnDe * 3, y, segmentWidthEnDe * 5, y, 15, 10, false, "signal / channel");
+					aOveModRelDeTo = new Arrow().getArrow(segmentWidthEnDe * 7, y, segmentWidthEnDe * 8, y, 15, 10, false, "message");
+					
+					ovePrePostDisplaying = false;
+				} else {
+					bOveModEncoder = new OverviewButton(segmentWidthPrePost * 2, "Encoder", currentlySelectedEnDecoder);
+					bOveModEncoder.setLayoutX(segmentWidthPrePost * 4);
+					bOveModDecoder = new OverviewButton(segmentWidthPrePost * 2, "Decoder", currentlySelectedEnDecoder);
+					bOveModDecoder.setLayoutX(segmentWidthPrePost * 8);
+					
+					String currentPrePostProtocol;
+					switch (Main.selectedPrePost) {
+					case 0:
+						bOveModPreencoder.setSelectedItem("nothing selected");
+						bOveModPostdecoder.setSelectedItem("nothing selected");
+						currentPrePostProtocol = "-";
+						break;
+					case 1:
+						bOveModPreencoder.setSelectedItem(Main.enDecoder_StringToByte.getName());
+						bOveModPostdecoder.setSelectedItem(Main.enDecoder_StringToByte.getName());
+						currentPrePostProtocol = "byte[]";
+						break;
+					case 2:
+						bOveModPreencoder.setSelectedItem(Main.enDecoder_Mock.getName());
+						bOveModPostdecoder.setSelectedItem(Main.enDecoder_Mock.getName());
+						currentPrePostProtocol = "wuff";
+						break;
+					default:
+						bOveModPreencoder.setSelectedItem("Pre-en- / post-decoder not found");
+						bOveModPostdecoder.setSelectedItem("Pre-en- / post-decoder not found");
+						currentPrePostProtocol = "-";
+					}
+					
+					double y;
+					double y1 = bOveModEncoder.getHeightW() / 2;
+					double y2 = bOveModPostdecoder.getHeightW() / 2;
+					if (y1 >= y2) {
+						y = y2;
+					} else {
+						y = y1;
+					}
+					aOveModRelToEn = new Arrow().getArrow(0, y, segmentWidthPrePost, y, 10, 10, false, "message");
+					aOveModRelEnToEn = new Arrow().getArrow(segmentWidthPrePost * 3, y, segmentWidthPrePost * 4, y, 10, 10, false, currentPrePostProtocol);
+					aOveModRelEnToDe = new Arrow().getArrow(segmentWidthPrePost * 6, y, segmentWidthPrePost * 8, y, 10, 10, false, "signal / channel");
+					aOveModRelDeToDe = new Arrow().getArrow(segmentWidthPrePost * 10, y, segmentWidthPrePost * 11, y, 10, 10, false, currentPrePostProtocol);
+					aOveModRelDeTo = new Arrow().getArrow(segmentWidthPrePost * 13, y, segmentWidthPrePost * 14, y, 10, 10, false, "message");
+					
+					
+					pOveModel.getChildren().addAll(bOveModPreencoder, aOveModRelEnToEn, aOveModRelDeToDe, bOveModPostdecoder);
+					ovePrePostDisplaying = true;
+				}
+			pOveModel.getChildren().addAll(aOveModRelToEn, bOveModEncoder, aOveModRelEnToDe, bOveModDecoder, aOveModRelDeTo);
 		pOverview.getChildren().addAll(lOveHeading, pOveModel);
 		
 		
@@ -138,15 +204,17 @@ public class EnDecoderPage {
 			vbOptButtons.setLayoutY(Main.distanceToSubheading);
 			vbOptButtons.setSpacing(20);
 				bOptButGallager = new OptionsButton(pOptions.getPrefWidth(), Main.enDecoder_Gallager.getName());
-				bOptButTODO = new OptionsButton(pOptions.getPrefWidth(), Main.enDecoder_Mock.getName());
-			vbOptButtons.getChildren().addAll(bOptButGallager, bOptButTODO);
+				bOptButMock = new OptionsButton(pOptions.getPrefWidth(), Main.enDecoder_Mock.getName());
+				bOptButStringToByte = new OptionsButton(pOptions.getPrefWidth(), Main.enDecoder_StringToByte.getName());
+			vbOptButtons.getChildren().addAll(bOptButGallager, bOptButMock, bOptButStringToByte);
 	    pOptions.getChildren().addAll(lOptHeading, vbOptButtons);
 	    
 	    
 	    pInformation = new InformationSegment((byte) 1, Main.pos1 * 3, pOptions.getLayoutY(), Main.calcHeight(pOptions));
-		    bOptButGallager.setOnActionW(Main.enDecoder_Gallager, (byte) 1, pInformation, bOveModEncoder, bOveModDecoder);
-		    bOptButTODO.setOnActionW(Main.enDecoder_Mock, (byte) 2, pInformation, bOveModEncoder, bOveModDecoder);
-		
+		    bOptButGallager.setOnActionW(Main.enDecoder_Gallager, this, pInformation);
+		    bOptButMock.setOnActionW(Main.enDecoder_Mock, this, pInformation);
+		    bOptButStringToByte.setOnActionW(Main.enDecoder_StringToByte, this, pInformation);
+		    
 		
 		addListener();
 		Main.updateScrollbar(pOptions);
@@ -154,90 +222,112 @@ public class EnDecoderPage {
 	}
 	
 	
-	/**
-	 * Builds / instantiates the overview {@link OverviewButton buttons} and {@link Arrow arrows} for {@link #pOveModel} . 
-	 * This is a separate method from {@link #EnDecoderPage(Group)} in order 
-	 * to be able to separately re-build the model if an en- / decoder gets chosen.
-	 * It gets the option to be displayed from {@link #selectedEnDecoder} and {@link #selectedPrePost}.
-	 * This method gets called by the constructor and the buttons event handler from {@link #vbOptButtons} (see {@link #addListener()}). 
-	 */
-	private void buildOverviewModel() {
-		pOveModel.getChildren().clear();
-		
+	void updateOveModel(byte changed) {
 		String currentlySelectedEnDecoder;
+		String currentlySelectedPrePost;
+		String currentPrePostProtocol;
+		
 		switch (Main.selectedEnDecoder) {
 		case 0:
 			currentlySelectedEnDecoder = "nothing selected";
 			break;
 		case 1:
-			currentlySelectedEnDecoder = "Gallager-Code";
+			currentlySelectedEnDecoder = Main.enDecoder_Gallager.getName();
 			break;
 		case 2:
-			currentlySelectedEnDecoder = "Example 2";
+			currentlySelectedEnDecoder = Main.enDecoder_Mock.getName();
 			break;
 		default:
 			currentlySelectedEnDecoder = "En- / decoder not found";
 		}
 		
+		switch (Main.selectedPrePost) {
+		case 0:
+			currentlySelectedPrePost = "nothing selected";
+			currentPrePostProtocol = "-";
+			break;
+		case 1:
+			currentlySelectedPrePost = Main.enDecoder_StringToByte.getName();
+			currentPrePostProtocol = Main.enDecoder_StringToByte.getProtocol();
+			break;
+		case 2:
+			currentlySelectedPrePost = Main.enDecoder_Mock.getName();
+			currentPrePostProtocol = Main.enDecoder_Mock.getProtocol();
+			break;
+		default:
+			currentlySelectedPrePost = "Pre-en- / post-decoder not found";
+			currentPrePostProtocol = "-";
+		}
 		
-		if (Main.selectedPrePost == 0) {
-			double segmentWidth = pOverview.getPrefWidth() / 8;
+		double y, y1, y2;
+		
+		switch (changed) {
+		case 0:						// en- / decoder changes
+			bOveModEncoder.setSelectedItem(currentlySelectedEnDecoder);
+			bOveModDecoder.setSelectedItem(currentlySelectedEnDecoder);
+			break;
+		case 1:						// pre- / post- changed
+			bOveModPreencoder.setSelectedItem(currentlySelectedPrePost);
+			bOveModPostdecoder.setSelectedItem(currentlySelectedPrePost);
 			
-			bOveModEncoder = new OverviewButton(segmentWidth * 2, "Encoder", currentlySelectedEnDecoder);
-			bOveModEncoder.setLayoutX(segmentWidth);
-			bOveModDecoder = new OverviewButton(segmentWidth * 2, "Decoder", currentlySelectedEnDecoder);
-			bOveModDecoder.setLayoutX(segmentWidth * 5);
-			
-			double y = bOveModEncoder.getHeightW() / 2;
-			aOveModRelToEn = new Arrow().getArrow(0, y, segmentWidth, y, 15, 10, false, "message");
-			aOveModRelEnToDe = new Arrow().getArrow(segmentWidth * 3, y, segmentWidth * 5, y, 15, 10, false, "signal / channel");
-			aOveModRelDeTo = new Arrow().getArrow(segmentWidth * 7, y, segmentWidth * 8, y, 15, 10, false, "message");
-			
-		} else {
-			double segmentWidth = pOverview.getPrefWidth() / 14;
-			String currentlySelectedPrePost;
-			String currentPrePostProtocol;
-			switch (Main.selectedPrePost) {
-			case 0:
-				currentlySelectedPrePost = "nothing selected";
-				currentPrePostProtocol = "-";
-				break;
-			case 1:
-				currentlySelectedPrePost = "String to byte[]";
-				currentPrePostProtocol = "byte[]";
-				break;
-			default:
-				currentlySelectedPrePost = "Pre-en- / post-decoder not found";
-				currentPrePostProtocol = "-";
-			}
-			
-			bOveModPreencoder = new OverviewButton(segmentWidth * 2, "Pre-encoder", currentlySelectedPrePost);
-			bOveModPreencoder.setLayoutX(segmentWidth);
-			bOveModEncoder = new OverviewButton(segmentWidth * 2, "Encoder", currentlySelectedEnDecoder);
-			bOveModEncoder.setLayoutX(segmentWidth * 4);
-			bOveModDecoder = new OverviewButton(segmentWidth * 2, "Decoder", currentlySelectedEnDecoder);
-			bOveModDecoder.setLayoutX(segmentWidth * 8);
-			bOveModPostdecoder = new OverviewButton(segmentWidth * 2, "Post-decoder", currentlySelectedPrePost);
-			bOveModPostdecoder.setLayoutX(segmentWidth * 11);
-			
-			double y;
-			double y1 = bOveModEncoder.getHeightW() / 2;
-			double y2 = bOveModPostdecoder.getHeightW() / 2;
+			y1 = bOveModEncoder.getHeightW() / 2;
+			y2 = bOveModPostdecoder.getHeightW() / 2;
 			if (y1 >= y2) {
 				y = y2;
 			} else {
 				y = y1;
 			}
-			aOveModRelToEn = new Arrow().getArrow(0, y, segmentWidth, y, 10, 10, false, "message");
-			aOveModRelEnToEn = new Arrow().getArrow(segmentWidth * 3, y, segmentWidth * 4, y, 10, 10, false, currentPrePostProtocol);
-			aOveModRelEnToDe = new Arrow().getArrow(segmentWidth * 6, y, segmentWidth * 8, y, 10, 10, false, "signal / channel");
-			aOveModRelDeToDe = new Arrow().getArrow(segmentWidth * 10, y, segmentWidth * 11, y, 10, 10, false, currentPrePostProtocol);
-			aOveModRelDeTo = new Arrow().getArrow(segmentWidth * 13, y, segmentWidth * 14, y, 10, 10, false, "message");
+			pOveModel.getChildren().removeAll(aOveModRelEnToEn, aOveModRelDeToDe);
+			aOveModRelEnToEn = new Arrow().getArrow(segmentWidthPrePost * 3, y, segmentWidthPrePost * 4, y, 10, 10, false, currentPrePostProtocol);
+			aOveModRelDeToDe = new Arrow().getArrow(segmentWidthPrePost * 10, y, segmentWidthPrePost * 11, y, 10, 10, false, currentPrePostProtocol);
+			pOveModel.getChildren().addAll(aOveModRelEnToEn, aOveModRelDeToDe);
+			break;
+		case 2:						// view-setup: !pre-/post- -> pre-/post-
+			bOveModPreencoder.rebuild(segmentWidthPrePost * 2, "Pre-encoder", currentlySelectedPrePost);
+			bOveModPreencoder.setLayoutX(segmentWidthPrePost);
+			bOveModEncoder.rebuild(segmentWidthPrePost * 2, "Encoder", currentlySelectedEnDecoder);
+			bOveModEncoder.setLayoutX(segmentWidthPrePost * 4);
+			bOveModDecoder.rebuild(segmentWidthPrePost * 2, "Decoder", currentlySelectedEnDecoder);
+			bOveModDecoder.setLayoutX(segmentWidthPrePost * 8);
+			bOveModPostdecoder.rebuild(segmentWidthPrePost * 2, "Post-decoder", currentlySelectedPrePost);
+			bOveModPostdecoder.setLayoutX(segmentWidthPrePost * 11);
 			
+			y1 = bOveModEncoder.getHeightW() / 2;
+			y2 = bOveModPostdecoder.getHeightW() / 2;
+			if (y1 >= y2) {
+				y = y2;
+			} else {
+				y = y1;
+			}
+			pOveModel.getChildren().removeAll(aOveModRelToEn, aOveModRelEnToDe, aOveModRelDeTo);
+			aOveModRelToEn = new Arrow().getArrow(0, y, segmentWidthPrePost, y, 10, 10, false, "message");
+			aOveModRelEnToEn = new Arrow().getArrow(segmentWidthPrePost * 3, y, segmentWidthPrePost * 4, y, 10, 10, false, currentPrePostProtocol);
+			aOveModRelEnToDe = new Arrow().getArrow(segmentWidthPrePost * 6, y, segmentWidthPrePost * 8, y, 10, 10, false, "signal / channel");
+			aOveModRelDeToDe = new Arrow().getArrow(segmentWidthPrePost * 10, y, segmentWidthPrePost * 11, y, 10, 10, false, currentPrePostProtocol);
+			aOveModRelDeTo = new Arrow().getArrow(segmentWidthPrePost * 13, y, segmentWidthPrePost * 14, y, 10, 10, false, "message");
 			
-			pOveModel.getChildren().addAll(bOveModPreencoder, aOveModRelEnToEn, aOveModRelDeToDe, bOveModPostdecoder);
+			pOveModel.getChildren().addAll(aOveModRelToEn, bOveModPreencoder, aOveModRelEnToEn, aOveModRelEnToDe, 
+					aOveModRelDeToDe, bOveModPostdecoder, aOveModRelDeTo);
+			ovePrePostDisplaying = true;
+			break;
+		case 3: 					// view-setup: pre-/post- -> !pre-/post-
+			pOveModel.getChildren().removeAll(bOveModPreencoder, aOveModRelEnToEn, aOveModRelDeToDe, bOveModPostdecoder);
+			
+			bOveModEncoder.rebuild(segmentWidthEnDe * 2, "Encoder", currentlySelectedEnDecoder);
+			bOveModEncoder.setLayoutX(segmentWidthEnDe * 1);
+			bOveModDecoder.rebuild(segmentWidthEnDe * 2, "Decoder", currentlySelectedEnDecoder);
+			bOveModDecoder.setLayoutX(segmentWidthEnDe * 5);
+			
+			y = bOveModEncoder.getHeightW() / 2;
+			pOveModel.getChildren().removeAll(aOveModRelToEn, aOveModRelEnToDe, aOveModRelDeTo);
+			aOveModRelToEn = new Arrow().getArrow(0, y, segmentWidthEnDe, y, 15, 10, false, "message");
+			aOveModRelEnToDe = new Arrow().getArrow(segmentWidthEnDe * 3, y, segmentWidthEnDe * 5, y, 15, 10, false, "signal / channel");
+			aOveModRelDeTo = new Arrow().getArrow(segmentWidthEnDe * 7, y, segmentWidthEnDe * 8, y, 15, 10, false, "message");
+			
+			pOveModel.getChildren().addAll(aOveModRelToEn, aOveModRelEnToDe, aOveModRelDeTo);
+			ovePrePostDisplaying = false;
+			break;
 		}
-		pOveModel.getChildren().addAll(aOveModRelToEn, bOveModEncoder, aOveModRelEnToDe, bOveModDecoder, aOveModRelDeTo);
 	}
 	
 	

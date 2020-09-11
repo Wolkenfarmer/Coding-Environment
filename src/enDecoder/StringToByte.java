@@ -8,15 +8,11 @@ import javafx.scene.paint.Color;
 /**
  * @author Wolkenfarmer
  */
-public class Gallager implements ExperimentElement {
-	private static String name = "Gallager-Code";
-	private static String protocol = "idk";
+public class StringToByte implements ExperimentElement {
+	private static String name = "String to byte[]";
+	private static String protocol = "byte[]";
 	private static byte index = 1;
-	/**
-	 * 0: en- / decoder
-	 * 1: pre- / post-
-	 */
-	private static byte type = 0;
+	private static byte type = 1;
 	/** Layout container representing the given root from {@link environment.SourcePage#pInfContent} to attach the GUI-elements to.
 	 * It's content ({@link #tfUserText}) gets build in {@link #buildGui(Pane)}.
 	 * When loading another page it's content gets first removed and then the layout container will be given to the other class.
@@ -31,21 +27,22 @@ public class Gallager implements ExperimentElement {
 		root = parent;
 		
 		mock = new Label();
-		mock.setText("Galleger-Code-Gui has been loaded!\n"
-				+ "Can only be set as en-/decoder.");
+		mock.setText("Strin-to-byte[]-Gui has been loaded!\n"
+				+ "Can only be set as pre-encoder / post-decoder.");
 		mock.setFont(environment.Main.fNormalText);
 		mock.setTextFill(Color.WHITESMOKE);
 		mock.setPrefWidth(root.getPrefWidth());
 		mock.setWrapText(true);
         
         builtGui = true;
-        root.getChildren().add(mock);
+        root.getChildren().addAll(mock);
+		
 	}
 
 
 	public void reloadGui(Pane parent) {
 		root = parent;
-		root.getChildren().add(mock);
+		root.getChildren().addAll(mock);
 	}
 	
 	

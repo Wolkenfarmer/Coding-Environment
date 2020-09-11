@@ -7,7 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 
@@ -16,7 +15,6 @@ import javafx.scene.text.TextAlignment;
  */
 public class InformationSegment extends Pane {
 	private byte refType;
-	private HBox hbHeading;
 		/** Label which displays the sub-heading "Information" by default, but gets updated to fit the currently picked en- / decoder. 
 		 * It's part of {@link #pInformation}.*/
 		private Label lHeading;
@@ -82,34 +80,62 @@ public class InformationSegment extends Pane {
 	}
 	
 	
-	public void setSaveAddReference(ExperimentElement reference, OptionsButton button) {
+	public void setSaveAddReference(ExperimentElement reference, OptionsButton optButton, SettingsPage page) {
 		bHeaSav.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent t) {
 				System.out.println("\"Save & add\" got pressed!");
 				reference.save();
 				
+				
 				switch (refType) {
 				case 0: // information source
+					Main.selectedSource = reference.getIndex();
+					page.updateOveModel((byte) 0);
+					
+					for (int i = 0; i < page.vbOptButtons.getChildren().size(); i++) {
+						if (((OptionsButton) page.vbOptButtons.getChildren().get(i)).getMode() == 1) {
+							((OptionsButton) page.vbOptButtons.getChildren().get(i)).setMode((byte) 0);
+						}
+					}
+					optButton.setMode((byte) 1);
 					break;
 				case 1: // EnDecoder	
 					if (reference.getType() == 0) {
 						Main.selectedEnDecoder = reference.getIndex();
 						
-						for (int i = 0; i < EnDecoderPage.vbOptButtons.getChildren().size(); i++) {
-							if (((OptionsButton) EnDecoderPage.vbOptButtons.getChildren().get(i)).getMode() == 1) {
-								((OptionsButton) EnDecoderPage.vbOptButtons.getChildren().get(i)).setMode((byte) 0);
+						if (optButton.getMode() == 2) {
+							Main.selectedPrePost = 0;
+							page.updateOveModel((byte) 3);
+						} else {
+							page.updateOveModel((byte) 0);
+						}
+						
+						for (int i = 0; i < page.vbOptButtons.getChildren().size(); i++) {
+							if (((OptionsButton) page.vbOptButtons.getChildren().get(i)).getMode() == 1) {
+								((OptionsButton) page.vbOptButtons.getChildren().get(i)).setMode((byte) 0);
 							}
 						}
-						button.setMode((byte) 1);
+						optButton.setMode((byte) 1);
 					} else {
 						Main.selectedPrePost = reference.getIndex();
 						
-						for (int i = 0; i < EnDecoderPage.vbOptButtons.getChildren().size(); i++) {
-							if (((OptionsButton) EnDecoderPage.vbOptButtons.getChildren().get(i)).getMode() == 2) {
-								((OptionsButton) EnDecoderPage.vbOptButtons.getChildren().get(i)).setMode((byte) 0);
+						if (optButton.getMode() == 1) {
+							Main.selectedEnDecoder = 0;
+							page.updateOveModel((byte) 0);
+						}
+						
+						if (!EnDecoderPage.ovePrePostDisplaying) {
+							page.updateOveModel((byte) 2);
+						} else {
+							page.updateOveModel((byte) 1);
+						}
+						
+						for (int i = 0; i < page.vbOptButtons.getChildren().size(); i++) {
+							if (((OptionsButton) page.vbOptButtons.getChildren().get(i)).getMode() == 2) {
+								((OptionsButton) page.vbOptButtons.getChildren().get(i)).setMode((byte) 0);
 							}
 						}
-						button.setMode((byte) 2);
+						optButton.setMode((byte) 2);
 					}
 					break;
 				case 2: // noise source

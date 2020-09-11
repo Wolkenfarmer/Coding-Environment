@@ -11,6 +11,7 @@ import javafx.scene.layout.Pane;
  */
 public class UserInput implements ExperimentElement {
 	private static String name = "User input";
+	private static String protocol = "string";
 	private static byte index = 1;
 	private static byte type = 0;
 	/** Layout container representing the given root from {@link environment.SourcePage#pInfContent} to attach the GUI-elements to.
@@ -66,6 +67,7 @@ public class UserInput implements ExperimentElement {
 	public boolean getBuiltGui() {return builtGui;}
 	public static boolean getBuiltGuiDeprecated() {return builtGui;}
 	public String getName() {return name;}
+	public String getProtocol() {return protocol;}
 	public byte getIndex() {return index;}
 	public byte getType() {return type;}
 }

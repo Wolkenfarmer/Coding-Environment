@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import enDecoder.Gallager;
 import enDecoder.Mock;
+import enDecoder.StringToByte;
+import infSources.RandomDigitBook;
 import infSources.UserInput;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -178,6 +180,16 @@ public class Main extends Application{
     /** Static reference to the en- / decoder page in order for the pages to have simple access to one another.*/
     static EnDecoderPage enDecoderPage;
     
+    
+    
+    /**
+	 * Saves the selected information source for further use in the environment. This byte specifies the displayed text in 
+	 * {@link Homepage#bSetModSource} and {@link #lConSelectedItem}. <br>
+	 * 0: No option picked
+	 * 1: {@link infSources.UserInput user input}
+	 * 2: random digit book
+	 */
+	static byte selectedSource = 0;
     /**
 	 * Saves the selected encoder / decoder for further use in the environment. This byte specifies the displayed text in 
 	 * {@link Homepage#bSetModSource} and {@link #bOveModEncoder} / {@link #bOveModDecoder}. <br>
@@ -195,12 +207,17 @@ public class Main extends Application{
 	 */
 	static byte selectedPrePost = 0;
     
-    /** Static reference to the information source "User Input" in order for {@link environment.SourcePage} and TODO to have simple access to it.*/
+    /** Static reference to the information source "User input" in order for {@link environment.SourcePage} and TODO to have simple access to it.*/
     static UserInput infSource_UserInput = new UserInput();
+    /** Static reference to the information source "Random digit book" in order for {@link environment.SourcePage} and 
+     * TODO to have simple access to it.*/
+    static RandomDigitBook infSource_RandomDigitBook = new RandomDigitBook();
     /** Static reference to the en- / decoder "Gallager-Code" in order for {@link environment.EnDecoderPage} and TODO to have simple access to it.*/
     static Gallager enDecoder_Gallager = new Gallager();
     /** Static reference to the en- / decoder "Mock" in order for {@link environment.EnDecoderPage} and TODO to have simple access to it.*/
     static Mock enDecoder_Mock = new Mock();
+    /** Static reference to the en- / decoder "Mock" in order for {@link environment.EnDecoderPage} and TODO to have simple access to it.*/
+    static StringToByte enDecoder_StringToByte = new StringToByte();
     
     
 	/**
