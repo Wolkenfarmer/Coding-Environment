@@ -1,7 +1,7 @@
 /**
- * Contains the environment itself and with it the entire UI and {@link environment.Main main} class. 
+ * Contains the environment itself and with it the entire GUI and {@link environment.Main main} class. 
  * This part of the program handles all the other packages and picks the {@link infSources information source} 
- * as well as {@link enDecoder en-/ decoder} which will be used for the communication experiment. 
+ * as well as {@link enDecoder en- / decoder} which will be used for the communication experiment. 
  * In addition, it contains the logic of the program.
  * <p>
  * In the classes building the UI the declaration of the UI objects is written in the following scheme: 

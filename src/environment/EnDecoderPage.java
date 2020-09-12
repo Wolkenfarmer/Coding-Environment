@@ -4,20 +4,28 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextFlow;
 
 /**
- * The en- / decoder page (a sub-page of {@link Homepage}).
- * The en- / decoder for the communication experiment can be set here.
- * See {@link #EnDecoderPage(Group)} for more information about the UI.
+ * The en- / decoder page (a sub-page of the {@link Homepage home page}).
+ * The en- / decoder and pre-en- / post-decoder for the communication experiment can be set here.
+ * This page extends from {@link SettingsPage} (like {@link InfSourcePage} and TODO).
+ * See {@link #EnDecoderPage(Group)} for more information about the GUI.
  * @author Wolkenfarmer
  */
 public class EnDecoderPage extends SettingsPage {
+	/** Saves whether the pre-en- / post-decoder are displayed at the moment or not. 
+	 * This is important in order to know whether the overview model has to be rebuild or not. Gets updated in {@link #EnDecoderPage(Group)}
+	 * and {@link #updateOveModel(byte)} and used for defining the changed-specification in 
+	 * {@link InformationSegment#setSaveAddReference(ExperimentElement, OptionButton, SettingsPage)} for {@link #reload(Group)}.*/
 	static boolean ovePrePostDisplaying;
+	/** Saves the width of an segment in {@link #pOveModel} which gets calculated in {@link #EnDecoderPage(Group)}
+	 * in the view case of not displaying the pre-en- / post-decoder.*/
 	private double segmentWidthEnDe;
+	/** Saves the width of an segment in {@link #pOveModel} which gets calculated in {@link #EnDecoderPage(Group)}
+	 * in the view case of displaying the pre-en- / post-decoder.*/
 	private double segmentWidthPrePost;
 	// Heading
 		/** Label which displays the heading segment "CE \  " (bold). It's part of {@link #tfHeading}.*/
@@ -27,48 +35,77 @@ public class EnDecoderPage extends SettingsPage {
 	// Overview
 		/** Label which displays the sub-heading "Overview". It's part of {@link #pOverview}.*/
 		private static Label lOveHeading;
-		/** Layout container for the overview model. Contains TODO 
+		/** Layout container for the overview model. Contains {@link #bOveModEncoder}, {@link #bOveModDecoder}, {@link #aOveModRelToEn},
+		 * {@link #aOveModRelEnToDe} and {@link #aOveModRelDeTo} and in the view case of additionally displaying the pre-en- / post-decoder
+		 * additionally {@link #bOveModPreencoder}, {@link #bOveModPostdecoder}, {@link #aOveModRelEnToEn} and {@link #aOveModRelDeToDe}
 		 * and is part of {@link #pOverview}.*/
 		private static Pane pOveModel;
-			/** The button showing the pre-encoder in the overview. It's used as a better rectangle. It's part of {@link #pOveModel}.*/
+			/** The button showing the pre-encoder in the overview. It's used as a better rectangle. 
+			 * Won't be used if {@link Main#selectedPrePost} == 0.
+			 * The button gets instantiated in {@link #EnDecoderPage(Group)} and 
+			 * updated in {@link #updateOveModel(byte)} to fit {@link Main#selectedPrePost}. It's part of {@link #pOveModel}.
+			 * @see OverviewButton*/
 			private static OverviewButton bOveModPreencoder;
-			/** The button showing the post-decoder in the overview. It's used as a better rectangle. It's part of {@link #pOveModel}.*/
+			/** The button showing the post-decoder in the overview. It's used as a better rectangle. 
+			 * Won't be used if {@link Main#selectedPrePost} == 0.
+			 * The button gets instantiated in {@link #EnDecoderPage(Group)} and 
+			 * updated in {@link #updateOveModel(byte)} to fit {@link Main#selectedPrePost}. It's part of {@link #pOveModel}.
+			 * @see OverviewButton*/
 			private static OverviewButton bOveModPostdecoder;
-			/** The button showing the encoder in the overview. It's used as a better rectangle. It's part of {@link #pOveModel}.*/
+			/** The button showing the encoder in the overview. It's used as a better rectangle.
+			 * The button gets instantiated in {@link #EnDecoderPage(Group)} and 
+			 * updated in {@link #updateOveModel(byte)} to fit {@link Main#selectedEnDecoder}. It's part of {@link #pOveModel}.
+			 * @see OverviewButton*/
 			private static OverviewButton bOveModEncoder;
-			/** The button showing the decoder in the overview. It's used as a better rectangle. It's part of {@link #pOveModel}.*/
+			/** The button showing the decoder in the overview. It's used as a better rectangle. 
+			 * The button gets instantiated in {@link #EnDecoderPage(Group)} and 
+			 * updated in {@link #updateOveModel(byte)} to fit {@link Main#selectedEnDecoder}. It's part of {@link #pOveModel}.
+			 * @see OverviewButton*/
 			private static OverviewButton bOveModDecoder;
 			/** Relations for the model in overview. Connect the start of {@link #pOveModel} with either {@link #bOveModPreencoder} or
-			 * {@link #bOveModEncoder} and is part of {@link #pOveModel}.*/
+			 * {@link #bOveModEncoder} and is part of {@link #pOveModel}.
+			 * @see Arrow*/
 			private static Arrow aOveModRelToEn;
 			/** Relation for the model in overview. Connects {@link #bOveModPreencoder} with {@link #bOveModEncoder} 
-			 * and is part of {@link #pOveModel}.*/
+			 * and is part of {@link #pOveModel}.
+			 * @see Arrow*/
 			private static Arrow aOveModRelEnToEn;
-			/** Relation for the model in overview. Won't be used if {@link #selectedPrePost} == 0. 
-			 * Connects {@link #bOveModEncoder} with {@link #bOveModDecoder} and is part of {@link #pOveModel}.*/
+			/** Relation for the model in overview. Won't be used if {@link Main#selectedPrePost} == 0. 
+			 * Connects {@link #bOveModEncoder} with {@link #bOveModDecoder} and is part of {@link #pOveModel}.
+			 * @see Arrow*/
 			private static Arrow aOveModRelEnToDe;
-			/** Relation for the model in overview. Won't be used if {@link #selectedPrePost} == 0. 
-			 * Connects {@link #bOveModDecoder} with {@link #bOveModPostdecoder} and is part of {@link #pOveModel}.*/
+			/** Relation for the model in overview. Won't be used if {@link Main#selectedPrePost} == 0. 
+			 * Connects {@link #bOveModDecoder} with {@link #bOveModPostdecoder} and is part of {@link #pOveModel}.
+			 * @see Arrow*/
 			private static Arrow aOveModRelDeToDe;
 			/** Relation for the model in overview. Connects either {@link #bOveModDecoder} or {@link #bOveModPostdecoder} with 
-			 * the end of {@link #pOveModel} and is part of {@link #pOveModel}.*/
+			 * the end of {@link #pOveModel} and is part of {@link #pOveModel}.
+			 * @see Arrow*/
 			private static Arrow aOveModRelDeTo;
 	// Options
-		/** The button showing the Gallager-Code option under options. It's part of {@link #vbOptButtons}.*/
-		private static OptionsButton bOptButGallager;
-		/** The button showing the TODO option under options. It's 
-		 * part of {@link #vbOptButtons}.*/
-		private static OptionsButton bOptButMock;
-		private static OptionsButton bOptButStringToByte;
+		/** The button showing the {@link enDecoder.Gallager Gallager-Coder} option under {@link #pOptions option}. 
+		 * It's part of {@link #vbOptButtons}.*/
+		private static OptionButton bOptButGallager;
+		/** The button showing the {@link enDecoder.Mock mock} option under {@link #pOptions option}. 
+		 * It's part of {@link #vbOptButtons}.*/
+		private static OptionButton bOptButMock;
+		/** The button showing the {@link enDecoder.StringToByte string to byte} option under {@link #pOptions option}. 
+		 * It's part of {@link #vbOptButtons}.*/
+		private static OptionButton bOptButStringToByte;
 	// Information
 			
 	
 	/**
 	 * Builds the en- / decoder page of the application.
+	 * For building it's content and updating the environment accordingly to the picked options {@link OverviewButton}, {@link OptionButton} and
+	 * {@link InformationSegment} get used.
+	 * There are two different view cases for the overview model depending on whether a 
+	 * {@link Main#selectedPrePost pre-en- / post-decoder is selected or not}.
+	 * If there is one selected, they will also be displayed in the model, but if none is selected, they won't.
 	 * The en- / decoder page gets scaled accordingly to {@link Main#stageHeight} and {@link Main#stageWidth}.
 	 * Normally, the height of {@link #pInformation} gets calculated in order to not exceed the screen's size, 
 	 * but if the screen is too small to even fit {@link #pOptions} on it, 
-	 * the options height will be the minimum height of the information segment and {@link Main#scrollbar} will be displayed.
+	 * the options height will be the minimum height of the information segment and {@link Main#scrollbar scroll bar} will be displayed.
 	 * @param parent Layout container to attach it's layout parts to.
 	 */
 	public EnDecoderPage(Group parent) {
@@ -203,9 +240,9 @@ public class EnDecoderPage extends SettingsPage {
 			vbOptButtons.setPrefWidth(pOptions.getPrefWidth());
 			vbOptButtons.setLayoutY(Main.distanceToSubheading);
 			vbOptButtons.setSpacing(20);
-				bOptButGallager = new OptionsButton(pOptions.getPrefWidth(), Main.enDecoder_Gallager.getName());
-				bOptButMock = new OptionsButton(pOptions.getPrefWidth(), Main.enDecoder_Mock.getName());
-				bOptButStringToByte = new OptionsButton(pOptions.getPrefWidth(), Main.enDecoder_StringToByte.getName());
+				bOptButGallager = new OptionButton(pOptions.getPrefWidth(), Main.enDecoder_Gallager.getName());
+				bOptButMock = new OptionButton(pOptions.getPrefWidth(), Main.enDecoder_Mock.getName());
+				bOptButStringToByte = new OptionButton(pOptions.getPrefWidth(), Main.enDecoder_StringToByte.getName());
 			vbOptButtons.getChildren().addAll(bOptButGallager, bOptButMock, bOptButStringToByte);
 	    pOptions.getChildren().addAll(lOptHeading, vbOptButtons);
 	    
@@ -222,6 +259,17 @@ public class EnDecoderPage extends SettingsPage {
 	}
 	
 	
+	/**
+	 * Updates the {@link #pOveModel overview model} to fit the {@link Main#selectedEnDecoder selected en- / decoder} as well as the
+	 * {@link Main#selectedPrePost selected pre-en / post-decoder}.
+	 * This method differentiates between four "changed" cases: <br>
+	 * 0: Only the en- / decoder changed.<br>
+	 * 1: Only the pre-en- / post-decoder changed.<br>
+	 * 2: The pre-en- / post-decoder weren't displayed before but now got added. Consequently, the overview model has to be partially rebuild.<br>
+	 * 3: The pre-en- / post-decoder were displayed before but now got removed. Consequently, the overview model has to be partially rebuild.
+	 * @param changed Specifies what has to be updated in the model.
+	 * @see SettingsPage
+	 */
 	void updateOveModel(byte changed) {
 		String currentlySelectedEnDecoder;
 		String currentlySelectedPrePost;
@@ -328,28 +376,5 @@ public class EnDecoderPage extends SettingsPage {
 			ovePrePostDisplaying = false;
 			break;
 		}
-	}
-	
-	
-	
-	private void addListener() {
-		Main.scene.setOnKeyReleased(Main.krlBackHome);
-	}
-	
-	
-	
-	/**
-	 * Reloads the en- / decoder page. Re-attaches the page's elements ({@link #tfHeading}, {@link #pOverview}, {@link #pOptions}, 
-	 * {@link #pInformation}) and {@link Main#krlBackHome}. In addition, {@link Main#updateScrollbar(Region)} gets called 
-	 * (see {@link #EnDecoderPage(Group)} for more information relating to it's view-cases).
-	 * This method gets called by the {@link Homepage homepage}, 
-	 * when the page is already not null and {@link Homepage#bSetModEncoder} or {@link Homepage#bSetModDecoder} gets pressed.
-	 * @param parent Layout container to attach it's layout parts to.
-	 */
-	void reload(Group parent) {
-		root = parent;
-		Main.updateScrollbar(pOptions);
-		root.getChildren().addAll(tfHeading, pOverview, pOptions, pInformation);
-		Main.scene.setOnKeyReleased(Main.krlBackHome);		
 	}
 }

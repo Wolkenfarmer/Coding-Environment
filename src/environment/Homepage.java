@@ -23,8 +23,11 @@ import javafx.scene.text.TextAlignment;
 import javafx.util.Callback;
 
 /**
- * The homepage of the application with access to every part of the program.
- * See {@link #Homepage(Group)} for more information about the UI.
+ * The home page of the application with access to every part of the program.
+ * Links with {@link #bSetModSource} up to the {@link InfSourcePage information source page}, 
+ * with {@link #bSetModEncoder} and {@link #bSetModDecoder} up to the {@link EnDecoderPage en- / decoder page} and 
+ * with TODO up to the TODO .
+ * See {@link #Homepage(Group)} for more information about the GUI.
  * @author Wolkenfarmer
  */
 public class Homepage {
@@ -55,7 +58,7 @@ public class Homepage {
 		 * Contains {@link #bSetModSource}, {@link #bSetModEncoder}, {@link #bSetModNoise}, {@link #bSetModDecoder} and {@link #bSetModDestination} */
 		private static Pane pSetModel;
 			/** Information source button of the model in settings. Uses {@link environment.Main#baNormalButton} as background.
-			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to {@link SourcePage}.*/
+			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to {@link InfSourcePage}.*/
 			static Button bSetModSource;
 			/** Encoder button of the model in settings. Uses {@link environment.Main#baNormalButton} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
@@ -69,13 +72,17 @@ public class Homepage {
 			/** Destination button of the model in settings. Uses {@link environment.Main#baNormalButton} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
 			private static Button bSetModDestination;
-			/** Relation for the model in settings. Connects {@link #bSetModSource} with {@link #bSetModEncoder}.*/
+			/** Relation for the model in settings. Connects {@link #bSetModSource} with {@link #bSetModEncoder}.
+			 * @see Arrow*/
 			private static Group gSetModRelSoToEn;
-			/** Relation for the model in settings. Connects {@link #bSetModEncoder} with {@link #bSetModDecoder}.*/
+			/** Relation for the model in settings. Connects {@link #bSetModEncoder} with {@link #bSetModDecoder}.
+			 * @see Arrow*/
 			private static Group gSetModRelEnToDe;
-			/** Relation for the model in settings. Connects {@link #bSetModDecoder} with {@link #bSetModDestination}.*/
+			/** Relation for the model in settings. Connects {@link #bSetModDecoder} with {@link #bSetModDestination}.
+			 * @see Arrow*/
 			private static Group gSetModRelDeToDe;
-			/** Relation for the model in settings. Connects {@link #bSetModNoise} with {@link #gSetModRelEnToDe}.*/
+			/** Relation for the model in settings. Connects {@link #bSetModNoise} with {@link #gSetModRelEnToDe}.
+			 * @see Arrow*/
 			private static Group gSetModRelNoToCh;
 	/** Layout container for the results segment. Contains {@link #lResHeading} and {@link #tvResTable} and gets added to {@link #root}.*/
 	private static Pane pResults;
@@ -135,13 +142,13 @@ public class Homepage {
 	
 	
 	/**
-	 * Builds the homepage of the application.
+	 * Builds the home page of the application.
 	 * This constructor uses {@link ModelFactory#buildButton(float, float, byte)} for the buttons 
 	 * and {@link ModelFactory#buildRelation(float, float, short, boolean, String)} for the relations in {@link #pSetModel}.
-	 * The homepage gets scaled accordingly to {@link Main#stageHeight} and {@link Main#stageWidth}.
+	 * The home page gets scaled accordingly to {@link Main#stageHeight} and {@link Main#stageWidth}.
 	 * Normally, the height of {@link #pResults} gets calculated in order to not exceed the screen's size, 
 	 * but if the screen is too small to even fit {@link #pControls} on it, the controls height will be the minimum height of results 
-	 * and {@link Main#scrollbar} will be displayed.
+	 * and {@link Main#scrollbar scroll bar} will be displayed.
 	 * @param parent Layout container to attach it's layout parts to.
 	 */
 	public Homepage(Group parent) {
@@ -391,10 +398,10 @@ public class Homepage {
 			public void handle(ActionEvent t) {
 				System.out.println("bSetModSource got pressed!");
 				root.getChildren().clear();
-				if (Main.sourcePage == null) {
-					Main.sourcePage = new SourcePage(root);
+				if (Main.infSourcePage == null) {
+					Main.infSourcePage = new InfSourcePage(root);
 				} else {
-					Main.sourcePage.reload(root);
+					Main.infSourcePage.reload(root);
 				}
 	        }
 	    });
@@ -450,10 +457,11 @@ public class Homepage {
 	
 	
 	/**
-	 * Reloads the homepage. Re-attaches the page's elements ({@link #hbHeading}, {@link #pSettings}, {@link #pResults}, {@link #pControls})
-	 * and {@link environment.Main#krlClose}.
+	 * Reloads the home page. Re-attaches the page's elements ({@link #hbHeading}, {@link #pSettings}, {@link #pResults}, {@link #pControls})
+	 * and {@link Main#krlClose}.
 	 * Rebuilds the buttons of {@link #pSetModel} if changes on the communication experiment setup were made.
-	 * In addition, {@link Main#updateScrollbar(Region)} gets called (see {@link #Homepage(Group)} for more information relating to it's view-cases).
+	 * In addition, {@link Main#updateScrollbar(Region)} gets called 
+	 * (see {@link #Homepage(Group)} for more information relating to it's view-cases).
 	 * This method gets called by the sub-pages when they get closed.
 	 * @param parent Layout container to attach it's layout parts to.
 	 * @param updateSettingsModel Defines whether changes on the communication experiment setup were made and the buttons have to be revuild or not.

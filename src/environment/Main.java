@@ -38,36 +38,39 @@ import javafx.stage.Stage;
 /**
  * Main class hosting the JavaFX Application.
  * Gets called on start of the program and is the base for the JavaFX application.
- * Builds the stage (window) with some basic setup like FullScreen-Mode or the {@link #scrollbar} along with its calculations.
- * In addition, this class provides the program with some basic layouts like the headline font {@link #fHeadline}.
+ * Builds the stage (window) with some basic setup like FullScreen-Mode or the {@link #scrollbar scroll bar} along with its calculations.
+ * In addition, this class provides the program with some unified layouts like the headline font {@link #fHeadline} 
+ * and hosts the instances to the pages and experiment elements (like {@link infSources.UserInput}).
  * Ultimately, {@link environment.Homepage} gets called.
  * @author Wolkenfarmer
  * @version 1.0
 */
-public class Main extends Application{
+public class Main extends Application {
 	/**
 	 * The Scene for the {@link #start(Stage)}.
 	 * Uses the stylesheets from {@link css}.
-	 * @see	<a href="https://www.educba.com/javafx-applications/">Javafx Application basic structure</a>
+	 * @see	<a href="https://www.educba.com/javafx-applications/">JavaFX Application basic structure</a>
+	 * @see	<a href="https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html">JavaFX CSS support</a>
 	 */
 	static Scene scene;
 	/**
-	 * Layout-group to contains the {@link #scrollbar} and start up the {@link #scene}. 
-	 * This layout-group need to be separate from {@link #root}, 
-	 * because root gets moved along it's y-axis while scrolling / using the scrollbar, 
-	 * while the scrollbar itself should not move in sbRoot.
+	 * Layout-group to contains the {@link #scrollbar scroll bar} and start up the {@link #scene}. 
+	 * This layout-group needs to be separate from {@link #root}, 
+	 * because the root gets moved along it's y-axis while scrolling / using the scroll bar, 
+	 * while the scroll bar itself should not move in sbRoot.
 	 * @see	 <a href="https://www.educba.com/javafx-applications/">Javafx Application basic structure</a>
 	*/
 	static Group sbRoot;
 	/**
 	 * Layout-group to contain the content of the pages (like {@link environment.Homepage}).
-	 * This layout-group need to be separate from {@link #sbRoot}, 
-	 * because root gets moved along it's y-axis while scrolling / using the {@link #scrollbar}, 
-	 * while the scrollbar itself should not move in sbRoot.
+	 * The root gets carried from one page to another when loading them in order to connect its' layout-elements to it.
+	 * This layout-group needs to be separate from {@link #sbRoot}, 
+	 * because root gets moved along it's y-axis while scrolling / using the {@link #scrollbar scroll bar}, 
+	 * while the scroll bar itself should not move in sbRoot.
 	*/
 	static Group root;
 	/**
-	 * The scrollbar for all pages nested in {@link #sbRoot}. 
+	 * The scroll bar for all pages nested in {@link #sbRoot}. 
 	 * EventHandler and Listener with its calculations are in {@link #start(Stage)}.
 	 */
 	static ScrollBar scrollbar;
@@ -107,15 +110,15 @@ public class Main extends Application{
 	/** Input handling. This ArrayList gets filled / used in {@link #start(Stage)} by the scene listeners.*/
 	static ArrayList<String> input = new ArrayList<String>();
 	/** Input handling. This unified event handler checks {@link #input} for (Esc) and closes the program when pressed.
-	 * This event handler is only used for {@link environment.Homepage}.
+	 * This event handler is only used for the {@link Homepage home page}.
 	 * @see environment.Homepage#reload(Group, boolean) */
 	static EventHandler<KeyEvent> krlClose;
-	/** Input handling. This event handler checks {@link #input} for (Esc) and passes back to {@link Homepage} when pressed.
-	 * This event handler is used for the direct sub-pages of {@link Homepage}.*/
+	/** Input handling. This event handler checks {@link #input} for (Esc) and passes back to the {@link Homepage home page} when pressed.
+	 * This event handler is used for the direct sub-pages of the home page.*/
 	static EventHandler<KeyEvent> krlBackHome;
 	/** Boolean which defines whether {@link Homepage#pSetModel} has to be rebuild on the next call of the page or not. 
-	 * Gets changed to true if there is a setup-change of the communication experiment from {@link SourcePage}, ... TODO and back to false
-	 * when {@link #krlBackHome reloading the page}.*/
+	 * Gets changed to true if there is a setup-change of the communication experiment from {@link InfSourcePage}, {@link EnDecoderPage} or TODO 
+	 * and back to false when {@link #krlBackHome the page has been reloaded}.*/
 		static boolean boUpdateSettingsModelHomepage;
 	
 	/** Standard distance from sub-headings to the content below them.*/
@@ -173,57 +176,74 @@ public class Main extends Application{
 	/** Unified referenceable event handler for changing the background of a brown button when the mouse exits it.*/
 	static EventHandler<MouseEvent> evButBroExited;
 
-    /** Static reference to the homepage in order for the pages to have simple access to one another. Gets initialized in {@link #start(Stage)}.*/
+    /** Static reference to the home page in order for the pages to have simple access to one another. Gets initialized in {@link #start(Stage)}.*/
     static Homepage homepage;
-    /** Static reference to the source page in order for the pages to have simple access to one another.*/
-    static SourcePage sourcePage;
-    /** Static reference to the en- / decoder page in order for the pages to have simple access to one another.*/
+    /** Static reference to the information source page in order for the pages to have simple access to one another. 
+     * Gets initialized in {@link Homepage}.*/
+    static InfSourcePage infSourcePage;
+    /** Static reference to the en- / decoder page in order for the pages to have simple access to one another. 
+     * Gets initialized in {@link Homepage}.*/
     static EnDecoderPage enDecoderPage;
     
     
     
     /**
-	 * Saves the selected information source for further use in the environment. This byte specifies the displayed text in 
-	 * {@link Homepage#bSetModSource} and {@link #lConSelectedItem}. <br>
-	 * 0: No option picked
-	 * 1: {@link infSources.UserInput user input}
-	 * 2: random digit book
+	 * Saves the selected information source for further use in the environment. 
+	 * This byte specifies the used information source for the communication experiment and 
+	 * displayed text in {@link Homepage#bSetModSource} and {@link OverviewButton#lSelectedItem} (if instantiated from {@link InfSourcePage}).<br>
+	 * 0: No option picked<br>
+	 * 1: {@link infSources.UserInput User input}<br>
+	 * 2: {@link infSources.RandomDigitBook Random digit book}
 	 */
-	static byte selectedSource = 0;
+	static byte selectedInfSource = 0;
     /**
-	 * Saves the selected encoder / decoder for further use in the environment. This byte specifies the displayed text in 
-	 * {@link Homepage#bSetModSource} and {@link #bOveModEncoder} / {@link #bOveModDecoder}. <br>
-	 * 0: No option picked
-	 * 1: Gallager-Code
+	 * Saves the selected encoder / decoder for further use in the environment. 
+	 * This byte specifies the used en- / decoder for the communication experiment and 
+	 * displayed text in {@link Homepage#bSetModEncoder} / {@link Homepage#bSetModDecoder} and {@link OverviewButton#lSelectedItem}
+	 * (if instantiated from {@link EnDecoderPage}).<br>
+	 * 0: No option picked<br>
+	 * 1: Gallager-Code<br>
 	 * 2: Mock (1)
 	 */
 	static byte selectedEnDecoder = 0;
 	/**
-	 * Saves the selected pre-en- / post-decoder for further use in the environment. This byte specifies the displayed text in 
-	 * {@link Homepage#bSetModSource} and {@link #bOveModPreencoder} / {@link #bOveModPostdecoder}. <br>
-	 * 0: No option picked
-	 * 1: String to byte[]
+	 * Saves the selected pre-en- / post-decoder for further use in the environment. 
+	 * This byte specifies the used pre-en- / post-decoder for the communication experiment and 
+	 * the displayed text in {@link OverviewButton#lSelectedItem} (if instantiated from {@link EnDecoderPage}).<br>
+	 * 0: No option picked<br>
+	 * 1: String to byte[]<br>
 	 * 2: Mock (2)
 	 */
 	static byte selectedPrePost = 0;
+	/**
+	 * Saves the selected noise source for further use in the environment. 
+	 * This byte specifies the used noise source for the communication experiment and 
+	 * displayed text in {@link Homepage#bSetModNoise} and {@link OverviewButton#lSelectedItem} (if instantiated from TODO).<br>
+	 * 0: No option picked
+	 */
+	static byte selectedNoiSource = 0;
     
-    /** Static reference to the information source "User input" in order for {@link environment.SourcePage} and TODO to have simple access to it.*/
+    /** Static reference to the information source "User input" in order for {@link environment.InfSourcePage} and
+     * TODO to have simple access to it.*/
     static UserInput infSource_UserInput = new UserInput();
-    /** Static reference to the information source "Random digit book" in order for {@link environment.SourcePage} and 
+    /** Static reference to the information source "Random digit book" in order for {@link environment.InfSourcePage} and 
      * TODO to have simple access to it.*/
     static RandomDigitBook infSource_RandomDigitBook = new RandomDigitBook();
-    /** Static reference to the en- / decoder "Gallager-Code" in order for {@link environment.EnDecoderPage} and TODO to have simple access to it.*/
+    /** Static reference to the en- / decoder "Gallager-Code" in order for {@link environment.EnDecoderPage} and
+     * TODO to have simple access to it.*/
     static Gallager enDecoder_Gallager = new Gallager();
-    /** Static reference to the en- / decoder "Mock" in order for {@link environment.EnDecoderPage} and TODO to have simple access to it.*/
+    /** Static reference to the en- / decoder "Mock" in order for {@link environment.EnDecoderPage} and
+     * TODO to have simple access to it.*/
     static Mock enDecoder_Mock = new Mock();
-    /** Static reference to the en- / decoder "Mock" in order for {@link environment.EnDecoderPage} and TODO to have simple access to it.*/
+    /** Static reference to the en- / decoder "String to byte" in order for {@link environment.EnDecoderPage} and
+     * TODO to have simple access to it.*/
     static StringToByte enDecoder_StringToByte = new StringToByte();
     
     
 	/**
 	 * Main method of the program calling launch.
 	 * Starts the application by calling {@link #launch(String...)} which calls up start. 
-	 * @param args Used for calling launch (javafx Application)
+	 * @param args Used for calling launch (JavaFX Application)
 	 * @see <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/application/Application.html">Javafx Application documentation</a>
 	 * @see #start(Stage)
 	 */
@@ -232,14 +252,16 @@ public class Main extends Application{
 	}
 
 	/**
-	 * (Builds) and starts the javafx application.
+	 * Builds and starts the JavaFX application.
 	 * Sets up the stage and links it up to the {@link #scene}. 
-	 * Both are modified with some basic setup like FullScreen-Mode or the {@link #scrollbar} (which gets added via {@link #sbRoot} to the scene). 
-	 * In addition, the keyboard and scrollbar listeners are written here and added to the scene.
+	 * Both are modified with some basic setup like full-screen mode or the {@link #scrollbar scroll bar} 
+	 * (which gets added via {@link #sbRoot} to the scene). 
+	 * In addition, the keyboard, scroll bar and some basic button listeners are written here and 
+	 * {@link #krlClose} and scroll bar listeners added to the scene.
 	 * Lastly, {@link environment.Homepage} gets called.
-	 * @param stage Makes up the window and is required for a javafx application.
+	 * @param stage Makes up the window and is required for a JavaFX application.
 	 * @see <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/application/Application.html#start-javafx.stage.Stage-">
-	 * Javafx Application start() documentation</a>
+	 * JavaFX Application start() documentation</a>
 	 */
 	public void start(Stage stage) throws Exception {
 		sbRoot = new Group();
@@ -450,9 +472,10 @@ public class Main extends Application{
 	
 	
 	/**
-	 * Updates {@link #scrollbar} when loading another page. Firstly resets the layout of {@link #root}, 
-	 * secondly calculates the new {@link #contentHeight}, then sets the new values for the scrollbar and lastly sets 
-	 * it's visibility (appears only if the content height is bigger than the screen's height.
+	 * Updates {@link #scrollbar} when loading another page. Firstly it resets the layout of {@link #root}, 
+	 * secondly it calculates the new {@link #contentHeight}, then sets the new values for the scroll bar and lastly sets 
+	 * it's visibility (appears only if the content height is bigger than the screen's height). 
+	 * However, if the screen is big enough, the scroll bar won't be displayed, because the content's height gets set to fit it perfectly. 
 	 * @param lastObject The last layout object on the page in order to calculate the {@link #contentHeight}.
 	 */
 	static void updateScrollbar(Region lastObject) {

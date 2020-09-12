@@ -9,12 +9,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.TextFlow;
 
 /**
- * The information source page (a sub-page of {@link Homepage}).
+ * The information source page (a sub-page of the {@link Homepage home page}).
  * The information source for the communication experiment can be set here.
- * See {@link #SourcePage(Group)} for more information about the UI.
+ * This page extends from {@link SettingsPage} (like {@link EnDecoderPage} and TODO).
+ * See {@link #InfSourcePage(Group)} for more information about the GUI.
  * @author Wolkenfarmer
  */
-public class SourcePage extends SettingsPage {
+public class InfSourcePage extends SettingsPage {
+	/** Saves the width of an segment in {@link #pOveModel} which gets calculated in {@link #InfSourcePage(Group)}.*/
 	private double segmentWidth;
 	// heading
 		/** Label which displays the heading segment "CE \  " (bold). It's part of {@link #tfHeading}.*/
@@ -24,33 +26,43 @@ public class SourcePage extends SettingsPage {
 	// Overview
 		/** Label which displays the sub-heading "Overview". It's part of {@link #pOverview}.*/
 		private static Label lOveHeading;
-		/** Layout container for the overview model. Contains {@link #bOveModSource}, {@link #bOveModEncoder} and {@link #aOveModRelation} 
+		/** Layout container for the overview model. Contains {@link #aOveModRelToSo}, {@link #bOveModSource} and {@link #aOveModRelSoTo} 
 		 * and is part of {@link #pOverview}.*/
 		private static Pane pOveModel;
-			/** The button showing the source in the overview. It's used as a better rectangle. Contains {@link #hbOveModSouContent} 
-			 * and is part of {@link #pOveModel}.*/
+			/** The button showing the source in the overview. It's used as a better rectangle. 
+			 * The button gets instantiated in {@link #InfSourcePage(Group)} and 
+			 * updated in {@link #updateOveModel(byte)} to fit {@link Main#selectedInfSource}. It's part of {@link #pOveModel}.
+			 * @see OverviewButton*/
 			private static OverviewButton bOveModSource;
-			/** Relation for the model in overview. Connects {@link #bOveModSource} with {@link #bOveModEncoder} and is part of {@link #pOveModel}.*/
+			/** Relation for the model in overview. Connects the start of {@link #pOveModel} with {@link #bOveModSource} 
+			 * and is part of {@link #pOveModel}.
+			 * @see Arrow*/
 			private static Arrow aOveModRelToSo;
+			/** Relation for the model in overview. Displays "message | " and the protocol type of the information source.
+			 * Connects {@link #bOveModSource} with the end of {@link #pOveModel} and is part of {@link #pOveModel}.
+			 * @see Arrow*/
 			private static Arrow aOveModRelSoTo;
 	// Options
-		/** The button showing the user input option under options. Contains {@link #hbOptButUserInput} and is part of {@link #vbOptButtons}.*/
-		private static OptionsButton bOptButUserInput;
-		/** The button showing the random digit book option under options. Contains {@link #hbOptButBook} and is 
-		 * part of {@link #vbOptButtons}.*/
-		private static OptionsButton bOptButBook;
+		/** The button showing the {@link infSources.UserInput user input} option under {@link #pOptions option}. 
+		 * It's part of {@link #vbOptButtons}.*/
+		private static OptionButton bOptButUserInput;
+		/** The button showing the {@link infSources.RandomDigitBook random digit book} option under {@link #pOptions option}. 
+		 * It's part of {@link #vbOptButtons}.*/
+		private static OptionButton bOptButBook;
 	// Information segment
 			
 			
 	/**
 	 * Builds the information source page of the application.
+	 * For building it's content and updating the environment accordingly to the picked options {@link OverviewButton}, {@link OptionButton} and
+	 * {@link InformationSegment} get used.
 	 * The information source page gets scaled accordingly to {@link Main#stageHeight} and {@link Main#stageWidth}.
 	 * Normally, the height of {@link #pInformation} gets calculated in order to not exceed the screen's size, 
 	 * but if the screen is too small to even fit {@link #pOptions} on it, 
-	 * the options height will be the minimum height of the information segment and {@link Main#scrollbar} will be displayed.
+	 * the options height will be the minimum height of the information segment and {@link Main#scrollbar scroll bar} will be displayed.
 	 * @param parent Layout container to attach it's layout parts to.
 	 */
-	public SourcePage(Group parent) {
+	public InfSourcePage(Group parent) {
 		root = parent;
 		
 		tfHeading = new TextFlow();
@@ -86,7 +98,7 @@ public class SourcePage extends SettingsPage {
 			pOveModel = new Pane();
 			pOveModel.setLayoutY(Main.distanceToSubheading);
 				String currentProtocol;
-				switch (Main.selectedSource) {
+				switch (Main.selectedInfSource) {
 				case 0:
 					bOveModSource = new OverviewButton(segmentWidth, "Information Source", "nothing selected");
 					currentProtocol = "-";
@@ -126,8 +138,8 @@ public class SourcePage extends SettingsPage {
 			vbOptButtons.setPrefWidth(pOptions.getPrefWidth());
 			vbOptButtons.setLayoutY(Main.distanceToSubheading);
 			vbOptButtons.setSpacing(20);
-				bOptButUserInput = new OptionsButton(pOptions.getPrefWidth(), Main.infSource_UserInput.getName());
-				bOptButBook = new OptionsButton(pOptions.getPrefWidth(), Main.infSource_RandomDigitBook.getName());
+				bOptButUserInput = new OptionButton(pOptions.getPrefWidth(), Main.infSource_UserInput.getName());
+				bOptButBook = new OptionButton(pOptions.getPrefWidth(), Main.infSource_RandomDigitBook.getName());
 			vbOptButtons.getChildren().addAll(bOptButUserInput, bOptButBook);
 	    pOptions.getChildren().addAll(lOptHeading, vbOptButtons);
 	    	    
@@ -142,15 +154,16 @@ public class SourcePage extends SettingsPage {
 		root.getChildren().addAll(tfHeading, pOverview, pOptions, pInformation);
 	}
 	
-	
-	private void addListener() {
-		Main.scene.setOnKeyReleased(Main.krlBackHome);
-	}
-	
 
+	/**
+	 * Updates the {@link #pOveModel overview model} of this page to fit the {@link Main#selectedInfSource currently selected information source}.
+	 * For this {@link OverviewButton#setSelectedItem(String)} gets used and
+	 * the {@link Arrow relation} gets rebuild and added to {@link #pOveModel}.
+	 * @param changed Is currently not used for this page.
+	 */
 	void updateOveModel(byte changed) {
 		String currentProtocol;
-		switch (Main.selectedSource) {
+		switch (Main.selectedInfSource) {
 		case 0:
 			bOveModSource.setSelectedItem("nothing selected");
 			currentProtocol = "-";

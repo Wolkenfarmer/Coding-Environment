@@ -130,7 +130,7 @@ public class ModelFactory {
 					lConSelectedItem.setText("nothing selected");
 					switch (type) {
 					case 0:	
-						switch (Main.selectedSource) {
+						switch (Main.selectedInfSource) {
 						case 0:
 							lConSelectedItem.setText("nothing selected");
 							break;
