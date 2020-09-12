@@ -1,5 +1,10 @@
-package environment;
+package environment.pages;
 
+import environment.Main;
+import environment.pages.guiElements.Arrow;
+import environment.pages.guiElements.InformationSegment;
+import environment.pages.guiElements.OptionButton;
+import environment.pages.guiElements.OverviewButton;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -161,7 +166,7 @@ public class InfSourcePage extends SettingsPage {
 	 * the {@link Arrow relation} gets rebuild and added to {@link #pOveModel}.
 	 * @param changed Is currently not used for this page.
 	 */
-	void updateOveModel(byte changed) {
+	public void updateOveModel(byte changed) {
 		String currentProtocol;
 		switch (Main.selectedInfSource) {
 		case 0:

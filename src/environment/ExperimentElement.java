@@ -1,5 +1,8 @@
 package environment;
 
+import environment.pages.Homepage;
+import environment.pages.SettingsPage;
+import environment.pages.guiElements.InformationSegment;
 import javafx.scene.layout.Pane;
 
 /**
@@ -9,16 +12,16 @@ import javafx.scene.layout.Pane;
 public interface ExperimentElement {
 	
 	/**
-	 * Builds the GUI of the experiment element to be displayed in {@link environment.InformationSegment#pInfContent}.
-	 * This method gets called by {@link environment.OptionButton#setOnActionW(ExperimentElement, SettingsPage, InformationSegment)}
+	 * Builds the GUI of the experiment element to be displayed in {@link environment.pages.guiElements.InformationSegment#pInfContent}.
+	 * This method gets called by {@link environment.pages.guiElements.OptionButton#setOnActionW(ExperimentElement, SettingsPage, InformationSegment)}
 	 * if {@link #getBuiltGui()} == false.
-	 * The GUI gets scaled accordingly to {@link environment.InformationSegment#pInfContent}'s size.
+	 * The GUI gets scaled accordingly to {@link environment.pages.guiElements.InformationSegment#pInfContent}'s size.
 	 * @param parent The layout container to attach it's GUI-elements to.
 	 */
 	public void buildGui(Pane parent);
 	/**
-	 * Reloads the GUI of the experiment element to be displayed in {@link environment.InformationSegment#pInfContent}.
-	 * This method gets called by {@link environment.OptionButton#setOnActionW(ExperimentElement, SettingsPage, InformationSegment)}
+	 * Reloads the GUI of the experiment element to be displayed in {@link environment.pages.guiElements.InformationSegment#pInfContent}.
+	 * This method gets called by {@link environment.pages.guiElements.OptionButton#setOnActionW(ExperimentElement, SettingsPage, InformationSegment)}
 	 * if {@link #getBuiltGui()} == false.
 	 * @param parent The layout container to attach it's GUI-elements to.
 	 */

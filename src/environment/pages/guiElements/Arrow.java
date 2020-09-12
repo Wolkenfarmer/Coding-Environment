@@ -1,5 +1,6 @@
-package environment;
+package environment.pages.guiElements;
 
+import environment.Main;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -11,8 +12,8 @@ import javafx.scene.shape.Line;
  * A template class to create arrows.
  * They can either be created horizontal (from left to right) or vertical (from bottom to top).
  * The arrows have a non-solid head and can be labeled (if horizontal).
- * The data for the arrows get prepared in {@link environment.ModelFactory#buildRelation(float, float, short, boolean, String)}
- * to be shown as relation in {@link environment.Homepage#pSetModel}.
+ * The data for the arrows get prepared in {@link environment.pages.guiElements.ModelFactory#buildRelation(float, float, short, boolean, String)}
+ * to be shown as relation in {@link environment.pages.Homepage#pSetModel}.
  * @author Wolkenfarmer
  */
 public class Arrow extends Group {

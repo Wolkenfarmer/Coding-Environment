@@ -6,7 +6,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 /**
- * For now just a mock class for {@link environment.EnDecoderPage}. 
+ * For now just a mock class for {@link environment.pages.EnDecoderPage}. 
  * Will later be extended to a full version of the user input information source.
  * @author Wolkenfarmer
  */
@@ -21,8 +21,8 @@ public class Gallager implements ExperimentElement {
 	 * 0: en- / decoder
 	 * 1: pre- / post-*/
 	private static byte type = 0;
-	/** Layout container representing the given root from {@link environment.InformationSegment} to attach the GUI-elements to 
-	 * (gets added via {@link environment.OptionButton#setOnActionW(ExperimentElement, environment.SettingsPage, environment.InformationSegment)}).
+	/** Layout container representing the given root from {@link environment.pages.guiElements.InformationSegment} to attach the GUI-elements to 
+	 * (gets added via {@link environment.pages.guiElements.OptionButton#setOnActionW(ExperimentElement, environment.SettingsPage, environment.pages.guiElements.InformationSegment)}).
 	 * It's content ({@link #mock}) gets build in {@link #buildGui(Pane)}.
 	 * When loading another page, it's content gets first removed and then the layout container will be given to the other class.
 	 * When reloading the page {@link #reloadGui(Pane)} will be used to re-attach the content to the root.*/

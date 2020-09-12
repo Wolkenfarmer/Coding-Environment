@@ -1,5 +1,11 @@
-package environment;
+package environment.pages;
 
+import environment.ExperimentElement;
+import environment.Main;
+import environment.pages.guiElements.Arrow;
+import environment.pages.guiElements.InformationSegment;
+import environment.pages.guiElements.OptionButton;
+import environment.pages.guiElements.OverviewButton;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -20,7 +26,7 @@ public class EnDecoderPage extends SettingsPage {
 	 * This is important in order to know whether the overview model has to be rebuild or not. Gets updated in {@link #EnDecoderPage(Group)}
 	 * and {@link #updateOveModel(byte)} and used for defining the changed-specification in 
 	 * {@link InformationSegment#setSaveAddReference(ExperimentElement, OptionButton, SettingsPage)} for {@link #reload(Group)}.*/
-	static boolean ovePrePostDisplaying;
+	public static boolean ovePrePostDisplaying;
 	/** Saves the width of an segment in {@link #pOveModel} which gets calculated in {@link #EnDecoderPage(Group)}
 	 * in the view case of not displaying the pre-en- / post-decoder.*/
 	private double segmentWidthEnDe;
@@ -270,7 +276,7 @@ public class EnDecoderPage extends SettingsPage {
 	 * @param changed Specifies what has to be updated in the model.
 	 * @see SettingsPage
 	 */
-	void updateOveModel(byte changed) {
+	public void updateOveModel(byte changed) {
 		String currentlySelectedEnDecoder;
 		String currentlySelectedPrePost;
 		String currentPrePostProtocol;

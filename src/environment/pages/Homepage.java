@@ -1,7 +1,10 @@
-package environment;
+package environment.pages;
 
 import java.util.Arrays;
 
+import environment.Main;
+import environment.pages.guiElements.Arrow;
+import environment.pages.guiElements.ModelFactory;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -466,7 +469,7 @@ public class Homepage {
 	 * @param parent Layout container to attach it's layout parts to.
 	 * @param updateSettingsModel Defines whether changes on the communication experiment setup were made and the buttons have to be revuild or not.
 	 */
-	void reload(Group parent, boolean updateSettingsModel) {
+	public void reload(Group parent, boolean updateSettingsModel) {
 		root = parent;
 		
 		if (updateSettingsModel) {

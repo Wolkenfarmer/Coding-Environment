@@ -1,5 +1,9 @@
-package environment;
+package environment.pages.guiElements;
 
+import environment.ExperimentElement;
+import environment.Main;
+import environment.pages.EnDecoderPage;
+import environment.pages.SettingsPage;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;

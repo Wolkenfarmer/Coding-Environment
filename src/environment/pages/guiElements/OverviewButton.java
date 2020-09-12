@@ -1,5 +1,10 @@
-package environment;
+package environment.pages.guiElements;
 
+import environment.ExperimentElement;
+import environment.Main;
+import environment.pages.EnDecoderPage;
+import environment.pages.InfSourcePage;
+import environment.pages.SettingsPage;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

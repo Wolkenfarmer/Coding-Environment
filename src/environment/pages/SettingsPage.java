@@ -1,5 +1,9 @@
-package environment;
+package environment.pages;
 
+import environment.ExperimentElement;
+import environment.Main;
+import environment.pages.guiElements.InformationSegment;
+import environment.pages.guiElements.OptionButton;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
@@ -13,7 +17,7 @@ import javafx.scene.text.TextFlow;
  * implement a unified system for handling the pages.
  * @author Wolkenfarmer
  */
-abstract class SettingsPage {
+public abstract class SettingsPage {
 	/** Layout container representing the given root from {@link Homepage home page} to attach the GUI-elements to.
 	 * It's content ({@link #tfHeading}, {@link #pOverview}, {@link #pOptions}, {@link #pInformation}) gets build in the corresponding constructors.
 	 * When loading another page it's content gets first removed and then the layout container will be given to the other class.
@@ -32,7 +36,7 @@ abstract class SettingsPage {
 		Label lOptHeading;
 		/** Layout container for the buttons of options. It's content will be added in the constructors of the sub-classes. 
 		 * It's part of {@link #pOptions}.*/
-		VBox vbOptButtons;
+		public VBox vbOptButtons;
 	/** Layout container for the information segment. 
 	 * Displays the information of the selected {@link ExperimentElement experiment element} in {@link #pOptions}.
 	 * It gets added to {@link #root}.
@@ -69,5 +73,5 @@ abstract class SettingsPage {
 	 * Updates the {@link #pOverview overview's} model to fit the selected element in {@link Main}.
 	 * @param changed Specifies what has to be updated in the model.
 	 */
-	abstract void updateOveModel(byte changed);
+	public abstract void updateOveModel(byte changed);
 }

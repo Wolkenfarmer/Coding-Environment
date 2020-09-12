@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import enDecoder.Gallager;
 import enDecoder.Mock;
 import enDecoder.StringToByte;
+import environment.pages.EnDecoderPage;
+import environment.pages.Homepage;
+import environment.pages.InfSourcePage;
+import environment.pages.guiElements.OverviewButton;
 import infSources.RandomDigitBook;
 import infSources.UserInput;
 import javafx.application.Application;
@@ -41,7 +45,7 @@ import javafx.stage.Stage;
  * Builds the stage (window) with some basic setup like FullScreen-Mode or the {@link #scrollbar scroll bar} along with its calculations.
  * In addition, this class provides the program with some unified layouts like the headline font {@link #fHeadline} 
  * and hosts the instances to the pages and experiment elements (like {@link infSources.UserInput}).
- * Ultimately, {@link environment.Homepage} gets called.
+ * Ultimately, {@link environment.pages.Homepage} gets called.
  * @author Wolkenfarmer
  * @version 1.0
 */
@@ -52,7 +56,7 @@ public class Main extends Application {
 	 * @see	<a href="https://www.educba.com/javafx-applications/">JavaFX Application basic structure</a>
 	 * @see	<a href="https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html">JavaFX CSS support</a>
 	 */
-	static Scene scene;
+	public static Scene scene;
 	/**
 	 * Layout-group to contains the {@link #scrollbar scroll bar} and start up the {@link #scene}. 
 	 * This layout-group needs to be separate from {@link #root}, 
@@ -62,18 +66,18 @@ public class Main extends Application {
 	*/
 	static Group sbRoot;
 	/**
-	 * Layout-group to contain the content of the pages (like {@link environment.Homepage}).
+	 * Layout-group to contain the content of the pages (like {@link environment.pages.Homepage}).
 	 * The root gets carried from one page to another when loading them in order to connect its' layout-elements to it.
 	 * This layout-group needs to be separate from {@link #sbRoot}, 
 	 * because root gets moved along it's y-axis while scrolling / using the {@link #scrollbar scroll bar}, 
 	 * while the scroll bar itself should not move in sbRoot.
 	*/
-	static Group root;
+	public static Group root;
 	/**
 	 * The scroll bar for all pages nested in {@link #sbRoot}. 
 	 * EventHandler and Listener with its calculations are in {@link #start(Stage)}.
 	 */
-	static ScrollBar scrollbar;
+	public static ScrollBar scrollbar;
 	/**
 	 * A dummyScene in order to calculate the dimensions of layout objects while building. 
 	 * The scene gets connected with {@link #dummyRoot} in {@link #start(Stage)}. 
@@ -81,58 +85,59 @@ public class Main extends Application {
 	 * in order to be able to applyCSS and layout() the given objects without having to attach them to {@link #scene} 
 	 * where the entire page is added to.
 	 */
-	static Scene dummyScene;
+	@SuppressWarnings("unused")
+	private static Scene dummyScene;
 	/**
 	 * A dummyRoot for the {@link #dummyScene} in order to calculate the dimensions of layout objects while building.
 	 * This is needed to setup the scene.
 	 */
-	static Group dummyRoot;
+	private static Group dummyRoot;
 	/**
 	 * Reference to the window-height for the entire program. 
 	 * This gets used for the layout-calculations of the pages' contents.
 	 */
-	static double stageHeight;
+	public static double stageHeight;
 	/**
 	 * Reference to the window-width for the entire program.
 	 * This gets used for the layout-calculations of the pages' contents.
 	 */
-	static double stageWidth;
+	public static double stageWidth;
 	/** Describes the height of content of each page. 
 	 * This value gets calculated / get overwritten for each page in order for the {@link #scrollbar} to compute its movement space correctly.*/
-	static double contentHeight;
+	public static double contentHeight;
 	/** Describes the layoutX from where the content of the pages start. This gets used for the layout-calculations of the pages' contents.*/
-	static double pos1;
+	public static double pos1;
 	/** Describes the layoutX from where the content of the pages end. This gets used for the layout-calculations of the pages' contents.*/
-	static double pos7;
+	public static double pos7;
 	/** Describes width of the content of the pages. This gets used for the layout-calculations of the pages' contents.*/
-	static double contentWidth;
+	public static double contentWidth;
 	
 	/** Input handling. This ArrayList gets filled / used in {@link #start(Stage)} by the scene listeners.*/
-	static ArrayList<String> input = new ArrayList<String>();
+	public static ArrayList<String> input = new ArrayList<String>();
 	/** Input handling. This unified event handler checks {@link #input} for (Esc) and closes the program when pressed.
 	 * This event handler is only used for the {@link Homepage home page}.
-	 * @see environment.Homepage#reload(Group, boolean) */
-	static EventHandler<KeyEvent> krlClose;
+	 * @see environment.pages.Homepage#reload(Group, boolean) */
+	public static EventHandler<KeyEvent> krlClose;
 	/** Input handling. This event handler checks {@link #input} for (Esc) and passes back to the {@link Homepage home page} when pressed.
 	 * This event handler is used for the direct sub-pages of the home page.*/
-	static EventHandler<KeyEvent> krlBackHome;
+	public static EventHandler<KeyEvent> krlBackHome;
 	/** Boolean which defines whether {@link Homepage#pSetModel} has to be rebuild on the next call of the page or not. 
 	 * Gets changed to true if there is a setup-change of the communication experiment from {@link InfSourcePage}, {@link EnDecoderPage} or TODO 
 	 * and back to false when {@link #krlBackHome the page has been reloaded}.*/
-		static boolean boUpdateSettingsModelHomepage;
+	public static boolean boUpdateSettingsModelHomepage;
 	
 	/** Standard distance from sub-headings to the content below them.*/
-	static int distanceToHeading = 80;
+	public static int distanceToHeading = 80;
 	/** Standard distance from sub-headings to the content below them.*/
-	static int distanceToSubheading = 60;
+	public static int distanceToSubheading = 60;
 	/** Standard distance from segments to one another.*/
-	static int distanceToSegment = 50;
+	public static int distanceToSegment = 50;
 	/** Unified referenceable font for layouts.*/
-	static Font fHeadline = Font.font("Arial", FontWeight.BOLD, 50);
+	public static Font fHeadline = Font.font("Arial", FontWeight.BOLD, 50);
 	/** Unified referenceable font for layouts.*/
-	static Font fHeading = new Font("Arial", 50);
+	public static Font fHeading = new Font("Arial", 50);
 	/** Unified referenceable font for layouts.*/
-    static Font fSubheading = new Font("Arial", 35);
+	public static Font fSubheading = new Font("Arial", 35);
     /** Unified referenceable font for layouts.*/
     public static Font fNormalText = new Font("Arial", 20);
     /** Unified referenceable font for layouts.*/
@@ -152,38 +157,38 @@ public class Main extends Application {
 	/** Unified referenceable button background (green, focused) for layouts.*/
     public static Background baGreenFocusedButton = new Background (new BackgroundFill(Color.rgb(0, 70, 0), crNormal,  null));
     /** Unified referenceable button background (brown) for layouts.*/
-    static Background baBrownButton = new Background (new BackgroundFill(Color.rgb(100, 50 , 0), crNormal,  null));
+    public static Background baBrownButton = new Background (new BackgroundFill(Color.rgb(100, 50 , 0), crNormal,  null));
 	/** Unified referenceable button background (brown, focused) for layouts.*/
-    static Background baBrownFocusedButton = new Background (new BackgroundFill(Color.rgb(80, 30, 0), crNormal,  null));
+    public static Background baBrownFocusedButton = new Background (new BackgroundFill(Color.rgb(80, 30, 0), crNormal,  null));
     /** Unified referenceable button background (purple) for layouts.*/
-    static Background baPurpleButton = new Background (new BackgroundFill(Color.rgb(90, 0 , 60), crNormal,  null));
+    public static Background baPurpleButton = new Background (new BackgroundFill(Color.rgb(90, 0 , 60), crNormal,  null));
 	/** Unified referenceable button background (purple, focused) for layouts.*/
-    static Background baPurpleFocusedButton = new Background (new BackgroundFill(Color.rgb(70, 30, 40), crNormal,  null));
+    public static Background baPurpleFocusedButton = new Background (new BackgroundFill(Color.rgb(70, 30, 40), crNormal,  null));
 	/** Unified referenceable Border for layouts.*/
-    static Border boNormal = new Border(new BorderStroke(Color.WHITESMOKE, BorderStrokeStyle.SOLID, crNormal, BorderWidths.DEFAULT));
+    public static Border boNormal = new Border(new BorderStroke(Color.WHITESMOKE, BorderStrokeStyle.SOLID, crNormal, BorderWidths.DEFAULT));
     /** Unified referenceable Border for layouts.*/
-    static Border boSelected = new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, crNormal, new BorderWidths(4)));
+    public static Border boSelected = new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, crNormal, new BorderWidths(4)));
     /** Unified referenceable event handler for changing the background of a normal button when the mouse enters it.*/
-    static EventHandler<MouseEvent> evButEntered;
+    public static EventHandler<MouseEvent> evButEntered;
     /** Unified referenceable event handler for changing the background of a normal button when the mouse exits it.*/
-	static EventHandler<MouseEvent> evButExited;
+    public static EventHandler<MouseEvent> evButExited;
 	/** Unified referenceable event handler for changing the background of a green button when the mouse enters it.*/
-	static EventHandler<MouseEvent> evButGreEntered;
+    public static EventHandler<MouseEvent> evButGreEntered;
 	/** Unified referenceable event handler for changing the background of a green button when the mouse exits it.*/
-	static EventHandler<MouseEvent> evButGreExited;
+    public static EventHandler<MouseEvent> evButGreExited;
 	/** Unified referenceable event handler for changing the background of a brown button when the mouse enters it.*/
-	static EventHandler<MouseEvent> evButBroEntered;
+    public static EventHandler<MouseEvent> evButBroEntered;
 	/** Unified referenceable event handler for changing the background of a brown button when the mouse exits it.*/
-	static EventHandler<MouseEvent> evButBroExited;
+    public static EventHandler<MouseEvent> evButBroExited;
 
     /** Static reference to the home page in order for the pages to have simple access to one another. Gets initialized in {@link #start(Stage)}.*/
-    static Homepage homepage;
+    public static Homepage homepage;
     /** Static reference to the information source page in order for the pages to have simple access to one another. 
      * Gets initialized in {@link Homepage}.*/
-    static InfSourcePage infSourcePage;
+    public static InfSourcePage infSourcePage;
     /** Static reference to the en- / decoder page in order for the pages to have simple access to one another. 
      * Gets initialized in {@link Homepage}.*/
-    static EnDecoderPage enDecoderPage;
+    public static EnDecoderPage enDecoderPage;
     
     
     
@@ -195,7 +200,7 @@ public class Main extends Application {
 	 * 1: {@link infSources.UserInput User input}<br>
 	 * 2: {@link infSources.RandomDigitBook Random digit book}
 	 */
-	static byte selectedInfSource = 0;
+    public static byte selectedInfSource = 0;
     /**
 	 * Saves the selected encoder / decoder for further use in the environment. 
 	 * This byte specifies the used en- / decoder for the communication experiment and 
@@ -205,7 +210,7 @@ public class Main extends Application {
 	 * 1: Gallager-Code<br>
 	 * 2: Mock (1)
 	 */
-	static byte selectedEnDecoder = 0;
+    public static byte selectedEnDecoder = 0;
 	/**
 	 * Saves the selected pre-en- / post-decoder for further use in the environment. 
 	 * This byte specifies the used pre-en- / post-decoder for the communication experiment and 
@@ -214,30 +219,30 @@ public class Main extends Application {
 	 * 1: String to byte[]<br>
 	 * 2: Mock (2)
 	 */
-	static byte selectedPrePost = 0;
+    public static byte selectedPrePost = 0;
 	/**
 	 * Saves the selected noise source for further use in the environment. 
 	 * This byte specifies the used noise source for the communication experiment and 
 	 * displayed text in {@link Homepage#bSetModNoise} and {@link OverviewButton#lSelectedItem} (if instantiated from TODO).<br>
 	 * 0: No option picked
 	 */
-	static byte selectedNoiSource = 0;
+    public static byte selectedNoiSource = 0;
     
-    /** Static reference to the information source "User input" in order for {@link environment.InfSourcePage} and
+    /** Static reference to the information source "User input" in order for {@link environment.pages.InfSourcePage} and
      * TODO to have simple access to it.*/
-    static UserInput infSource_UserInput = new UserInput();
-    /** Static reference to the information source "Random digit book" in order for {@link environment.InfSourcePage} and 
+    public static UserInput infSource_UserInput = new UserInput();
+    /** Static reference to the information source "Random digit book" in order for {@link environment.pages.InfSourcePage} and 
      * TODO to have simple access to it.*/
-    static RandomDigitBook infSource_RandomDigitBook = new RandomDigitBook();
-    /** Static reference to the en- / decoder "Gallager-Code" in order for {@link environment.EnDecoderPage} and
+    public static RandomDigitBook infSource_RandomDigitBook = new RandomDigitBook();
+    /** Static reference to the en- / decoder "Gallager-Code" in order for {@link environment.pages.EnDecoderPage} and
      * TODO to have simple access to it.*/
-    static Gallager enDecoder_Gallager = new Gallager();
-    /** Static reference to the en- / decoder "Mock" in order for {@link environment.EnDecoderPage} and
+    public static Gallager enDecoder_Gallager = new Gallager();
+    /** Static reference to the en- / decoder "Mock" in order for {@link environment.pages.EnDecoderPage} and
      * TODO to have simple access to it.*/
-    static Mock enDecoder_Mock = new Mock();
-    /** Static reference to the en- / decoder "String to byte" in order for {@link environment.EnDecoderPage} and
+    public static Mock enDecoder_Mock = new Mock();
+    /** Static reference to the en- / decoder "String to byte" in order for {@link environment.pages.EnDecoderPage} and
      * TODO to have simple access to it.*/
-    static StringToByte enDecoder_StringToByte = new StringToByte();
+    public static StringToByte enDecoder_StringToByte = new StringToByte();
     
     
 	/**
@@ -258,7 +263,7 @@ public class Main extends Application {
 	 * (which gets added via {@link #sbRoot} to the scene). 
 	 * In addition, the keyboard, scroll bar and some basic button listeners are written here and 
 	 * {@link #krlClose} and scroll bar listeners added to the scene.
-	 * Lastly, {@link environment.Homepage} gets called.
+	 * Lastly, {@link environment.pages.Homepage} gets called.
 	 * @param stage Makes up the window and is required for a JavaFX application.
 	 * @see <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/application/Application.html#start-javafx.stage.Stage-">
 	 * JavaFX Application start() documentation</a>
@@ -267,7 +272,7 @@ public class Main extends Application {
 		sbRoot = new Group();
 		root = new Group();
 		scene = new Scene(sbRoot, Color.grayRgb(40));
-		scene.getStylesheets().addAll("css/tableView.css", "css/scrollbar.css");
+		scene.getStylesheets().addAll("environment/pages/css/tableView.css", "environment/pages/css/scrollbar.css");
 		dummyScene = new Scene(dummyRoot = new Group());
 		        
 		stage = new Stage();
@@ -401,7 +406,7 @@ public class Main extends Application {
 	 * @param r The region (or subclass of it) of which the width gets calculated.
 	 * @return Returns the width of the region.
 	 */
-	static double calcWidth(Region r) {
+	public static double calcWidth(Region r) {
 		dummyRoot.getChildren().add(r);
 		dummyRoot.applyCss();
 		dummyRoot.layout();
@@ -418,7 +423,7 @@ public class Main extends Application {
 	 * @param r The region (or subclass of it) of which the height gets calculated.
 	 * @return Returns the height of the region.
 	 */
-	static double calcHeight(Region r) {
+	public static double calcHeight(Region r) {
 		dummyRoot.getChildren().add(r);
 		dummyRoot.applyCss();
 		dummyRoot.layout();
@@ -436,7 +441,7 @@ public class Main extends Application {
 	 * @param l The label of which the height gets calculated.
 	 * @return Returns the width of a label.
 	 */
-	static double calcWidthLabel(Label l) {
+	public static double calcWidthLabel(Label l) {
 		dummyRoot.getChildren().add(l);
 		dummyRoot.applyCss();
 		dummyRoot.layout();
@@ -460,7 +465,7 @@ public class Main extends Application {
 	 * @param parentWidth The width of the parent object in order to calculate the number of lines.
 	 * @return Returns the height of a label.
 	 */
-	static double calcHeightLabel(Label l, double parentWidth) {
+	public static double calcHeightLabel(Label l, double parentWidth) {
 		dummyRoot.getChildren().add(l);
 		dummyRoot.applyCss();
 		dummyRoot.layout();
@@ -472,13 +477,13 @@ public class Main extends Application {
 	
 	
 	/**
-	 * Updates {@link #scrollbar} when loading another page. Firstly it resets the layout of {@link #root}, 
+	 * Updates the {@link #scrollbar scroll bar} when loading another page. Firstly it resets the layout of {@link #root}, 
 	 * secondly it calculates the new {@link #contentHeight}, then sets the new values for the scroll bar and lastly sets 
 	 * it's visibility (appears only if the content height is bigger than the screen's height). 
 	 * However, if the screen is big enough, the scroll bar won't be displayed, because the content's height gets set to fit it perfectly. 
 	 * @param lastObject The last layout object on the page in order to calculate the {@link #contentHeight}.
 	 */
-	static void updateScrollbar(Region lastObject) {
+	public static void updateScrollbar(Region lastObject) {
 		root.setLayoutY(0);
 		contentHeight = lastObject.getLayoutY() + calcHeight(lastObject) + pos1 / 3;
 		scrollbar.setMax(contentHeight - scene.getHeight());

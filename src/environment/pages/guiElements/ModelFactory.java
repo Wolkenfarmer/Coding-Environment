@@ -1,5 +1,7 @@
-package environment;
+package environment.pages.guiElements;
 
+import environment.Main;
+import environment.pages.Homepage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -12,20 +14,20 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.TextAlignment;
 
 /**
- * Separate class to build the buttons and relations of the model in settings in {@link environment.Homepage}.
+ * Separate class to build the buttons and relations of the model in settings in {@link environment.pages.Homepage}.
  * @author Wolkenfarmer
- * @see environment.Homepage#pSetModel
+ * @see environment.pages.Homepage#pSetModel
  */
 public class ModelFactory {
-	/** The width of a zone in {@link environment.Homepage#pSetModel}. 
+	/** The width of a zone in {@link environment.pages.Homepage#pSetModel}. 
 	 * This gets calculated in {@link #ModelFactory(double)} and 
 	 * used in {@link #buildButton(float, float, byte)} and {@link #buildRelation(float, float, short, boolean, String)}.*/
 	private static double modelZoneWidth;
-	/** The width of a button in {@link environment.Homepage#pSetModel}. 
+	/** The width of a button in {@link environment.pages.Homepage#pSetModel}. 
 	 * This gets calculated in {@link #ModelFactory(double)} and 
 	 * used in {@link #buildButton(float, float, byte)}.*/
 	private static double modelButtonWidth;
-	/** The height of a zone in {@link environment.Homepage#pSetModel}. 
+	/** The height of a zone in {@link environment.pages.Homepage#pSetModel}. 
 	 * This gets used in {@link #buildButton(float, float, byte)} and {@link #buildRelation(float, float, short, boolean, String)}.*/
 	private static double modelZoneHeight = 50;
 	
@@ -65,7 +67,7 @@ public class ModelFactory {
 	}
 	
 	/**
-	 * Builds the buttons for {@link environment.Homepage#pSetModel}. 
+	 * Builds the buttons for {@link environment.pages.Homepage#pSetModel}. 
 	 * It uses the {@link environment.Main#calcHeight(Region)} and {@link environment.Main#calcHeightLabel(Label, double)} methods 
 	 * for some of it's calculations.
 	 * @param layoutZoneX Defines the layoutX multiplied by {@link #modelZoneWidth}.
@@ -191,8 +193,8 @@ public class ModelFactory {
 	}
 	
 	/**
-	 * Builds the buttons for {@link environment.Homepage#pSetModel}. 
-	 * It uses {@link environment.Arrow#getArrow(double, double, double, double, double, double, boolean, String)} to create the arrow.
+	 * Builds the buttons for {@link environment.pages.Homepage#pSetModel}. 
+	 * It uses {@link environment.pages.guiElements.Arrow#getArrow(double, double, double, double, double, double, boolean, String)} to create the arrow.
 	 * This method calculates the values to create the arrow via the class and returns it.
 	 * @param layoutZoneX Defines the x coordinate of the start of the arrow multiplied by {@link #modelZoneWidth}.
 	 * @param layoutZoneY Defines the y coordinate of the start of the arrow multiplied by {@link #modelZoneHeight}.
