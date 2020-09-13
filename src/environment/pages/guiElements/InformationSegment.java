@@ -13,7 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 
 /**
@@ -86,7 +85,7 @@ public class InformationSegment extends Pane {
 				hbHeaSavContent = new HBox();
 					lHeaSavContent = new Label();
 					lHeaSavContent.setText("save & add");
-					lHeaSavContent.setTextFill(Color.WHITESMOKE);
+					lHeaSavContent.setTextFill(Main.cNormal);
 					lHeaSavContent.setFont(Main.fNormalText);
 					lHeaSavContent.setWrapText(true);
 					lHeaSavContent.setTextAlignment(TextAlignment.CENTER);
@@ -99,7 +98,7 @@ public class InformationSegment extends Pane {
 			
 			lHeading = new Label();
 			lHeading.setText("Information");
-			lHeading.setTextFill(Color.WHITESMOKE);
+			lHeading.setTextFill(Main.cNormal);
 			lHeading.setFont(Main.fSubheading);
 			lHeading.setPrefWidth(bHeaSav.getLayoutX());
 			
@@ -112,7 +111,7 @@ public class InformationSegment extends Pane {
 			pInfContent.setMinHeight(minHeight - pInfContent.getLayoutY());
 				lInfConDefault = new Label();
 				lInfConDefault.setText("No option picked");
-				lInfConDefault.setTextFill(Color.INDIANRED);
+				lInfConDefault.setTextFill(Main.cPink);
 				lInfConDefault.setFont(Main.fNormallTextItalic);
 			pInfContent.getChildren().add(lInfConDefault);
 		this.getChildren().addAll(bHeaSav, lHeading, pInfContent);

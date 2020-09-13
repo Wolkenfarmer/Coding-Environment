@@ -3,7 +3,6 @@ package infSources;
 import environment.ExperimentElement;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 
 /**
  * For now just a mock class for {@link environment.pages.InfSourcePage}. 
@@ -38,7 +37,7 @@ public class RandomDigitBook implements ExperimentElement {
 		mock = new Label();
 		mock.setText("Random-digit-book-Gui has been loaded!");
 		mock.setFont(environment.Main.fNormalText);
-		mock.setTextFill(Color.WHITESMOKE);
+		mock.setTextFill(environment.Main.cNormal);
 		mock.setPrefWidth(root.getPrefWidth());
 		mock.setWrapText(true);
         

@@ -21,7 +21,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Callback;
 
@@ -163,7 +162,7 @@ public class Homepage {
 		hbHeading.setPrefWidth(Main.contentWidth);
 			lHeadline = new Label();
 			lHeadline.setText("Coding Environment");
-			lHeadline.setTextFill(Color.WHITESMOKE);
+			lHeadline.setTextFill(Main.cNormal);
 			lHeadline.setFont(Main.fHeadline);
 			lHeadline.setAlignment(Pos.CENTER_LEFT);
 			
@@ -174,13 +173,13 @@ public class Homepage {
 			vbHeadline.setAlignment(Pos.CENTER_RIGHT);
 				lHeadlineVersion = new Label();
 				lHeadlineVersion.setText("Version 1.0");
-				lHeadlineVersion.setTextFill(Color.WHITESMOKE);
+				lHeadlineVersion.setTextFill(Main.cNormal);
 				lHeadlineVersion.setFont(Main.fNormalText);
 				lHeadlineVersion.setAlignment(Pos.TOP_RIGHT);
 				
 				lHeadlineBy = new Label();
 				lHeadlineBy.setText("by Wolkenfarmer");
-				lHeadlineBy.setTextFill(Color.WHITESMOKE);
+				lHeadlineBy.setTextFill(Main.cNormal);
 				lHeadlineBy.setFont(Main.fSmallText);
 				lHeadlineBy.setAlignment(Pos.BOTTOM_RIGHT);
 			vbHeadline.getChildren().addAll(lHeadlineVersion, lHeadlineBy);
@@ -193,7 +192,7 @@ public class Homepage {
 		pSettings.setPrefWidth(Main.contentWidth);
 			lSetHeading = new Label();
 			lSetHeading.setText("Settings");
-			lSetHeading.setTextFill(Color.WHITESMOKE);
+			lSetHeading.setTextFill(Main.cNormal);
 			lSetHeading.setFont(Main.fSubheading);
 			
 			pSetModel = new Pane();
@@ -220,7 +219,7 @@ public class Homepage {
 		pResults.setPrefWidth(Main.stageWidth / 2);
 			lResHeading = new Label();
 			lResHeading.setText("Last Results");
-			lResHeading.setTextFill(Color.WHITESMOKE);
+			lResHeading.setTextFill(Main.cNormal);
 			lResHeading.setFont(Main.fSubheading);
 			pResults.getChildren().add(lResHeading);
 			
@@ -275,7 +274,7 @@ public class Homepage {
 		pControls.setPrefWidth(Main.stageWidth / 8 * 1.5);
 			lConHeading = new Label();
 			lConHeading.setText("Controls");
-			lConHeading.setTextFill(Color.WHITESMOKE);
+			lConHeading.setTextFill(Main.cNormal);
 			lConHeading.setFont(Main.fSubheading);			
 			
 			vbConButtons = new VBox();
@@ -290,7 +289,7 @@ public class Homepage {
 					hbConButRun = new HBox();
 						lConButRun = new Label();
 						lConButRun.setText("Run");
-						lConButRun.setTextFill(Color.WHITESMOKE);
+						lConButRun.setTextFill(Main.cNormal);
 						lConButRun.setFont(Main.fNormalText);
 						lConButRun.setWrapText(false);
 						lConButRun.setTextAlignment(TextAlignment.CENTER);
@@ -306,7 +305,7 @@ public class Homepage {
 					hbConButSaveResult = new HBox();
 						lConButSaveResult = new Label();
 						lConButSaveResult.setText("Save last result");
-						lConButSaveResult.setTextFill(Color.WHITESMOKE);
+						lConButSaveResult.setTextFill(Main.cNormal);
 						lConButSaveResult.setFont(Main.fNormalText);
 						lConButSaveResult.setWrapText(false);
 						lConButSaveResult.setTextAlignment(TextAlignment.CENTER);
@@ -322,7 +321,7 @@ public class Homepage {
 					hbConButHelp = new HBox();
 						lConButHelp = new Label();
 						lConButHelp.setText("Help");
-						lConButHelp.setTextFill(Color.WHITESMOKE);
+						lConButHelp.setTextFill(Main.cNormal);
 						lConButHelp.setFont(Main.fNormalText);
 						lConButHelp.setWrapText(false);
 						lConButHelp.setTextAlignment(TextAlignment.CENTER);

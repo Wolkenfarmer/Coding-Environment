@@ -9,7 +9,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 
 /**
@@ -50,7 +49,7 @@ public class OverviewButton extends Button {
 			vbContent.setSpacing(5);
 				lHeading = new Label();
 				lHeading.setText(heading);
-				lHeading.setTextFill(Color.WHITESMOKE);
+				lHeading.setTextFill(Main.cNormal);
 				lHeading.setFont(Main.fNormalText);
 				lHeading.setWrapText(true);
 				lHeading.setTextAlignment(TextAlignment.CENTER);
@@ -58,7 +57,7 @@ public class OverviewButton extends Button {
 				
 				lSelectedItem = new Label();
 				lSelectedItem.setText(selectedItem);
-				lSelectedItem.setTextFill(Color.INDIANRED);
+				lSelectedItem.setTextFill(Main.cPink);
 				lSelectedItem.setFont(Main.fSmallText);
 				lSelectedItem.setWrapText(true);
 				lSelectedItem.setTextAlignment(TextAlignment.CENTER);

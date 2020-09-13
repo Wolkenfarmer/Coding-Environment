@@ -10,7 +10,6 @@ import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.TextFlow;
 
 /**
@@ -76,13 +75,13 @@ public class InfSourcePage extends SettingsPage {
 		tfHeading.setPrefWidth(Main.contentWidth);
 			lHeaHome = new Label();
 			lHeaHome.setText("CE \\  ");
-			lHeaHome.setTextFill(Color.WHITESMOKE);
+			lHeaHome.setTextFill(Main.cNormal);
 			lHeaHome.setFont(Main.fHeadline);
 			lHeaHome.setAlignment(Pos.CENTER_LEFT);
 				
 			lHeaHere = new Label();
 			lHeaHere.setText("Information Source");
-			lHeaHere.setTextFill(Color.WHITESMOKE);
+			lHeaHere.setTextFill(Main.cNormal);
 			lHeaHere.setFont(Main.fHeading);
 			lHeaHere.setAlignment(Pos.CENTER_LEFT);
 		tfHeading.getChildren().addAll(lHeaHome, lHeaHere);
@@ -95,7 +94,7 @@ public class InfSourcePage extends SettingsPage {
 		pOverview.setPrefWidth(Main.contentWidth);
 			lOveHeading = new Label();
 			lOveHeading.setText("Overview");
-			lOveHeading.setTextFill(Color.WHITESMOKE);
+			lOveHeading.setTextFill(Main.cNormal);
 			lOveHeading.setFont(Main.fSubheading);
 			
 			segmentWidth = pOverview.getPrefWidth() / 3;
@@ -136,7 +135,7 @@ public class InfSourcePage extends SettingsPage {
 		pOptions.setPrefWidth(Main.stageWidth / 8 * 1.5);
 			lOptHeading = new Label();
 			lOptHeading.setText("Options");
-			lOptHeading.setTextFill(Color.WHITESMOKE);
+			lOptHeading.setTextFill(Main.cNormal);
 			lOptHeading.setFont(Main.fSubheading);			
 			
 			vbOptButtons = new VBox();

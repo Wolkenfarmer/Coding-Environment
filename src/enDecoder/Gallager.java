@@ -3,7 +3,6 @@ package enDecoder;
 import environment.ExperimentElement;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 
 /**
  * For now just a mock class for {@link environment.pages.EnDecoderPage}. 
@@ -41,7 +40,7 @@ public class Gallager implements ExperimentElement {
 		mock.setText("Galleger-Code-Gui has been loaded!\n"
 				+ "Can only be set as en-/decoder.");
 		mock.setFont(environment.Main.fNormalText);
-		mock.setTextFill(Color.WHITESMOKE);
+		mock.setTextFill(environment.Main.cNormal);
 		mock.setPrefWidth(root.getPrefWidth());
 		mock.setWrapText(true);
         

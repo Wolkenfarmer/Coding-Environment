@@ -1,13 +1,11 @@
 package enDecoder;
 
 import environment.ExperimentElement;
-import environment.Main;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 
 /**
  * For now just a mock class for {@link environment.pages.EnDecoderPage}. 
@@ -52,24 +50,24 @@ public class Mock implements ExperimentElement {
 		mock.setText("Mock-Gui has been loaded!\n"
 				+ "Can be set as en- / decoder as well as pre-encoder / post-decoder.");
 		mock.setFont(environment.Main.fNormalText);
-		mock.setTextFill(Color.WHITESMOKE);
+		mock.setTextFill(environment.Main.cNormal);
 		mock.setPrefWidth(root.getPrefWidth());
 		mock.setWrapText(true);
 		
 		tgEnDePrePost = new ToggleGroup();
 			rbEnDe = new RadioButton("En- / decoder");
 	        rbEnDe.setToggleGroup(tgEnDePrePost);
-	        rbEnDe.setFont(Main.fNormalText);
+	        rbEnDe.setFont(environment.Main.fNormalText);
 	        rbEnDe.setLayoutY(100);
-	        rbEnDe.setTextFill(Color.WHITESMOKE);
+	        rbEnDe.setTextFill(environment.Main.cNormal);
 	        rbEnDe.setAlignment(Pos.TOP_LEFT);
 	        rbEnDe.setSelected(true);
 	         
 	        rbPrePost = new RadioButton("Pre-encoder / post-decoder");
 	        rbPrePost.setToggleGroup(tgEnDePrePost);
-	        rbPrePost.setFont(Main.fNormalText);
+	        rbPrePost.setFont(environment.Main.fNormalText);
 	        rbPrePost.setLayoutY(140);
-	        rbPrePost.setTextFill(Color.WHITESMOKE);
+	        rbPrePost.setTextFill(environment.Main.cNormal);
 	        rbPrePost.setAlignment(Pos.TOP_LEFT);
         
         builtGui = true;

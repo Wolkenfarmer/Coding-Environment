@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.TextAlignment;
 
@@ -106,7 +105,7 @@ public class ModelFactory {
 					default:
 						lConName.setText("button type not found");
 					}
-					lConName.setTextFill(Color.WHITESMOKE);
+					lConName.setTextFill(Main.cNormal);
 					lConName.setFont(Main.fNormalText);
 					lConName.setWrapText(true);
 					lConName.setTextAlignment(TextAlignment.CENTER);
@@ -116,14 +115,14 @@ public class ModelFactory {
 				hbConName.getChildren().add(lConName);
 				
 				liConDiffer = new Line();
-				liConDiffer.setStroke(Color.WHITESMOKE);
+				liConDiffer.setStroke(Main.cNormal);
 				liConDiffer.setEndX(modelButtonWidth - 40);
 				liConDiffer.setTranslateX(8);
 				
 				if (type != 4) {
 					lConSelectedItemHead = new Label();
 					lConSelectedItemHead.setText("selected item:");
-					lConSelectedItemHead.setTextFill(Color.WHITESMOKE);
+					lConSelectedItemHead.setTextFill(Main.cNormal);
 					lConSelectedItemHead.setFont(Main.fSmallText);
 					lConSelectedItemHead.setWrapText(true);
 					lConSelectedItemHead.setPrefHeight(Main.calcHeightLabel(lConSelectedItemHead, modelButtonWidth));
@@ -168,7 +167,7 @@ public class ModelFactory {
 					default:
 						lConSelectedItem.setText("button type not found");
 					}
-					lConSelectedItem.setTextFill(Color.INDIANRED);
+					lConSelectedItem.setTextFill(Main.cPink);
 					lConSelectedItem.setFont(Main.fSmallTextItalic);
 					lConSelectedItem.setWrapText(true);
 					lConSelectedItem.setPadding(new Insets(-5, 0, 0, 10));
@@ -178,7 +177,7 @@ public class ModelFactory {
 				} else {
 					lConSub = new Label();
 					lConSub.setText("compare in- & output");
-					lConSub.setTextFill(Color.WHITESMOKE);
+					lConSub.setTextFill(Main.cNormal);
 					lConSub.setFont(Main.fSmallText);
 					lConSub.setWrapText(true);
 					lConSub.setPrefHeight(Main.calcHeightLabel(lConSub, modelButtonWidth));

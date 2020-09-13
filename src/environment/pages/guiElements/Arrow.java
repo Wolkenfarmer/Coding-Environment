@@ -5,7 +5,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
 /**
@@ -42,11 +41,11 @@ public class Arrow extends Group {
      */
     public Arrow getArrow(double startX, double startY, double endX, double endY, double lenghtHead, double widthHead, boolean vertical, String name) {
     	line = new Line();
-    	line.setStroke(Color.WHITESMOKE);
+    	line.setStroke(Main.cNormal);
     	headL = new Line();
-    	headL.setStroke(Color.WHITESMOKE);
+    	headL.setStroke(Main.cNormal);
     	headR = new Line();
-    	headR.setStroke(Color.WHITESMOKE);
+    	headR.setStroke(Main.cNormal);
     	    	
        	if (vertical) {
        		line.setStartX(startX);
@@ -75,7 +74,7 @@ public class Arrow extends Group {
     		hbDescription.setLayoutY(startY - 25);
     		description = new Label(name);
     		description.setFont(Main.fSmallText);
-    		description.setTextFill(Color.WHITESMOKE);
+    		description.setTextFill(Main.cNormal);
     		hbDescription.getChildren().add(description);
     		hbDescription.setAlignment(Pos.CENTER);
     		this.getChildren().add(hbDescription);

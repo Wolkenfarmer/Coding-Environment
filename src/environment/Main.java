@@ -132,6 +132,12 @@ public class Main extends Application {
 	public static int distanceToSubheading = 60;
 	/** Standard distance from segments to one another.*/
 	public static int distanceToSegment = 50;
+	/** Unified referenceable color for layouts.*/
+	public static Color cNormal = Color.WHITESMOKE;
+	/** Unified referenceable color for layouts.*/
+	public static Color cPink = Color.rgb(250, 80, 130);
+	/** Unified referenceable color for layouts.*/
+	public static Color cYellow = Color.YELLOW;
 	/** Unified referenceable font for layouts.*/
 	public static Font fHeadline = Font.font("Arial", FontWeight.BOLD, 50);
 	/** Unified referenceable font for layouts.*/
@@ -165,9 +171,9 @@ public class Main extends Application {
 	/** Unified referenceable button background (purple, focused) for layouts.*/
     public static Background baPurpleFocusedButton = new Background (new BackgroundFill(Color.rgb(70, 30, 40), crNormal,  null));
 	/** Unified referenceable Border for layouts.*/
-    public static Border boNormal = new Border(new BorderStroke(Color.WHITESMOKE, BorderStrokeStyle.SOLID, crNormal, BorderWidths.DEFAULT));
+    public static Border boNormal = new Border(new BorderStroke(cNormal, BorderStrokeStyle.SOLID, crNormal, BorderWidths.DEFAULT));
     /** Unified referenceable Border for layouts.*/
-    public static Border boSelected = new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, crNormal, new BorderWidths(4)));
+    public static Border boSelected = new Border(new BorderStroke(cYellow, BorderStrokeStyle.SOLID, crNormal, new BorderWidths(4)));
     /** Unified referenceable event handler for changing the background of a normal button when the mouse enters it.*/
     public static EventHandler<MouseEvent> evButEntered;
     /** Unified referenceable event handler for changing the background of a normal button when the mouse exits it.*/

@@ -10,7 +10,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 
 /**
@@ -47,7 +46,7 @@ public class OptionButton extends Button {
 			hb = new HBox();
 				l = new Label();
 				l.setText(heading);
-				l.setTextFill(Color.WHITESMOKE);
+				l.setTextFill(Main.cNormal);
 				l.setFont(Main.fNormalText);
 				l.setWrapText(true);
 				l.setTextAlignment(TextAlignment.CENTER);
