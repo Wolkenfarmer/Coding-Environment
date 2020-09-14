@@ -8,6 +8,7 @@ import enDecoder.StringToByte;
 import environment.pages.EnDecoderPage;
 import environment.pages.Homepage;
 import environment.pages.InfSourcePage;
+import environment.pages.NoiSourcePage;
 import environment.pages.guiElements.OverviewButton;
 import infSources.RandomDigitBook;
 import infSources.UserInput;
@@ -38,6 +39,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import noiSources.IndividualChanges;
+import noiSources.MixUpChanges;
 
 /**
  * Main class hosting the JavaFX Application.
@@ -52,7 +55,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	/**
 	 * The Scene for the {@link #start(Stage)}.
-	 * Uses the stylesheets from {@link css}.
+	 * Uses the stylesheets from {@link environment.pages.css}.
 	 * @see	<a href="https://www.educba.com/javafx-applications/">JavaFX Application basic structure</a>
 	 * @see	<a href="https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html">JavaFX CSS support</a>
 	 */
@@ -195,6 +198,9 @@ public class Main extends Application {
     /** Static reference to the en- / decoder page in order for the pages to have simple access to one another. 
      * Gets initialized in {@link Homepage}.*/
     public static EnDecoderPage enDecoderPage;
+    /** Static reference to the noise source page in order for the pages to have simple access to one another. 
+     * Gets initialized in {@link Homepage}.*/
+    public static NoiSourcePage noiSourcePage;
     
     
     
@@ -229,7 +235,7 @@ public class Main extends Application {
 	/**
 	 * Saves the selected noise source for further use in the environment. 
 	 * This byte specifies the used noise source for the communication experiment and 
-	 * displayed text in {@link Homepage#bSetModNoise} and {@link OverviewButton#lSelectedItem} (if instantiated from TODO).<br>
+	 * displayed text in {@link Homepage#bSetModNoise} and {@link OverviewButton#lSelectedItem} (if instantiated from {@link NoiSourcePage}).<br>
 	 * 0: No option picked
 	 */
     public static byte selectedNoiSource = 0;
@@ -249,6 +255,12 @@ public class Main extends Application {
     /** Static reference to the en- / decoder "String to byte" in order for {@link environment.pages.EnDecoderPage} and
      * TODO to have simple access to it.*/
     public static StringToByte enDecoder_StringToByte = new StringToByte();
+    /** Static reference to the noise source "Individual changes" in order for {@link environment.pages.NoiSourcePage} and
+     * TODO to have simple access to it.*/
+    public static IndividualChanges noiSource_IndividualChanges = new IndividualChanges();
+    /** Static reference to the noise source "Mix-up changes" in order for {@link environment.pages.NoiSourcePage} and 
+     * TODO to have simple access to it.*/
+    public static MixUpChanges noiSource_MixUpChanges = new MixUpChanges();
     
     
 	/**

@@ -9,10 +9,11 @@ import javafx.scene.shape.Line;
 
 /**
  * A template class to create arrows.
- * They can either be created horizontal (from left to right) or vertical (from bottom to top).
+ * They can either be created horizontal (from left to right) or vertical (from bottom to top or top to bottom).
  * The arrows have a non-solid head and can be labeled (if horizontal).
- * The data for the arrows get prepared in {@link environment.pages.guiElements.ModelFactory#buildRelation(float, float, short, boolean, String)}
- * to be shown as relation in {@link environment.pages.Homepage#pSetModel}.
+ * The arrows get used in {@link environment.pages.guiElements.ModelFactory#buildRelation(float, float, short, boolean, String)} 
+ * to be shown in {@link environment.pages.Homepage#pSetModel} and used in the different {@link environment.pages.SettingsPage settings pages}
+ * constructors and {@link environment.pages.SettingsPage#updateOveModel(byte)}.
  * @author Wolkenfarmer
  */
 public class Arrow extends Group {
@@ -37,9 +38,11 @@ public class Arrow extends Group {
      * @param widthHead Defines the width of the head.
      * @param vertical Defines whether the arrow should be displayed horizontal (from left to right) or vertical (from bottom to top).
      * @param name The description of the arrow which will be displayed above it (only if horizontal).
+     * @param labelWidth Only used for vertical arrows to determine the space for {@link #description}.
      * @return Returns the finished arrow.
      */
-    public Arrow getArrow(double startX, double startY, double endX, double endY, double lenghtHead, double widthHead, boolean vertical, String name) {
+    public Arrow getArrow(double startX, double startY, double endX, double endY, double lenghtHead, double widthHead, 
+    		boolean vertical, String name, double labelWidth) {
     	line = new Line();
     	line.setStroke(Main.cNormal);
     	headL = new Line();
@@ -47,16 +50,37 @@ public class Arrow extends Group {
     	headR = new Line();
     	headR.setStroke(Main.cNormal);
     	    	
+    	hbDescription = new HBox();
+    	description = new Label();
+    	description.setFont(Main.fSmallText);
+    	description.setTextFill(Main.cNormal);
+    	description.setText(name);
+    	
+    	
        	if (vertical) {
        		line.setStartX(startX);
         	line.setStartY(startY - 5);
         	line.setEndX(endX);
         	line.setEndY(endY + 5);
         	
-    		headL.setEndY(endY + lenghtHead);
-    		headL.setEndX(endX + (widthHead / 2));
-    		headR.setEndY(endY + lenghtHead);
-    		headR.setEndX(endX - (widthHead / 2));
+        	hbDescription.setAlignment(Pos.CENTER_LEFT);
+        	hbDescription.setPrefWidth(labelWidth - 10);
+        	hbDescription.setPrefHeight(endY - startY);
+    		hbDescription.setLayoutX(endX + 10);
+    		hbDescription.setLayoutY(startY);
+    		description.setWrapText(true);
+        	
+        	if (startY < endY) {
+        		headL.setEndY(endY - lenghtHead);
+        		headL.setEndX(endX + (widthHead / 2));
+        		headR.setEndY(endY - lenghtHead);
+        		headR.setEndX(endX - (widthHead / 2));
+        	} else {
+        		headL.setEndY(endY + lenghtHead);
+        		headL.setEndX(endX + (widthHead / 2));
+        		headR.setEndY(endY + lenghtHead);
+        		headR.setEndX(endX - (widthHead / 2));
+        	}
     	} else {
     		line.setStartX(startX + 5);
         	line.setStartY(startY);
@@ -68,16 +92,10 @@ public class Arrow extends Group {
     		headR.setEndX(endX - lenghtHead);
     		headR.setEndY(endY - (widthHead / 2));
     		
-    		hbDescription = new HBox();
+    		hbDescription.setAlignment(Pos.CENTER);
     		hbDescription.setPrefWidth(endX - startX);
     		hbDescription.setLayoutX(startX);
     		hbDescription.setLayoutY(startY - 25);
-    		description = new Label(name);
-    		description.setFont(Main.fSmallText);
-    		description.setTextFill(Main.cNormal);
-    		hbDescription.getChildren().add(description);
-    		hbDescription.setAlignment(Pos.CENTER);
-    		this.getChildren().add(hbDescription);
     	}
     	
     	headL.setStartX(line.getEndX());
@@ -85,8 +103,9 @@ public class Arrow extends Group {
     	headR.setStartX(line.getEndX());
     	headR.setStartY(line.getEndY());
         
-    	
-        this.getChildren().addAll(line, headL, headR);
+    	hbDescription.getChildren().add(description);
+        this.getChildren().addAll(line, headL, headR, hbDescription);
+        
         return this;
     }
 }

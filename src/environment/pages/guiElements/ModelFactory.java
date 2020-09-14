@@ -68,7 +68,9 @@ public class ModelFactory {
 	/**
 	 * Builds the buttons for {@link environment.pages.Homepage#pSetModel}. 
 	 * It uses the {@link environment.Main#calcHeight(Region)} and {@link environment.Main#calcHeightLabel(Label, double)} methods 
-	 * for some of it's calculations.
+	 * for some of it's calculations.<br>
+	 * For setting the text of {@link #lConSelectedItem} {@link Main#selectedInfSource}, {@link Main#selectedEnDecoder} and
+	 * {@link Main#selectedNoiSource} get used depending on the type.
 	 * @param layoutZoneX Defines the layoutX multiplied by {@link #modelZoneWidth}.
 	 * @param layoutZoneY Defines the layoutY multiplied by 50.
 	 * @param type Specifies which button will be build, because each button of {@link Homepage#pSetModel} needs it's own {@link #lConName} text
@@ -136,13 +138,13 @@ public class ModelFactory {
 							lConSelectedItem.setText("nothing selected");
 							break;
 						case 1:
-							lConSelectedItem.setText("user input");
+							lConSelectedItem.setText(Main.infSource_UserInput.getName());
 							break;
 						case 2:
-							lConSelectedItem.setText("random digit book");
+							lConSelectedItem.setText(Main.infSource_RandomDigitBook.getName());
 							break;
 						default:
-							lConSelectedItem.setText("source type not found");
+							lConSelectedItem.setText("infomration source index \"" + Main.selectedInfSource + "\" not found");
 						}
 						break;
 					case 1:
@@ -152,17 +154,29 @@ public class ModelFactory {
 							lConSelectedItem.setText("nothing selected");
 							break;
 						case 1:
-							lConSelectedItem.setText("Gallager-Code");
+							lConSelectedItem.setText(Main.enDecoder_Gallager.getName());
 							break;
 						case 2:
-							lConSelectedItem.setText("Mock");
+							lConSelectedItem.setText(Main.enDecoder_Mock.getName());
 							break;
 						default:
-							lConSelectedItem.setText("en- / decoder type not found");
+							lConSelectedItem.setText("en- / decoder index \"" + Main.selectedEnDecoder + "\" not found");
 						}
 						break;
 					case 2:
-						lConSelectedItem.setText("TODO");
+						switch (Main.selectedNoiSource) {
+						case 0:
+							lConSelectedItem.setText("nothing selected");
+							break;
+						case 1:
+							lConSelectedItem.setText(Main.noiSource_IndividualChanges.getName());
+							break;
+						case 2:
+							lConSelectedItem.setText(Main.noiSource_MixUpChanges.getName());
+							break;
+						default:
+							lConSelectedItem.setText("noise source index \"" + Main.selectedNoiSource + "\" not found");
+						}
 						break;
 					default:
 						lConSelectedItem.setText("button type not found");
@@ -193,8 +207,8 @@ public class ModelFactory {
 	
 	/**
 	 * Builds the buttons for {@link environment.pages.Homepage#pSetModel}. 
-	 * It uses {@link environment.pages.guiElements.Arrow#getArrow(double, double, double, double, double, double, boolean, String)} to create the arrow.
-	 * This method calculates the values to create the arrow via the class and returns it.
+	 * It uses {@link environment.pages.guiElements.Arrow#getArrow(double, double, double, double, double, double, boolean, String, double)} 
+	 * to create the arrow. This method calculates the values to create the arrow via the class and returns it.
 	 * @param layoutZoneX Defines the x coordinate of the start of the arrow multiplied by {@link #modelZoneWidth}.
 	 * @param layoutZoneY Defines the y coordinate of the start of the arrow multiplied by {@link #modelZoneHeight}.
 	 * @param lenght Defines the length of the arrow multiplied by either {@link #modelZoneWidth} or {@link #modelZoneHeight}.
@@ -217,6 +231,6 @@ public class ModelFactory {
 		}
 		
 		Arrow a = new Arrow();
-		return a.getArrow(startX, startY, endX, endY, 10, 10, vertical, name);
+		return a.getArrow(startX, startY, endX, endY, 10, 10, vertical, name, 0);
 	}
 }

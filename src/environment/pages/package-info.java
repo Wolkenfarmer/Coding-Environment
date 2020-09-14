@@ -3,7 +3,7 @@
  * It's {@link environment.pages.Homepage home page} links up to the different sub-pages 
  * {@link environment.pages.InfSourcePage information source page},
  * {@link environment.pages.EnDecoderPage en- / decoder page},
- * noise source page TODO and
+ * {@link environment.pages.NoiSourcePage noise source page} and
  * destination page TODO ,
  * of which the first three extend {@link environment.pages.SettingsPage}.<br>
  * In addition, it contains the packages {@link environment.pages.guiElements}, 

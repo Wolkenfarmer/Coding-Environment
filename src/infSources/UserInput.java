@@ -19,7 +19,8 @@ public class UserInput implements ExperimentElement {
 	/** Defines the type of this information source. This variable has for information sources currently no use-case.*/
 	private static byte type = 0;
 	/** Layout container representing the given root from {@link environment.pages.guiElements.InformationSegment} to attach the GUI-elements to 
-	 * (gets added via {@link environment.pages.guiElements.OptionButton#setOnActionW(ExperimentElement, environment.SettingsPage, environment.pages.guiElements.InformationSegment)}).
+	 * (gets added via {@link environment.pages.guiElements.OptionButton#setOnActionW(ExperimentElement, environment.pages.SettingsPage, 
+	 * environment.pages.guiElements.InformationSegment)}).
 	 * It's content ({@link #tfUserText}) gets build in {@link #buildGui(Pane)}.
 	 * When loading another page, it's content gets first removed and then the layout container will be given to the other class.
 	 * When reloading the page {@link #reloadGui(Pane)} will be used to re-attach the content to the root.*/

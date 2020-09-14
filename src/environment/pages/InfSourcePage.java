@@ -15,7 +15,7 @@ import javafx.scene.text.TextFlow;
 /**
  * The information source page (a sub-page of the {@link Homepage home page}).
  * The information source for the communication experiment can be set here.
- * This page extends from {@link SettingsPage} (like {@link EnDecoderPage} and TODO).
+ * This page extends from {@link SettingsPage} (like {@link EnDecoderPage} and {@link NoiSourcePage}).
  * See {@link #InfSourcePage(Group)} for more information about the GUI.
  * @author Wolkenfarmer
  */
@@ -58,7 +58,7 @@ public class InfSourcePage extends SettingsPage {
 			
 	/**
 	 * Builds the information source page of the application.
-	 * For building it's content and updating the environment accordingly to the picked options {@link OverviewButton}, {@link OptionButton} and
+	 * For building it's content and updating the environment accordingly to the picked option {@link OverviewButton}, {@link OptionButton} and
 	 * {@link InformationSegment} get used.
 	 * The information source page gets scaled accordingly to {@link Main#stageHeight} and {@link Main#stageWidth}.
 	 * Normally, the height of {@link #pInformation} gets calculated in order to not exceed the screen's size, 
@@ -122,8 +122,8 @@ public class InfSourcePage extends SettingsPage {
 				bOveModSource.setLayoutX(segmentWidth);
 				
 				double y = bOveModSource.getHeightW() / 2;
-				aOveModRelToSo = new Arrow().getArrow(0, y, segmentWidth, y, 15, 10, false, "you");
-				aOveModRelSoTo = new Arrow().getArrow(segmentWidth * 2, y, segmentWidth * 3, y, 15, 10, false, currentProtocol);
+				aOveModRelToSo = new Arrow().getArrow(0, y, segmentWidth, y, 15, 10, false, "you", 0);
+				aOveModRelSoTo = new Arrow().getArrow(segmentWidth * 2, y, segmentWidth * 3, y, 15, 10, false, currentProtocol, 0);
 			pOveModel.getChildren().addAll(aOveModRelToSo, bOveModSource, aOveModRelSoTo);
 		pOverview.getChildren().addAll(lOveHeading, pOveModel);
 		
@@ -187,7 +187,7 @@ public class InfSourcePage extends SettingsPage {
 		
 		double y = bOveModSource.getHeightW() / 2;
 		pOveModel.getChildren().remove(aOveModRelSoTo);
-		aOveModRelSoTo = new Arrow().getArrow(segmentWidth * 2, y, segmentWidth * 3, y, 15, 10, false, currentProtocol);
+		aOveModRelSoTo = new Arrow().getArrow(segmentWidth * 2, y, segmentWidth * 3, y, 15, 10, false, currentProtocol, 0);
 		pOveModel.getChildren().add(aOveModRelSoTo);
 	}
 }

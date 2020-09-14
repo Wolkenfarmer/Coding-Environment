@@ -1,25 +1,23 @@
-package enDecoder;
+package noiSources;
 
 import environment.ExperimentElement;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
 /**
- * For now just a mock class for {@link environment.pages.EnDecoderPage}. 
- * Will later be extended to a full version of the user input information source.
+ * For now just a mock class for {@link environment.pages.NoiSourcePage}. 
+ * Will later be extended to a full version of the individual changes noise source.
  * @author Wolkenfarmer
  */
-public class StringToByte implements ExperimentElement {
+public class MixUpChanges implements ExperimentElement {
 	/** Name of this experiment element.*/
-	private static String name = "String to byte[]";
+	private static String name = "Mix-up changes";
 	/** The protocol / data type / structure that this experiment element gives.*/
-	private static String protocol = "byte[]";
+	private static String protocol = "byte[]2?";
 	/** The index of this experiment element. Indices only have to be unique inside the own category.*/
-	private static byte index = 1;
-	/** Defines whether this is an en- / decoder or a pre-en- / post-decoder. This experiment element is only an pre-en- / post-decoder.
-	 * 0: en- / decoder
-	 * 1: pre- / post-*/
-	private static byte type = 1;
+	private static byte index = 2;
+	/** Defines the type of this information source. This variable has for noise sources currently no use-case.*/
+	private static byte type = 0;
 	/** Layout container representing the given root from {@link environment.pages.guiElements.InformationSegment} to attach the GUI-elements to 
 	 * (gets added via {@link environment.pages.guiElements.OptionButton#setOnActionW(ExperimentElement, environment.pages.SettingsPage, 
 	 * environment.pages.guiElements.InformationSegment)}).
@@ -31,15 +29,14 @@ public class StringToByte implements ExperimentElement {
 	public static boolean builtGui;
 	/** Mock label for testing the layout-loading. It will be directly attached to {@link #root}.*/
 	private static Label mock;
-	
 
+	
 	/** @see environment.ExperimentElement#buildGui(Pane)*/
 	public void buildGui(Pane parent) {
 		root = parent;
 		
 		mock = new Label();
-		mock.setText("Strin-to-byte[]-Gui has been loaded!\n"
-				+ "Can only be set as pre-encoder / post-decoder.");
+		mock.setText("Mix-up-changes-GUI has been loaded!");
 		mock.setFont(environment.Main.fNormalText);
 		mock.setTextFill(environment.Main.cNormal);
 		mock.setPrefWidth(root.getPrefWidth());

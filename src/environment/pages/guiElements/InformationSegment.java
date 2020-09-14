@@ -130,6 +130,7 @@ public class InformationSegment extends Pane {
 	
 	/**
 	 * Updates the on action event handler of {@link #bHeaSav} to fit the currently selected {@link ExperimentElement experiment element}.
+	 * This method gets called by {@link OptionButton#setOnActionW(ExperimentElement, SettingsPage, InformationSegment)}.
 	 * Depending on the {@link #refType} the corresponding selection for the communication experiment in {@link Main} gets changed.
 	 * In addition, the mode of the {@link OptionButton}'s gets changed as well as the {@link Homepage#pSetModel home page's settings model} on
 	 * it's next build by setting {@link Main#boUpdateSettingsModelHomepage} to true and the corresponding page's
@@ -176,12 +177,16 @@ public class InformationSegment extends Pane {
 							}
 						}
 						optButton.setMode((byte) 1);
+						
+						Main.noiSourcePage.updateOveModEnDeProtocol();
 					} else {
 						Main.selectedPrePost = reference.getIndex();
 						
 						if (optButton.getMode() == 1) {
 							Main.selectedEnDecoder = 0;
 							page.updateOveModel((byte) 0);
+							
+							Main.noiSourcePage.updateOveModEnDeProtocol();
 						}
 						
 						if (!EnDecoderPage.ovePrePostDisplaying) {
@@ -199,6 +204,15 @@ public class InformationSegment extends Pane {
 					}
 					break;
 				case 2: // noise source
+					Main.selectedNoiSource = reference.getIndex();
+					page.updateOveModel((byte) 0);
+					
+					for (int i = 0; i < page.vbOptButtons.getChildren().size(); i++) {
+						if (((OptionButton) page.vbOptButtons.getChildren().get(i)).getMode() == 1) {
+							((OptionButton) page.vbOptButtons.getChildren().get(i)).setMode((byte) 0);
+						}
+					}
+					optButton.setMode((byte) 1);
 					break;
 				default:
 					System.out.println("Type not found");

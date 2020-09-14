@@ -12,7 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.TextFlow;
 
 /**
- * Abstract class for the sub-pages {@link InfSourcePage}, {@link EnDecoderPage} and TODO .
+ * Abstract class for the sub-pages {@link InfSourcePage}, {@link EnDecoderPage} and {@link NoiSourcePage} .
  * Gets used for {@link OptionButton} and {@link InformationSegment} in order to have a unified access to the pages / 
  * implement a unified system for handling the pages.
  * @author Wolkenfarmer

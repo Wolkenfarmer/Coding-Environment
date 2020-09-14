@@ -27,8 +27,9 @@ import javafx.util.Callback;
 /**
  * The home page of the application with access to every part of the program.
  * Links with {@link #bSetModSource} up to the {@link InfSourcePage information source page}, 
- * with {@link #bSetModEncoder} and {@link #bSetModDecoder} up to the {@link EnDecoderPage en- / decoder page} and 
- * with TODO up to the TODO .
+ * with {@link #bSetModEncoder} and {@link #bSetModDecoder} up to the {@link EnDecoderPage en- / decoder page}, 
+ * with {@link #bSetModNoise} up to the {@link NoiSourcePage noise source page} and
+ * with {@link #bSetModDestination} to the TODO page.
  * See {@link #Homepage(Group)} for more information about the GUI.
  * @author Wolkenfarmer
  */
@@ -63,13 +64,13 @@ public class Homepage {
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to {@link InfSourcePage}.*/
 			static Button bSetModSource;
 			/** Encoder button of the model in settings. Uses {@link environment.Main#baNormalButton} as background.
-			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
+			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to {@link EnDecoderPage}*/
 			static Button bSetModEncoder;
 			/** Noise source button of the model in settings. Uses {@link environment.Main#baNormalButton} as background.
-			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
+			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to {@link NoiSourcePage}*/
 			static Button bSetModNoise;
 			/** Decoder button of the model in settings. Uses {@link environment.Main#baNormalButton} as background.
-			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
+			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to {@link EnDecoderPage}*/
 			static Button bSetModDecoder;
 			/** Destination button of the model in settings. Uses {@link environment.Main#baNormalButton} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
@@ -93,7 +94,7 @@ public class Homepage {
 		/** The table displaying the last result below {@link #lResHeading}. 
 		 * It gets the result from TODO
 		 * Contains {@link #tvResTabDescription} and {@link #tvResTabValue} and is part of {@link #pResults}.
-		 * @see css */
+		 * @see environment.pages.css */
 		private static TableView<String[]> tvResTable;
 			/** The first column of {@link #tvResTable} displaying the descriptions of the values.*/
 			private static TableColumn<String[], String> tvResTabDescription;
@@ -423,6 +424,12 @@ public class Homepage {
 		bSetModNoise.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent t) {
 				System.out.println("bSetModNoise got pressed!");
+				root.getChildren().clear();
+				if (Main.noiSourcePage == null) {
+					Main.noiSourcePage = new NoiSourcePage(root);
+				} else {
+					Main.noiSourcePage.reload(root);
+				}
 	        }
 	    });
 		

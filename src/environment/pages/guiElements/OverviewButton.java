@@ -2,8 +2,6 @@ package environment.pages.guiElements;
 
 import environment.ExperimentElement;
 import environment.Main;
-import environment.pages.EnDecoderPage;
-import environment.pages.InfSourcePage;
 import environment.pages.SettingsPage;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -12,7 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 
 /**
- * The overview button for the overview models in {@link InfSourcePage}, {@link EnDecoderPage} and TODO.
+ * The overview button for the overview models in the {@link SettingsPage#pOverview settings pages}.
  * It's mostly used as a better rectangle and without it's action listeners.
  * It's able to display a {@link #lHeading heading} and a {@link #lSelectedItem selected item}. 
  * The second one can be set with {@link #setSelectedItem(String)}.

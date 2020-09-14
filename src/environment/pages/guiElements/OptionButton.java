@@ -13,7 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.TextAlignment;
 
 /**
- * The option button for the {@link SettingsPage#vbOptButtons options-segments}.
+ * The option button for the {@link SettingsPage#vbOptButtons settings pages' options-segments}.
  * It's action listener gets set in {@link #setOnActionW(ExperimentElement, SettingsPage, InformationSegment)}.
  * It's able to display the name of the {@link ExperimentElement} experiment element. 
  * It's height gets correctly calculated to fit the given text and gets updated if needed. 
