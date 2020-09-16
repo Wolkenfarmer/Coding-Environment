@@ -49,6 +49,10 @@ public class NoiSourcePage extends SettingsPage {
 			 * @see Arrow*/
 			private static Arrow aOveModRelEnToDe;
 	// Options
+		/** The button showing the {@link noiSources.Deselect deselect} option under {@link #pOptions option}. 
+		 * Can be used to deactivate the noise source.
+		 * It's part of {@link #vbOptButtons}.*/
+		private static OptionButton bOptButDeselect;
 		/** The button showing the {@link noiSources.IndividualChanges individual changes} option under {@link #pOptions option}. 
 		 * It's part of {@link #vbOptButtons}.*/
 		private static OptionButton bOptButIndChanges;
@@ -157,13 +161,15 @@ public class NoiSourcePage extends SettingsPage {
 			vbOptButtons.setPrefWidth(pOptions.getPrefWidth());
 			vbOptButtons.setLayoutY(Main.distanceToSubheading);
 			vbOptButtons.setSpacing(20);
+				bOptButDeselect = new OptionButton(pOptions.getPrefWidth(), Main.noiSource_deselect.getName());
 				bOptButIndChanges = new OptionButton(pOptions.getPrefWidth(), Main.noiSource_IndividualChanges.getName());
 				bOptButMixUpChanges = new OptionButton(pOptions.getPrefWidth(), Main.noiSource_MixUpChanges.getName());
-			vbOptButtons.getChildren().addAll(bOptButIndChanges, bOptButMixUpChanges);
+			vbOptButtons.getChildren().addAll(bOptButDeselect, bOptButIndChanges, bOptButMixUpChanges);
 	    pOptions.getChildren().addAll(lOptHeading, vbOptButtons);
 	    
 	    
 	    pInformation = new InformationSegment((byte) 2, Main.pos1 * 3, pOptions.getLayoutY(), Main.calcHeight(pOptions));
+	    	bOptButDeselect.setOnActionW(Main.noiSource_deselect, this, pInformation);
 	    	bOptButIndChanges.setOnActionW(Main.noiSource_IndividualChanges, this, pInformation);
 	    	bOptButMixUpChanges.setOnActionW(Main.noiSource_MixUpChanges, this, pInformation);
 		

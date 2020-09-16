@@ -88,6 +88,10 @@ public class EnDecoderPage extends SettingsPage {
 			 * @see Arrow*/
 			private static Arrow aOveModRelDeTo;
 	// Options
+		/** The button showing the {@link enDecoder.DeselectPrePost deselect} option under {@link #pOptions option}. 
+		 * Can be used to deactivate the pre-en- / post-decoder.
+		 * It's part of {@link #vbOptButtons}.*/
+		private static OptionButton bOptButDeselect;
 		/** The button showing the {@link enDecoder.Gallager Gallager-Coder} option under {@link #pOptions option}. 
 		 * It's part of {@link #vbOptButtons}.*/
 		private static OptionButton bOptButGallager;
@@ -249,14 +253,16 @@ public class EnDecoderPage extends SettingsPage {
 			vbOptButtons.setPrefWidth(pOptions.getPrefWidth());
 			vbOptButtons.setLayoutY(Main.distanceToSubheading);
 			vbOptButtons.setSpacing(20);
+				bOptButDeselect = new OptionButton(pOptions.getPrefWidth(), Main.enDecoder_DeselectPrePost.getName());
 				bOptButGallager = new OptionButton(pOptions.getPrefWidth(), Main.enDecoder_Gallager.getName());
 				bOptButMock = new OptionButton(pOptions.getPrefWidth(), Main.enDecoder_Mock.getName());
 				bOptButStringToByte = new OptionButton(pOptions.getPrefWidth(), Main.enDecoder_StringToByte.getName());
-			vbOptButtons.getChildren().addAll(bOptButGallager, bOptButMock, bOptButStringToByte);
+			vbOptButtons.getChildren().addAll(bOptButDeselect, bOptButGallager, bOptButMock, bOptButStringToByte);
 	    pOptions.getChildren().addAll(lOptHeading, vbOptButtons);
 	    
 	    
 	    pInformation = new InformationSegment((byte) 1, Main.pos1 * 3, pOptions.getLayoutY(), Main.calcHeight(pOptions));
+	    	bOptButDeselect.setOnActionW(Main.enDecoder_DeselectPrePost, this, pInformation);
 		    bOptButGallager.setOnActionW(Main.enDecoder_Gallager, this, pInformation);
 		    bOptButMock.setOnActionW(Main.enDecoder_Mock, this, pInformation);
 		    bOptButStringToByte.setOnActionW(Main.enDecoder_StringToByte, this, pInformation);
@@ -391,5 +397,16 @@ public class EnDecoderPage extends SettingsPage {
 			ovePrePostDisplaying = false;
 			break;
 		}
+	}
+	
+	
+	/**
+	 * Selects the deselect option for 
+	 * {@link environment.pages.guiElements.InformationSegment#setSaveAddReference(ExperimentElement, OptionButton, SettingsPage)} 
+	 * if a option previously set as pre-en / post-decoder becomes the en- / decoder and therefore {@link #bOptButDeselect} has to be set
+	 * even though there is no direct reference to it in this context.
+	 */
+	public void selectDeselectOption() {
+		bOptButDeselect.setMode((byte) 2);
 	}
 }

@@ -166,6 +166,7 @@ public class InformationSegment extends Pane {
 						
 						if (optButton.getMode() == 2) {
 							Main.selectedPrePost = 0;
+							((EnDecoderPage) page).selectDeselectOption();
 							page.updateOveModel((byte) 3);
 						} else {
 							page.updateOveModel((byte) 0);
@@ -178,7 +179,9 @@ public class InformationSegment extends Pane {
 						}
 						optButton.setMode((byte) 1);
 						
-						Main.noiSourcePage.updateOveModEnDeProtocol();
+						if (Main.noiSourcePage != null) {
+							Main.noiSourcePage.updateOveModEnDeProtocol();
+						}
 					} else {
 						Main.selectedPrePost = reference.getIndex();
 						
@@ -186,13 +189,21 @@ public class InformationSegment extends Pane {
 							Main.selectedEnDecoder = 0;
 							page.updateOveModel((byte) 0);
 							
-							Main.noiSourcePage.updateOveModEnDeProtocol();
+							if (Main.noiSourcePage != null) {
+								Main.noiSourcePage.updateOveModEnDeProtocol();
+							}
 						}
 						
 						if (!EnDecoderPage.ovePrePostDisplaying) {
-							page.updateOveModel((byte) 2);
+							if (reference.getIndex() != 0) {
+								page.updateOveModel((byte) 2);		
+							}
 						} else {
-							page.updateOveModel((byte) 1);
+							if (reference.getIndex() != 0) {
+								page.updateOveModel((byte) 1);		
+							} else {
+								page.updateOveModel((byte) 3);	
+							}
 						}
 						
 						for (int i = 0; i < page.vbOptButtons.getChildren().size(); i++) {

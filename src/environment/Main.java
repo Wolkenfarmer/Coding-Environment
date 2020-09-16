@@ -2,6 +2,7 @@ package environment;
 
 import java.util.ArrayList;
 
+import enDecoder.DeselectPrePost;
 import enDecoder.Gallager;
 import enDecoder.Mock;
 import enDecoder.StringToByte;
@@ -39,6 +40,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import noiSources.Deselect;
 import noiSources.IndividualChanges;
 import noiSources.MixUpChanges;
 
@@ -246,6 +248,9 @@ public class Main extends Application {
     /** Static reference to the information source "Random digit book" in order for {@link environment.pages.InfSourcePage} and 
      * TODO to have simple access to it.*/
     public static RandomDigitBook infSource_RandomDigitBook = new RandomDigitBook();
+    /** Static reference to the en- / decoder "Deselect" in order for {@link environment.pages.EnDecoderPage} and
+     * TODO to have simple access to it.*/
+    public static DeselectPrePost enDecoder_DeselectPrePost = new DeselectPrePost();
     /** Static reference to the en- / decoder "Gallager-Code" in order for {@link environment.pages.EnDecoderPage} and
      * TODO to have simple access to it.*/
     public static Gallager enDecoder_Gallager = new Gallager();
@@ -255,6 +260,9 @@ public class Main extends Application {
     /** Static reference to the en- / decoder "String to byte" in order for {@link environment.pages.EnDecoderPage} and
      * TODO to have simple access to it.*/
     public static StringToByte enDecoder_StringToByte = new StringToByte();
+    /** Static reference to the noise source "Deselect" in order for {@link environment.pages.NoiSourcePage} and
+     * TODO to have simple access to it.*/
+    public static Deselect noiSource_deselect = new Deselect();
     /** Static reference to the noise source "Individual changes" in order for {@link environment.pages.NoiSourcePage} and
      * TODO to have simple access to it.*/
     public static IndividualChanges noiSource_IndividualChanges = new IndividualChanges();
