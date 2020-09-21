@@ -154,6 +154,8 @@ public class EnDecoderPage extends SettingsPage {
 			pOveModel.setLayoutY(Main.distanceToSubheading);
 				String currentlySelectedEnDecoder = Main.selectedEnDecoder.getName();
 				
+				bOveModEncoder = new OverviewButton(segmentWidthEnDe * 2, "Encoder", currentlySelectedEnDecoder);
+				bOveModDecoder = new OverviewButton(segmentWidthEnDe * 2, "Decoder", currentlySelectedEnDecoder);
 				bOveModPreencoder = new OverviewButton(segmentWidthPrePost * 2, "Pre-encoder", "");
 				bOveModPreencoder.setLayoutX(segmentWidthPrePost);
 				bOveModPostdecoder = new OverviewButton(segmentWidthPrePost * 2, "Post-decoder", "");
@@ -161,9 +163,7 @@ public class EnDecoderPage extends SettingsPage {
 				
 				
 				if (Main.selectedPrePost == Main.enDecoder_DeselectPrePost) {
-					bOveModEncoder = new OverviewButton(segmentWidthEnDe * 2, "Encoder", currentlySelectedEnDecoder);
 					bOveModEncoder.setLayoutX(segmentWidthEnDe);
-					bOveModDecoder = new OverviewButton(segmentWidthEnDe * 2, "Decoder", currentlySelectedEnDecoder);
 					bOveModDecoder.setLayoutX(segmentWidthEnDe * 5);
 					
 					double y = bOveModEncoder.getHeightW() / 2;
@@ -173,13 +173,9 @@ public class EnDecoderPage extends SettingsPage {
 					
 					ovePrePostDisplaying = false;
 				} else {
-					bOveModEncoder = new OverviewButton(segmentWidthPrePost * 2, "Encoder", currentlySelectedEnDecoder);
 					bOveModEncoder.setLayoutX(segmentWidthPrePost * 4);
-					bOveModDecoder = new OverviewButton(segmentWidthPrePost * 2, "Decoder", currentlySelectedEnDecoder);
 					bOveModDecoder.setLayoutX(segmentWidthPrePost * 8);
 					
-					String currentPrePostProtocol = Main.selectedPrePost.getProtocol();
-
 					bOveModPreencoder.setSelectedItem(Main.selectedPrePost.getName());
 					bOveModPostdecoder.setSelectedItem(Main.selectedPrePost.getName());
 					
@@ -193,11 +189,11 @@ public class EnDecoderPage extends SettingsPage {
 					}
 					aOveModRelToEn = new Arrow().getArrow(0, y, segmentWidthPrePost, y, 10, 10, false, "message", 0);
 					aOveModRelEnToEn = new Arrow().getArrow(segmentWidthPrePost * 3, y, segmentWidthPrePost * 4, y, 10, 10, 
-							false, currentPrePostProtocol, 0);
+							false, "", 0);
 					aOveModRelEnToDe = new Arrow().getArrow(segmentWidthPrePost * 6, y, segmentWidthPrePost * 8, y, 10, 10, 
 							false, "signal / channel", 0);
 					aOveModRelDeToDe = new Arrow().getArrow(segmentWidthPrePost * 10, y, segmentWidthPrePost * 11, y, 10, 10, 
-							false, currentPrePostProtocol, 0);
+							false, "", 0);
 					aOveModRelDeTo = new Arrow().getArrow(segmentWidthPrePost * 13, y, segmentWidthPrePost * 14, y, 10, 10, 
 							false, "message", 0);
 					
@@ -257,11 +253,9 @@ public class EnDecoderPage extends SettingsPage {
 	public void updateOveModel(byte changed) {
 		String currentlySelectedEnDecoder;
 		String currentlySelectedPrePost;
-		String currentPrePostProtocol;
 		
 		currentlySelectedEnDecoder = Main.selectedEnDecoder.getName();
 		currentlySelectedPrePost = Main.selectedPrePost.getName();
-		currentPrePostProtocol = Main.selectedPrePost.getProtocol();
 		
 		double y, y1, y2;
 		
@@ -283,9 +277,9 @@ public class EnDecoderPage extends SettingsPage {
 			}
 			pOveModel.getChildren().removeAll(aOveModRelEnToEn, aOveModRelDeToDe);
 			aOveModRelEnToEn = new Arrow().getArrow(segmentWidthPrePost * 3, y, segmentWidthPrePost * 4, y, 10, 10, 
-					false, currentPrePostProtocol, 0);
+					false, "", 0);
 			aOveModRelDeToDe = new Arrow().getArrow(segmentWidthPrePost * 10, y, segmentWidthPrePost * 11, y, 10, 10, 
-					false, currentPrePostProtocol, 0);
+					false, "", 0);
 			pOveModel.getChildren().addAll(aOveModRelEnToEn, aOveModRelDeToDe);
 			break;
 		case 2:						// view-setup: !pre-/post- -> pre-/post-
@@ -308,11 +302,11 @@ public class EnDecoderPage extends SettingsPage {
 			pOveModel.getChildren().removeAll(aOveModRelToEn, aOveModRelEnToDe, aOveModRelDeTo);
 			aOveModRelToEn = new Arrow().getArrow(0, y, segmentWidthPrePost, y, 10, 10, false, "message", 0);
 			aOveModRelEnToEn = new Arrow().getArrow(segmentWidthPrePost * 3, y, segmentWidthPrePost * 4, y, 10, 10, 
-					false, currentPrePostProtocol, 0);
+					false, "", 0);
 			aOveModRelEnToDe = new Arrow().getArrow(segmentWidthPrePost * 6, y, segmentWidthPrePost * 8, y, 10, 10, 
 					false, "signal / channel", 0);
 			aOveModRelDeToDe = new Arrow().getArrow(segmentWidthPrePost * 10, y, segmentWidthPrePost * 11, y, 10, 10, 
-					false, currentPrePostProtocol, 0);
+					false, "", 0);
 			aOveModRelDeTo = new Arrow().getArrow(segmentWidthPrePost * 13, y, segmentWidthPrePost * 14, y, 10, 10, 
 					false, "message", 0);
 			

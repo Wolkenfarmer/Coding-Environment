@@ -68,9 +68,6 @@ public class RandomDigitBook implements ExperimentElement {
 	/** @return {@link #protocol}
 	 * @see environment.ExperimentElement#getProtocol()*/
 	public String getProtocol() {return protocol;}
-	/** @return {@link #index}
-	 * @see environment.ExperimentElement#getIndex()*/
-	public byte getIndex() {return index;}
 	/** @return {@link #type}
 	 * @see environment.ExperimentElement#getType()*/
 	public byte getType() {return type;}

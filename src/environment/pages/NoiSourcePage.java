@@ -109,11 +109,10 @@ public class NoiSourcePage extends SettingsPage {
 				bOveModSource = new OverviewButton(segmentWidth, "Noise Source", Main.selectedNoiSource.getName());
 				
 				double y = bOveModSource.getHeightW() / 2;
-				aOveModRelNoToCh = new Arrow().getArrow(segmentWidth, y, segmentWidth * 3, y, 15, 10, false, 
-						"noise | " + Main.selectedNoiSource.getProtocol(), 0);
+				aOveModRelNoToCh = new Arrow().getArrow(segmentWidth, y, segmentWidth * 3, y, 15, 10, false, "noise", 0);
 				
 				aOveModRelEnToDe = new Arrow().getArrow(segmentWidth * 3, 0, segmentWidth * 3, y * 2, 5, 10, true, 
-						"En- / decoder protocol:\n" + Main.selectedEnDecoder.getProtocol(), segmentWidth);
+						"signal / channel\nselected en- / decoder: " + Main.selectedEnDecoder.getName(), segmentWidth);
 			pOveModel.getChildren().addAll(bOveModSource, aOveModRelNoToCh, aOveModRelEnToDe);
 		pOverview.getChildren().addAll(lOveHeading, pOveModel);
 		
@@ -166,8 +165,7 @@ public class NoiSourcePage extends SettingsPage {
 		
 		double y = bOveModSource.getHeightW() / 2;
 		pOveModel.getChildren().remove(aOveModRelNoToCh);
-		aOveModRelNoToCh = new Arrow().getArrow(segmentWidth, y, segmentWidth * 3, y, 15, 10, false, 
-				"message | " + Main.selectedNoiSource.getProtocol(), 0);
+		aOveModRelNoToCh = new Arrow().getArrow(segmentWidth, y, segmentWidth * 3, y, 15, 10, false, "noise", 0);
 		pOveModel.getChildren().add(aOveModRelNoToCh);
 	}
 	
@@ -184,7 +182,7 @@ public class NoiSourcePage extends SettingsPage {
 			pOveModel.getChildren().remove(aOveModRelEnToDe);
 		}
 		aOveModRelEnToDe = new Arrow().getArrow(segmentWidth * 3, 0, segmentWidth * 3, y * 2, 5, 10, true, 
-				"En- / decoder protocol:\n" + Main.selectedEnDecoder.getProtocol(), segmentWidth);
+				"signal / channel\nselected en- / decoder: " + Main.selectedEnDecoder.getName(), segmentWidth);
 		pOveModel.getChildren().add(aOveModRelEnToDe);
 	}
 
