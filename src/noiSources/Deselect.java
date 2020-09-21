@@ -10,11 +10,9 @@ import javafx.scene.layout.Pane;
  */
 public class Deselect implements ExperimentElement {
 	/** Name of this experiment element.*/
-	private String name = "Deselect";
+	private String name = "nothing selected";
 	/** The protocol / data type / structure that this experiment element gives.*/
 	private static String protocol = "-";
-	/** The index of this experiment element. Indices only have to be unique inside the own category.*/
-	private static byte index = 0;
 	/** Defines the type of this information source. This variable has for noise sources currently no use-case.*/
 	private static byte type = 0;
 	/** Layout container representing the given root from {@link environment.pages.guiElements.InformationSegment} to attach the GUI-elements to 
@@ -56,15 +54,24 @@ public class Deselect implements ExperimentElement {
 	/** @return {@link #builtGui}
 	 * @see environment.ExperimentElement#getBuiltGui()*/
 	public boolean getBuiltGui() {return builtGui;}
-	/** @return {@link #name}
+	/** Differs between being called from the {@link environment.pages.Homepage home page} and the 
+	 * {@link environment.pages.EnDecoderPage en- / decoder page}. 
+	 * In the second case it displays "Deselect", because "nothing selected" would be weird button name.
+	 * However, getting the calling method from the StackTrace for differentiating between the corresponding 
+	 * {@link environment.pages.guiElements.OverviewButton overview button} and {@link environment.pages.guiElements.OverviewButton option button}
+	 * doesn't work because of the unreasonable universe.
+	 * @return {@link #name}
 	 * @see environment.ExperimentElement#getName()*/
-	public String getName() {return name;}
+	public String getName() {
+		if (Thread.currentThread().getStackTrace()[2].getClassName() == "environment.pages.NoiSourcePage") {
+			return "Deselect";
+		} else {
+			return name;
+		}
+	}
 	/** @return {@link #protocol}
 	 * @see environment.ExperimentElement#getProtocol()*/
 	public String getProtocol() {return protocol;}
-	/** @return {@link #index}
-	 * @see environment.ExperimentElement#getIndex()*/
-	public byte getIndex() {return index;}
 	/** @return {@link #type}
 	 * @see environment.ExperimentElement#getType()*/
 	public byte getType() {return type;}

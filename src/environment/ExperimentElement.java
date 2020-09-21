@@ -41,9 +41,6 @@ public interface ExperimentElement {
 	/** Gives the protocol / data type / structure which the experiment element gives.
 	 * @return protocol*/
 	public String getProtocol();
-	/** Gives the index of the experiment element.
-	 * @return index*/
-	public byte getIndex();
 	/** Gives the type of the experiment element (currently only used for differentiating between e- / decoder and pre-en / post-decoder.
 	 * @return type*/
 	public byte getType();

@@ -14,8 +14,6 @@ public class Gallager implements ExperimentElement {
 	private static String name = "Gallager-Code";
 	/** The protocol / data type / structure that this experiment element gives.*/
 	private static String protocol = "idk";
-	/** The index of this experiment element. Indices only have to be unique inside the own category.*/
-	private static byte index = 1;
 	/** Defines whether this is an en- / decoder or a pre-en- / post-decoder. This experiment element is only an en- / decoder.
 	 * 0: en- / decoder
 	 * 1: pre- / post-*/
@@ -72,9 +70,6 @@ public class Gallager implements ExperimentElement {
 	/** @return {@link #protocol}
 	 * @see environment.ExperimentElement#getProtocol()*/
 	public String getProtocol() {return protocol;}
-	/** @return {@link #index}
-	 * @see environment.ExperimentElement#getIndex()*/
-	public byte getIndex() {return index;}
 	/** @return {@link #type}
 	 * @see environment.ExperimentElement#getType()*/
 	public byte getType() {return type;}

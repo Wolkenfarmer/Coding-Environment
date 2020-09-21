@@ -152,20 +152,7 @@ public class EnDecoderPage extends SettingsPage {
 			
 			pOveModel = new Pane();
 			pOveModel.setLayoutY(Main.distanceToSubheading);
-				String currentlySelectedEnDecoder;
-				switch (Main.selectedEnDecoder) {
-				case 0:
-					currentlySelectedEnDecoder = "nothing selected";
-					break;
-				case 1:
-					currentlySelectedEnDecoder = Main.enDecoder_Gallager.getName();
-					break;
-				case 2:
-					currentlySelectedEnDecoder = Main.enDecoder_Mock.getName();
-					break;
-				default:
-					currentlySelectedEnDecoder = "En- / decoder not found";
-				}
+				String currentlySelectedEnDecoder = Main.selectedEnDecoder.getName();
 				
 				bOveModPreencoder = new OverviewButton(segmentWidthPrePost * 2, "Pre-encoder", "");
 				bOveModPreencoder.setLayoutX(segmentWidthPrePost);
@@ -173,7 +160,7 @@ public class EnDecoderPage extends SettingsPage {
 				bOveModPostdecoder.setLayoutX(segmentWidthPrePost * 11);
 				
 				
-				if (Main.selectedPrePost == 0) {
+				if (Main.selectedPrePost == Main.enDecoder_DeselectPrePost) {
 					bOveModEncoder = new OverviewButton(segmentWidthEnDe * 2, "Encoder", currentlySelectedEnDecoder);
 					bOveModEncoder.setLayoutX(segmentWidthEnDe);
 					bOveModDecoder = new OverviewButton(segmentWidthEnDe * 2, "Decoder", currentlySelectedEnDecoder);
@@ -191,28 +178,10 @@ public class EnDecoderPage extends SettingsPage {
 					bOveModDecoder = new OverviewButton(segmentWidthPrePost * 2, "Decoder", currentlySelectedEnDecoder);
 					bOveModDecoder.setLayoutX(segmentWidthPrePost * 8);
 					
-					String currentPrePostProtocol;
-					switch (Main.selectedPrePost) {
-					case 0:
-						bOveModPreencoder.setSelectedItem("nothing selected");
-						bOveModPostdecoder.setSelectedItem("nothing selected");
-						currentPrePostProtocol = "-";
-						break;
-					case 1:
-						bOveModPreencoder.setSelectedItem(Main.enDecoder_StringToByte.getName());
-						bOveModPostdecoder.setSelectedItem(Main.enDecoder_StringToByte.getName());
-						currentPrePostProtocol = "byte[]";
-						break;
-					case 2:
-						bOveModPreencoder.setSelectedItem(Main.enDecoder_Mock.getName());
-						bOveModPostdecoder.setSelectedItem(Main.enDecoder_Mock.getName());
-						currentPrePostProtocol = "wuff";
-						break;
-					default:
-						bOveModPreencoder.setSelectedItem("Pre-en- / post-decoder not found");
-						bOveModPostdecoder.setSelectedItem("Pre-en- / post-decoder not found");
-						currentPrePostProtocol = "-";
-					}
+					String currentPrePostProtocol = Main.selectedPrePost.getProtocol();
+
+					bOveModPreencoder.setSelectedItem(Main.selectedPrePost.getName());
+					bOveModPostdecoder.setSelectedItem(Main.selectedPrePost.getName());
 					
 					double y;
 					double y1 = bOveModEncoder.getHeightW() / 2;
@@ -290,37 +259,9 @@ public class EnDecoderPage extends SettingsPage {
 		String currentlySelectedPrePost;
 		String currentPrePostProtocol;
 		
-		switch (Main.selectedEnDecoder) {
-		case 0:
-			currentlySelectedEnDecoder = "nothing selected";
-			break;
-		case 1:
-			currentlySelectedEnDecoder = Main.enDecoder_Gallager.getName();
-			break;
-		case 2:
-			currentlySelectedEnDecoder = Main.enDecoder_Mock.getName();
-			break;
-		default:
-			currentlySelectedEnDecoder = "En- / decoder not found";
-		}
-		
-		switch (Main.selectedPrePost) {
-		case 0:
-			currentlySelectedPrePost = "nothing selected";
-			currentPrePostProtocol = "-";
-			break;
-		case 1:
-			currentlySelectedPrePost = Main.enDecoder_StringToByte.getName();
-			currentPrePostProtocol = Main.enDecoder_StringToByte.getProtocol();
-			break;
-		case 2:
-			currentlySelectedPrePost = Main.enDecoder_Mock.getName();
-			currentPrePostProtocol = Main.enDecoder_Mock.getProtocol();
-			break;
-		default:
-			currentlySelectedPrePost = "Pre-en- / post-decoder not found";
-			currentPrePostProtocol = "-";
-		}
+		currentlySelectedEnDecoder = Main.selectedEnDecoder.getName();
+		currentlySelectedPrePost = Main.selectedPrePost.getName();
+		currentPrePostProtocol = Main.selectedPrePost.getProtocol();
 		
 		double y, y1, y2;
 		

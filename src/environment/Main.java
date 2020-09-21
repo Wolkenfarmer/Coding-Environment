@@ -206,50 +206,17 @@ public class Main extends Application {
     
     
     
-    /**
-	 * Saves the selected information source for further use in the environment. 
-	 * This byte specifies the used information source for the communication experiment and 
-	 * displayed text in {@link Homepage#bSetModSource} and {@link OverviewButton#lSelectedItem} (if instantiated from {@link InfSourcePage}).<br>
-	 * 0: No option picked<br>
-	 * 1: {@link infSources.UserInput User input}<br>
-	 * 2: {@link infSources.RandomDigitBook Random digit book}
-	 */
-    public static byte selectedInfSource = 0;
-    /**
-	 * Saves the selected encoder / decoder for further use in the environment. 
-	 * This byte specifies the used en- / decoder for the communication experiment and 
-	 * displayed text in {@link Homepage#bSetModEncoder} / {@link Homepage#bSetModDecoder} and {@link OverviewButton#lSelectedItem}
-	 * (if instantiated from {@link EnDecoderPage}).<br>
-	 * 0: No option picked<br>
-	 * 1: Gallager-Code<br>
-	 * 2: Mock (1)
-	 */
-    public static byte selectedEnDecoder = 0;
-	/**
-	 * Saves the selected pre-en- / post-decoder for further use in the environment. 
-	 * This byte specifies the used pre-en- / post-decoder for the communication experiment and 
-	 * the displayed text in {@link OverviewButton#lSelectedItem} (if instantiated from {@link EnDecoderPage}).<br>
-	 * 0: No option picked<br>
-	 * 1: String to byte[]<br>
-	 * 2: Mock (2)
-	 */
-    public static byte selectedPrePost = 0;
-	/**
-	 * Saves the selected noise source for further use in the environment. 
-	 * This byte specifies the used noise source for the communication experiment and 
-	 * displayed text in {@link Homepage#bSetModNoise} and {@link OverviewButton#lSelectedItem} (if instantiated from {@link NoiSourcePage}).<br>
-	 * 0: No option picked
-	 */
-    public static byte selectedNoiSource = 0;
-    
+    /** Static reference to the information source "Deselect" in order for {@link environment.pages.InfSourcePage} to have simple access to it.*/
+    public static infSources.Deselect infSource_Deselect = new infSources.Deselect();
     /** Static reference to the information source "User input" in order for {@link environment.pages.InfSourcePage} and
      * TODO to have simple access to it.*/
     public static UserInput infSource_UserInput = new UserInput();
     /** Static reference to the information source "Random digit book" in order for {@link environment.pages.InfSourcePage} and 
      * TODO to have simple access to it.*/
     public static RandomDigitBook infSource_RandomDigitBook = new RandomDigitBook();
-    /** Static reference to the en- / decoder "Deselect" in order for {@link environment.pages.EnDecoderPage} and
-     * TODO to have simple access to it.*/
+    /** Static reference to the en- / decoder "Deselect" in order for {@link environment.pages.EnDecoderPage} to have simple access to it.*/
+    public static enDecoder.Deselect enDecoder_Deselect = new enDecoder.Deselect();
+    /** Static reference to the pre-en- / post-decoder "Deselect" in order for {@link environment.pages.EnDecoderPage} to have simple access to it.*/
     public static DeselectPrePost enDecoder_DeselectPrePost = new DeselectPrePost();
     /** Static reference to the en- / decoder "Gallager-Code" in order for {@link environment.pages.EnDecoderPage} and
      * TODO to have simple access to it.*/
@@ -260,15 +227,43 @@ public class Main extends Application {
     /** Static reference to the en- / decoder "String to byte" in order for {@link environment.pages.EnDecoderPage} and
      * TODO to have simple access to it.*/
     public static StringToByte enDecoder_StringToByte = new StringToByte();
-    /** Static reference to the noise source "Deselect" in order for {@link environment.pages.NoiSourcePage} and
-     * TODO to have simple access to it.*/
-    public static Deselect noiSource_deselect = new Deselect();
+    /** Static reference to the noise source "Deselect" in order for {@link environment.pages.NoiSourcePage} to have simple access to it.*/
+    public static noiSources.Deselect noiSource_Deselect = new Deselect();
     /** Static reference to the noise source "Individual changes" in order for {@link environment.pages.NoiSourcePage} and
      * TODO to have simple access to it.*/
     public static IndividualChanges noiSource_IndividualChanges = new IndividualChanges();
     /** Static reference to the noise source "Mix-up changes" in order for {@link environment.pages.NoiSourcePage} and 
      * TODO to have simple access to it.*/
     public static MixUpChanges noiSource_MixUpChanges = new MixUpChanges();
+    
+    
+    /**
+     * Saves the selected information source for further use in the environment. 
+     * This information source will be used for the {@link Run communication experiment} and for providing the
+     * displayed text in {@link Homepage#bSetModSource} and {@link OverviewButton#lSelectedItem} (if instantiated from {@link InfSourcePage}).
+     */
+    public static ExperimentElement selectedInfSource = infSource_Deselect;
+    /**
+     * Saves the selected en- / decoder for further use in the environment. 
+     * This en- / decoder will be used for the {@link Run communication experiment} and for providing the
+     * displayed text in {@link Homepage#bSetModEncoder} / {@link Homepage#bSetModDecoder} and {@link OverviewButton#lSelectedItem}
+     * (if instantiated from {@link EnDecoderPage}).
+     */
+    public static ExperimentElement selectedEnDecoder = enDecoder_Deselect;
+    /**
+     * Saves the selected pre-en- / post-decoder for further use in the environment. 
+     * This pre-en- / post-decoder will be used for the {@link Run communication experiment} and for providing the
+     * displayed text in {@link OverviewButton#lSelectedItem} (if instantiated from {@link EnDecoderPage}).
+     */
+    public static ExperimentElement selectedPrePost = enDecoder_DeselectPrePost;
+    /**
+	 * Saves the selected noise source for further use in the environment. 
+	 * This noise source will be used for the {@link Run communication experiment} and for providing the
+	 * displayed text in {@link Homepage#bSetModNoise} and {@link OverviewButton#lSelectedItem} (if instantiated from {@link NoiSourcePage}).<br>
+	 */
+    public static ExperimentElement selectedNoiSource = noiSource_Deselect;
+    
+    
     
     
 	/**

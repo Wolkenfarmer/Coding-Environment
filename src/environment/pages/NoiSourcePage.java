@@ -106,44 +106,14 @@ public class NoiSourcePage extends SettingsPage {
 			
 			pOveModel = new Pane();
 			pOveModel.setLayoutY(Main.distanceToSubheading);
-				String currentProtocol;
-				switch (Main.selectedNoiSource) {
-				case 0:
-					bOveModSource = new OverviewButton(segmentWidth, "Noise Source", "nothing selected");
-					currentProtocol = "-";
-					break;
-				case 1:
-					bOveModSource = new OverviewButton(segmentWidth, "Noise Source", Main.noiSource_IndividualChanges.getName());
-					currentProtocol = "noise | " + Main.noiSource_IndividualChanges.getProtocol();
-					break;
-				case 2:
-					bOveModSource = new OverviewButton(segmentWidth, "Noise Source", Main.noiSource_MixUpChanges.getName());
-					currentProtocol = "noise | " + Main.noiSource_MixUpChanges.getProtocol();
-					break;
-				default:
-					bOveModSource = new OverviewButton(segmentWidth, "Noise Source", "Noise source not found");
-					currentProtocol = "-";
-				}
+				bOveModSource = new OverviewButton(segmentWidth, "Noise Source", Main.selectedNoiSource.getName());
 				
 				double y = bOveModSource.getHeightW() / 2;
-				aOveModRelNoToCh = new Arrow().getArrow(segmentWidth, y, segmentWidth * 3, y, 15, 10, false, currentProtocol, 0);
+				aOveModRelNoToCh = new Arrow().getArrow(segmentWidth, y, segmentWidth * 3, y, 15, 10, false, 
+						"noise | " + Main.selectedNoiSource.getProtocol(), 0);
 				
-				String enDecoderProtocol;
-				switch (Main.selectedEnDecoder) {
-				case 0:
-					enDecoderProtocol = "nothing selected";
-					break;
-				case 1:
-					enDecoderProtocol = Main.enDecoder_Gallager.getProtocol();
-					break;
-				case 2:
-					enDecoderProtocol= Main.enDecoder_Mock.getProtocol();
-					break;
-				default:
-					enDecoderProtocol = "en- / decoder index \"" + Main.selectedEnDecoder + "\" not found";
-				}
 				aOveModRelEnToDe = new Arrow().getArrow(segmentWidth * 3, 0, segmentWidth * 3, y * 2, 5, 10, true, 
-						"En- / decoder protocol:\n" + enDecoderProtocol, segmentWidth);
+						"En- / decoder protocol:\n" + Main.selectedEnDecoder.getProtocol(), segmentWidth);
 			pOveModel.getChildren().addAll(bOveModSource, aOveModRelNoToCh, aOveModRelEnToDe);
 		pOverview.getChildren().addAll(lOveHeading, pOveModel);
 		
@@ -161,7 +131,7 @@ public class NoiSourcePage extends SettingsPage {
 			vbOptButtons.setPrefWidth(pOptions.getPrefWidth());
 			vbOptButtons.setLayoutY(Main.distanceToSubheading);
 			vbOptButtons.setSpacing(20);
-				bOptButDeselect = new OptionButton(pOptions.getPrefWidth(), Main.noiSource_deselect.getName());
+				bOptButDeselect = new OptionButton(pOptions.getPrefWidth(), Main.noiSource_Deselect.getName());
 				bOptButIndChanges = new OptionButton(pOptions.getPrefWidth(), Main.noiSource_IndividualChanges.getName());
 				bOptButMixUpChanges = new OptionButton(pOptions.getPrefWidth(), Main.noiSource_MixUpChanges.getName());
 			vbOptButtons.getChildren().addAll(bOptButDeselect, bOptButIndChanges, bOptButMixUpChanges);
@@ -169,9 +139,7 @@ public class NoiSourcePage extends SettingsPage {
 	    
 	    
 	    pInformation = new InformationSegment((byte) 2, Main.pos1 * 3, pOptions.getLayoutY(), Main.calcHeight(pOptions));
-	    	bOptButDeselect.setOnActionW(Main.noiSource_deselect, this, pInformation);
-	    	bOptButIndChanges.setOnActionW(Main.noiSource_IndividualChanges, this, pInformation);
-	    	bOptButMixUpChanges.setOnActionW(Main.noiSource_MixUpChanges, this, pInformation);
+	    buildOptButtons();
 		
 		
 		addListener();
@@ -180,35 +148,26 @@ public class NoiSourcePage extends SettingsPage {
 	}
 	
 	
+	private void buildOptButtons() {
+		bOptButDeselect.setOnActionW(Main.noiSource_Deselect, this, pInformation);
+    	bOptButIndChanges.setOnActionW(Main.noiSource_IndividualChanges, this, pInformation);
+    	bOptButMixUpChanges.setOnActionW(Main.noiSource_MixUpChanges, this, pInformation);
+	}
+	
+	
 	/**
-	 * Updates the {@link #pOveModel overview model} of this page to fit the {@link Main#selectedInfSource currently selected noise source}.
+	 * Updates the {@link #pOveModel overview model} of this page to fit the {@link Main#selectedNoiSource currently selected noise source}.
 	 * For this {@link OverviewButton#setSelectedItem(String)} gets used and {@link #aOveModRelNoToCh} 
 	 * gets rebuild and added to {@link #pOveModel}.
 	 * @param changed Is currently not used for this page.
 	 */
 	public void updateOveModel(byte changed) {
-		String currentProtocol;
-		switch (Main.selectedNoiSource) {
-		case 0:
-			bOveModSource.setSelectedItem("nothing selected");
-			currentProtocol = "-";
-			break;
-		case 1:
-			bOveModSource.setSelectedItem(Main.noiSource_IndividualChanges.getName());
-			currentProtocol = "message | " + Main.noiSource_IndividualChanges.getProtocol();
-			break;
-		case 2:
-			bOveModSource.setSelectedItem(Main.noiSource_MixUpChanges.getName());
-			currentProtocol = "message | " + Main.noiSource_MixUpChanges.getProtocol();
-			break;
-		default:
-			bOveModSource.setSelectedItem("Noise source index \"" + Main.selectedNoiSource + "\" not found");
-			currentProtocol = "-";
-		}
+		bOveModSource.setSelectedItem(Main.selectedNoiSource.getName());
 		
 		double y = bOveModSource.getHeightW() / 2;
 		pOveModel.getChildren().remove(aOveModRelNoToCh);
-		aOveModRelNoToCh = new Arrow().getArrow(segmentWidth, y, segmentWidth * 3, y, 15, 10, false, currentProtocol, 0);
+		aOveModRelNoToCh = new Arrow().getArrow(segmentWidth, y, segmentWidth * 3, y, 15, 10, false, 
+				"message | " + Main.selectedNoiSource.getProtocol(), 0);
 		pOveModel.getChildren().add(aOveModRelNoToCh);
 	}
 	
@@ -219,27 +178,13 @@ public class NoiSourcePage extends SettingsPage {
 	 * This method gets called from {@link InformationSegment#setSaveAddReference(environment.ExperimentElement, OptionButton, SettingsPage)}.
 	 */
 	public void updateOveModEnDeProtocol() {
-		String enDecoderProtocol;
-		switch (Main.selectedEnDecoder) {
-		case 0:
-			enDecoderProtocol = "nothing selected";
-			break;
-		case 1:
-			enDecoderProtocol = Main.enDecoder_Gallager.getProtocol();
-			break;
-		case 2:
-			enDecoderProtocol= Main.enDecoder_Mock.getProtocol();
-			break;
-		default:
-			enDecoderProtocol = "en- / decoder index \"" + Main.selectedEnDecoder + "\" not found";
-		}
 		double y = bOveModSource.getHeightW() / 2;
 		
 		if (pOveModel.getChildren().contains(aOveModRelEnToDe)) {
 			pOveModel.getChildren().remove(aOveModRelEnToDe);
 		}
 		aOveModRelEnToDe = new Arrow().getArrow(segmentWidth * 3, 0, segmentWidth * 3, y * 2, 5, 10, true, 
-				"En- / decoder protocol:\n" + enDecoderProtocol, segmentWidth);
+				"En- / decoder protocol:\n" + Main.selectedEnDecoder.getProtocol(), segmentWidth);
 		pOveModel.getChildren().add(aOveModRelEnToDe);
 	}
 

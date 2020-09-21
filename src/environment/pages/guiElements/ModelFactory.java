@@ -133,50 +133,14 @@ public class ModelFactory {
 					lConSelectedItem.setText("nothing selected");
 					switch (type) {
 					case 0:	
-						switch (Main.selectedInfSource) {
-						case 0:
-							lConSelectedItem.setText("nothing selected");
-							break;
-						case 1:
-							lConSelectedItem.setText(Main.infSource_UserInput.getName());
-							break;
-						case 2:
-							lConSelectedItem.setText(Main.infSource_RandomDigitBook.getName());
-							break;
-						default:
-							lConSelectedItem.setText("infomration source index \"" + Main.selectedInfSource + "\" not found");
-						}
+						lConSelectedItem.setText(Main.selectedInfSource.getName());
 						break;
 					case 1:
 					case 3:
-						switch (Main.selectedEnDecoder) {
-						case 0:
-							lConSelectedItem.setText("nothing selected");
-							break;
-						case 1:
-							lConSelectedItem.setText(Main.enDecoder_Gallager.getName());
-							break;
-						case 2:
-							lConSelectedItem.setText(Main.enDecoder_Mock.getName());
-							break;
-						default:
-							lConSelectedItem.setText("en- / decoder index \"" + Main.selectedEnDecoder + "\" not found");
-						}
+						lConSelectedItem.setText(Main.selectedEnDecoder.getName());
 						break;
 					case 2:
-						switch (Main.selectedNoiSource) {
-						case 0:
-							lConSelectedItem.setText("nothing selected");
-							break;
-						case 1:
-							lConSelectedItem.setText(Main.noiSource_IndividualChanges.getName());
-							break;
-						case 2:
-							lConSelectedItem.setText(Main.noiSource_MixUpChanges.getName());
-							break;
-						default:
-							lConSelectedItem.setText("noise source index \"" + Main.selectedNoiSource + "\" not found");
-						}
+						lConSelectedItem.setText(Main.selectedNoiSource.getName());
 						break;
 					default:
 						lConSelectedItem.setText("button type not found");

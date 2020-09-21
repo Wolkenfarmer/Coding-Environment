@@ -13,9 +13,7 @@ public class RandomDigitBook implements ExperimentElement {
 	/** Name of this experiment element.*/
 	private static String name = "Random digit book";
 	/** The protocol / data type / structure that this experiment element gives.*/
-	private static String protocol = "byte[]?";
-	/** The index of this experiment element. Indices only have to be unique inside the own category.*/
-	private static byte index = 2;
+	private static String protocol = "byte[]";
 	/** Defines the type of this information source. This variable has for information sources currently no use-case.*/
 	private static byte type = 0;
 	/** Layout container representing the given root from {@link environment.pages.guiElements.InformationSegment} to attach the GUI-elements to 

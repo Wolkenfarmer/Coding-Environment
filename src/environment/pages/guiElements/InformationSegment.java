@@ -150,7 +150,7 @@ public class InformationSegment extends Pane {
 				
 				switch (refType) {
 				case 0: // information source
-					Main.selectedInfSource = reference.getIndex();
+					Main.selectedInfSource = reference;
 					page.updateOveModel((byte) 0);
 					
 					for (int i = 0; i < page.vbOptButtons.getChildren().size(); i++) {
@@ -162,10 +162,10 @@ public class InformationSegment extends Pane {
 					break;
 				case 1: // EnDecoder	
 					if (reference.getType() == 0) {
-						Main.selectedEnDecoder = reference.getIndex();
+						Main.selectedEnDecoder = reference;
 						
 						if (optButton.getMode() == 2) {
-							Main.selectedPrePost = 0;
+							Main.selectedPrePost = Main.enDecoder_DeselectPrePost;
 							((EnDecoderPage) page).selectDeselectOption();
 							page.updateOveModel((byte) 3);
 						} else {
@@ -183,10 +183,10 @@ public class InformationSegment extends Pane {
 							Main.noiSourcePage.updateOveModEnDeProtocol();
 						}
 					} else {
-						Main.selectedPrePost = reference.getIndex();
+						Main.selectedPrePost = reference;
 						
 						if (optButton.getMode() == 1) {
-							Main.selectedEnDecoder = 0;
+							Main.selectedEnDecoder = Main.enDecoder_Deselect;
 							page.updateOveModel((byte) 0);
 							
 							if (Main.noiSourcePage != null) {
@@ -195,15 +195,11 @@ public class InformationSegment extends Pane {
 						}
 						
 						if (!EnDecoderPage.ovePrePostDisplaying) {
-							if (reference.getIndex() != 0) {
+							if (reference != Main.enDecoder_DeselectPrePost) {
 								page.updateOveModel((byte) 2);		
 							}
 						} else {
-							if (reference.getIndex() != 0) {
-								page.updateOveModel((byte) 1);		
-							} else {
-								page.updateOveModel((byte) 3);	
-							}
+							page.updateOveModel((byte) 3);	
 						}
 						
 						for (int i = 0; i < page.vbOptButtons.getChildren().size(); i++) {
@@ -215,7 +211,7 @@ public class InformationSegment extends Pane {
 					}
 					break;
 				case 2: // noise source
-					Main.selectedNoiSource = reference.getIndex();
+					Main.selectedNoiSource = reference;
 					page.updateOveModel((byte) 0);
 					
 					for (int i = 0; i < page.vbOptButtons.getChildren().size(); i++) {

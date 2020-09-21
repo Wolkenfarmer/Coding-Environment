@@ -101,29 +101,13 @@ public class InfSourcePage extends SettingsPage {
 			
 			pOveModel = new Pane();
 			pOveModel.setLayoutY(Main.distanceToSubheading);
-				String currentProtocol;
-				switch (Main.selectedInfSource) {
-				case 0:
-					bOveModSource = new OverviewButton(segmentWidth, "Information Source", "nothing selected");
-					currentProtocol = "-";
-					break;
-				case 1:
-					bOveModSource = new OverviewButton(segmentWidth, "Information Source", Main.infSource_UserInput.getName());
-					currentProtocol = "message | " + Main.infSource_UserInput.getProtocol();
-					break;
-				case 2:
-					bOveModSource = new OverviewButton(segmentWidth, "Information Source", Main.infSource_RandomDigitBook.getName());
-					currentProtocol = "message | " + Main.infSource_RandomDigitBook.getProtocol();
-					break;
-				default:
-					bOveModSource = new OverviewButton(segmentWidth, "Information Source", "Information source not found");
-					currentProtocol = "-";
-				}
+				bOveModSource = new OverviewButton(segmentWidth, "Information Source", Main.selectedInfSource.getName());
 				bOveModSource.setLayoutX(segmentWidth);
 				
 				double y = bOveModSource.getHeightW() / 2;
 				aOveModRelToSo = new Arrow().getArrow(0, y, segmentWidth, y, 15, 10, false, "you", 0);
-				aOveModRelSoTo = new Arrow().getArrow(segmentWidth * 2, y, segmentWidth * 3, y, 15, 10, false, currentProtocol, 0);
+				aOveModRelSoTo = new Arrow().getArrow(segmentWidth * 2, y, segmentWidth * 3, y, 15, 10, false, 
+						"message | " + Main.selectedInfSource.getProtocol(), 0);
 			pOveModel.getChildren().addAll(aOveModRelToSo, bOveModSource, aOveModRelSoTo);
 		pOverview.getChildren().addAll(lOveHeading, pOveModel);
 		
@@ -166,28 +150,12 @@ public class InfSourcePage extends SettingsPage {
 	 * @param changed Is currently not used for this page.
 	 */
 	public void updateOveModel(byte changed) {
-		String currentProtocol;
-		switch (Main.selectedInfSource) {
-		case 0:
-			bOveModSource.setSelectedItem("nothing selected");
-			currentProtocol = "-";
-			break;
-		case 1:
-			bOveModSource.setSelectedItem(Main.infSource_UserInput.getName());
-			currentProtocol = "message | " + Main.infSource_UserInput.getProtocol();
-			break;
-		case 2:
-			bOveModSource.setSelectedItem(Main.infSource_RandomDigitBook.getName());
-			currentProtocol = "message | " + Main.infSource_RandomDigitBook.getProtocol();
-			break;
-		default:
-			bOveModSource.setSelectedItem("Information source not found");
-			currentProtocol = "-";
-		}
+		bOveModSource.setSelectedItem(Main.selectedInfSource.getName());
 		
 		double y = bOveModSource.getHeightW() / 2;
 		pOveModel.getChildren().remove(aOveModRelSoTo);
-		aOveModRelSoTo = new Arrow().getArrow(segmentWidth * 2, y, segmentWidth * 3, y, 15, 10, false, currentProtocol, 0);
+		aOveModRelSoTo = new Arrow().getArrow(segmentWidth * 2, y, segmentWidth * 3, y, 15, 10, false, 
+				"message | " + Main.selectedInfSource.getProtocol(), 0);
 		pOveModel.getChildren().add(aOveModRelSoTo);
 	}
 }

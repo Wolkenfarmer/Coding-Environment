@@ -17,8 +17,6 @@ public class Mock implements ExperimentElement {
 	private static String name = "Mock";
 	/** The protocol / data type / structure that this experiment element gives.*/
 	private static String protocol = "wuff";
-	/** The index of this experiment element. Indices only have to be unique inside the own category.*/
-	private static byte index = 2;
 	/** Defines whether this is an en- / decoder or a pre-en- / post-decoder. This experiment element can be both and reads it's use-case from
 	 * {@link #tgEnDePrePost} and sets it in {@link #save()}.
 	 * 0: en- / decoder
@@ -104,9 +102,6 @@ public class Mock implements ExperimentElement {
 	/** @return {@link #protocol}
 	 * @see environment.ExperimentElement#getProtocol()*/
 	public String getProtocol() {return protocol;}
-	/** @return {@link #index}
-	 * @see environment.ExperimentElement#getIndex()*/
-	public byte getIndex() {return index;}
 	/** @return {@link #type}
 	 * @see environment.ExperimentElement#getType()*/
 	public byte getType() {return type;}

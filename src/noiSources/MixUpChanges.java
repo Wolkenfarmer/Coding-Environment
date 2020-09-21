@@ -13,9 +13,7 @@ public class MixUpChanges implements ExperimentElement {
 	/** Name of this experiment element.*/
 	private static String name = "Mix-up changes";
 	/** The protocol / data type / structure that this experiment element gives.*/
-	private static String protocol = "byte[]2?";
-	/** The index of this experiment element. Indices only have to be unique inside the own category.*/
-	private static byte index = 2;
+	private static String protocol = "byte[]";
 	/** Defines the type of this information source. This variable has for noise sources currently no use-case.*/
 	private static byte type = 0;
 	/** Layout container representing the given root from {@link environment.pages.guiElements.InformationSegment} to attach the GUI-elements to 
@@ -70,9 +68,6 @@ public class MixUpChanges implements ExperimentElement {
 	/** @return {@link #protocol}
 	 * @see environment.ExperimentElement#getProtocol()*/
 	public String getProtocol() {return protocol;}
-	/** @return {@link #index}
-	 * @see environment.ExperimentElement#getIndex()*/
-	public byte getIndex() {return index;}
 	/** @return {@link #type}
 	 * @see environment.ExperimentElement#getType()*/
 	public byte getType() {return type;}
