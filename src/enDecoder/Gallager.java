@@ -1,6 +1,7 @@
 package enDecoder;
 
 import environment.ExperimentElement;
+import environment.UniDataType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
@@ -29,6 +30,10 @@ public class Gallager implements ExperimentElement {
 	public static boolean builtGui;
 	/** Mock label for testing the layout-loading. It will be directly attached to {@link #root}.*/
 	private static Label mock;
+	
+	
+	/** @see environment.ExperimentElement#doJob(byte, UniDataType)*/
+	public UniDataType doJob(byte task, UniDataType data) {return data;}
 	
 
 	/** @see environment.ExperimentElement#buildGui(Pane)*/

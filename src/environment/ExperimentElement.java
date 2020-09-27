@@ -11,6 +11,17 @@ import javafx.scene.layout.Pane;
  */
 public interface ExperimentElement {
 	/**
+	 * Makes the experiment element fulfill it's purpose of either giving the information, or en- / decoding it or altering it (noise source).
+	 * Gets called by {@link environment.Run#run(ExperimentElement, ExperimentElement, ExperimentElement, ExperimentElement)}.
+	 * @param task Specifies the requested task from this experiment element. Currently only used for the {@link enDecoder en- / decoder}
+	 * to specify whether the data should be encoded (0) or decoded (1). {@link infSources information sources} will always set the data and 
+	 * {@link noiSources noise sources} will always alter the data for the communication experiment.
+	 * @param data The data which will be used for the requested task.
+	 * @return Returns the modified {@link UniDataType data} 
+	 * or if a deselect-option (like {@link noiSources.Deselect}) was selected the unmodified data. 
+	 */
+	public UniDataType doJob(byte task, UniDataType data);
+	/**
 	 * Builds the GUI of the experiment element to be displayed in {@link environment.pages.guiElements.InformationSegment#pInfContent}.
 	 * This method gets called by {@link environment.pages.guiElements.OptionButton#setOnActionW(ExperimentElement, SettingsPage, InformationSegment)}
 	 * if {@link #getBuiltGui()} == false.

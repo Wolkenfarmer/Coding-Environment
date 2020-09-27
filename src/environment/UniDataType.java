@@ -17,7 +17,9 @@ public class UniDataType {
 	
 	
 	/**
-	 * Searches for an already set variable and converts it's content into the requested output format.<br>
+	 * Searches for an already set variable and converts it's content into the requested output format. 
+	 * The previously set variable gets set null again in order for the {@link ExperimentElement experiment elements} 
+	 * to have to use the most recently modified data.<br>
 	 * 
 	 * __ String[ascii] to String[binary]: Translates the String char after char into it's binary representation. 
 	 * The char-representations get divided by a '-'. This conversion got taken from the 1. @ see with some slight modifications.<br>
@@ -58,6 +60,7 @@ public class UniDataType {
 					.forEach(s -> sb.append((char) Integer.parseInt(s, 2)) 
 				);
 				stringAscii = sb.toString(); 
+				stringBinary = null;
 				break;
 				
 			default:

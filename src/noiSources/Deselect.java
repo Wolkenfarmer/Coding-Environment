@@ -1,6 +1,7 @@
 package noiSources;
 
 import environment.ExperimentElement;
+import environment.UniDataType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
@@ -26,6 +27,10 @@ public class Deselect implements ExperimentElement {
 	public static boolean builtGui;
 	/** Label which explains the function of this element. It will be directly attached to {@link #root}.*/
 	private static Label l;
+	
+	
+	/** @see environment.ExperimentElement#doJob(byte, UniDataType)*/
+	public UniDataType doJob(byte task, UniDataType data) {return data;}
 
 	
 	/** @see environment.ExperimentElement#buildGui(Pane)*/

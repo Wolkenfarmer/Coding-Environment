@@ -1,6 +1,7 @@
 package infSources;
 
 import environment.ExperimentElement;
+import environment.UniDataType;
 import javafx.scene.layout.Pane;
 
 /**
@@ -18,19 +19,14 @@ public class Deselect implements ExperimentElement {
 	private static boolean builtGui;
 
 	
-	
+	/** @see environment.ExperimentElement#doJob(byte, UniDataType)*/
+	public UniDataType doJob(byte task, UniDataType data) {return data;}
 	/** @see environment.ExperimentElement#buildGui(Pane)*/
 	public void buildGui(Pane parent) {}
-
-
 	/** @see environment.ExperimentElement#reloadGui(Pane)*/
 	public void reloadGui(Pane parent) {}
-	
-	
 	/** @see environment.ExperimentElement#save()*/
 	public void save() {}
-
-
 	/** @return {@link #builtGui}
 	 * @see environment.ExperimentElement#getBuiltGui()*/
 	public boolean getBuiltGui() {return builtGui;}

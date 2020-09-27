@@ -1,6 +1,7 @@
 package enDecoder;
 
 import environment.ExperimentElement;
+import environment.UniDataType;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -39,6 +40,10 @@ public class Mock implements ExperimentElement {
 	private static RadioButton rbEnDe;
 	/** Radio button for representing {@link #type} = 1. It's part of {@link #tgEnDePrePost} and will be directly attached to {@link #root}.*/
 	private static RadioButton rbPrePost;
+	
+	
+	/** @see environment.ExperimentElement#doJob(byte, UniDataType)*/
+	public UniDataType doJob(byte task, UniDataType data) {return data;}
 	
 
 	/** @see environment.ExperimentElement#buildGui(Pane)*/

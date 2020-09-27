@@ -14,7 +14,6 @@ public class Run {
 	 * 
 	 * @param infSource The {@link infSources information source} which provides the data for this experiment
 	 * @param prePost The {@link enDecoder pre-en- / post-decoder} which prepares the data for the en- / decoder. 
-	 * This item is optional and can be left out. 
 	 * @param enDecoder The {@link enDecoder en- / decoder} which will encode then given data from infSource for the channel 
 	 * and afterwards decode it again for the destination. 
 	 * During the decoding most changes through the noise source should hopefully be detected or even corrected.
@@ -22,13 +21,16 @@ public class Run {
 	 */
 	public static void run(ExperimentElement infSource, ExperimentElement prePost, ExperimentElement enDecoder, ExperimentElement noiSource) {
 		UniDataType data = new UniDataType();
-		String mock = "Hello";
-		//String mock2 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
-		System.out.println(mock);
-		data.setStringAscii(mock);
-		System.out.println(data.getStringBinary());
-		data.getStringBinary();
-		System.out.println(data.getStringAscii());
+		
+		data.setStringAscii("Hello world!");
+		data = infSource.doJob((byte) 0, data);
+		data = prePost.doJob((byte) 0, data);
+		data = enDecoder.doJob((byte) 0, data);
+		data = noiSource.doJob((byte) 0, data);
+		data = enDecoder.doJob((byte) 1, data);
+		data = prePost.doJob((byte) 1, data);
+		
+		System.out.println("Communication experiment result: " + data.getStringAscii());
 	}
 	
 }

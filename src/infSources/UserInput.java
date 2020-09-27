@@ -1,6 +1,7 @@
 package infSources;
 
 import environment.ExperimentElement;
+import environment.UniDataType;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
@@ -27,6 +28,10 @@ public class UserInput implements ExperimentElement {
 	private static boolean builtGui;
 	/** The text field where the user can write his/her input into it. It will be directly attached to {@link #root}.*/
 	private static TextField tfUserText;
+	
+	
+	/** @see environment.ExperimentElement#doJob(byte, UniDataType)*/
+	public UniDataType doJob(byte task, UniDataType data) {return data;}
 	
 	
 	/** @see environment.ExperimentElement#buildGui(Pane)*/
