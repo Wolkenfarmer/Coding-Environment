@@ -13,8 +13,6 @@ import javafx.scene.layout.Pane;
 public class MixUpChanges implements ExperimentElement {
 	/** Name of this experiment element.*/
 	private static String name = "Mix-up changes";
-	/** The protocol / data type / structure that this experiment element gives.*/
-	private static String protocol = "byte[]";
 	/** Defines the type of this information source. This variable has for noise sources currently no use-case.*/
 	private static byte type = 0;
 	/** Layout container representing the given root from {@link environment.pages.guiElements.InformationSegment} to attach the GUI-elements to 
@@ -70,9 +68,6 @@ public class MixUpChanges implements ExperimentElement {
 	/** @return {@link #name}
 	 * @see environment.ExperimentElement#getName()*/
 	public String getName() {return name;}
-	/** @return {@link #protocol}
-	 * @see environment.ExperimentElement#getProtocol()*/
-	public String getProtocol() {return protocol;}
 	/** @return {@link #type}
 	 * @see environment.ExperimentElement#getType()*/
 	public byte getType() {return type;}

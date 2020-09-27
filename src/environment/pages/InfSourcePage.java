@@ -106,8 +106,7 @@ public class InfSourcePage extends SettingsPage {
 				
 				double y = bOveModSource.getHeightW() / 2;
 				aOveModRelToSo = new Arrow().getArrow(0, y, segmentWidth, y, 15, 10, false, "you", 0);
-				aOveModRelSoTo = new Arrow().getArrow(segmentWidth * 2, y, segmentWidth * 3, y, 15, 10, false, 
-						"message | " + Main.selectedInfSource.getProtocol(), 0);
+				aOveModRelSoTo = new Arrow().getArrow(segmentWidth * 2, y, segmentWidth * 3, y, 15, 10, false, "message", 0);
 			pOveModel.getChildren().addAll(aOveModRelToSo, bOveModSource, aOveModRelSoTo);
 		pOverview.getChildren().addAll(lOveHeading, pOveModel);
 		
@@ -154,8 +153,7 @@ public class InfSourcePage extends SettingsPage {
 		
 		double y = bOveModSource.getHeightW() / 2;
 		pOveModel.getChildren().remove(aOveModRelSoTo);
-		aOveModRelSoTo = new Arrow().getArrow(segmentWidth * 2, y, segmentWidth * 3, y, 15, 10, false, 
-				"message | " + Main.selectedInfSource.getProtocol(), 0);
+		aOveModRelSoTo = new Arrow().getArrow(segmentWidth * 2, y, segmentWidth * 3, y, 15, 10, false, "message", 0);
 		pOveModel.getChildren().add(aOveModRelSoTo);
 	}
 }

@@ -17,6 +17,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -142,6 +143,10 @@ public class Main extends Application {
 	public static Color cPink = Color.rgb(250, 80, 130);
 	/** Unified referenceable color for layouts.*/
 	public static Color cYellow = Color.YELLOW;
+	/** Unified referenceable color for layouts.*/
+	public static Color cLightGray = Color.grayRgb(230);
+	/** Unified referenceable color for layouts.*/
+	public static Color cDarkGray = Color.grayRgb(20);
 	/** Unified referenceable font for layouts.*/
 	public static Font fHeadline = Font.font("Arial", FontWeight.BOLD, 50);
 	/** Unified referenceable font for layouts.*/
@@ -151,33 +156,41 @@ public class Main extends Application {
     /** Unified referenceable font for layouts.*/
     public static Font fNormalText = new Font("Arial", 20);
     /** Unified referenceable font for layouts.*/
-    public static Font fNormallTextItalic = Font.font("Arial", FontPosture.ITALIC, 20);
+    public static Font fNormalTextItalic = Font.font("Arial", FontPosture.ITALIC, 20);
     /** Unified referenceable font for layouts.*/
     public static Font fSmallText = new Font("Arial", 15);
 	/** Unified referenceable font for layouts.*/
     public static Font fSmallTextItalic = Font.font("Arial", FontPosture.ITALIC, 15);
 	/** Unified referenceable corner radius for layouts.*/
-    public static CornerRadii crNormal = new CornerRadii(10);
+    public static CornerRadii crNormalbo = new CornerRadii(10);
+    /** Unified referenceable corner radius for layouts.*/
+    public static CornerRadii crNormalBa = new CornerRadii(12);
+    /** Unified referenceable button background for layouts.*/
+    public static Background baTransparent = new Background (new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY,  Insets.EMPTY));
 	/** Unified referenceable button background for layouts.*/
-    public static Background baNormalButton = new Background (new BackgroundFill(Color.grayRgb(90), crNormal,  null));
+    public static Background baNormalButton = new Background (new BackgroundFill(Color.grayRgb(90), crNormalBa,  null));
 	/** Unified referenceable button background (focused) for layouts.*/
-    public static Background baNormalFocusedButton = new Background (new BackgroundFill(Color.grayRgb(70), crNormal,  null));
+    public static Background baNormalFocusedButton = new Background (new BackgroundFill(Color.grayRgb(70), crNormalBa,  null));
 	/** Unified referenceable button background (green) for layouts.*/
-    public static Background baGreenButton = new Background (new BackgroundFill(Color.rgb(0, 90, 0), crNormal,  null));
+    public static Background baGreenButton = new Background (new BackgroundFill(Color.rgb(0, 90, 0), crNormalBa,  null));
 	/** Unified referenceable button background (green, focused) for layouts.*/
-    public static Background baGreenFocusedButton = new Background (new BackgroundFill(Color.rgb(0, 70, 0), crNormal,  null));
+    public static Background baGreenFocusedButton = new Background (new BackgroundFill(Color.rgb(0, 70, 0), crNormalBa,  null));
     /** Unified referenceable button background (brown) for layouts.*/
-    public static Background baBrownButton = new Background (new BackgroundFill(Color.rgb(100, 50 , 0), crNormal,  null));
+    public static Background baBrownButton = new Background (new BackgroundFill(Color.rgb(100, 50 , 0), crNormalBa,  null));
 	/** Unified referenceable button background (brown, focused) for layouts.*/
-    public static Background baBrownFocusedButton = new Background (new BackgroundFill(Color.rgb(80, 30, 0), crNormal,  null));
+    public static Background baBrownFocusedButton = new Background (new BackgroundFill(Color.rgb(80, 30, 0), crNormalBa,  null));
     /** Unified referenceable button background (purple) for layouts.*/
-    public static Background baPurpleButton = new Background (new BackgroundFill(Color.rgb(90, 0 , 60), crNormal,  null));
+    public static Background baPurpleButton = new Background (new BackgroundFill(Color.rgb(90, 0 , 60), crNormalBa,  null));
 	/** Unified referenceable button background (purple, focused) for layouts.*/
-    public static Background baPurpleFocusedButton = new Background (new BackgroundFill(Color.rgb(70, 30, 40), crNormal,  null));
+    public static Background baPurpleFocusedButton = new Background (new BackgroundFill(Color.rgb(70, 30, 40), crNormalBa,  null));
+    /** Unified referenceable button background (red) for layouts.*/
+    public static Background baRedButton = new Background (new BackgroundFill(Color.rgb(120, 0, 0), crNormalBa,  null));
 	/** Unified referenceable Border for layouts.*/
-    public static Border boNormal = new Border(new BorderStroke(cNormal, BorderStrokeStyle.SOLID, crNormal, BorderWidths.DEFAULT));
+    public static Border boNormal = new Border(new BorderStroke(cNormal, BorderStrokeStyle.SOLID, crNormalbo, BorderWidths.DEFAULT));
     /** Unified referenceable Border for layouts.*/
-    public static Border boSelected = new Border(new BorderStroke(cYellow, BorderStrokeStyle.SOLID, crNormal, new BorderWidths(4)));
+    public static Border boSelected = new Border(new BorderStroke(cYellow, BorderStrokeStyle.SOLID, crNormalbo, new BorderWidths(4)));
+    /** Unified referenceable Border for layouts.*/
+    public static Border boNotInteractive = new Border(new BorderStroke(cDarkGray, BorderStrokeStyle.SOLID, crNormalbo, new BorderWidths(2)));
     /** Unified referenceable event handler for changing the background of a normal button when the mouse enters it.*/
     public static EventHandler<MouseEvent> evButEntered;
     /** Unified referenceable event handler for changing the background of a normal button when the mouse exits it.*/
@@ -289,7 +302,8 @@ public class Main extends Application {
 		sbRoot = new Group();
 		root = new Group();
 		scene = new Scene(sbRoot, Color.grayRgb(40));
-		scene.getStylesheets().addAll("environment/pages/css/tableView.css", "environment/pages/css/scrollbar.css");
+		scene.getStylesheets().addAll("environment/pages/css/tableView.css", "environment/pages/css/scrollbar.css", 
+				"environment/pages/css/textArea.css");
 		dummyScene = new Scene(dummyRoot = new Group());
 		        
 		stage = new Stage();
@@ -298,6 +312,7 @@ public class Main extends Application {
 		stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 		stage.setResizable(false);   
 		stage.setScene(scene);
+	
 		stage.show();
 		stageWidth = stage.getWidth();
 		stageHeight = stage.getHeight();

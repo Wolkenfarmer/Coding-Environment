@@ -112,7 +112,7 @@ public class InformationSegment extends Pane {
 				lInfConDefault = new Label();
 				lInfConDefault.setText("No option picked");
 				lInfConDefault.setTextFill(Main.cPink);
-				lInfConDefault.setFont(Main.fNormallTextItalic);
+				lInfConDefault.setFont(Main.fNormalTextItalic);
 			pInfContent.getChildren().add(lInfConDefault);
 		this.getChildren().addAll(bHeaSav, lHeading, pInfContent);
 	}

@@ -12,8 +12,6 @@ import javafx.scene.layout.Pane;
 public class DeselectPrePost implements ExperimentElement {
 	/** Name of this experiment element.*/
 	private String name = "Deselect pre-en- / post-decoder";
-	/** The protocol / data type / structure that this experiment element gives.*/
-	private static String protocol = "-";
 	/** Defines whether this is an en- / decoder or a pre-en- / post-decoder. This experiment element is only an en- / decoder.
 	 * 0: en- / decoder
 	 * 1: pre- / post-*/
@@ -65,9 +63,6 @@ public class DeselectPrePost implements ExperimentElement {
 	/** @return {@link #name}
 	 * @see environment.ExperimentElement#getName()*/
 	public String getName() {return name;}
-	/** @return {@link #protocol}
-	 * @see environment.ExperimentElement#getProtocol()*/
-	public String getProtocol() {return protocol;}
 	/** @return {@link #type}
 	 * @see environment.ExperimentElement#getType()*/
 	public byte getType() {return type;}

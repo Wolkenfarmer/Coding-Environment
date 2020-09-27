@@ -42,9 +42,6 @@ public interface ExperimentElement {
 	 * in the {@link Homepage#pSetModel home-page's settings model}.
 	 */
 	public void save();
-	/** Gives the protocol / data type which the experiment element can handle.
-	 * @return protocol*/
-	public String getProtocol();
 	/** Gives the buildGui boolean. Indicates, whether the GUI has yet to be build or not.
 	 * @return builtGui boolean*/
 	public boolean getBuiltGui();

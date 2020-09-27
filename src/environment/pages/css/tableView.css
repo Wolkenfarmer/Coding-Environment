@@ -1,7 +1,3 @@
-.root{
-    -fx-background-color: rgba(10, 10, 10, 1);
-}
-
 .table-view {
    -fx-background-color: transparent;
    -fx-border-color: rgba(245, 245, 245, 1);

@@ -16,8 +16,6 @@ import javafx.scene.layout.Pane;
 public class Mock implements ExperimentElement {
 	/** Name of this experiment element.*/
 	private static String name = "Mock";
-	/** The protocol / data type / structure that this experiment element gives.*/
-	private static String protocol = "wuff";
 	/** Defines whether this is an en- / decoder or a pre-en- / post-decoder. This experiment element can be both and reads it's use-case from
 	 * {@link #tgEnDePrePost} and sets it in {@link #save()}.
 	 * 0: en- / decoder
@@ -104,9 +102,6 @@ public class Mock implements ExperimentElement {
 	/** @return {@link #name}
 	 * @see environment.ExperimentElement#getName()*/
 	public String getName() {return name;}
-	/** @return {@link #protocol}
-	 * @see environment.ExperimentElement#getProtocol()*/
-	public String getProtocol() {return protocol;}
 	/** @return {@link #type}
 	 * @see environment.ExperimentElement#getType()*/
 	public byte getType() {return type;}
