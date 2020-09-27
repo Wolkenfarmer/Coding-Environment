@@ -98,9 +98,6 @@ public class EnDecoderPage extends SettingsPage {
 		/** The button showing the {@link enDecoder.Mock mock} option under {@link #pOptions option}. 
 		 * It's part of {@link #vbOptButtons}.*/
 		private static OptionButton bOptButMock;
-		/** The button showing the {@link enDecoder.StringToByte string to byte} option under {@link #pOptions option}. 
-		 * It's part of {@link #vbOptButtons}.*/
-		private static OptionButton bOptButStringToByte;
 	// Information
 			
 	
@@ -221,8 +218,7 @@ public class EnDecoderPage extends SettingsPage {
 				bOptButDeselect = new OptionButton(pOptions.getPrefWidth(), Main.enDecoder_DeselectPrePost.getName());
 				bOptButGallager = new OptionButton(pOptions.getPrefWidth(), Main.enDecoder_Gallager.getName());
 				bOptButMock = new OptionButton(pOptions.getPrefWidth(), Main.enDecoder_Mock.getName());
-				bOptButStringToByte = new OptionButton(pOptions.getPrefWidth(), Main.enDecoder_StringToByte.getName());
-			vbOptButtons.getChildren().addAll(bOptButDeselect, bOptButGallager, bOptButMock, bOptButStringToByte);
+			vbOptButtons.getChildren().addAll(bOptButDeselect, bOptButGallager, bOptButMock);
 	    pOptions.getChildren().addAll(lOptHeading, vbOptButtons);
 	    
 	    
@@ -230,7 +226,6 @@ public class EnDecoderPage extends SettingsPage {
 	    	bOptButDeselect.setOnActionW(Main.enDecoder_DeselectPrePost, this, pInformation);
 		    bOptButGallager.setOnActionW(Main.enDecoder_Gallager, this, pInformation);
 		    bOptButMock.setOnActionW(Main.enDecoder_Mock, this, pInformation);
-		    bOptButStringToByte.setOnActionW(Main.enDecoder_StringToByte, this, pInformation);
 		    
 		
 		addListener();

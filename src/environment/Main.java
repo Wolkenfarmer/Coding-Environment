@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import enDecoder.DeselectPrePost;
 import enDecoder.Gallager;
 import enDecoder.Mock;
-import enDecoder.StringToByte;
 import environment.pages.EnDecoderPage;
 import environment.pages.Homepage;
 import environment.pages.InfSourcePage;
@@ -224,9 +223,6 @@ public class Main extends Application {
     /** Static reference to the en- / decoder "Mock" in order for {@link environment.pages.EnDecoderPage} and
      * TODO to have simple access to it.*/
     public static Mock enDecoder_Mock = new Mock();
-    /** Static reference to the en- / decoder "String to byte" in order for {@link environment.pages.EnDecoderPage} and
-     * TODO to have simple access to it.*/
-    public static StringToByte enDecoder_StringToByte = new StringToByte();
     /** Static reference to the noise source "Deselect" in order for {@link environment.pages.NoiSourcePage} to have simple access to it.*/
     public static noiSources.Deselect noiSource_Deselect = new Deselect();
     /** Static reference to the noise source "Individual changes" in order for {@link environment.pages.NoiSourcePage} and

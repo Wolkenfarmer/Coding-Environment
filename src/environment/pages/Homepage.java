@@ -3,6 +3,7 @@ package environment.pages;
 import java.util.Arrays;
 
 import environment.Main;
+import environment.Run;
 import environment.pages.guiElements.Arrow;
 import environment.pages.guiElements.ModelFactory;
 import javafx.beans.property.SimpleStringProperty;
@@ -350,7 +351,7 @@ public class Homepage {
 		bConButRun.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent t) {
 				System.out.println("bConButRun got pressed!");
-				//Run.run(infSource, prePost, enDecoder, noiSource);
+				Run.run(Main.selectedInfSource, Main.selectedPrePost, Main.enDecoder_Deselect, Main.noiSource_Deselect);
 	        }
 	    });
 		bConButRun.setOnMouseEntered(Main.evButGreEntered);

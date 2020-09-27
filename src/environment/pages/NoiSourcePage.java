@@ -138,19 +138,14 @@ public class NoiSourcePage extends SettingsPage {
 	    
 	    
 	    pInformation = new InformationSegment((byte) 2, Main.pos1 * 3, pOptions.getLayoutY(), Main.calcHeight(pOptions));
-	    buildOptButtons();
+		    bOptButDeselect.setOnActionW(Main.noiSource_Deselect, this, pInformation);
+			bOptButIndChanges.setOnActionW(Main.noiSource_IndividualChanges, this, pInformation);
+			bOptButMixUpChanges.setOnActionW(Main.noiSource_MixUpChanges, this, pInformation);
 		
 		
 		addListener();
 		Main.updateScrollbar(pOptions);
 		root.getChildren().addAll(tfHeading, pOverview, pOptions, pInformation);
-	}
-	
-	
-	private void buildOptButtons() {
-		bOptButDeselect.setOnActionW(Main.noiSource_Deselect, this, pInformation);
-    	bOptButIndChanges.setOnActionW(Main.noiSource_IndividualChanges, this, pInformation);
-    	bOptButMixUpChanges.setOnActionW(Main.noiSource_MixUpChanges, this, pInformation);
 	}
 	
 	

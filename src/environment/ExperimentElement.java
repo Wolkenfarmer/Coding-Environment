@@ -10,7 +10,6 @@ import javafx.scene.layout.Pane;
  * @author Wolkenfarmer
  */
 public interface ExperimentElement {
-	
 	/**
 	 * Builds the GUI of the experiment element to be displayed in {@link environment.pages.guiElements.InformationSegment#pInfContent}.
 	 * This method gets called by {@link environment.pages.guiElements.OptionButton#setOnActionW(ExperimentElement, SettingsPage, InformationSegment)}
@@ -41,7 +40,7 @@ public interface ExperimentElement {
 	/** Gives the name.
 	 * @return name*/
 	public String getName();
-	/** Gives the type of the experiment element (currently only used for differentiating between e- / decoder and pre-en / post-decoder.
+	/** Gives the type of the experiment element (currently only used for differentiating between en- / decoder and pre-en / post-decoder.
 	 * @return type*/
 	public byte getType();
 }
