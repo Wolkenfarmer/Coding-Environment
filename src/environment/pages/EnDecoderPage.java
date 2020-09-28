@@ -108,10 +108,8 @@ public class EnDecoderPage extends SettingsPage {
 	 * There are two different view cases for the overview model depending on whether a 
 	 * {@link Main#selectedPrePost pre-en- / post-decoder is selected or not}.
 	 * If there is one selected, they will also be displayed in the model, but if none is selected, they won't.
-	 * The en- / decoder page gets scaled accordingly to {@link Main#stageHeight} and {@link Main#stageWidth}.
-	 * Normally, the height of {@link #pInformation} gets calculated in order to not exceed the screen's size, 
-	 * but if the screen is too small to even fit {@link #pOptions} on it, 
-	 * the options height will be the minimum height of the information segment and {@link Main#scrollbar scroll bar} will be displayed.
+	 * The en- / decoder page gets scaled accordingly to {@link Main#stageWidth}.
+	 * If the height of it's content exceeds {@link Main#stageHeight}, the {@link Main#scrollbar scroll bar} will be displayed.
 	 * @param parent Layout container to attach it's layout parts to.
 	 */
 	public EnDecoderPage(Group parent) {
@@ -229,7 +227,11 @@ public class EnDecoderPage extends SettingsPage {
 		    
 		
 		addListener();
-		Main.updateScrollbar(pOptions);
+		if (Main.calcHeight(pOptions) >= Main.calcHeight(pInformation)) {
+			Main.updateScrollbar(pOptions);
+		} else {
+			Main.updateScrollbar(pInformation);
+		}
 		root.getChildren().addAll(tfHeading, pOverview, pOptions, pInformation);
 	}
 	

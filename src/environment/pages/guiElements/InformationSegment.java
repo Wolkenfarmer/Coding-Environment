@@ -27,7 +27,7 @@ public class InformationSegment extends Pane {
 	 * should be changed / updated. The individual types belong to the {@link SettingsPage settings page's}.<br>
 	 * 0: {@link InfSourcePage}<br>
 	 * 1: {@link EnDecoderPage}<br>
-	 * 2: TODO*/
+	 * 2: {@link environment.pages.NoiSourcePage} */
 	private byte refType;
 		/** Label which displays the sub-heading "Information" by default, but gets updated to fit the currently picked 
 		 * {@link ExperimentElement experiment element}. 
@@ -47,26 +47,14 @@ public class InformationSegment extends Pane {
 	/** Layout container for the information content elements. Contains {@link #lInfConDefault} by default,
 	 * but gets updated by the currently picked en- / decoder, and gets directly attached to the pane.*/
 	private Pane pInfContent;
-	/** Label displaying "No option picked" if there is yet no option picked. It's part of {@link #hbHeaSavContent}.*/
+		/** Label displaying "No option picked" if there is yet no option picked. It's part of {@link #hbHeaSavContent}.*/
 		private Label lInfConDefault;
-
-	/**
-	 * Builds the information source page of the application.
-	 * For building it's content and updating the environment accordingly to the picked options {@link OverviewButton}, {@link OptionButton} and
-	 * {@link InformationSegment} get used.
-	 * The information source page gets scaled accordingly to {@link Main#stageHeight} and {@link Main#stageWidth}.
-	 * Normally, the height of {@link #pInformation} gets calculated in order to not exceed the screen's size, 
-	 * but if the screen is too small to even fit {@link #pOptions} on it, 
-	 * the options height will be the minimum height of the information segment and {@link Main#scrollbar scroll bar} will be displayed.
-	 * @param parent Layout container to attach it's layout parts to.
-	 */
+		
 
 	/**
 	 * Builds the information segment for the {@link SettingsPage settings pages}.
 	 * For building it's content layoutX and layoutY needs to be set, because the segment gets directly added to 
 	 * the {@link SettingsPage#root settings pages' root}.
-	 * Normally, the segment gets scaled in order to fit the screen's size perfectly, but if the screen is too small to even fit the
-	 * {@link SettingsPage#pOptions option's segment} on it, this will be minimum height of the information segment.
 	 * @param refType Overwrites {@link #refType}.
 	 * @param layoutX The layoutX for the segment.
 	 * @param layoutY The layoutY for the segment.
@@ -106,7 +94,6 @@ public class InformationSegment extends Pane {
 			
 			pInfContent = new Pane();
 			pInfContent.setLayoutY(Main.distanceToSubheading);
-			pInfContent.setPrefHeight(Main.stageHeight - this.getLayoutY() - pInfContent.getLayoutY() - Main.pos1 / 3);
 			pInfContent.setPrefWidth(this.getPrefWidth());
 			pInfContent.setMinHeight(minHeight - pInfContent.getLayoutY());
 				lInfConDefault = new Label();
@@ -235,5 +222,8 @@ public class InformationSegment extends Pane {
 	 * Gives the content if the segment to be updated when another {@link OptionButton} gets selected.
 	 * @return Return {@link #pInfContent}.
 	 */
-	public Pane getContent() {return pInfContent;}
+	public Pane getContent() {
+		pInfContent.getChildren().clear();
+		return pInfContent;
+	}
 }

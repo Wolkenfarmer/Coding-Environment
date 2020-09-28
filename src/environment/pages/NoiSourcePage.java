@@ -66,10 +66,8 @@ public class NoiSourcePage extends SettingsPage {
 	 * Builds the noise source page of the application.
 	 * For building it's content and updating the environment accordingly to the picked option {@link OverviewButton}, {@link OptionButton} and
 	 * {@link InformationSegment} get used.
-	 * The information source page gets scaled accordingly to {@link Main#stageHeight} and {@link Main#stageWidth}.
-	 * Normally, the height of {@link #pInformation} gets calculated in order to not exceed the screen's size, 
-	 * but if the screen is too small to even fit {@link #pOptions} on it, 
-	 * the options height will be the minimum height of the information segment and {@link Main#scrollbar scroll bar} will be displayed.
+	 * The noise source page gets scaled accordingly to {@link Main#stageWidth}.
+	 * If the height of it's content exceeds {@link Main#stageHeight}, the {@link Main#scrollbar scroll bar} will be displayed.
 	 * @param parent Layout container to attach it's layout parts to.
 	 */
 	public NoiSourcePage(Group parent) {
@@ -144,7 +142,11 @@ public class NoiSourcePage extends SettingsPage {
 		
 		
 		addListener();
-		Main.updateScrollbar(pOptions);
+		if (Main.calcHeight(pOptions) >= Main.calcHeight(pInformation)) {
+			Main.updateScrollbar(pOptions);
+		} else {
+			Main.updateScrollbar(pInformation);
+		}
 		root.getChildren().addAll(tfHeading, pOverview, pOptions, pInformation);
 	}
 	

@@ -15,14 +15,14 @@ public class MixUpChanges implements ExperimentElement {
 	private static String name = "Mix-up changes";
 	/** Defines the type of this information source. This variable has for noise sources currently no use-case.*/
 	private static byte type = 0;
-	/** Layout container representing the given root from {@link environment.pages.guiElements.InformationSegment} to attach the GUI-elements to 
+	/** Layout container which will be attached to {@link environment.pages.guiElements.InformationSegment}
 	 * (gets added via {@link environment.pages.guiElements.OptionButton#setOnActionW(ExperimentElement, environment.pages.SettingsPage, 
 	 * environment.pages.guiElements.InformationSegment)}).
-	 * It's content ({@link #mock}) gets build in {@link #buildGui(Pane)}.
-	 * When loading another page, it's content gets first removed and then the layout container will be given to the other class.
-	 * When reloading the page {@link #reloadGui(Pane)} will be used to re-attach the content to the root.*/
+	 * It's content ({@link #mock}) gets build in {@link #buildGui(double)}.
+	 * When loading another page, it will be removed from the InformationSegment.
+	 * When loading the page {@link #getGui()} will be used to get the built GUI of the experiment element.*/
 	private static Pane root;
-	/** Shows whether the UI has yet to be build ({@link #buildGui}) or is already build and has only to be re-attached ({@link #reloadGui(Pane)}).*/
+	/** Shows whether the UI has yet to be build ({@link #buildGui}) or is already build and has only to be attached ({@link #getGui()}).*/
 	public static boolean builtGui;
 	/** Mock label for testing the layout-loading. It will be directly attached to {@link #root}.*/
 	private static Label mock;
@@ -32,9 +32,10 @@ public class MixUpChanges implements ExperimentElement {
 	public UniDataType doJob(byte task, UniDataType data) {return data;}
 
 	
-	/** @see environment.ExperimentElement#buildGui(Pane)*/
-	public void buildGui(Pane parent) {
-		root = parent;
+	/** @see environment.ExperimentElement#buildGui(double)*/
+	public void buildGui(double parentWidth) {
+		root = new Pane();
+		root.setPrefWidth(parentWidth);
 		
 		mock = new Label();
 		mock.setText("Mix-up-changes-GUI has been loaded!");
@@ -45,14 +46,6 @@ public class MixUpChanges implements ExperimentElement {
         
         builtGui = true;
         root.getChildren().addAll(mock);
-		
-	}
-
-
-	/** @see environment.ExperimentElement#reloadGui(Pane)*/
-	public void reloadGui(Pane parent) {
-		root = parent;
-		root.getChildren().addAll(mock);
 	}
 	
 	
@@ -62,6 +55,8 @@ public class MixUpChanges implements ExperimentElement {
 	}
 	
 	
+	/** @see environment.ExperimentElement#getGui()*/
+	public Pane getGui() {return root;}
 	/** @return {@link #builtGui}
 	 * @see environment.ExperimentElement#getBuiltGui()*/
 	public boolean getBuiltGui() {return builtGui;}

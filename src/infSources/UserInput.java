@@ -27,14 +27,14 @@ public class UserInput implements ExperimentElement {
 	private static String name = "User input";
 	/** Defines the type of this information source. This variable has for information sources currently no use-case.*/
 	private static byte type = 0;
-	/** Layout container representing the given root from {@link environment.pages.guiElements.InformationSegment} to attach the GUI-elements to 
+	/** Layout container which will be attached to {@link environment.pages.guiElements.InformationSegment}
 	 * (gets added via {@link environment.pages.guiElements.OptionButton#setOnActionW(ExperimentElement, environment.pages.SettingsPage, 
 	 * environment.pages.guiElements.InformationSegment)}).
-	 * It's content ({@link #taUserText}) gets build in {@link #buildGui(Pane)}.
-	 * When loading another page, it's content gets first removed and then the layout container will be given to the other class.
-	 * When reloading the page {@link #reloadGui(Pane)} will be used to re-attach the content to the root.*/
+	 * It's content ({@link #taUserText}, {@link #hbControls}, {@link #lDescription}) gets build in {@link #buildGui(double)}.
+	 * When loading another page, it will be removed from the InformationSegment.
+	 * When loading the page {@link #getGui()} will be used to get the built GUI of the experiment element.*/
 	private static Pane root;
-	/** Shows whether the UI has yet to be build ({@link #buildGui}) or is already build and has only to be re-attached ({@link #reloadGui(Pane)}).*/
+	/** Shows whether the UI has yet to be build ({@link #buildGui}) or is already build and has only to be attached ({@link #getGui()}).*/
 	private static boolean builtGui;
 	
 	/** Contains the input which will be used for the communication experiment if {@link #doJob(byte, UniDataType)} gets called.
@@ -88,9 +88,10 @@ public class UserInput implements ExperimentElement {
 	}
 	
 	
-	/** @see environment.ExperimentElement#buildGui(Pane)*/
-	public void buildGui(Pane parent) {
-		root = parent;
+	/** @see environment.ExperimentElement#buildGui(double)*/
+	public void buildGui(double parentWidth) {
+		root = new Pane();
+		root.setPrefWidth(parentWidth);
 		
 		taUserText = new TextArea();
         taUserText.setFont(environment.Main.fNormalText);
@@ -199,7 +200,7 @@ public class UserInput implements ExperimentElement {
         		+ "To check whether the given text meets the requierements you can press the \"Check input\" button above. "
         		+ "\"Checked\" is green, if the given text got recently checked and it was okay, it's brown if the text was not checked yet"
         		+ "and it's red if it got checked and non-ASCII characters were found.\n"
-        		+ "\"Saved\" is green if the text was recently saved and red if the current text was not saved yet.");
+        		+ "\"Saved\" is green if the text was recently saved and red if the current text was not saved yet.");	
         lDescription.setFont(environment.Main.fNormalText);
         lDescription.setTextFill(environment.Main.cNormal);
         lDescription.setLayoutY(hbControls.getLayoutY() + Main.calcHeight(hbControls) + 30);
@@ -210,13 +211,6 @@ public class UserInput implements ExperimentElement {
         
         builtGui = true;
         root.getChildren().addAll(taUserText, hbControls, lDescription);
-	}
-	
-	
-	/** @see environment.ExperimentElement#reloadGui(Pane)*/
-	public void reloadGui(Pane parent) {
-		root = parent;
-		root.getChildren().addAll(taUserText, hbControls, lDescription);
 	}
 	
 	
@@ -235,6 +229,8 @@ public class UserInput implements ExperimentElement {
 	}
 
 
+	/** @see environment.ExperimentElement#getGui()*/
+	public Pane getGui() {return root;}
 	/** @return {@link #builtGui}
 	 * @see environment.ExperimentElement#getBuiltGui()*/
 	public boolean getBuiltGui() {return builtGui;}

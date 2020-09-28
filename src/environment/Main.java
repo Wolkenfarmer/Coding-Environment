@@ -344,6 +344,7 @@ public class Main extends Application {
                 if (input.contains("ESCAPE")) {
                 	Platform.exit();
                 }
+                input.remove(e.getCode().toString());
             }
         });
 		krlBackHome = new EventHandler<KeyEvent>() {
@@ -353,6 +354,7 @@ public class Main extends Application {
                 	Main.homepage.reload(root, boUpdateSettingsModelHomepage);
                 	boUpdateSettingsModelHomepage = false;
                 }
+                input.remove(e.getCode().toString());
             }
         };
 		
@@ -504,6 +506,11 @@ public class Main extends Application {
 		double lines = Math.ceil(l.getWidth() / (parentWidth - 10));
 		double height = (l.getHeight() * lines) + (l.getLineSpacing() + (l.getFont().getSize()) * (lines - 1));
 		dummyRoot.getChildren().remove(l);
+		if (stageWidth < 1200) {
+			height += l.getHeight() * 0.5 + 15;
+		} else if (stageWidth < 850) {
+			height += l.getHeight() + 20;
+		}
 		return height;
 	}
 	
@@ -517,6 +524,7 @@ public class Main extends Application {
 	 */
 	public static void updateScrollbar(Region lastObject) {
 		root.setLayoutY(0);
+		scrollbar.setValue(0);
 		contentHeight = lastObject.getLayoutY() + calcHeight(lastObject) + pos1 / 3;
 		scrollbar.setMax(contentHeight - scene.getHeight());
 		scrollbar.setBlockIncrement(contentHeight);

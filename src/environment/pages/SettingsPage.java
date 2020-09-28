@@ -46,15 +46,18 @@ public abstract class SettingsPage {
 	
 	/**
 	 * Reloads the settings page. Re-attaches the page's elements ({@link #tfHeading}, {@link #pOverview}, {@link #pOptions}, 
-	 * {@link #pInformation}) and {@link Main#krlBackHome}. In addition, {@link Main#updateScrollbar(Region)} gets called 
-	 * (see constructors for more information relating to it's view-cases).
+	 * {@link #pInformation}) and {@link Main#krlBackHome}. In addition, {@link Main#updateScrollbar(Region)} gets called.
 	 * This method gets called by the {@link Homepage home page}, 
 	 * when the page is already not null and the corresponding button(s) get(s) pressed.
 	 * @param parent Layout container to attach it's layout parts to.
 	 */
 	void reload(Group parent) {
 		root = parent;
-		Main.updateScrollbar(pOptions);
+		if (Main.calcHeight(pOptions) >= Main.calcHeight(pInformation)) {
+			Main.updateScrollbar(pOptions);
+		} else {
+			Main.updateScrollbar(pInformation);
+		}
 		root.getChildren().addAll(tfHeading, pOverview, pOptions, pInformation);
 		Main.scene.setOnKeyReleased(Main.krlBackHome);		
 	}
@@ -74,4 +77,19 @@ public abstract class SettingsPage {
 	 * @param changed Specifies what has to be updated in the model.
 	 */
 	public abstract void updateOveModel(byte changed);
+	
+	
+	/**
+	 * Updates the {@link Main#scrollbar scroll bar} when the 
+	 * {@link environment.pages.guiElements.OptionButton#setOnActionW(ExperimentElement, SettingsPage, InformationSegment) 
+	 * information segment's content changed}. 
+	 */
+	public void updateHeight() {
+		if (Main.calcHeight(pOptions) >= Main.calcHeight(pInformation)) {
+			Main.updateScrollbar(pOptions);
+		} else {
+			Main.updateScrollbar(pInformation);
+		}
+		root.getChildren().addAll(pOptions, pInformation);
+	}
 }

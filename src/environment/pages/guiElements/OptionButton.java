@@ -67,7 +67,8 @@ public class OptionButton extends Button {
 	 * to false for the previously selected option button on the {@link SettingsPage page}.
 	 * In addition, the {@link InformationSegment} of the page gets updated to display 
 	 * the content of the {@link ExperimentElement experiment element} connected to this button via 
-	 * {@link ExperimentElement#buildGui(javafx.scene.layout.Pane)} or {@link ExperimentElement#reloadGui(javafx.scene.layout.Pane)}
+	 * {@link ExperimentElement#getGui()} (if {@link ExperimentElement#getBuiltGui()} returns false, 
+	 * {@link ExperimentElement#buildGui(double)} will be called before)
 	 * and {@link InformationSegment#setSaveAddReference(ExperimentElement, OptionButton, SettingsPage)} gets called.
 	 * @param reference The {@link ExperimentElement experiment element} of which the content should be displayed if pressed.
 	 * @param page The {@link SettingsPage page} of which the button's should be updated and carried on to 
@@ -86,13 +87,12 @@ public class OptionButton extends Button {
 				}
 				((OptionButton) t.getSource()).setSelected(true);
 				
-				infSegment.getContent().getChildren().clear();
-				if (reference.getBuiltGui()) {
-					reference.reloadGui(infSegment.getContent());
-				} else {
-					reference.buildGui(infSegment.getContent());
-				}	
+				if (!reference.getBuiltGui()) {
+					reference.buildGui(infSegment.getContent().getPrefWidth());
+				} 	
+				infSegment.getContent().getChildren().add(reference.getGui());
 				infSegment.setHeading("Information | " + reference.getName());
+				page.updateHeight();
 	        }
 	    });
 	}
