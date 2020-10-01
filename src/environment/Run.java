@@ -23,14 +23,16 @@ public class Run {
 		UniDataType data = new UniDataType();
 		
 		data.setStringAscii("Hello world!");
+		System.out.println("_runs infSource");
 		data = infSource.doJob((byte) 0, data);
 		data = prePost.doJob((byte) 0, data);
 		data = enDecoder.doJob((byte) 0, data);
+		System.out.println("_runs noiSource: ");
 		data = noiSource.doJob((byte) 0, data);
 		data = enDecoder.doJob((byte) 1, data);
 		data = prePost.doJob((byte) 1, data);
 		
-		System.out.println("Communication experiment result: " + data.getStringAscii());
+		System.out.println("Communication experiment result: " + data.getStringCp125X());
 	}
 	
 }

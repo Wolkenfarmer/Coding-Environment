@@ -351,7 +351,7 @@ public class Homepage {
 		bConButRun.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent t) {
 				System.out.println("bConButRun got pressed!");
-				Run.run(Main.selectedInfSource, Main.selectedPrePost, Main.enDecoder_Deselect, Main.noiSource_Deselect);
+				Run.run(Main.selectedInfSource, Main.selectedPrePost, Main.selectedEnDecoder, Main.selectedNoiSource);
 	        }
 	    });
 		bConButRun.setOnMouseEntered(Main.evButGreEntered);

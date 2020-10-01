@@ -1,5 +1,7 @@
 package infSources;
 
+import java.nio.charset.Charset;
+
 import environment.ExperimentElement;
 import environment.Main;
 import environment.UniDataType;
@@ -18,8 +20,11 @@ import javafx.scene.layout.Region;
 import javafx.scene.text.TextAlignment;
 
 /**
- * For now just a mock class for {@link environment.pages.InfSourcePage}. 
- * Will later be extended to a full version of the user input information source.
+ * The {@link infSources information source} user input which is selectable on the {@link environment.pages.InfSourcePage information source page}.
+ * This information source accepts written text which can be entered in {@link #taUserText}. 
+ * However, only Cp1252(or Cp125X depending on the operating system) characters are accepted 
+ * due to the simpler conversions from String to binary (one character is always one byte).
+ * To check whether the entered text is valid {@link #bCheckInput} can be pressed.
  * @author Wolkenfarmer
  */
 public class UserInput implements ExperimentElement {
@@ -80,8 +85,11 @@ public class UserInput implements ExperimentElement {
 	private static Label lDescription;
 	
 	
-	/** @see environment.ExperimentElement#doJob(byte, UniDataType)
-	 * @return Returns {@link #input}.*/
+	/** 
+	 * Returns a String..
+	 * @see environment.ExperimentElement#doJob(byte, UniDataType)
+	 * @return Returns {@link #input}.
+	 */
 	public UniDataType doJob(byte task, UniDataType data) {
 		data.setStringAscii(input);
 		return data;
@@ -94,7 +102,7 @@ public class UserInput implements ExperimentElement {
 		root.setPrefWidth(parentWidth);
 		
 		taUserText = new TextArea();
-        taUserText.setFont(environment.Main.fNormalText);
+        taUserText.setFont(Main.fNormalText);
         taUserText.setPromptText("User input");
         taUserText.setStyle("-fx-text-inner-color: WHITESMOKE;");
         taUserText.setPrefHeight(200);
@@ -142,7 +150,7 @@ public class UserInput implements ExperimentElement {
 			bCheckInput.setOnMouseExited(Main.evButExited);
 			bCheckInput.setOnAction(new EventHandler<ActionEvent>() {
 				public void handle(ActionEvent t) {
-					if (taUserText.getText().matches("\\A\\p{ASCII}*\\z")) {
+					if (Charset.forName("windows-1252").newEncoder().canEncode(taUserText.getText())) {
 						bChecked.setBackground(Main.baGreenButton);
 					} else {
 						bChecked.setBackground(Main.baRedButton);
@@ -196,8 +204,10 @@ public class UserInput implements ExperimentElement {
 		
         lDescription = new Label();
         lDescription.setText("Enter your text above.\n"
-        		+ "Note that only up to  (2'147'483'647 (2^30 - 1)) ASCII characters are supported.\n\n"
+        		+ "Note that only up to  (2'147'483'647 (2^30 - 1)) Cp1252 (or windows-1252) characters are supported. "
+        		+ "The actual supported Cp125X might differ due to the operating system of your computer.\n\n"
         		+ "To check whether the given text meets the requierements you can press the \"Check input\" button above. "
+        		+ "However, only the not-changing part of Cp125X gets checked, so there might be a few more characters possible than displayed. "
         		+ "\"Checked\" is green, if the given text got recently checked and it was okay, it's brown if the text was not checked yet"
         		+ "and it's red if it got checked and non-ASCII characters were found.\n"
         		+ "\"Saved\" is green if the text was recently saved and red if the current text was not saved yet.");	
@@ -216,7 +226,7 @@ public class UserInput implements ExperimentElement {
 	
 	/** @see environment.ExperimentElement#save()*/
 	public void save() {
-		if (taUserText.getText().matches("\\A\\p{ASCII}*\\z")) {
+		if (Charset.forName("windows-1252").newEncoder().canEncode(taUserText.getText())) {
 			bChecked.setBackground(Main.baGreenButton);
 		} else {
 			bChecked.setBackground(Main.baRedButton);
