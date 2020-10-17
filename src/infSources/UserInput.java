@@ -210,7 +210,8 @@ public class UserInput implements ExperimentElement {
         		+ "However, only the not-changing part of Cp125X gets checked, so there might be a few more characters possible than displayed. "
         		+ "\"Checked\" is green, if the given text got recently checked and it was okay, it's brown if the text was not checked yet"
         		+ "and it's red if it got checked and non-ASCII characters were found.\n"
-        		+ "\"Saved\" is green if the text was recently saved and red if the current text was not saved yet.");	
+        		+ "\"Saved\" is green if the text was recently saved and red if the current text was not saved yet.\n\n"
+        		+ "\"https://loremipsum.io/generator/\" is highly recommend for mock-text.");	
         lDescription.setFont(environment.Main.fNormalText);
         lDescription.setTextFill(environment.Main.cNormal);
         lDescription.setLayoutY(hbControls.getLayoutY() + Main.calcHeight(hbControls) + 30);
@@ -218,6 +219,7 @@ public class UserInput implements ExperimentElement {
         lDescription.setPrefHeight(Main.calcHeightLabel(lDescription, lDescription.getPrefWidth()));
         lDescription.setWrapText(true);
         lDescription.setAlignment(Pos.TOP_LEFT);
+                
         
         builtGui = true;
         root.getChildren().addAll(taUserText, hbControls, lDescription);

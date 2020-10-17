@@ -504,7 +504,7 @@ public class Main extends Application {
 		dummyRoot.applyCss();
 		dummyRoot.layout();
 		double lines = Math.ceil(l.getWidth() / (parentWidth - 10));
-		double height = (l.getHeight() * lines) + (l.getLineSpacing() + (l.getFont().getSize()) * (lines - 1));
+		double height = (l.getHeight() * lines * 1.25) + (l.getLineSpacing() + (l.getFont().getSize()) * (lines - 1));
 		dummyRoot.getChildren().remove(l);
 		if (stageWidth < 1200) {
 			height += l.getHeight() * 0.5 + 15;

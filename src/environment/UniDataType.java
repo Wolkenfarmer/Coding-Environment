@@ -26,7 +26,9 @@ public class UniDataType {
 	 * __ String(cp125X) to String(binary): Translates the String char after char into it's binary representation. 
 	 * The char-representations get divided by a '-'. This conversion got taken from the 1. @ see with some slight modifications.<br>
 	 * __ String(binary) to String(cp125X): Splits the given binary String at every [-] and translates each part 
-	 * into the corresponding ASCII-Character. This conversion got taken from the 2. @ see with some slight modification.<br><br>
+	 * into the corresponding character. However, only characters translated into 8 bits or less can get converted back correctly, 
+	 * which is why usually only cp125X will work depending on your operating system. 
+	 * This conversion got taken from the 2. @ see with some slight modification.<br><br>
 	 * 
 	 * __ String(binary) to char[](binary): Uses String.toCharArray().<br>
 	 * __ char[](binary) to String(binary): Uses new String(char[]).<br><br>

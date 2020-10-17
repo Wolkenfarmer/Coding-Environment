@@ -165,20 +165,12 @@ public class InformationSegment extends Pane {
 							}
 						}
 						optButton.setMode((byte) 1);
-						
-						if (Main.noiSourcePage != null) {
-							Main.noiSourcePage.updateOveModEnDeProtocol();
-						}
 					} else {
 						Main.selectedPrePost = reference;
 						
 						if (optButton.getMode() == 1) {
 							Main.selectedEnDecoder = Main.enDecoder_Deselect;
 							page.updateOveModel((byte) 0);
-							
-							if (Main.noiSourcePage != null) {
-								Main.noiSourcePage.updateOveModEnDeProtocol();
-							}
 						}
 						
 						if (!EnDecoderPage.ovePrePostDisplaying) {

@@ -165,22 +165,4 @@ public class NoiSourcePage extends SettingsPage {
 		aOveModRelNoToCh = new Arrow().getArrow(segmentWidth, y, segmentWidth * 3, y, 15, 10, false, "noise", 0);
 		pOveModel.getChildren().add(aOveModRelNoToCh);
 	}
-	
-	
-	/**
-	 * Updates the {@link #pOveModel overview model} of this page to fit the {@link Main#selectedEnDecoder currently selected en- decoder protocol}.
-	 * For this {@link #aOveModRelEnToDe} gets rebuild and added to {@link #pOveModel}.
-	 * This method gets called from {@link InformationSegment#setSaveAddReference(environment.ExperimentElement, OptionButton, SettingsPage)}.
-	 */
-	public void updateOveModEnDeProtocol() {
-		double y = bOveModSource.getHeightW() / 2;
-		
-		if (pOveModel.getChildren().contains(aOveModRelEnToDe)) {
-			pOveModel.getChildren().remove(aOveModRelEnToDe);
-		}
-		aOveModRelEnToDe = new Arrow().getArrow(segmentWidth * 3, 0, segmentWidth * 3, y * 2, 5, 10, true, 
-				"signal / channel\nselected en- / decoder: " + Main.selectedEnDecoder.getName(), segmentWidth);
-		pOveModel.getChildren().add(aOveModRelEnToDe);
-	}
-
 }
