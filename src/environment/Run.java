@@ -33,6 +33,5 @@ public class Run {
 		data = prePost.doJob((byte) 1, data);
 		
 		System.out.println("Communication experiment result: " + data.getStringUnicode());
-		System.out.println(data.getStringUnicode().equals("你b*_ _'# ۩؅۩"));
 	}
 }

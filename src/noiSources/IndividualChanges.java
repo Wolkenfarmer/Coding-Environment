@@ -49,6 +49,8 @@ public class IndividualChanges implements ExperimentElement {
 	private static RadioButton rbCha100;
 	/** The radio button of {@link #tgChangeRate} which represents the change rate of 25%. It's directly attached to {@link #root}.*/
 	private static RadioButton rbCha25;
+	/** The radio button of {@link #tgChangeRate} which represents the change rate of 0%. It's directly attached to {@link #root}.*/
+	private static RadioButton rbCha0;
 	
 	
 	/** 
@@ -115,7 +117,7 @@ public class IndividualChanges implements ExperimentElement {
 		lDescription.setPrefHeight(Main.calcHeightLabel(lDescription, parentWidth + 10));
 		
 		tgChangeRate = new ToggleGroup();
-			rbCha100 = new RadioButton("≈ 100%");
+			rbCha100 = new RadioButton("= 100%");
 			rbCha100.setLayoutY(lDescription.getPrefHeight() + 30);
 		    rbCha100.setToggleGroup(tgChangeRate);
 		    rbCha100.setFont(Main.fNormalText);
@@ -124,7 +126,7 @@ public class IndividualChanges implements ExperimentElement {
 		    rbCha100.setPrefHeight(Main.calcHeight(rbCha100));
 		    rbCha100.setSelected(true);
 		    rbCha100.setOnAction(new EventHandler<ActionEvent>() {
-				public void handle(ActionEvent t) {changeRate = 256;}
+				public void handle(ActionEvent t) {changeRate = 1;}
 		    });
          
 	        rbCha25 = new RadioButton("≈ 25%");
@@ -133,13 +135,24 @@ public class IndividualChanges implements ExperimentElement {
 	        rbCha25.setFont(Main.fNormalText);
 	        rbCha25.setTextFill(Main.cNormal);
 	        rbCha25.setPrefWidth(parentWidth);
-	        rbCha25.setPrefHeight(Main.calcHeight(rbCha100));
+	        rbCha25.setPrefHeight(Main.calcHeight(rbCha25));
 	        rbCha25.setOnAction(new EventHandler<ActionEvent>() {
 				public void handle(ActionEvent t) {changeRate = 4;}
 		    });
+	        
+	        rbCha0 = new RadioButton("= 0%");
+	        rbCha0.setLayoutY(rbCha25.getLayoutY() + rbCha25.getPrefHeight() + 15);
+	        rbCha0.setToggleGroup(tgChangeRate);
+	        rbCha0.setFont(Main.fNormalText);
+		    rbCha0.setTextFill(Main.cNormal);
+		    rbCha0.setPrefWidth(parentWidth);
+		    rbCha0.setPrefHeight(Main.calcHeight(rbCha0));
+		    rbCha0.setOnAction(new EventHandler<ActionEvent>() {
+				public void handle(ActionEvent t) {changeRate = 256;}
+		    });
         
         builtGui = true;
-        root.getChildren().addAll(lDescription, rbCha100, rbCha25);
+        root.getChildren().addAll(lDescription, rbCha100, rbCha25, rbCha0);
 	}
 	
 	

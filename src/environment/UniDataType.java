@@ -28,7 +28,8 @@ public class UniDataType {
 	 * The char-representations get divided by a '-'. Uses the 4th code example of the first @ see in a slightly modified version. 
 	 * UTF8 is used for this conversion.<br>
 	 * String(binary) to String(Unicode): Uses the 5th code example of the first @ see as it's base. 
-	 * Got further enhanced with the help of Vincent (see comments under article).UTF8 is used for this conversion.<br><br>
+	 * Got further enhanced with the help of Vincent (see comments under article) and then further improved for the use in this program 
+	 * (various try-catches for example for noisy Unicode interpretation. UTF8 is used for this conversion.<br><br>
 	 * 
 	 * String(binary) to char[](binary): Uses String.toCharArray().<br>
 	 * char[](binary) to String(binary): Uses new String(char[]).<br><br>
@@ -49,7 +50,7 @@ public class UniDataType {
 				for (byte b : bInput) {
 		            int val = b;
 		            for (int i = 0; i < 8; i++) {
-		                sb.append((val & 128) == 0 ? 0 : 1);      // 128 = 1000 0000
+		                sb.append((val & 128) == 0 ? 0 : 1);
 		                val <<= 1;
 		            }
 		            sb.append('-');
@@ -70,32 +71,55 @@ public class UniDataType {
 			
 			
 		} else if (stringBinary != null) {
-			System.out.println("__UniDataType_converter: input type found: String(binary) \"" + output + "\"");
+			System.out.println("__UniDataType_converter: input type found: String(binary) -> \"" + output + "\"");
 			switch (output) {
 			case "String(Unicode)":
 				String[] stringBA = stringBinary.split("-");
 				String stringBConvert = new String();
 				
-				for (int i = 0; i < stringBA.length; i++) {
-					if (stringBA[i].startsWith("110")) {
-						stringBConvert = stringBA[i] + stringBA[i + 1];
-						i++;
-					} else if (stringBA[i].startsWith("1110")) {
-						stringBConvert = stringBA[i] + stringBA[i + 1] + stringBA[i + 2];
-						i += 2;
-					} else if (stringBA[i].startsWith("11110")) {
-						stringBConvert = stringBA[i] + stringBA[i + 1] + stringBA[i + 2] + stringBA[i + 3];
-						i += 3;
-					} else {
-						stringBConvert = stringBA[i];
+				if (!stringBinary.equals("")) {
+					for (int i = 0; i < stringBA.length; i++) {
+						try {
+							if (stringBA[i].startsWith("110")) {
+								stringBConvert = stringBA[i] + stringBA[i + 1];
+								i++;
+							} else if (stringBA[i].startsWith("1110")) {
+								stringBConvert = stringBA[i] + stringBA[i + 1] + stringBA[i + 2];
+								i += 2;
+							} else if (stringBA[i].startsWith("11110")) {
+								stringBConvert = stringBA[i] + stringBA[i + 1] + stringBA[i + 2] + stringBA[i + 3];
+								i += 3;
+							} else {
+								stringBConvert = stringBA[i];
+							}
+						} catch (ArrayIndexOutOfBoundsException e) {
+							stringBConvert = "00111111";
+						}
+						
+						try {
+							byte[] array = ByteBuffer.allocate(4).putInt(Integer.parseInt(stringBConvert, 2)).array();
+							if (stringUnicode != null) {
+								stringUnicode = stringUnicode + 
+										new String(array, StandardCharsets.UTF_8).substring(4 - stringBConvert.length() / 8);
+							} else {
+								stringUnicode = new String(array, StandardCharsets.UTF_8).substring(4 - stringBConvert.length() / 8);
+							}
+						} catch (NumberFormatException e) {
+							if (stringBConvert.length() >= 32) {
+								if (stringUnicode != null) {
+									stringUnicode = stringUnicode + "????";
+								} else {
+									stringUnicode = "????";
+								}
+							} else {
+								throw e;
+							}
+						}
+						
+						
 					}
-					byte[] array = ByteBuffer.allocate(4).putInt(Integer.parseInt(stringBConvert, 2)).array();
-					
-					if (stringUnicode != null) {
-						stringUnicode = stringUnicode + new String(array, StandardCharsets.UTF_8).substring(4 - stringBConvert.length() / 8);
-					} else {
-						stringUnicode = new String(array, StandardCharsets.UTF_8).substring(4 - stringBConvert.length() / 8);
-					}
+				} else {
+					stringUnicode = "";
 				}
 				stringBinary = null;
 				break;
@@ -111,7 +135,7 @@ public class UniDataType {
 			
 			
 		} else if (charBinary != null) {
-			System.out.println("__UniDataType_converter: input type found: char[](binary) \"" + output + "\"");
+			System.out.println("__UniDataType_converter: input type found: char[](binary) -> \"" + output + "\"");
 			switch (output) {
 			case "String(binary)":
 				stringBinary = new String(charBinary);

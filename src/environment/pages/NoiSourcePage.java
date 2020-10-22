@@ -110,7 +110,7 @@ public class NoiSourcePage extends SettingsPage {
 				aOveModRelNoToCh = new Arrow().getArrow(segmentWidth, y, segmentWidth * 3, y, 15, 10, false, "noise", 0);
 				
 				aOveModRelEnToDe = new Arrow().getArrow(segmentWidth * 3, 0, segmentWidth * 3, y * 2, 5, 10, true, 
-						"signal / channel\nselected en- / decoder: " + Main.selectedEnDecoder.getName(), segmentWidth);
+						"signal / channel", segmentWidth);
 			pOveModel.getChildren().addAll(bOveModSource, aOveModRelNoToCh, aOveModRelEnToDe);
 		pOverview.getChildren().addAll(lOveHeading, pOveModel);
 		

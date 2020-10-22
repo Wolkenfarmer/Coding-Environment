@@ -507,9 +507,9 @@ public class Main extends Application {
 		double height = (l.getHeight() * lines * 1.25) + (l.getLineSpacing() + (l.getFont().getSize()) * (lines - 1));
 		dummyRoot.getChildren().remove(l);
 		if (stageWidth < 1200) {
-			height += l.getHeight() * 0.5 + 15;
+			height += l.getHeight() * 0.5;
 		} else if (stageWidth < 850) {
-			height += l.getHeight() + 20;
+			height += l.getHeight();
 		}
 		return height;
 	}

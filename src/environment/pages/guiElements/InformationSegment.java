@@ -68,6 +68,7 @@ public class InformationSegment extends Pane {
 			bHeaSav = new Button();
 			bHeaSav.setBorder(Main.boNormal);
 			bHeaSav.setBackground(Main.baGreenButton);
+			bHeaSav.setMaxHeight(50);
 			bHeaSav.setOnMouseEntered(Main.evButGreEntered);
 			bHeaSav.setOnMouseExited(Main.evButGreExited);
 				hbHeaSavContent = new HBox();
@@ -90,7 +91,6 @@ public class InformationSegment extends Pane {
 			lHeading.setFont(Main.fSubheading);
 			lHeading.setPrefWidth(bHeaSav.getLayoutX());
 			
-			bHeaSav.setPrefHeight(Main.calcHeightLabel(lHeading, Double.MAX_VALUE));
 			
 			pInfContent = new Pane();
 			pInfContent.setLayoutY(Main.distanceToSubheading);
