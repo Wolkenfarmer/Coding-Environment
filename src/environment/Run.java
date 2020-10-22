@@ -22,7 +22,7 @@ public class Run {
 	public static void run(ExperimentElement infSource, ExperimentElement prePost, ExperimentElement enDecoder, ExperimentElement noiSource) {
 		UniDataType data = new UniDataType();
 		
-		data.setStringAscii("Hello world!");
+		data.setStringUnicode("Hello world!");
 		System.out.println("_runs infSource");
 		data = infSource.doJob((byte) 0, data);
 		data = prePost.doJob((byte) 0, data);
@@ -32,7 +32,7 @@ public class Run {
 		data = enDecoder.doJob((byte) 1, data);
 		data = prePost.doJob((byte) 1, data);
 		
-		System.out.println("Communication experiment result: " + data.getStringCp125X());
+		System.out.println("Communication experiment result: " + data.getStringUnicode());
+		System.out.println(data.getStringUnicode().equals("你b*_ _'# ۩؅۩"));
 	}
-	
 }

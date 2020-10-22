@@ -1,7 +1,5 @@
 package infSources;
 
-import java.nio.charset.Charset;
-
 import environment.ExperimentElement;
 import environment.Main;
 import environment.UniDataType;
@@ -51,6 +49,8 @@ public class UserInput implements ExperimentElement {
 	/** Saves whether {@link #bSaved}'s background already got set to unsaved / red.
 	 * Should improve the performance by not setting the background of the button every time a character gets changed in {@link #taUserText}.*/
 	private static boolean boSavedRed;
+	/** A container to check whether to execute the conversions with for {@link #bCheckInput}.*/
+	private static UniDataType check = new UniDataType();
 	
 	/** The text field where the user can write his/her input into. It will be directly attached to {@link #root}.*/
 	private static TextArea taUserText;
@@ -58,7 +58,8 @@ public class UserInput implements ExperimentElement {
 	 * Contains {@link #bCheckInput}, {@link #bChecked} and {@link #bSaved} and will be directly attached to {@link #root}.*/
 	private static HBox hbControls;
 		/** Button to check whether the input in {@link #taUserText} meets the given requirements in {@link #lDescription}.
-		 * It contains {@link #hbCheckInput} and is part of {@link #hbControls}.*/
+		 * If pressed, a test conversion from Unicode to binary and back will occur and if the text before and afterwards are identical, 
+		 * {@link #bChecked} will be set to green. It contains {@link #hbCheckInput} and is part of {@link #hbControls}.*/
 		private static Button bCheckInput;
 			/** Layout container for the content of the button. Contains {@link #lCheckInput} and is part of {@link #bCheckInput}.*/
 			private static HBox hbCheckInput;
@@ -91,7 +92,7 @@ public class UserInput implements ExperimentElement {
 	 * @return Returns {@link #input}.
 	 */
 	public UniDataType doJob(byte task, UniDataType data) {
-		data.setStringAscii(input);
+		data.setStringUnicode(input);
 		return data;
 	}
 	
@@ -150,7 +151,11 @@ public class UserInput implements ExperimentElement {
 			bCheckInput.setOnMouseExited(Main.evButExited);
 			bCheckInput.setOnAction(new EventHandler<ActionEvent>() {
 				public void handle(ActionEvent t) {
-					if (Charset.forName("windows-1252").newEncoder().canEncode(taUserText.getText())) {
+					check.setStringUnicode(taUserText.getText());
+					String c1 = check.getStringUnicode();
+					check.getStringBinary();
+					String c2 = check.getStringUnicode();
+					if (c1.equals(c2)) {
 						bChecked.setBackground(Main.baGreenButton);
 					} else {
 						bChecked.setBackground(Main.baRedButton);
@@ -204,12 +209,11 @@ public class UserInput implements ExperimentElement {
 		
         lDescription = new Label();
         lDescription.setText("Enter your text above.\n"
-        		+ "Note that only up to  (2'147'483'647 (2^30 - 1)) Cp1252 (or windows-1252) characters are supported. "
-        		+ "The actual supported Cp125X might differ due to the operating system of your computer.\n\n"
-        		+ "To check whether the given text meets the requierements you can press the \"Check input\" button above. "
-        		+ "However, only the not-changing part of Cp125X gets checked, so there might be a few more characters possible than displayed. "
+        		+ "Note that only Unicode characters are supported and that the maximum lenght is 2'147'483'647 (2^30 - 1) "
+        		+ "characters in binary represantation ('a' would be 8 bits).\n"
+        		+ "To check whether the given text meets the requirements you can press the \"Check input\" button above. "
         		+ "\"Checked\" is green, if the given text got recently checked and it was okay, it's brown if the text was not checked yet"
-        		+ "and it's red if it got checked and non-ASCII characters were found.\n"
+        		+ "and it's red if it got checked and the it did not meet the requirements.\n"
         		+ "\"Saved\" is green if the text was recently saved and red if the current text was not saved yet.\n\n"
         		+ "\"https://loremipsum.io/generator/\" is highly recommend for mock-text.");	
         lDescription.setFont(environment.Main.fNormalText);
@@ -228,11 +232,16 @@ public class UserInput implements ExperimentElement {
 	
 	/** @see environment.ExperimentElement#save()*/
 	public void save() {
-		if (Charset.forName("windows-1252").newEncoder().canEncode(taUserText.getText())) {
+		check.setStringUnicode(taUserText.getText());
+		String c1 = check.getStringUnicode();
+		check.getStringBinary();
+		String c2 = check.getStringUnicode();
+		if (c1.equals(c2)) {
 			bChecked.setBackground(Main.baGreenButton);
 		} else {
 			bChecked.setBackground(Main.baRedButton);
 		}
+
 		input = taUserText.getText();
 		bSaved.setBackground(Main.baGreenButton);
 		boSavedRed = false;

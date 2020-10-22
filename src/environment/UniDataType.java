@@ -1,6 +1,7 @@
 package environment;
 
-import java.util.Arrays;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Universal data type to be handed over from one method to another.
@@ -10,8 +11,8 @@ import java.util.Arrays;
  * @author Wolkenfarmer
  */
 public class UniDataType {
-	/** The String(cp125X) option as data type. Example: "Hello!"*/
-	private String stringCp125X;
+	/** The String(Unicode) option as data type. Example: "Hello!"*/
+	private String stringUnicode;
 	/** The String(binary) option as data type. Example: "1001000-1100101-1101100-1101100-1101111-"*/
 	private String stringBinary;
 	/** The char[](binary) option as data type. Example: '1', '0', '0', '1', '0', '0', '0', '-'*/
@@ -23,63 +24,79 @@ public class UniDataType {
 	 * The previously set variable gets set null again in order for the {@link ExperimentElement experiment elements} 
 	 * to have to use the most recently modified data.<br><br>
 	 * 
-	 * __ String(cp125X) to String(binary): Translates the String char after char into it's binary representation. 
-	 * The char-representations get divided by a '-'. This conversion got taken from the 1. @ see with some slight modifications.<br>
-	 * __ String(binary) to String(cp125X): Splits the given binary String at every [-] and translates each part 
-	 * into the corresponding character. However, only characters translated into 8 bits or less can get converted back correctly, 
-	 * which is why usually only cp125X will work depending on your operating system. 
-	 * This conversion got taken from the 2. @ see with some slight modification.<br><br>
+	 * String(Unicode) to String(binary): Translates the String char after char into it's binary representation. 
+	 * The char-representations get divided by a '-'. Uses the 4th code example of the first @ see in a slightly modified version. 
+	 * UTF8 is used for this conversion.<br>
+	 * String(binary) to String(Unicode): Uses the 5th code example of the first @ see as it's base. 
+	 * Got further enhanced with the help of Vincent (see comments under article).UTF8 is used for this conversion.<br><br>
 	 * 
-	 * __ String(binary) to char[](binary): Uses String.toCharArray().<br>
-	 * __ char[](binary) to String(binary): Uses new String(char[]).<br><br>
+	 * String(binary) to char[](binary): Uses String.toCharArray().<br>
+	 * char[](binary) to String(binary): Uses new String(char[]).<br><br>
 	 * 
-	 * __ String(cp125X) to char[](binary): Connects "String(cp125X) to String(binary)" with "String(binary) to char[](binary)".<br>
-	 * __ char[](binary) to String(binary): Connects "char[](binary) to String(binary)" with "String(binary) to String(cp125X)".
+	 * String(Unicode) to char[](binary): Uses "String(Unicode) to String(binary)" plus .toCharArray().<br>
+	 * char[](binary) to String(Unicode): Uses "char[](binary) to String(binary)" and "String(binary) to String(Unicode)".
 	 * 
 	 * @param output The requested output.
-	 * @see <a href="https://mkyong.com/java/java-convert-string-to-binary/">String(cp125X) to String(binary) - mkyong</a>
-	 * @see <a href="https://stackoverflow.com/questions/4211705/binary-to-text-in-java">String(binary) to String(cp125X) - Leon Kasko</a>
+	 * @see <a href="https://mkyong.com/java/java-convert-string-to-binary/">mkyong</a>
 	 */
 	private void converter(String output) {		
-		if (stringCp125X != null) {
-			System.out.println("__UniDataType_converter: input type found: String(cp125X) -> \"" + output + "\"");
+		if (stringUnicode != null) {
+			System.out.println("__UniDataType_converter: input type found: String(Unicode) -> \"" + output + "\"");
 			switch (output) {
 			case "String(binary)":
-				StringBuilder resultStrStr = new StringBuilder();
-		        char[] charsStrStr = stringCp125X.toCharArray();
-		        for (char aChar : charsStrStr) {
-		        	resultStrStr.append(String.format(Integer.toBinaryString(aChar)));
-		        	resultStrStr.append('-');
+				StringBuilder sb = new StringBuilder();
+				byte[] bInput = stringUnicode.getBytes(StandardCharsets.UTF_8);
+				for (byte b : bInput) {
+		            int val = b;
+		            for (int i = 0; i < 8; i++) {
+		                sb.append((val & 128) == 0 ? 0 : 1);      // 128 = 1000 0000
+		                val <<= 1;
+		            }
+		            sb.append('-');
 		        }
-		        stringBinary = resultStrStr.toString();
-		        stringCp125X = null;
+		        stringBinary = sb.toString();
+		        stringUnicode = null;
 				break;
 				
 			case "char[](binary)":
-				StringBuilder resultStrCha = new StringBuilder();
-		        char[] charsStrCha = stringCp125X.toCharArray();
-		        for (char aChar : charsStrCha) {
-		        	resultStrCha.append(String.format(Integer.toBinaryString(aChar)));
-		        	resultStrCha.append('-');
-		        }
-		        charBinary = resultStrCha.toString().toCharArray();
-		        stringCp125X = null;
+				converter("String(binary)");
+				charBinary = stringBinary.toCharArray();
+				stringBinary = null;
 				break;
 				
 			default:
-				System.out.println("__UniDataType_converter: no fitting converter found for \"String(cp125X)\" -> \"" + output + "\"");
+				System.out.println("__UniDataType_converter: no fitting converter found for \"String(Unicode)\" -> \"" + output + "\"");
 			}
 			
 			
 		} else if (stringBinary != null) {
 			System.out.println("__UniDataType_converter: input type found: String(binary) \"" + output + "\"");
 			switch (output) {
-			case "String(cp125X)":
-				StringBuilder sb = new StringBuilder();
-				Arrays.stream(stringBinary.split("-"))
-					.forEach(s -> sb.append((char) Integer.parseInt(s, 2)) 
-				);
-				stringCp125X = sb.toString(); 
+			case "String(Unicode)":
+				String[] stringBA = stringBinary.split("-");
+				String stringBConvert = new String();
+				
+				for (int i = 0; i < stringBA.length; i++) {
+					if (stringBA[i].startsWith("110")) {
+						stringBConvert = stringBA[i] + stringBA[i + 1];
+						i++;
+					} else if (stringBA[i].startsWith("1110")) {
+						stringBConvert = stringBA[i] + stringBA[i + 1] + stringBA[i + 2];
+						i += 2;
+					} else if (stringBA[i].startsWith("11110")) {
+						stringBConvert = stringBA[i] + stringBA[i + 1] + stringBA[i + 2] + stringBA[i + 3];
+						i += 3;
+					} else {
+						stringBConvert = stringBA[i];
+					}
+					byte[] array = ByteBuffer.allocate(4).putInt(Integer.parseInt(stringBConvert, 2)).array();
+					
+					if (stringUnicode != null) {
+						stringUnicode = stringUnicode + new String(array, StandardCharsets.UTF_8).substring(4 - stringBConvert.length() / 8);
+					} else {
+						stringUnicode = new String(array, StandardCharsets.UTF_8).substring(4 - stringBConvert.length() / 8);
+					}
+				}
 				stringBinary = null;
 				break;
 				
@@ -101,14 +118,12 @@ public class UniDataType {
 				charBinary = null;
 				break;
 			
-			case "String(cp125X)":
-				String strBin = new String(charBinary);
-				StringBuilder sb = new StringBuilder();
-				Arrays.stream(strBin.split("-"))
-					.forEach(s -> sb.append((char) Integer.parseInt(s, 2)) 
-				);
-				stringCp125X = sb.toString(); 
+			case "String(Unicode)":
+				converter("String(binary)");
 				charBinary = null;
+				converter("String(Unicode)");
+				stringBinary = null;
+				
 				break;
 				
 			default:
@@ -122,18 +137,18 @@ public class UniDataType {
 	}
 	
 	
-	/** Sets {@link #stringCp125X} to v.
-	 * @param v New value for {@link #stringCp125X}.*/
-	public void setStringAscii(String v) {
-		stringCp125X = v;
+	/** Sets {@link #stringUnicode} to v.
+	 * @param v New value for {@link #stringUnicode}.*/
+	public void setStringUnicode(String v) {
+		stringUnicode = v;
 	}
-	/** Returns {@link #stringCp125X} and calls {@link #converter(String)} beforehand if {@link #stringCp125X} was null.
-	 * @return Returns {@link #stringCp125X}.*/
-	public String getStringCp125X() {
-		if (stringCp125X == null) {
-			converter("String(cp125X)");
+	/** Returns {@link #stringUnicode} and calls {@link #converter(String)} beforehand if {@link #stringUnicode} was null.
+	 * @return Returns {@link #stringUnicode}.*/
+	public String getStringUnicode() {
+		if (stringUnicode == null) {
+			converter("String(Unicode)");
 		}
-		return stringCp125X;
+		return stringUnicode;
 	}
 	
 	/** Sets {@link #stringBinary} to v.
