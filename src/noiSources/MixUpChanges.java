@@ -7,7 +7,7 @@ import javafx.scene.layout.Pane;
 
 /**
  * For now just a mock class for {@link environment.pages.NoiSourcePage}. 
- * Will later be extended to a full version of the individual changes noise source.
+ * Will later be extended to a full version of the mix-up changes noise source.
  * @author Wolkenfarmer
  */
 public class MixUpChanges implements ExperimentElement {
@@ -18,7 +18,7 @@ public class MixUpChanges implements ExperimentElement {
 	/** Layout container which will be attached to {@link environment.pages.guiElements.InformationSegment}
 	 * (gets added via {@link environment.pages.guiElements.OptionButton#setOnActionW(ExperimentElement, environment.pages.SettingsPage, 
 	 * environment.pages.guiElements.InformationSegment)}).
-	 * It's content ({@link #mock}) gets build in {@link #buildGui(double)}.
+	 * Its content ({@link #mock}) gets build in {@link #buildGui(double)}.
 	 * When loading another page, it will be removed from the InformationSegment.
 	 * When loading the page {@link #getGui()} will be used to get the built GUI of the experiment element.*/
 	private static Pane root;

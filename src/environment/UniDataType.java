@@ -20,6 +20,10 @@ public class UniDataType {
 	/** The char[](binary) option as data type. Example: '1', '0', '0', '1', '0', '0', '0', '-'*/
 	private char[] charBinary;
 	
+	/**
+	 * String builder for "String(Unicode) to String(binary)" and "String[](binary) to String(binary)".
+	 * @see #converter(String)
+	 */
 	StringBuilder sb;
 	
 	

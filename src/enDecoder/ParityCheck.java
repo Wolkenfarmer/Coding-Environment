@@ -12,8 +12,12 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
 
 /**
- * For now just a mock class for {@link environment.pages.EnDecoderPage}. 
- * Will later be extended to a full version of the user input information source.
+ * The {@link enDecoder en- / decoder} "Parity Check" which is selectable on the {@link environment.pages.EnDecoderPage en- / decoder page}.
+ * This encoder adds after every unit either a 0 or 1 in a way that every unit has a even number of 1s afterwards.
+ * Therefore, the decoder can check whether there is still a even number of 1s and if not, 
+ * there must have been an odd number of changed bits in this unit. In this case, 
+ * it just assumes that here must have been one change and counts it as detected error.
+ * However, if cross parity check is enabled, it TODO
  * @author Wolkenfarmer
  */
 public class ParityCheck implements ExperimentElement {
@@ -26,23 +30,28 @@ public class ParityCheck implements ExperimentElement {
 	/** Layout container which will be attached to {@link environment.pages.guiElements.InformationSegment}
 	 * (gets added via {@link environment.pages.guiElements.OptionButton#setOnActionW(ExperimentElement, environment.pages.SettingsPage, 
 	 * environment.pages.guiElements.InformationSegment)}).
-	 * It's content ({@link #mock}) gets build in {@link #buildGui(double)}.
+	 * Its content ({@link #lDescription}, {@link #rbParSimple}, {@link #rbParCross}) gets build in {@link #buildGui(double)}.
 	 * When loading another page, it will be removed from the InformationSegment.
 	 * When loading the page {@link #getGui()} will be used to get the built GUI of the experiment element.*/
 	private static Pane root;
 	/** Shows whether the UI has yet to be build ({@link #buildGui}) or is already build and has only to be attached ({@link #getGui()}).*/
 	public static boolean builtGui;
 	
+	/** Saves whether the simple (false) or the cross (true) parity check should be used on the next 
+	 * {@link environment.Run#run(ExperimentElement, ExperimentElement, ExperimentElement, ExperimentElement) run} of the communication experiment.
+	 * It gets set by {@link #rbParSimple} and {@link #rbParCross} and its default is false.*/
 	private static boolean boCrossPC;
 
 	/** Label displaying the description for this experiment element. It gets directly attached to {@link #root}.*/
 	private static Label lDescription;
-	/** The toggle group containing the different options for the {@link #changeRate change rate}. 
-	 * Connects {@link #rbParSimple} and {@link #rbParCross}.*/
+	/** The toggle group to toggle between the simple parity check ({@link #boCrossPC = false}) and the cross parity check 
+	 * ({@link #boCrossPC = true}). Connects {@link #rbParSimple} and {@link #rbParCross}.*/
 	private static ToggleGroup tgChangeRate;
-	/** The radio button of {@link #tgChangeRate} which represents the change rate of 100%. It's directly attached to {@link #root}.*/
+	/** The radio button of {@link #tgChangeRate} which represents the simple parity check. 
+	 * It sets {@link #boCrossPC} to false and is directly attached to {@link #root}.*/
 	private static RadioButton rbParSimple;
-	/** The radio button of {@link #tgChangeRate} which represents the change rate of 25%. It's directly attached to {@link #root}.*/
+	/** The radio button of {@link #tgChangeRate} which represents the cross parity check.
+	 * It sets {@link #boCrossPC} to true and is directly attached to {@link #root}.*/
 	private static RadioButton rbParCross;
 	
 	
