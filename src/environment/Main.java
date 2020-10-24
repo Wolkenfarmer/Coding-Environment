@@ -3,7 +3,7 @@ package environment;
 import java.util.ArrayList;
 
 import enDecoder.DeselectPrePost;
-import enDecoder.Gallager;
+import enDecoder.ParityCheck;
 import enDecoder.Mock;
 import environment.pages.EnDecoderPage;
 import environment.pages.Homepage;
@@ -230,9 +230,9 @@ public class Main extends Application {
     public static enDecoder.Deselect enDecoder_Deselect = new enDecoder.Deselect();
     /** Static reference to the pre-en- / post-decoder "Deselect" in order for {@link environment.pages.EnDecoderPage} to have simple access to it.*/
     public static DeselectPrePost enDecoder_DeselectPrePost = new DeselectPrePost();
-    /** Static reference to the en- / decoder "Gallager-Code" in order for {@link environment.pages.EnDecoderPage} and
+    /** Static reference to the en- / decoder "ParityCheck-Code" in order for {@link environment.pages.EnDecoderPage} and
      * TODO to have simple access to it.*/
-    public static Gallager enDecoder_Gallager = new Gallager();
+    public static ParityCheck enDecoder_Gallager = new ParityCheck();
     /** Static reference to the en- / decoder "Mock" in order for {@link environment.pages.EnDecoderPage} and
      * TODO to have simple access to it.*/
     public static Mock enDecoder_Mock = new Mock();

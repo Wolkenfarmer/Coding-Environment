@@ -215,7 +215,7 @@ public class UserInput implements ExperimentElement {
         		+ "\"Checked\" is green, if the given text got recently checked and it was okay, it's brown if the text was not checked yet"
         		+ "and it's red if it got checked and the it did not meet the requirements.\n"
         		+ "\"Saved\" is green if the text was recently saved and red if the current text was not saved yet.\n\n"
-        		+ "\"https://loremipsum.io/generator/\" is highly recommend for mock-text.");	
+        		+ "\"https://loremipsum.de\" is highly recommend for mock-text.");	
         lDescription.setFont(environment.Main.fNormalText);
         lDescription.setTextFill(environment.Main.cNormal);
         lDescription.setLayoutY(hbControls.getLayoutY() + Main.calcHeight(hbControls) + 30);

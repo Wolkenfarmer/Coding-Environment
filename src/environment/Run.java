@@ -32,6 +32,6 @@ public class Run {
 		data = enDecoder.doJob((byte) 1, data);
 		data = prePost.doJob((byte) 1, data);
 		
-		System.out.println("Communication experiment result: " + data.getStringUnicode());
+		//System.out.println("Communication experiment result: " + data.getStringUnicode());
 	}
 }

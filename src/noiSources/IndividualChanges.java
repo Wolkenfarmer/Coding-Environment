@@ -28,7 +28,7 @@ public class IndividualChanges implements ExperimentElement {
 	/** Layout container which will be attached to {@link environment.pages.guiElements.InformationSegment}
 	 * (gets added via {@link environment.pages.guiElements.OptionButton#setOnActionW(ExperimentElement, environment.pages.SettingsPage, 
 	 * environment.pages.guiElements.InformationSegment)}).
-	 * It's content ({@link #lDescription}) gets build in {@link #buildGui(double)}.
+	 * It's content ({@link #lDescription}, {@link #rbCha100}, {@link #rbCha25}, {@link #rbCha0}) gets build in {@link #buildGui(double)}.
 	 * When loading another page, it will be removed from the InformationSegment.
 	 * When loading the page {@link #getGui()} will be used to get the built GUI of the experiment element.*/
 	private static Pane root;
@@ -148,11 +148,11 @@ public class IndividualChanges implements ExperimentElement {
 		    rbCha0.setPrefWidth(parentWidth);
 		    rbCha0.setPrefHeight(Main.calcHeight(rbCha0));
 		    rbCha0.setOnAction(new EventHandler<ActionEvent>() {
-				public void handle(ActionEvent t) {changeRate = 256;}
+				public void handle(ActionEvent t) {changeRate = 257;}
 		    });
         
-        builtGui = true;
         root.getChildren().addAll(lDescription, rbCha100, rbCha25, rbCha0);
+        builtGui = true;
 	}
 	
 	
