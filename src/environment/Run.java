@@ -25,13 +25,18 @@ public class Run {
 		data.setStringUnicode("Hello world!");
 		System.out.println("_runs infSource");
 		data = infSource.doJob((byte) 0, data);
+		System.out.println("_runs Encoder: ");
 		data = prePost.doJob((byte) 0, data);
 		data = enDecoder.doJob((byte) 0, data);
 		System.out.println("_runs noiSource: ");
 		data = noiSource.doJob((byte) 0, data);
+		System.out.println("_runs Decoder: ");
 		data = enDecoder.doJob((byte) 1, data);
 		data = prePost.doJob((byte) 1, data);
+		System.out.println("_Decoder result: " + data.getStringBinary());
 		
-		//System.out.println("Communication experiment result: " + data.getStringUnicode());
+		if (data.getStringUnicode().length() < 100) {
+			System.out.println("Communication experiment result: " + data.getStringUnicode());
+		}
 	}
 }

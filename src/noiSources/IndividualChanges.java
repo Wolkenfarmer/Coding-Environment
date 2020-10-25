@@ -19,6 +19,7 @@ import javafx.scene.layout.Pane;
  * It assumes, that every segment is as big as the first one and it is only / mainly designed to just switch 0 and 1 in the selected spot.
  * In addition, it works with probabilities (see {@link #changeRate}, {@link #tgChangeRate}).
  * @author Wolkenfarmer
+ * @see #doJob(byte, UniDataType) doJob() for further information
  */
 public class IndividualChanges implements ExperimentElement {
 	/** Name of this experiment element.*/
@@ -55,14 +56,13 @@ public class IndividualChanges implements ExperimentElement {
 	
 	/** 
 	 * Modifies the input accordingly to {@link #changeRate}.
-	 * Firstly, the segment width gets calculated of the char[] (they get divided by '-'). 
-	 * Then it iterates through every segment changing some single bits per segment according to {@link #changeRate} on the way.
+	 * Firstly, the units' width gets calculated of the char[] (they get divided by '-'). 
+	 * Then it iterates through every unit changing a single bit per unit according to {@link #changeRate} on the way.
 	 * The '-' pieces however won't be touched due to being crucial for later decoding and 
-	 * them not being there in normal data transfers (still representative communication experiment).
+	 * them not being there in normal data transfers (therefore: still representative communication experiment).
 	 * @param task Not used for {@link noiSources noise sources}.
 	 * @param data The char[] which will be modified.
 	 * @return Returns the modified data.
-	 * @see environment.ExperimentElement#doJob(byte, UniDataType)
 	 */
 	public UniDataType doJob(byte task, UniDataType data) {
 		char[] charBinary = data.getCharBinary();

@@ -20,8 +20,6 @@ import javafx.scene.text.TextAlignment;
 /**
  * The {@link infSources information source} user input which is selectable on the {@link environment.pages.InfSourcePage information source page}.
  * This information source accepts written text which can be entered in {@link #taUserText}. 
- * However, only Cp1252(or Cp125X depending on the operating system) characters are accepted 
- * due to the simpler conversions from String to binary (one character is always one byte).
  * To check whether the entered text is valid {@link #bCheckInput} can be pressed.
  * @author Wolkenfarmer
  */
@@ -88,7 +86,6 @@ public class UserInput implements ExperimentElement {
 	
 	/** 
 	 * Returns a String..
-	 * @see environment.ExperimentElement#doJob(byte, UniDataType)
 	 * @return Returns {@link #input}.
 	 */
 	public UniDataType doJob(byte task, UniDataType data) {

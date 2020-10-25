@@ -8,7 +8,8 @@ import java.nio.charset.StandardCharsets;
  * This class saves the given input and gives it back in the required format {@link #converter(String) converting} it in the process if needed.
  * In addition, it works as an universal data type for the {@link ExperimentElement interface experiment element}
  * in order to be able to get an unknown type from an experiment element.
- * @author Wolkenfarmer
+ * @author Wolkenfarmer (+ mkyong, Vincent)
+ * @see #converter(String) converter() for further information
  */
 public class UniDataType {
 	/** The String(Unicode) option as data type. Example: "Hello!"*/
@@ -32,28 +33,36 @@ public class UniDataType {
 	 * The previously set variable gets set null again in order for the {@link ExperimentElement experiment elements} 
 	 * to have to use the most recently modified data.<br><br>
 	 * 
-	 * String(Unicode) to String(binary): Translates the String char after char into it's binary representation. 
+	 * <dl>
+	 * <dt><span class="strong">String(Unicode) to ...</span></dt><dd>
+	 * ... String(binary): Translates the String char after char into it's binary representation. 
 	 * The char-representations get divided by a '-'. Uses the 4th code example of the first @ see in a slightly modified version. 
 	 * UTF8 is used for this conversion.<br>
-	 * String(Unicode) to String[](binary): Uses "String(Unicode) to String(binary)" and "String(binary) to String[](binary)".<br>
-	 * String(Unicode) to char[](binary): Uses "String(Unicode) to String(binary)" plus .toCharArray().<br><br>
+	 * ... String[](binary): Uses "String(Unicode) to String(binary)" and "String(binary) to String[](binary)".<br>
+	 * ... char[](binary): Uses "String(Unicode) to String(binary)" plus .toCharArray().</dd>
 	 * 
-	 * String(binary) to String(Unicode): Uses the 5th code example of the first @ see as it's base. 
+	 * <dt><span class="strong">String(binary) to ...</span></dt><dd>
+	 * ... String(Unicode): Uses the 5th code example of the first @ see as it's base. 
 	 * Got further enhanced with the help of Vincent (see comments under article) and then further improved for the use in this program 
 	 * (various try-catches for example for noisy Unicode interpretation. UTF8 is used for this conversion.<br>
-	 * String(binary) to String[](binary): Uses String.split("-").<br>
-	 * String(binary) to char[](binary): Uses String.toCharArray().<br><br>
+	 * ... String[](binary): Uses String.split("-").<br>
+	 * ... char[](binary): Uses String.toCharArray().</dd>
 	 * 
-	 * String[](binary) to String(Unicode): Uses "String[](binary) to String(binary)" and "String(binary) to String(Unicode)".<br>
-	 * String[](binary) to String(binary): Appends each String[](binary)-element and puts '-' in between.<br>
-	 * String[](binary) to char[](binary): Uses "String[](binary) to String(binary)" and "String(binary) to char[](binary)".<br><br>
+	 * <dt><span class="strong">String[](binary) to ...</span></dt><dd>
+	 * ... String(Unicode): Uses "String[](binary) to String(binary)" and "String(binary) to String(Unicode)".<br>
+	 * ... String(binary): Appends each String[](binary)-element and puts '-' in between.<br>
+	 * ... char[](binary): Uses "String[](binary) to String(binary)" and "String(binary) to char[](binary)".</dd>
 	 * 
-	 * char[](binary) to String(Unicode): Uses "char[](binary) to String(binary)" and "String(binary) to String(Unicode)".<br>
-	 * char[](binary) to String(binary): Uses new String(char[]).<br>
-	 * char[](binary) to String[](binary): Uses "char[](binary) to String(binary)" and "String(binary) to String[](binary)".
+	 * <dt><span class="strong">char[](binary) to ...</span></dt><dd>
+	 * ... String(Unicode): Uses "char[](binary) to String(binary)" and "String(binary) to String(Unicode)".<br>
+	 * ... String(binary): Uses new String(char[]).<br>
+	 * ... String[](binary): Uses "char[](binary) to String(binary)" and "String(binary) to String[](binary)".</dd>
 	 * 
-	 * @apiNote If you want to ensure that the content is always available in only one variable, 
-	 * use the corresponding get-method before the set-method.
+	 * <dt><span class="strong">apiNote:</span></dt><dd>
+	 * If you want to ensure that the content is always available in only one variable, 
+	 * use the corresponding get-method before the set-method.</dd>
+	 * </dl>
+	 * 
 	 * @param output The requested output.
 	 * @see <a href="https://mkyong.com/java/java-convert-string-to-binary/">mkyong</a>
 	 */
