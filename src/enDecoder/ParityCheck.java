@@ -67,10 +67,14 @@ public class ParityCheck implements ExperimentElement {
 	
 	
 	/** 
-	 * While encoding (task = 0) attaches parity bits or whole parity units to the input and while decoding (task = 1) 
-	 * checks whether the parity bits and parity units still sum up correctly and otherwise detects or even corrects the made changes 
-	 * and ultimately reverses the changes made while encoding. 
-	 * Either does a simple binary parity check or a cross binary parity check depending on {@link #boCrossPC}.<br><br>
+	 * While encoding (task = 0) attaches parity bits or whole parity units to each unit of the input (divided by '-') 
+	 * and while decoding (task = 1) checks whether the parity bits and parity units still sum up correctly 
+	 * and otherwise detects or even corrects the made changes and ultimately reverses the changes made while encoding.
+	 * It either does a simple binary parity check or a cross binary parity check depending on {@link #boCrossPC}.
+	 * In addition, a copy of the data with no corrected or flagged units will be decoded 
+	 * and set as {@link environment.Run#changedMessage} via {@link #reverseEncoding(String[])}, as well as a version of the decoded data with only corrected 
+	 * and not flagged units as {@link environment.Run#changedMessage} and the decoded data with flagged and corrected units as
+	 * {@link environment.Run#correctedFlaggedMessage} for later comparison in the end.<br><br>
 	 * 
 	 * <dl>
 	 * <dt><span class="strong">Encoding</span></dt><dd>
@@ -80,110 +84,119 @@ public class ParityCheck implements ExperimentElement {
 	 * If the  number of initial units can't be divided by {@link #crossPCDistance}, the rest will just get parity bits attached.</dd>
 	 * 
 	 * <dt><span class="strong">Decoding:</span></dt><dd>
-	 * <strong>Simple:</strong> Checks whether there is still an even number of ones in every unit and if not, flags the character.<br>
+	 * <strong>Simple:</strong> Checks whether there is still an even number of ones in every unit and if not, flags the character. 
+	 * In addition, it reverses the changes made while encoding (not via {@link #reverseEncoding(String[])} for better performance).<br>
 	 * <strong>Cross:</strong> Checks whether there is still an even number of ones in every column of the segment.
-	 * If it detect exactly one changed row (unit with non-fitting parity bit) and one changed column, it will assume there was exactly change
-	 * and reverses the bit of the changed column in the changed row. However, if multiple changes get detected, it just flags the characters.<br>
-	 * <strong>Both:</strong> Reverse the changes made while encoding (removes parity bits and units).</dd>
+	 * If it detect exactly one changed row (unit with non-fitting parity bit) and one changed column, it will assume there was one change
+	 * and reverses the bit of the changed column in the changed row. However, if multiple changes get detected, 
+	 * it just flags the changed rows and not the whole segment. Ultimately, {@link #reverseEncoding(String[])} gets called.<br>
 	 * 
 	 * <dt><span class="strong">apiNote:</span></dt><dd>
-	 * The method assumes that the length of every unit is equally long.</dd>
+	 * The method assumes that the length of every unit is equally long, but is not specified to UTF8 
+	 * (except for distinct {@link environment.Run#flagSign flag-sign}) 
+	 * and the in-method reverse-encoding of the simple parity check decoding.</dd>
 	 * </dl>
 	 * @param task Defines whether the input (data) should be encoded (task = 0) or decoded (task = 1).
 	 * @param data The String[](binary) which will be modified.
-	 * @return Returns the modified data.
+	 * @return Returns the modified data with flagged characters.
 	 * @see <a href="https://en.wikipedia.org/wiki/Parity_bit">Wikipedia about a simple binary parity check</a>
 	 */
 	public UniDataType doJob(byte task, UniDataType data) {
-		String[] stringBA = data.getStringBinaryArray();
-		
 		if (task == 0) {
-			for (int i = 0; i < stringBA.length; i++) {
+			String[] message = data.getStringBinaryArray();
+			
+			for (int i = 0; i < message.length; i++) {
 				int ones = 0;
-				for (int k = 0; k < stringBA[i].length(); k++) {
-					if (stringBA[i].charAt(k) == '1') ones++;
+				for (int k = 0; k < message[i].length(); k++) {
+					if (message[i].charAt(k) == '1') ones++;
 				}
 				if (ones % 2 == 1) {
-					stringBA[i] += 1;
+					message[i] += 1;
 				} else {
-					stringBA[i] += 0;
+					message[i] += 0;
 				}
 			}
 			
 			if (boCrossPC) {
-				int numNewUnits = stringBA.length / crossPCDistance;
+				int numNewUnits = message.length / crossPCDistance;
 				int addedNewUnits = 0;
-				String[] stringBATemp = new String[stringBA.length + numNewUnits];
+				String[] stringBATemp = new String[message.length + numNewUnits];
 				StringBuilder sb;
 				
 				// adding the new units to the String[](binary)
-				for (int i = 0; i < stringBA.length; i++) {
+				for (int i = 0; i < message.length; i++) {
 					if (i % (crossPCDistance) == 0 && i != 0) {
 						addedNewUnits++;
 					} 
-					stringBATemp[i + addedNewUnits] = stringBA[i];
+					stringBATemp[i + addedNewUnits] = message[i];
 				}
-				stringBA = stringBATemp;
+				message = stringBATemp;
 				
 				// filling the new units
 				for (int i = 0; i < numNewUnits; i++) {
-					int[] ones = new int[stringBA[0].length()];
+					int[] ones = new int[message[0].length()];
 					for (int k = 0; k < crossPCDistance; k++) {
-						for (int j = 0; j < stringBA[0].length(); j++) {
-							if (stringBA[k + (i * crossPCDistance) + i].charAt(j) == '1') {
+						for (int j = 0; j < message[0].length(); j++) {
+							if (message[k + (i * crossPCDistance) + i].charAt(j) == '1') {
 								ones[j]++;
 							}
 						}
 					}
 					
 					sb = new StringBuilder();
-					for (int k = 0; k < stringBA[0].length(); k++) {
+					for (int k = 0; k < message[0].length(); k++) {
 						if (ones[k] % 2 == 1) {
 							sb.append('1');
 						} else {
 							sb.append('0');
 						}
 					}
-					stringBA[crossPCDistance * (i + 1) + i] = sb.toString();
+					message[crossPCDistance * (i + 1) + i] = sb.toString();
 				}
 			}
-			data.setStringBinaryArray(stringBA);
+			data.setStringBinaryArray(message);
 			
 		} else {
-			int correctedChanges = 0;
-			int detectedChanges = 0;
-			int numUnits = 0;
-			int numChar = 0;
+			String[] messageCF = data.getStringBinaryArray();
+			String[] messageC = messageCF.clone();
 			
+			UniDataType changedMessage = new UniDataType();
+			UniDataType correctedMessage = new UniDataType();
+			UniDataType correctedFlaggedMessage = new UniDataType();
+			changedMessage.setStringBinaryArray(reverseEncoding(messageCF.clone()));
+			environment.Run.changedMessage = changedMessage.getStringUnicode();
+
 			
 			if (!boCrossPC) {
-				for (int i = 0; i < stringBA.length; i++) {
+				for (int i = 0; i < messageCF.length; i++) {
 					int ones = 0;
-					for (int k = 0; k < stringBA[i].length(); k++) {
-						if (stringBA[i].charAt(k) == '1') ones++;
+					for (int k = 0; k < messageCF[i].length(); k++) {
+						if (messageCF[i].charAt(k) == '1') ones++;
 					}
-					if (ones % 2 == 1) {
-						detectedChanges++;
-					}
-					numChar++;
 					
-					stringBA[i] = stringBA[i].substring(0, 8);
+					messageCF[i] = messageCF[i].substring(0, 8);
+					messageC[i] = messageC[i].substring(0, 8);
+					
+					if (ones % 2 == 1) {
+						messageCF[i] = environment.Run.flagSign;
+					}
 				}
+				
 			} else {
 				
-				numUnits = stringBA.length / (crossPCDistance + 1);
+				int numSegments = messageCF.length / (crossPCDistance + 1);
 				
 				// error correction and detection units
-				for (int i = 0; i < numUnits; i++) {
+				for (int i = 0; i < numSegments; i++) {
 					ArrayList<Integer> incorrectColumns = new ArrayList<Integer>();
 					ArrayList<Integer> incorrectRows = new ArrayList<Integer>();
-					int[] onesColumn = new int[stringBA[0].length()];
+					int[] onesColumn = new int[messageCF[i * (crossPCDistance + 1)].length()];
 					
 					// counting the incorrect spots
 					for (int k = 0; k < (crossPCDistance + 1); k++) {
 						int onesRow = 0;
-						for (int j = 0; j < stringBA[0].length(); j++) {
-							if (stringBA[k + (i * (crossPCDistance + 1))].charAt(j) == '1') {
+						for (int j = 0; j < messageCF[i * (crossPCDistance + 1)].length(); j++) {
+							if (messageCF[k + (i * (crossPCDistance + 1))].charAt(j) == '1') {
 								onesColumn[j]++;
 								onesRow++;
 							}
@@ -192,18 +205,18 @@ public class ParityCheck implements ExperimentElement {
 							incorrectRows.add(k);
 						}
 					}
-					for (int k = 0; k < stringBA[0].length(); k++) {
+					for (int k = 0; k < messageCF[i * (crossPCDistance + 1)].length(); k++) {
 						if (onesColumn[k] % 2 != 0) {
 							incorrectColumns.add(k);
 						}
 					}
 					
-					// correcting
+					// correcting and flagging
 					if (incorrectColumns.size() == 1 && incorrectRows.size() == 1) {
-						char[] correctedRow = new char[stringBA[0].length()];
+						char[] correctedRow = new char[messageCF[0].length()];
 						
-						for (int k = 0; k < stringBA[0].length(); k++) {
-							correctedRow[k] = stringBA[incorrectRows.get(0) + (i * (crossPCDistance + 1))].charAt(k);
+						for (int k = 0; k < messageCF[incorrectRows.get(0) + (i * (crossPCDistance + 1))].length(); k++) {
+							correctedRow[k] = messageCF[incorrectRows.get(0) + (i * (crossPCDistance + 1))].charAt(k);
 						}
 						if (correctedRow[incorrectColumns.get(0)] == '1') {
 							correctedRow[incorrectColumns.get(0)] = '0';
@@ -211,53 +224,77 @@ public class ParityCheck implements ExperimentElement {
 							correctedRow[incorrectColumns.get(0)] = '1';
 						}
 						
-						stringBA[incorrectRows.get(0) + (i * (crossPCDistance + 1))] = new String(correctedRow);
-						correctedChanges++;
+						messageCF[incorrectRows.get(0) + (i * (crossPCDistance + 1))] = new String(correctedRow);
+						messageC = messageCF;
+						
+						// Flagging if more than one change got detected
 					} else if (incorrectColumns.size() > 0 || incorrectRows.size() > 0) {
-						detectedChanges += incorrectColumns.size() + incorrectRows.size();
+						for (int k = 0; k < incorrectRows.size(); k++) {
+							messageCF[incorrectRows.get(k) + (i * (crossPCDistance + 1))] = environment.Run.flagSign;
+						}
 					}
 					
 				}
 				
 				// error detection after last unit
-				for (int i = numUnits * (crossPCDistance + 1); i < stringBA.length; i++) {
+				for (int i = numSegments * (crossPCDistance + 1); i < messageCF.length; i++) {
 					int ones = 0;
-					for (int k = 0; k < stringBA[i].length(); k++) {
-						if (stringBA[i].charAt(k) == '1') ones++;
+					for (int k = 0; k < messageCF[i].length(); k++) {
+						if (messageCF[i].charAt(k) == '1') ones++;
 					}
 					if (ones % 2 == 1) {
-						detectedChanges++;
+						messageCF[i] = environment.Run.flagSign;
 					}
 				}
 				
 				
-				// decoding unit
-				int numNewUnits = stringBA.length / (crossPCDistance + 1);
-				int removedNewUnits = 0;
-				String[] stringBATemp = new String[stringBA.length - numNewUnits];
-				for (int i = 0; i < stringBATemp.length; i++) {
-					if (i % (crossPCDistance) == 0 && i != 0) {
-						removedNewUnits++;
-					} 
-					stringBATemp[i] = stringBA[i + removedNewUnits];
-				}
-				stringBA = stringBATemp;
-				
-				
-				// decoding simple
-				for (int i = 0; i < stringBA.length; i++) {
-					stringBA[i] = stringBA[i].substring(0, 8);
-				}
+				messageCF = reverseEncoding(messageCF);
+				messageC = reverseEncoding(messageC);
 			}
 			
-			System.out.println("corrected changes: " + correctedChanges);
-			System.out.println("detected changes: " + detectedChanges);
-			System.out.println("num units: " + numUnits);
-			System.out.println("num characters: " + numChar);
-			data.setStringBinaryArray(stringBA);
+			correctedMessage.setStringBinaryArray(messageC);
+			correctedFlaggedMessage.setStringBinaryArray(messageCF);
+			environment.Run.correctedMessage = correctedMessage.getStringUnicode();
+			environment.Run.correctedFlaggedMessage = correctedFlaggedMessage.getStringUnicode();
+			data.setStringBinaryArray(messageCF);
 		}
 		
 		return data;
+	}
+	
+	
+	/**
+	 * Reverses the encoding made by {@link #doJob(byte, UniDataType)} (task 0). 
+	 * Checks whether {@link #boCrossPC parity cross check} was enabled during encoding and therefore either just trims every unit to 8 bits or
+	 * removed the added parity units beforehand.
+	 * 
+	 * <dl>
+	 * <dt><span class="strong">apiNote:</span></dt><dd>
+	 * It's important to note, that this decoding will only work if the native length of the units is 8 bits long as in UTF8.</dd>
+	 * </dl>
+	 * @param stringBA The encoded String[] to be decoded.
+	 * @return Returns the decoded input without adding any new corrections or flags.
+	 */
+	public String[] reverseEncoding(String[] stringBA) {
+		if (boCrossPC) {
+			int numNewUnits = stringBA.length / (crossPCDistance + 1);
+			int removedNewUnits = 0;
+			String[] stringBATemp = new String[stringBA.length - numNewUnits];
+			for (int i = 0; i < stringBATemp.length; i++) {
+				if (i % (crossPCDistance) == 0 && i != 0) {
+					removedNewUnits++;
+				} 
+				stringBATemp[i] = stringBA[i + removedNewUnits].substring(0, 8);
+			}
+			stringBA = stringBATemp;
+			
+		} else {
+			for (int i = 0; i < stringBA.length; i++) {
+				stringBA[i] = stringBA[i].substring(0, 8);
+			}
+		}
+		
+		return stringBA;
 	}
 	
 

@@ -60,13 +60,15 @@ public class IndividualChanges implements ExperimentElement {
 	 * Then it iterates through every unit changing a single bit per unit according to {@link #changeRate} on the way.
 	 * The '-' pieces however won't be touched due to being crucial for later decoding and 
 	 * them not being there in normal data transfers (therefore: still representative communication experiment).
+	 * In addition, a pre-changed and post-changed version will be set as {@link environment.Run#originalCode original code} and
+	 * {@link environment.Run#changedCode changed code}.
 	 * @param task Not used for {@link noiSources noise sources}.
 	 * @param data The char[] which will be modified.
 	 * @return Returns the modified data.
 	 */
 	public UniDataType doJob(byte task, UniDataType data) {
 		char[] charBinary = data.getCharBinary();
-		System.out.println("___indivChanges: " + new String(charBinary));
+		environment.Run.originalCode = new String(charBinary);
 				
 		short segmentWidth = 0;
 		boolean blockDistanceFound = false;
@@ -95,7 +97,7 @@ public class IndividualChanges implements ExperimentElement {
 			}
 		}
 		
-		System.out.println("___indivChanges: " + new String(charBinary));
+		environment.Run.changedCode = new String(charBinary);
 		data.setCharBinary(charBinary);
 		return data;
 	}

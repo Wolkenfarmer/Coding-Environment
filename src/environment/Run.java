@@ -6,6 +6,23 @@ package environment;
  * @see #run(ExperimentElement, ExperimentElement, ExperimentElement, ExperimentElement) See run() for more information.
  */
 public class Run {
+	/** The character '_' which will replace changed but not correctable units in {@link #correctedFlaggedMessage} 
+	 * in the case of Unicode input format.*/
+	public static String flagSign = "01011111";
+	/** Saves the original input from the {@link infSources information source}.*/
+	public static String originalMessage = new String();
+	/** Saves the already encoded but not yet by the {@link noiSources noise source} changed message from the {@link noiSources noise source}.*/
+	public static String originalCode = new String();
+	/** Saves the {@link enDecoder encoded} and by the {@link noiSources noise source} changed message from the {@link noiSources noise source}.*/
+	public static String changedCode = new String();
+	/** Saves the by the {@link noiSources noise source} changed message from the {@link enDecoder encoder}.*/
+	public static String changedMessage = new String();
+	/** Saves the by the en- / decoder corrected message from the {@link enDecoder encoder}.*/
+	public static String correctedMessage = new String();
+	/** Saves the by the en- / decoder corrected message with flagged characters from the {@link enDecoder encoder}.*/
+	public static String correctedFlaggedMessage = new String();
+	
+	
 	/**
 	 * Runs the communication experiment with the given {@link ExperimentElement experiment elements}. 
 	 * In order to cover as much information sources and en- / decoder and noise sources as possible, 
@@ -21,22 +38,23 @@ public class Run {
 	 */
 	public static void run(ExperimentElement infSource, ExperimentElement prePost, ExperimentElement enDecoder, ExperimentElement noiSource) {
 		UniDataType data = new UniDataType();
-		
 		data.setStringUnicode("Hello world!");
-		System.out.println("_runs infSource");
+		
+		
 		data = infSource.doJob((byte) 0, data);
-		System.out.println("_runs Encoder: ");
-		data = prePost.doJob((byte) 0, data);
+		//data = prePost.doJob((byte) 0, data);
 		data = enDecoder.doJob((byte) 0, data);
-		System.out.println("_runs noiSource: ");
 		data = noiSource.doJob((byte) 0, data);
-		System.out.println("_runs Decoder: ");
 		data = enDecoder.doJob((byte) 1, data);
-		data = prePost.doJob((byte) 1, data);
-		System.out.println("_Decoder result: " + data.getStringBinary());
+		//data = prePost.doJob((byte) 1, data);
 		
 		if (data.getStringUnicode().length() < 100) {
-			System.out.println("Communication experiment result: " + data.getStringUnicode());
+			System.out.println("Communication experiment result: original message:              " + originalMessage);
+			System.out.println("Communication experiment result: original encoded code:         " + originalCode);
+			System.out.println("Communication experiment result: changed encoded code:          " + changedCode);
+			System.out.println("Communication experiment result: changed message:               " + changedMessage);
+			System.out.println("Communication experiment result: corrected message:             " + correctedMessage);
+			System.out.println("Communication experiment result: corrected and flagged message: " + correctedFlaggedMessage);
 		}
 	}
 }

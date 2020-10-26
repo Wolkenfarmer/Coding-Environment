@@ -85,11 +85,12 @@ public class UserInput implements ExperimentElement {
 	
 	
 	/** 
-	 * Returns a String..
-	 * @return Returns {@link #input}.
+	 * Returns the {@link #input} and sets the {@link environment.Run#originalMessage original message in Run}.
+	 * @return Returns the input String.
 	 */
 	public UniDataType doJob(byte task, UniDataType data) {
 		data.setStringUnicode(input);
+		environment.Run.originalMessage = input;
 		return data;
 	}
 	

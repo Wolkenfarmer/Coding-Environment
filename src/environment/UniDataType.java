@@ -68,7 +68,7 @@ public class UniDataType {
 	 */
 	private void converter(String output) {		
 		if (stringUnicode != null) {
-			System.out.println("__UniDataType_converter: input type found: String(Unicode) -> \"" + output + "\"");
+			//System.out.println("__UniDataType_converter: input type found: String(Unicode) -> \"" + output + "\"");
 			switch (output) {
 			case "String(binary)":
 				sb = new StringBuilder();
@@ -102,7 +102,7 @@ public class UniDataType {
 			
 			
 		} else if (stringBinary != null) {
-			System.out.println("__UniDataType_converter: input type found: String(binary) -> \"" + output + "\"");
+			//System.out.println("__UniDataType_converter: input type found: String(binary) -> \"" + output + "\"");
 			switch (output) {
 			case "String(Unicode)":
 				String[] stringBA = stringBinary.split("-");
@@ -169,7 +169,7 @@ public class UniDataType {
 			
 		
 		} else if (stringBinaryArray != null) {
-			System.out.println("__UniDataType_converter: input type found: String[](binary) -> \"" + output + "\"");
+			//System.out.println("__UniDataType_converter: input type found: String[](binary) -> \"" + output + "\"");
 			switch (output) {
 			case "String(Unicode)":
 				converter("String(binary)");
@@ -197,7 +197,7 @@ public class UniDataType {
 			
 			
 		} else if (charBinary != null) {
-			System.out.println("__UniDataType_converter: input type found: char[](binary) -> \"" + output + "\"");
+			//System.out.println("__UniDataType_converter: input type found: char[](binary) -> \"" + output + "\"");
 			switch (output) {
 			case "String(Unicode)":
 				converter("String(binary)");
