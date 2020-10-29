@@ -22,34 +22,34 @@ public class Result {
 	
 	/** Saves the number of changes in the encoded version of the message made by the {@link noiSources noise source} by comparing
 	 * {@link Run#originalCode} and {@link Run#changedCode}.*/
-	private static int changes;
+	private static double changes;
 	/** Saves the number of changed characters in the {@link Run#changedMessage changed message} in comparison to the 
 	 * {@link Run#originalMessage original message}.*/
-	private static int changedChars;
+	private static double changedChars;
 	/** Saves the number of corrected characters in the {@link Run#correctedMessage corrected message} in comparison to the 
 	 * {@link Run#originalMessage original message}.*/
-	private static int correctedChars;
+	private static double correctedChars;
 	/** Saves the number of mistakenly corrected characters in the {@link Run#correctedMessage corrected message} in comparison to the 
 	 * {@link Run#originalMessage original message}.*/
-	private static int mistakenlyCorrectedChars;
+	private static double mistakenlyCorrectedChars;
 	/** Saves the number of flagged characters in the {@link Run#correctedFlaggedMessage corrected+flagged message} in comparison to the 
 	 * {@link Run#originalMessage original message}.*/
-	private static int flaggedChars;
+	private static double flaggedChars;
 	/** Saves the number of mistakenly flagged characters in the {@link Run#correctedFlaggedMessage corrected+flagged message} 
 	 * in comparison to the {@link Run#originalMessage original message}.*/
-	private static int mistakenlyFlaggedChars;
+	private static double mistakenlyFlaggedChars;
 	/** Saves the information content of the {@link Run#originalMessage original message}, which is equivalent to it's length. 
 	 * @see #addResult(String, String, String, String, String, String) addResult's Note 2 for further information on the term "information"*/
 	private static int information;
 	/** Saves the information content of the {@link Run#changedMessage changed message}.
 	 * @see #addResult(String, String, String, String, String, String) addResult's Note 2 for further information on the term "information"*/
-	private static int informationWithoutCoding;
+	private static double informationWithoutCoding;
 	/** Saves the information content of the {@link Run#correctedMessage corrected message}.
 	 * @see #addResult(String, String, String, String, String, String) addResult's Note 2 for further information on the term "information"*/
-	private static int informationWithCodingCo;
+	private static double informationWithCodingCo;
 	/** Saves the information content of the {@link Run#correctedFlaggedMessage corrected+flagged message}.
 	 * @see #addResult(String, String, String, String, String, String) addResult's Note 2 for further information on the term "information"*/
-	private static int informationWithCodingCf;
+	private static double informationWithCodingCf;
 	
 	
 	/**
@@ -89,6 +89,11 @@ public class Result {
 	 * Every correct character gets counted as 1 positive bit of information, every wrong character as 1 negative bit of information 
 	 * and every flagged information as information-less. While not doing the formal information term justice, 
 	 * this is the most practicable way of determining the information content without too much complexity.</dd>
+	 * 
+	 * <dt><span class="strong">Note 3:</span></dt><dd>
+	 * {@link #changes}, {@link #changedChars}, {@link #correctedChars}, {@link #mistakenlyCorrectedChars}, {@link #flaggedChars} and 
+	 * {@link #mistakenlyFlaggedChars} have a local version of themselves here in order for the information content calculations to have 
+	 * the correct information for this particular run if it gets repeated multiple times (and not the accumulated counts).</dd>
 	 * </dl>
 	 * @param originalMessage Refers to {@link Run#originalMessage}.
 	 * @param originalCode Refers to {@link Run#originalCode}.
@@ -100,13 +105,21 @@ public class Result {
 	public static void addResult(String originalMessage, String originalCode, String changedCode, String changedMessage, 
 			String correctedMessage, String correctedFlaggedMessage) {
 		
+		int changesM = 0;
+		int changedCharsM = 0;
+		int correctedCharsM = 0;
+		int mistakenlyCorrectedCharsM = 0;
+		int flaggedCharsM = 0;
+		int mistakenlyFlaggedCharsM = 0;
+		information = 0;
+		
 		int iOrM = 0;
 		int iChM = 0;
 		int iCoM = 0;
 		int iCfM = 0;			
 		
 		for (int i = 0; i < originalCode.length(); i++) {
-			if (originalCode.charAt(i) != changedCode.charAt(i)) changes++;
+			if (originalCode.charAt(i) != changedCode.charAt(i)) changesM++;
 		}
 		
 		
@@ -114,78 +127,79 @@ public class Result {
 			information++;
 							
 			if (originalMessage.charAt(iOrM) != changedMessage.charAt(iChM)) {
-				changedChars++;
+				changedCharsM++;
 				
-				if (originalMessage.charAt(iOrM) == correctedMessage.charAt(iCoM)) correctedChars++;
-				if (correctedFlaggedMessage.charAt(iCfM) == '_') flaggedChars++;
+				if (originalMessage.charAt(iOrM) == correctedMessage.charAt(iCoM)) correctedCharsM++;
+				if (correctedFlaggedMessage.charAt(iCfM) == '_') flaggedCharsM++;
 				
-				try {
-					if (originalMessage.charAt(iOrM + 1) == changedMessage.charAt(iChM + 1)) {
-					} else if (originalMessage.charAt(iOrM + 1) == changedMessage.charAt(iChM + 2)
-							&& originalMessage.charAt(iOrM + 2) == changedMessage.charAt(iChM + 3)) {
-						iChM++;
-					} else if (originalMessage.charAt(iOrM + 1) == changedMessage.charAt(iChM + 3)
-							&& originalMessage.charAt(iOrM + 2) == changedMessage.charAt(iChM + 4)
-							&& originalMessage.charAt(iOrM + 2) == changedMessage.charAt(iChM + 4)) {
-						iChM += 2;
-					} else if (originalMessage.charAt(iOrM + 1) == changedMessage.charAt(iChM + 4)
-							&& originalMessage.charAt(iOrM + 2) == changedMessage.charAt(iChM + 5)
-							&& originalMessage.charAt(iOrM + 3) == changedMessage.charAt(iChM + 6)) {
-						iChM += 3;
+				if (!Run.oneUnitPerChar) {
+					try {
+						if (originalMessage.charAt(iOrM + 1) == changedMessage.charAt(iChM + 1)) {
+						} else if (originalMessage.charAt(iOrM + 1) == changedMessage.charAt(iChM + 2)
+								&& originalMessage.charAt(iOrM + 2) == changedMessage.charAt(iChM + 3)) {
+							iChM++;
+						} else if (originalMessage.charAt(iOrM + 1) == changedMessage.charAt(iChM + 3)
+								&& originalMessage.charAt(iOrM + 2) == changedMessage.charAt(iChM + 4)
+								&& originalMessage.charAt(iOrM + 2) == changedMessage.charAt(iChM + 4)) {
+							iChM += 2;
+						} else if (originalMessage.charAt(iOrM + 1) == changedMessage.charAt(iChM + 4)
+								&& originalMessage.charAt(iOrM + 2) == changedMessage.charAt(iChM + 5)
+								&& originalMessage.charAt(iOrM + 3) == changedMessage.charAt(iChM + 6)) {
+							iChM += 3;
+						}
+					} catch (StringIndexOutOfBoundsException e) {
+						System.out.println("Result output-compare: Couldn't match the Strings "
+								+ "changed message correctly to origin for further comparing");
 					}
-				} catch (StringIndexOutOfBoundsException e) {
-					System.out.println("Result output-compare: Couldn't match the Strings "
-							+ "changed message correctly to origin for further comparing");
-				}
-				
-				try {
-					if (originalMessage.charAt(iOrM + 1) == correctedMessage.charAt(iCoM + 1)) {
-					} else if (originalMessage.charAt(iOrM + 1) == correctedMessage.charAt(iCoM + 2)
-							&& originalMessage.charAt(iOrM + 2) == correctedMessage.charAt(iCoM + 3)) {
-						iCoM++;
-					} else if (originalMessage.charAt(iOrM + 1) == correctedMessage.charAt(iCoM + 3)
-							&& originalMessage.charAt(iOrM + 2) == correctedMessage.charAt(iCoM + 4)
-							&& originalMessage.charAt(iOrM + 2) == correctedMessage.charAt(iCoM + 4)) {
-						iCoM += 2;
-					} else if (originalMessage.charAt(iOrM + 1) == correctedMessage.charAt(iCoM + 4)
-							&& originalMessage.charAt(iOrM + 2) == correctedMessage.charAt(iCoM + 5)
-							&& originalMessage.charAt(iOrM + 3) == correctedMessage.charAt(iCoM + 6)) {
-						iCoM += 3;
+					
+					try {
+						if (originalMessage.charAt(iOrM + 1) == correctedMessage.charAt(iCoM + 1)) {
+						} else if (originalMessage.charAt(iOrM + 1) == correctedMessage.charAt(iCoM + 2)
+								&& originalMessage.charAt(iOrM + 2) == correctedMessage.charAt(iCoM + 3)) {
+							iCoM++;
+						} else if (originalMessage.charAt(iOrM + 1) == correctedMessage.charAt(iCoM + 3)
+								&& originalMessage.charAt(iOrM + 2) == correctedMessage.charAt(iCoM + 4)
+								&& originalMessage.charAt(iOrM + 2) == correctedMessage.charAt(iCoM + 4)) {
+							iCoM += 2;
+						} else if (originalMessage.charAt(iOrM + 1) == correctedMessage.charAt(iCoM + 4)
+								&& originalMessage.charAt(iOrM + 2) == correctedMessage.charAt(iCoM + 5)
+								&& originalMessage.charAt(iOrM + 3) == correctedMessage.charAt(iCoM + 6)) {
+							iCoM += 3;
+						}
+					} catch (StringIndexOutOfBoundsException e) {
+						System.out.println("Result output-compare: Couldn't match the Strings "
+								+ "corrected message correctly to origin for further comparing");
 					}
-				} catch (StringIndexOutOfBoundsException e) {
-					System.out.println("Result output-compare: Couldn't match the Strings "
-							+ "corrected message correctly to origin for further comparing");
-				}
-				
-				try {
-					if (originalMessage.charAt(iOrM + 1) == correctedFlaggedMessage.charAt(iCfM + 1)) {
-					} else if (originalMessage.charAt(iOrM + 1) == correctedFlaggedMessage.charAt(iCfM + 2)
-							&& originalMessage.charAt(iOrM + 2) == correctedFlaggedMessage.charAt(iCfM + 3)) {
-						iCfM++;
-					} else if (originalMessage.charAt(iOrM + 1) == correctedFlaggedMessage.charAt(iCfM + 3)
-							&& originalMessage.charAt(iOrM + 2) == correctedFlaggedMessage.charAt(iCfM + 4)
-							&& originalMessage.charAt(iOrM + 2) == correctedFlaggedMessage.charAt(iCfM + 4)) {
-						iCfM += 2;
-					} else if (originalMessage.charAt(iOrM + 1) == correctedFlaggedMessage.charAt(iCfM + 4)
-							&& originalMessage.charAt(iOrM + 2) == correctedFlaggedMessage.charAt(iCfM + 5)
-							&& originalMessage.charAt(iOrM + 3) == correctedFlaggedMessage.charAt(iCfM + 6)) {
-						iCfM += 3;
+					
+					try {
+						if (originalMessage.charAt(iOrM + 1) == correctedFlaggedMessage.charAt(iCfM + 1)) {
+						} else if (originalMessage.charAt(iOrM + 1) == correctedFlaggedMessage.charAt(iCfM + 2)
+								&& originalMessage.charAt(iOrM + 2) == correctedFlaggedMessage.charAt(iCfM + 3)) {
+							iCfM++;
+						} else if (originalMessage.charAt(iOrM + 1) == correctedFlaggedMessage.charAt(iCfM + 3)
+								&& originalMessage.charAt(iOrM + 2) == correctedFlaggedMessage.charAt(iCfM + 4)) {
+							iCfM += 2;
+						} else if (originalMessage.charAt(iOrM + 1) == correctedFlaggedMessage.charAt(iCfM + 4)
+								&& originalMessage.charAt(iOrM + 2) == correctedFlaggedMessage.charAt(iCfM + 5)
+								&& originalMessage.charAt(iOrM + 3) == correctedFlaggedMessage.charAt(iCfM + 6)) {
+							iCfM += 3;
+						}
+					} catch (StringIndexOutOfBoundsException e) {
+						System.out.println("Result output-compare: Couldn't match the Strings "
+								+ "corrected flagged message correctly to origin for further comparing");
 					}
-				} catch (StringIndexOutOfBoundsException e) {
-					System.out.println("Result output-compare: Couldn't match the Strings "
-							+ "corrected flagged message correctly to origin for further comparing");
 				}
 				
 			} else {
 				
 				if ((correctedFlaggedMessage.charAt(iCfM) == '_') && (originalMessage.charAt(iOrM) != '_')) {
-					flaggedChars++;
-					mistakenlyFlaggedChars++;
+					flaggedCharsM++;
+					mistakenlyFlaggedCharsM++;
 				}
 				
 				if (correctedMessage.charAt(iCoM) != originalMessage.charAt(iOrM)) {
-					correctedChars++;
-					mistakenlyCorrectedChars++;
+					correctedCharsM++;
+					mistakenlyCorrectedCharsM++;
 				}
 			}
 			
@@ -195,10 +209,17 @@ public class Result {
 			iCfM++;
 		}
 			
-			informationWithoutCoding = information - (changedChars * 2);
-			informationWithCodingCo += information - ((changedChars - (correctedChars - mistakenlyCorrectedChars)) * 2);
-			informationWithCodingCf += information - ((changedChars - (correctedChars - mistakenlyCorrectedChars)) * 2)
-					+ (flaggedChars - mistakenlyFlaggedChars) - mistakenlyFlaggedChars;
+			informationWithoutCoding += information - (changedCharsM * 2);
+			informationWithCodingCo += information - ((changedCharsM - (correctedCharsM - mistakenlyCorrectedCharsM)) * 2);
+			informationWithCodingCf += information - ((changedCharsM - (correctedCharsM - mistakenlyCorrectedCharsM)) * 2)
+					+ (flaggedCharsM - mistakenlyFlaggedCharsM) - mistakenlyFlaggedCharsM;
+			
+			changes += changesM;
+			changedChars += changedCharsM;
+			correctedChars += correctedCharsM;
+			mistakenlyCorrectedChars += mistakenlyCorrectedCharsM;
+			flaggedChars += flaggedCharsM;
+			mistakenlyFlaggedChars += mistakenlyFlaggedCharsM;
 	}
 	
 	
@@ -230,37 +251,37 @@ public class Result {
 		
 		
 		resultElement[0] = "Changes in code";
-		resultElement[1] = "" + changes;
+		resultElement[1] = "" + String.format("%.2f", changes / Run.repeat);
 		resultTableContent.add(resultElement.clone());
 		resultElement[0] = "Changed characters";
-		resultElement[1] = "" + changedChars;
+		resultElement[1] = "" + String.format("%.2f", changedChars / Run.repeat);
 		resultTableContent.add(resultElement.clone());
 		
 		resultElement[0] = "Corrected characters";
-		resultElement[1] = "" + correctedChars;
+		resultElement[1] = "" + String.format("%.2f", correctedChars / Run.repeat);
 		resultTableContent.add(resultElement.clone());
 		resultElement[0] = "Mistakenly corrected characters";
-		resultElement[1] = "" + mistakenlyCorrectedChars;
+		resultElement[1] = "" + String.format("%.2f", mistakenlyCorrectedChars / Run.repeat);
 		resultTableContent.add(resultElement.clone());
 		
 		resultElement[0] = "Flagged characters";
-		resultElement[1] = "" + flaggedChars;
+		resultElement[1] = "" + String.format("%.2f", flaggedChars / Run.repeat);
 		resultTableContent.add(resultElement.clone());
 		resultElement[0] = "Mistakenly flagged characters";
-		resultElement[1] = "" + mistakenlyFlaggedChars;
+		resultElement[1] = "" + String.format("%.2f", mistakenlyFlaggedChars / Run.repeat);
 		resultTableContent.add(resultElement.clone());
 		
 		resultElement[0] = "Information original";
 		resultElement[1] = "" + information;
 		resultTableContent.add(resultElement.clone());
 		resultElement[0] = "Inf. result without coding";
-		resultElement[1] = "" + informationWithoutCoding;
+		resultElement[1] = "" + String.format("%.2f", informationWithoutCoding / Run.repeat);
 		resultTableContent.add(resultElement.clone());
 		resultElement[0] = "Inf. result with coding (corrected)";
-		resultElement[1] = "" + informationWithCodingCo;
+		resultElement[1] = "" + String.format("%.2f", informationWithCodingCo / Run.repeat);
 		resultTableContent.add(resultElement.clone());
 		resultElement[0] = "Inf. result with coding (corrected & flagged)";
-		resultElement[1] = "" + informationWithCodingCf;
+		resultElement[1] = "" + String.format("%.2f", informationWithCodingCf / Run.repeat);
 		resultTableContent.add(resultElement.clone());
 		
 		
@@ -319,7 +340,7 @@ public class Result {
 	 */
 	public static void SysoResult(String originalMessage, String originalCode, String changedCode, String changedMessage, 
 			String correctedMessage, String correctedFlaggedMessage) {
-		System.out.println("Communication experiment result: original message:              " + originalMessage);
+		System.out.println("\nCommunication experiment result: original message:              " + originalMessage);
 		System.out.println("Communication experiment result: original encoded code:         " + originalCode);
 		System.out.println("Communication experiment result: changed encoded code:          " + changedCode);
 		System.out.println("Communication experiment result: changed message:               " + changedMessage);

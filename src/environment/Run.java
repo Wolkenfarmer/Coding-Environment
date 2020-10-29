@@ -6,14 +6,21 @@ package environment;
  * @see #run(ExperimentElement, ExperimentElement, ExperimentElement, ExperimentElement) See run() for more information.
  */
 public class Run {
-	/** The character '_' in Unicode (binary) which will replace changed but not correctable units in {@link #correctedFlaggedMessage}.*/
+	/** The character '_' in Unicode (binary) which will replace changed but not correctable units in {@link #correctedFlaggedMessage}.
+	 * Currently this variable can only be set manually.*/
 	public static String flagSignBinary = "01011111";
-	/** The character '_' which will replace changed but not correctable units in {@link #correctedFlaggedMessage}.*/
+	/** The character '_' which will replace changed but not correctable units in {@link #correctedFlaggedMessage}.
+	 * Currently this variable can only be set manually.*/
 	public static char flagSignUnicode = '_';
-	/**Saves the number of times the communication experiment should be repeated before evaluation. 
+	/** Saves the number of times the communication experiment should be repeated before evaluation. 
 	 * This is how often the experiment will be run if {@link environment.pages.Homepage#bConButRun run} gets pressed.
 	 * Currently this variable can only be set manually.*/
-	public static int repeat = 1;
+	public static int repeat = 100;
+	/** Defines the interpretation rule for message-version-comparison in {@link Result}. 
+	 * If set to true, no check-position corrections will be made. 
+	 * This is only recommended if just basic characters got used in the example of Unicode text 
+	 * and might improve the change-counting-accuracy a bit. Currently this variable can only be set manually.*/
+	public static boolean oneUnitPerChar = true;
 	
 	/** The original Message, which neither got en- / decoded or changed by a noise source. 
 	 * It gets set by the {@link infSources information source}. */
@@ -56,12 +63,13 @@ public class Run {
 			//data = prePost.doJob((byte) 1, data);
 			
 			Result.addResult(originalMessage, originalCode, changedCode, changedMessage, correctedMessage, correctedFlaggedMessage);
+			
+			if (data.getStringUnicode().length() < 100) {
+				Result.SysoResult(originalMessage, originalCode, changedCode, changedMessage, correctedMessage, correctedFlaggedMessage);
+			}
 		}
 		
 		Result.updateResult();		
 		
-		if (data.getStringUnicode().length() < 100) {
-			Result.SysoResult(originalMessage, originalCode, changedCode, changedMessage, correctedMessage, correctedFlaggedMessage);
-		}
 	}
 }
