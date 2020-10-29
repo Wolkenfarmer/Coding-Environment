@@ -8,6 +8,7 @@ import environment.pages.guiElements.Arrow;
 import environment.pages.guiElements.ModelFactory;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -232,8 +233,9 @@ public class Homepage {
 			tvResTable.setMinHeight(250 - tvResTable.getLayoutY());							// Minimum height -> ends with pControls
 			tvResTable.setPrefWidth(Main.stageWidth / 2);
 			    tvResTabDescription = new TableColumn<>("Description");
-			    tvResTabDescription.setResizable(false);
-			    tvResTabDescription.setPrefWidth(150);
+			    tvResTabDescription.setResizable(true);
+			    tvResTabDescription.setSortable(false);
+			    tvResTabDescription.setMinWidth(150);
 			    tvResTabDescription.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<String[], String>, ObservableValue<String>>() {
 			        public ObservableValue<String> call(TableColumn.CellDataFeatures<String[], String> p) {
 			            String[] x = p.getValue();
@@ -246,7 +248,9 @@ public class Homepage {
 			    });
 			    
 			    tvResTabValue = new TableColumn<>("Value");
-			    tvResTabValue.setResizable(false);
+			    tvResTabValue.setResizable(true);
+			    tvResTabValue.setSortable(false);
+			    tvResTabDescription.setMinWidth(200);
 			    tvResTabValue.prefWidthProperty().bind(tvResTable.widthProperty().subtract(tvResTabDescription.getPrefWidth() + 20));
 			    tvResTabValue.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<String[], String>, ObservableValue<String>>() {
 			        public ObservableValue<String> call(TableColumn.CellDataFeatures<String[], String> p) {
@@ -259,7 +263,7 @@ public class Homepage {
 			        }
 			    });
 			    
-			    String[][] mockdata = new String[50][2];
+			    String[][] mockdata = new String[10][2];
 				for (int i = 0; i < mockdata.length; i++) {
 					mockdata[i][0] = "Aspect...";
 					mockdata[i][1] = "Value...";
@@ -502,5 +506,14 @@ public class Homepage {
 		Main.updateScrollbar(pControls);
 		root.getChildren().addAll(hbHeading, pSettings, pResults, pControls);
 		Main.scene.setOnKeyReleased(Main.krlClose);
+	}
+	
+	
+	/**
+	 * Updates {@link #tvResTable the result table}. It gets called by {@link environment.Result#updateResult()}.
+	 * @param results The new content to e displayed by the table.
+	 */
+	public void updateResultTable(ObservableList<String[]> results) {
+		tvResTable.getItems().setAll(results);
 	}
 }

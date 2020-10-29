@@ -138,9 +138,10 @@ public class UniDataType {
 						} catch (NumberFormatException e) {
 							if (stringBConvert.length() >= 32) {
 								if (stringUnicode != null) {
-									stringUnicode = stringUnicode + "????";
+									stringUnicode = stringUnicode + Run.flagSignUnicode + Run.flagSignUnicode + Run.flagSignUnicode 
+											+ Run.flagSignUnicode;
 								} else {
-									stringUnicode = "????";
+									stringUnicode = "" + Run.flagSignUnicode + Run.flagSignUnicode + Run.flagSignUnicode + Run.flagSignUnicode;
 								}
 							} else {
 								throw e;

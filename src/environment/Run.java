@@ -6,21 +6,28 @@ package environment;
  * @see #run(ExperimentElement, ExperimentElement, ExperimentElement, ExperimentElement) See run() for more information.
  */
 public class Run {
-	/** The character '_' which will replace changed but not correctable units in {@link #correctedFlaggedMessage} 
-	 * in the case of Unicode input format.*/
-	public static String flagSign = "01011111";
-	/** Saves the original input from the {@link infSources information source}.*/
-	public static String originalMessage = new String();
+	/** The character '_' in Unicode (binary) which will replace changed but not correctable units in {@link #correctedFlaggedMessage}.*/
+	public static String flagSignBinary = "01011111";
+	/** The character '_' which will replace changed but not correctable units in {@link #correctedFlaggedMessage}.*/
+	public static char flagSignUnicode = '_';
+	/**Saves the number of times the communication experiment should be repeated before evaluation. 
+	 * This is how often the experiment will be run if {@link environment.pages.Homepage#bConButRun run} gets pressed.
+	 * Currently this variable can only be set manually.*/
+	public static int repeat = 1;
+	
+	/** The original Message, which neither got en- / decoded or changed by a noise source. 
+	 * It gets set by the {@link infSources information source}. */
+	public static String originalMessage;
 	/** Saves the already encoded but not yet by the {@link noiSources noise source} changed message from the {@link noiSources noise source}.*/
-	public static String originalCode = new String();
+	public static String originalCode;
 	/** Saves the {@link enDecoder encoded} and by the {@link noiSources noise source} changed message from the {@link noiSources noise source}.*/
-	public static String changedCode = new String();
+	public static String changedCode;
 	/** Saves the by the {@link noiSources noise source} changed message from the {@link enDecoder encoder}.*/
-	public static String changedMessage = new String();
+	public static String changedMessage;
 	/** Saves the by the en- / decoder corrected message from the {@link enDecoder encoder}.*/
-	public static String correctedMessage = new String();
+	public static String correctedMessage;
 	/** Saves the by the en- / decoder corrected message with flagged characters from the {@link enDecoder encoder}.*/
-	public static String correctedFlaggedMessage = new String();
+	public static String correctedFlaggedMessage;
 	
 	
 	/**
@@ -39,22 +46,22 @@ public class Run {
 	public static void run(ExperimentElement infSource, ExperimentElement prePost, ExperimentElement enDecoder, ExperimentElement noiSource) {
 		UniDataType data = new UniDataType();
 		data.setStringUnicode("Hello world!");
+				
+		for (int i = 0; i < repeat; i++) {
+			data = infSource.doJob((byte) 0, data);
+			//data = prePost.doJob((byte) 0, data);
+			data = enDecoder.doJob((byte) 0, data);
+			data = noiSource.doJob((byte) 0, data);
+			data = enDecoder.doJob((byte) 1, data);
+			//data = prePost.doJob((byte) 1, data);
+			
+			Result.addResult(originalMessage, originalCode, changedCode, changedMessage, correctedMessage, correctedFlaggedMessage);
+		}
 		
-		
-		data = infSource.doJob((byte) 0, data);
-		//data = prePost.doJob((byte) 0, data);
-		data = enDecoder.doJob((byte) 0, data);
-		data = noiSource.doJob((byte) 0, data);
-		data = enDecoder.doJob((byte) 1, data);
-		//data = prePost.doJob((byte) 1, data);
+		Result.updateResult();		
 		
 		if (data.getStringUnicode().length() < 100) {
-			System.out.println("Communication experiment result: original message:              " + originalMessage);
-			System.out.println("Communication experiment result: original encoded code:         " + originalCode);
-			System.out.println("Communication experiment result: changed encoded code:          " + changedCode);
-			System.out.println("Communication experiment result: changed message:               " + changedMessage);
-			System.out.println("Communication experiment result: corrected message:             " + correctedMessage);
-			System.out.println("Communication experiment result: corrected and flagged message: " + correctedFlaggedMessage);
+			Result.SysoResult(originalMessage, originalCode, changedCode, changedMessage, correctedMessage, correctedFlaggedMessage);
 		}
 	}
 }

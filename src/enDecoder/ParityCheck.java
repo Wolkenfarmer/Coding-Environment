@@ -93,7 +93,7 @@ public class ParityCheck implements ExperimentElement {
 	 * 
 	 * <dt><span class="strong">apiNote:</span></dt><dd>
 	 * The method assumes that the length of every unit is equally long, but is not specified to UTF8 
-	 * (except for distinct {@link environment.Run#flagSign flag-sign}) 
+	 * (except for distinct {@link environment.Run#flagSignBinary flag-sign}) 
 	 * and the in-method reverse-encoding of the simple parity check decoding.</dd>
 	 * </dl>
 	 * @param task Defines whether the input (data) should be encoded (task = 0) or decoded (task = 1).
@@ -178,7 +178,7 @@ public class ParityCheck implements ExperimentElement {
 					messageC[i] = messageC[i].substring(0, 8);
 					
 					if (ones % 2 == 1) {
-						messageCF[i] = environment.Run.flagSign;
+						messageCF[i] = environment.Run.flagSignBinary;
 					}
 				}
 				
@@ -213,7 +213,7 @@ public class ParityCheck implements ExperimentElement {
 					
 					// correcting and flagging
 					if (incorrectColumns.size() == 1 && incorrectRows.size() == 1) {
-						char[] correctedRow = new char[messageCF[0].length()];
+						char[] correctedRow = new char[messageCF[incorrectRows.get(0) + (i * (crossPCDistance + 1))].length()];
 						
 						for (int k = 0; k < messageCF[incorrectRows.get(0) + (i * (crossPCDistance + 1))].length(); k++) {
 							correctedRow[k] = messageCF[incorrectRows.get(0) + (i * (crossPCDistance + 1))].charAt(k);
@@ -225,12 +225,12 @@ public class ParityCheck implements ExperimentElement {
 						}
 						
 						messageCF[incorrectRows.get(0) + (i * (crossPCDistance + 1))] = new String(correctedRow);
-						messageC = messageCF;
+						messageC[incorrectRows.get(0) + (i * (crossPCDistance + 1))] = new String(correctedRow);
 						
 						// Flagging if more than one change got detected
 					} else if (incorrectColumns.size() > 0 || incorrectRows.size() > 0) {
 						for (int k = 0; k < incorrectRows.size(); k++) {
-							messageCF[incorrectRows.get(k) + (i * (crossPCDistance + 1))] = environment.Run.flagSign;
+							messageCF[incorrectRows.get(k) + (i * (crossPCDistance + 1))] = environment.Run.flagSignBinary;
 						}
 					}
 					
@@ -243,7 +243,7 @@ public class ParityCheck implements ExperimentElement {
 						if (messageCF[i].charAt(k) == '1') ones++;
 					}
 					if (ones % 2 == 1) {
-						messageCF[i] = environment.Run.flagSign;
+						messageCF[i] = environment.Run.flagSignBinary;
 					}
 				}
 				
