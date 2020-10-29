@@ -24,8 +24,16 @@ public class Deselect implements ExperimentElement {
 	private static boolean builtGui;
 
 	
-	/** @see environment.ExperimentElement#doJob(byte, UniDataType)*/
-	public UniDataType doJob(byte task, UniDataType data) {return data;}
+	/** Sets the necessary message-versions in {@link environment.Run} for a flawless data analysis.
+	 * @see environment.ExperimentElement#doJob(byte, UniDataType)*/
+	public UniDataType doJob(byte task, UniDataType data) {
+		if (task != 0) {
+			environment.Run.changedMessage = data.getStringUnicode();
+			environment.Run.correctedMessage = data.getStringUnicode();
+			environment.Run.correctedFlaggedMessage = data.getStringUnicode();
+		} 
+		return data;
+	}
 	/** @see environment.ExperimentElement#buildGui(double)*/
 	public void buildGui(double parentWidth) {}
 	/** @see environment.ExperimentElement#save()*/

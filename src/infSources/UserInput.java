@@ -86,9 +86,13 @@ public class UserInput implements ExperimentElement {
 	
 	/** 
 	 * Returns the {@link #input} and sets the {@link environment.Run#originalMessage original message in Run}.
+	 * If the input is empty, the {@link environment.Run#standardUnicodeMessage standard Unicode message} will be used. 
 	 * @return Returns the input String.
 	 */
 	public UniDataType doJob(byte task, UniDataType data) {
+		if (input.equals("")) {
+			input = environment.Run.standardUnicodeMessage;
+		}
 		data.setStringUnicode(input);
 		environment.Run.originalMessage = input;
 		return data;

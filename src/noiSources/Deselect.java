@@ -27,8 +27,13 @@ public class Deselect implements ExperimentElement {
 	private static Label l;
 	
 	
-	/** @see environment.ExperimentElement#doJob(byte, UniDataType)*/
-	public UniDataType doJob(byte task, UniDataType data) {return data;}
+	/** Sets the necessary message-versions in {@link environment.Run} for a flawless data analysis.
+	 * @see environment.ExperimentElement#doJob(byte, UniDataType)*/
+	public UniDataType doJob(byte task, UniDataType data) {
+		environment.Run.originalCode = data.getStringBinary();
+		environment.Run.changedCode = data.getStringBinary();
+		return data;
+	}
 
 	
 	/** @see environment.ExperimentElement#buildGui(double)*/

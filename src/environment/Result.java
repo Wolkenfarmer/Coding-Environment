@@ -83,7 +83,10 @@ public class Result {
 	 * (and if the distance is above 1 character even double-checked with the next character of the original message). 
 	 * These limitations are in order to avoid wrong positioning in highly repetitive messages. 
 	 * Still, this is not perfect, which is why complex Unicode characters should be obviated as last character in the message 
-	 * or even completely avoided in case of high change-rates.</dd>
+	 * or even completely avoided in case of high change-rates.<br>
+	 * If it is sure that every unit will define exactly one character, {@link Run#oneUnitPerChar} can be turned to true, 
+	 * which will deactivate this correction.<br>
+	 * If there is still an StringIndexOutOfBoundsException, it will be caught.</dd>
 	 * 
 	 * <dt><span class="strong">Note 2:</span></dt><dd>
 	 * Every correct character gets counted as 1 positive bit of information, every wrong character as 1 negative bit of information 
@@ -125,82 +128,92 @@ public class Result {
 		
 		for (int i = 0; i < originalMessage.length(); i++) {
 			information++;
-							
-			if (originalMessage.charAt(iOrM) != changedMessage.charAt(iChM)) {
-				changedCharsM++;
-				
-				if (originalMessage.charAt(iOrM) == correctedMessage.charAt(iCoM)) correctedCharsM++;
-				if (correctedFlaggedMessage.charAt(iCfM) == '_') flaggedCharsM++;
-				
-				if (!Run.oneUnitPerChar) {
-					try {
-						if (originalMessage.charAt(iOrM + 1) == changedMessage.charAt(iChM + 1)) {
-						} else if (originalMessage.charAt(iOrM + 1) == changedMessage.charAt(iChM + 2)
-								&& originalMessage.charAt(iOrM + 2) == changedMessage.charAt(iChM + 3)) {
-							iChM++;
-						} else if (originalMessage.charAt(iOrM + 1) == changedMessage.charAt(iChM + 3)
-								&& originalMessage.charAt(iOrM + 2) == changedMessage.charAt(iChM + 4)
-								&& originalMessage.charAt(iOrM + 2) == changedMessage.charAt(iChM + 4)) {
-							iChM += 2;
-						} else if (originalMessage.charAt(iOrM + 1) == changedMessage.charAt(iChM + 4)
-								&& originalMessage.charAt(iOrM + 2) == changedMessage.charAt(iChM + 5)
-								&& originalMessage.charAt(iOrM + 3) == changedMessage.charAt(iChM + 6)) {
-							iChM += 3;
+			
+			try {
+				if (originalMessage.charAt(iOrM) != changedMessage.charAt(iChM)) {
+					changedCharsM++;
+					
+					if (originalMessage.charAt(iOrM) == correctedMessage.charAt(iCoM)) correctedCharsM++;
+					if (correctedFlaggedMessage.charAt(iCfM) == '_') flaggedCharsM++;
+					
+					if (!Run.oneUnitPerChar) {
+						try {
+							if (originalMessage.charAt(iOrM + 1) == changedMessage.charAt(iChM + 1)) {
+							} else if (originalMessage.charAt(iOrM + 1) == changedMessage.charAt(iChM + 2)
+									&& originalMessage.charAt(iOrM + 2) == changedMessage.charAt(iChM + 3)) {
+								iChM++;
+							} else if (originalMessage.charAt(iOrM + 1) == changedMessage.charAt(iChM + 3)
+									&& originalMessage.charAt(iOrM + 2) == changedMessage.charAt(iChM + 4)
+									&& originalMessage.charAt(iOrM + 2) == changedMessage.charAt(iChM + 4)) {
+								iChM += 2;
+							} else if (originalMessage.charAt(iOrM + 1) == changedMessage.charAt(iChM + 4)
+									&& originalMessage.charAt(iOrM + 2) == changedMessage.charAt(iChM + 5)
+									&& originalMessage.charAt(iOrM + 3) == changedMessage.charAt(iChM + 6)) {
+								iChM += 3;
+							}
+						} catch (StringIndexOutOfBoundsException e) {
+							System.out.println("Result output-compare: Couldn't match the Strings "
+									+ "changed message correctly to origin for further comparing");
 						}
-					} catch (StringIndexOutOfBoundsException e) {
-						System.out.println("Result output-compare: Couldn't match the Strings "
-								+ "changed message correctly to origin for further comparing");
+						
+						try {
+							if (originalMessage.charAt(iOrM + 1) == correctedMessage.charAt(iCoM + 1)) {
+							} else if (originalMessage.charAt(iOrM + 1) == correctedMessage.charAt(iCoM + 2)
+									&& originalMessage.charAt(iOrM + 2) == correctedMessage.charAt(iCoM + 3)) {
+								iCoM++;
+							} else if (originalMessage.charAt(iOrM + 1) == correctedMessage.charAt(iCoM + 3)
+									&& originalMessage.charAt(iOrM + 2) == correctedMessage.charAt(iCoM + 4)
+									&& originalMessage.charAt(iOrM + 2) == correctedMessage.charAt(iCoM + 4)) {
+								iCoM += 2;
+							} else if (originalMessage.charAt(iOrM + 1) == correctedMessage.charAt(iCoM + 4)
+									&& originalMessage.charAt(iOrM + 2) == correctedMessage.charAt(iCoM + 5)
+									&& originalMessage.charAt(iOrM + 3) == correctedMessage.charAt(iCoM + 6)) {
+								iCoM += 3;
+							}
+						} catch (StringIndexOutOfBoundsException e) {
+							System.out.println("Result output-compare: Couldn't match the Strings "
+									+ "corrected message correctly to origin for further comparing");
+						}
+						
+						try {
+							if (originalMessage.charAt(iOrM + 1) == correctedFlaggedMessage.charAt(iCfM + 1)) {
+							} else if (originalMessage.charAt(iOrM + 1) == correctedFlaggedMessage.charAt(iCfM + 2)
+									&& originalMessage.charAt(iOrM + 2) == correctedFlaggedMessage.charAt(iCfM + 3)) {
+								iCfM++;
+							} else if (originalMessage.charAt(iOrM + 1) == correctedFlaggedMessage.charAt(iCfM + 3)
+									&& originalMessage.charAt(iOrM + 2) == correctedFlaggedMessage.charAt(iCfM + 4)) {
+								iCfM += 2;
+							} else if (originalMessage.charAt(iOrM + 1) == correctedFlaggedMessage.charAt(iCfM + 4)
+									&& originalMessage.charAt(iOrM + 2) == correctedFlaggedMessage.charAt(iCfM + 5)
+									&& originalMessage.charAt(iOrM + 3) == correctedFlaggedMessage.charAt(iCfM + 6)) {
+								iCfM += 3;
+							}
+						} catch (StringIndexOutOfBoundsException e) {
+							System.out.println("Result output-compare: Couldn't match the Strings "
+									+ "corrected flagged message correctly to origin for further comparing");
+						}
 					}
 					
-					try {
-						if (originalMessage.charAt(iOrM + 1) == correctedMessage.charAt(iCoM + 1)) {
-						} else if (originalMessage.charAt(iOrM + 1) == correctedMessage.charAt(iCoM + 2)
-								&& originalMessage.charAt(iOrM + 2) == correctedMessage.charAt(iCoM + 3)) {
-							iCoM++;
-						} else if (originalMessage.charAt(iOrM + 1) == correctedMessage.charAt(iCoM + 3)
-								&& originalMessage.charAt(iOrM + 2) == correctedMessage.charAt(iCoM + 4)
-								&& originalMessage.charAt(iOrM + 2) == correctedMessage.charAt(iCoM + 4)) {
-							iCoM += 2;
-						} else if (originalMessage.charAt(iOrM + 1) == correctedMessage.charAt(iCoM + 4)
-								&& originalMessage.charAt(iOrM + 2) == correctedMessage.charAt(iCoM + 5)
-								&& originalMessage.charAt(iOrM + 3) == correctedMessage.charAt(iCoM + 6)) {
-							iCoM += 3;
-						}
-					} catch (StringIndexOutOfBoundsException e) {
-						System.out.println("Result output-compare: Couldn't match the Strings "
-								+ "corrected message correctly to origin for further comparing");
+				} else {
+					
+					if ((correctedFlaggedMessage.charAt(iCfM) == '_') && (originalMessage.charAt(iOrM) != '_')) {
+						flaggedCharsM++;
+						mistakenlyFlaggedCharsM++;
 					}
 					
-					try {
-						if (originalMessage.charAt(iOrM + 1) == correctedFlaggedMessage.charAt(iCfM + 1)) {
-						} else if (originalMessage.charAt(iOrM + 1) == correctedFlaggedMessage.charAt(iCfM + 2)
-								&& originalMessage.charAt(iOrM + 2) == correctedFlaggedMessage.charAt(iCfM + 3)) {
-							iCfM++;
-						} else if (originalMessage.charAt(iOrM + 1) == correctedFlaggedMessage.charAt(iCfM + 3)
-								&& originalMessage.charAt(iOrM + 2) == correctedFlaggedMessage.charAt(iCfM + 4)) {
-							iCfM += 2;
-						} else if (originalMessage.charAt(iOrM + 1) == correctedFlaggedMessage.charAt(iCfM + 4)
-								&& originalMessage.charAt(iOrM + 2) == correctedFlaggedMessage.charAt(iCfM + 5)
-								&& originalMessage.charAt(iOrM + 3) == correctedFlaggedMessage.charAt(iCfM + 6)) {
-							iCfM += 3;
-						}
-					} catch (StringIndexOutOfBoundsException e) {
-						System.out.println("Result output-compare: Couldn't match the Strings "
-								+ "corrected flagged message correctly to origin for further comparing");
+					if (correctedMessage.charAt(iCoM) != originalMessage.charAt(iOrM)) {
+						correctedCharsM++;
+						mistakenlyCorrectedCharsM++;
 					}
 				}
 				
-			} else {
+			} catch (StringIndexOutOfBoundsException e) {
 				
-				if ((correctedFlaggedMessage.charAt(iCfM) == '_') && (originalMessage.charAt(iOrM) != '_')) {
-					flaggedCharsM++;
-					mistakenlyFlaggedCharsM++;
-				}
-				
-				if (correctedMessage.charAt(iCoM) != originalMessage.charAt(iOrM)) {
-					correctedCharsM++;
-					mistakenlyCorrectedCharsM++;
-				}
+				System.out.println("Communication experiment exception - changed message shorter than original one and not alignable\n" + e);
+				System.out.println("\nlog: original message:              " + originalMessage);
+				System.out.println("log: original encoded code:         " + originalCode);
+				System.out.println("log: changed encoded code:          " + changedCode);
+				System.out.println("log: changed message:               " + changedMessage);
 			}
 			
 			iOrM++;

@@ -6,21 +6,24 @@ package environment;
  * @see #run(ExperimentElement, ExperimentElement, ExperimentElement, ExperimentElement) See run() for more information.
  */
 public class Run {
+	/** Saves the number of times the communication experiment should be repeated before evaluation. 
+	 * This is how often the experiment will be run if {@link environment.pages.Homepage#bConButRun run} gets pressed.
+	 * Currently this variable can only be set manually.*/
+	public static int repeat = 10000;
+	/** Defines the interpretation rule for message-version-comparison in {@link Result}. 
+	 * If set to true, no check-position corrections will be made. 
+	 * This is only recommended if just basic characters got used in the example of Unicode text 
+	 * and might improve the change-counting-accuracy a bit. Currently this variable can only be set manually.*/
+	public static boolean oneUnitPerChar = true;
 	/** The character '_' in Unicode (binary) which will replace changed but not correctable units in {@link #correctedFlaggedMessage}.
 	 * Currently this variable can only be set manually.*/
 	public static String flagSignBinary = "01011111";
 	/** The character '_' which will replace changed but not correctable units in {@link #correctedFlaggedMessage}.
 	 * Currently this variable can only be set manually.*/
 	public static char flagSignUnicode = '_';
-	/** Saves the number of times the communication experiment should be repeated before evaluation. 
-	 * This is how often the experiment will be run if {@link environment.pages.Homepage#bConButRun run} gets pressed.
+	/** The standard Unicode message, if no {@link infSources information source} got selected or it was left empty.
 	 * Currently this variable can only be set manually.*/
-	public static int repeat = 100;
-	/** Defines the interpretation rule for message-version-comparison in {@link Result}. 
-	 * If set to true, no check-position corrections will be made. 
-	 * This is only recommended if just basic characters got used in the example of Unicode text 
-	 * and might improve the change-counting-accuracy a bit. Currently this variable can only be set manually.*/
-	public static boolean oneUnitPerChar = true;
+	public static String standardUnicodeMessage = "Hello World!";
 	
 	/** The original Message, which neither got en- / decoded or changed by a noise source. 
 	 * It gets set by the {@link infSources information source}. */
@@ -52,7 +55,6 @@ public class Run {
 	 */
 	public static void run(ExperimentElement infSource, ExperimentElement prePost, ExperimentElement enDecoder, ExperimentElement noiSource) {
 		UniDataType data = new UniDataType();
-		data.setStringUnicode("Hello world!");
 				
 		for (int i = 0; i < repeat; i++) {
 			data = infSource.doJob((byte) 0, data);
