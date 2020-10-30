@@ -263,7 +263,7 @@ public class Homepage {
 			        }
 			    });
 			    
-			    String[][] mockdata = new String[10][2];
+			    String[][] mockdata = new String[1][2];
 				for (int i = 0; i < mockdata.length; i++) {
 					mockdata[i][0] = "Aspect...";
 					mockdata[i][1] = "Value...";

@@ -79,14 +79,16 @@ public class Result {
 	 * or a at first harmless change in this regard triggers a flag-algorithm, 
 	 * which is why none message-version can be directly aligned to the other one and each version has it's own check-position.
 	 * They get corrected by checking where the next (or two next) character(s) of the original message can be found on the versions. 
-	 * However, currently only the next 4 and not previous characters get checked 
-	 * (and if the distance is above 1 character even double-checked with the next character of the original message). 
+	 * However, currently only the next 4 and 1 previous characters get double checked (2 characters have to align afterwards correctly) 
+	 * (and if the distance is above 1 character even triple-checked with the next next character of the original message). 
 	 * These limitations are in order to avoid wrong positioning in highly repetitive messages. 
-	 * Still, this is not perfect, which is why complex Unicode characters should be obviated as last character in the message 
+	 * Still, this is not perfect, which is why complex Unicode characters for example should be obviated as last character in the message 
 	 * or even completely avoided in case of high change-rates.<br>
 	 * If it is sure that every unit will define exactly one character, {@link Run#oneUnitPerChar} can be turned to true, 
 	 * which will deactivate this correction.<br>
-	 * If there is still an StringIndexOutOfBoundsException, it will be caught.</dd>
+	 * If there is still an StringIndexOutOfBoundsException, it will be caught.<br>
+	 * Ultimately, with a higher message length the risk of having false message check-positions increases, 
+	 * which is why long messages should be avoided and instead a higher {@link Run#repeat repeat}-number should be used.</dd>
 	 * 
 	 * <dt><span class="strong">Note 2:</span></dt><dd>
 	 * Every correct character gets counted as 1 positive bit of information, every wrong character as 1 negative bit of information 
@@ -150,6 +152,9 @@ public class Result {
 									&& originalMessage.charAt(iOrM + 2) == changedMessage.charAt(iChM + 5)
 									&& originalMessage.charAt(iOrM + 3) == changedMessage.charAt(iChM + 6)) {
 								iChM += 3;
+							} else if (originalMessage.charAt(iOrM + 2) == changedMessage.charAt(iChM + 1)
+									&& originalMessage.charAt(iOrM + 3) == changedMessage.charAt(iChM + 2)) {
+								iChM--;
 							}
 						} catch (StringIndexOutOfBoundsException e) {
 							System.out.println("Result output-compare: Couldn't match the Strings "
@@ -169,6 +174,9 @@ public class Result {
 									&& originalMessage.charAt(iOrM + 2) == correctedMessage.charAt(iCoM + 5)
 									&& originalMessage.charAt(iOrM + 3) == correctedMessage.charAt(iCoM + 6)) {
 								iCoM += 3;
+							} else if (originalMessage.charAt(iOrM + 2) == correctedMessage.charAt(iChM + 1)
+									&& originalMessage.charAt(iOrM + 3) == correctedMessage.charAt(iChM + 2)) {
+								iCoM--;
 							}
 						} catch (StringIndexOutOfBoundsException e) {
 							System.out.println("Result output-compare: Couldn't match the Strings "
@@ -187,6 +195,9 @@ public class Result {
 									&& originalMessage.charAt(iOrM + 2) == correctedFlaggedMessage.charAt(iCfM + 5)
 									&& originalMessage.charAt(iOrM + 3) == correctedFlaggedMessage.charAt(iCfM + 6)) {
 								iCfM += 3;
+							} else if (originalMessage.charAt(iOrM + 2) == correctedFlaggedMessage.charAt(iChM + 1)
+									&& originalMessage.charAt(iOrM + 3) == correctedFlaggedMessage.charAt(iChM + 2)) {
+								iCfM--;
 							}
 						} catch (StringIndexOutOfBoundsException e) {
 							System.out.println("Result output-compare: Couldn't match the Strings "

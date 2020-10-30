@@ -15,9 +15,8 @@ import javafx.scene.layout.Pane;
 
 /**
  * The {@link noiSources noise source} "individual changes" which is selectable on the {@link environment.pages.NoiSourcePage noise source page}.
- * This noise source changes single bits in a byte / with "-" marked segment in a char array. 
- * It assumes, that every segment is as big as the first one and it is only / mainly designed to just switch 0 and 1 in the selected spot.
- * In addition, it works with probabilities (see {@link #changeRate}, {@link #tgChangeRate}).
+ * This noise source changes single bits in a char array. 
+ * It works with probabilities (see {@link #changeRate}, {@link #tgChangeRate}).
  * @author Wolkenfarmer
  * @see #doJob(byte, UniDataType) doJob() for further information
  */
@@ -29,70 +28,62 @@ public class IndividualChanges implements ExperimentElement {
 	/** Layout container which will be attached to {@link environment.pages.guiElements.InformationSegment}
 	 * (gets added via {@link environment.pages.guiElements.OptionButton#setOnActionW(ExperimentElement, environment.pages.SettingsPage, 
 	 * environment.pages.guiElements.InformationSegment)}).
-	 * It's content ({@link #lDescription}, {@link #rbCha100}, {@link #rbCha25}, {@link #rbCha0}) gets build in {@link #buildGui(double)}.
+	 * It's content ({@link #lDescription}, {@link #rbCha25}, {@link #rbCha15}, {@link #rbCha5}) gets build in {@link #buildGui(double)}.
 	 * When loading another page, it will be removed from the InformationSegment.
 	 * When loading the page {@link #getGui()} will be used to get the built GUI of the experiment element.*/
 	private static Pane root;
 	/** Shows whether the UI has yet to be build ({@link #buildGui}) or is already build and has only to be attached ({@link #getGui()}).*/
 	public static boolean builtGui;
 	
-	/** Saves the set probability of changing a single bit in a segment. 
-	 * 1 equals 100%, 4 25% and so on until 256, which is the smallest saveable probability at the moment, but this can easily be increased.
-	 * It gets set by {@link #tgChangeRate} and it's standard is 1.*/
-	private static float changeRate = 1;
+	/** Saves the set probability of changing a bit in the data. 
+	 * 1000 equals 0‰, 975 25‰, 900 1% and so on (a bit will be changed if a random int between 1 and 1000 is bigger 
+	 * than the this variable's value. It gets set by {@link #tgChangeRate} and it's standard is 975.*/
+	private static float changeRate = 975;
 	
 	/** Label displaying the description for this experiment element. It gets directly attached to {@link #root}.*/
 	private static Label lDescription;
 	/** The toggle group containing the different options for the {@link #changeRate change rate}. 
-	 * Connects {@link #rbCha100} and {@link #rbCha25}.*/
+	 * Connects {@link #rbCha25} and {@link #rbCha15}.*/
 	private static ToggleGroup tgChangeRate;
-	/** The radio button of {@link #tgChangeRate} which represents the change rate of 100%. It's directly attached to {@link #root}.*/
-	private static RadioButton rbCha100;
-	/** The radio button of {@link #tgChangeRate} which represents the change rate of 25%. It's directly attached to {@link #root}.*/
+	/** The radio button of {@link #tgChangeRate} which represents the {@link #changeRate change rate} of 25‰. 
+	 * It's directly attached to {@link #root}.*/
 	private static RadioButton rbCha25;
-	/** The radio button of {@link #tgChangeRate} which represents the change rate of 0%. It's directly attached to {@link #root}.*/
-	private static RadioButton rbCha0;
+	/** The radio button of {@link #tgChangeRate} which represents the {@link #changeRate change rate} of 15‰. 
+	 * It's directly attached to {@link #root}.*/
+	private static RadioButton rbCha15;
+	/** The radio button of {@link #tgChangeRate} which represents the {@link #changeRate change rate} of 5‰. 
+	 * It's directly attached to {@link #root}.*/
+	private static RadioButton rbCha5;
 	
 	
 	/** 
 	 * Modifies the input accordingly to {@link #changeRate}.
-	 * Firstly, the units' width gets calculated of the char[] (they get divided by '-'). 
-	 * Then it iterates through every unit changing a single bit per unit according to {@link #changeRate} on the way.
-	 * The '-' pieces however won't be touched due to being crucial for later decoding and 
-	 * them not being there in normal data transfers (therefore: still representative communication experiment).
+	 * It iterates through every bit of the message randomly changing single bits according to the set {@link #changeRate change rate}.
+	 * The '-' pieces dividing each unit in the {@link environment.UniDataType#charBinary char binary array} however won't be touched 
+	 * due to being crucial for later decoding and them not existing in normal data transfers 
+	 * (therefore: still representative communication experiment).
 	 * In addition, a pre-changed and post-changed version will be set as {@link environment.Run#originalCode original code} and
 	 * {@link environment.Run#changedCode changed code}.
 	 * @param task Not used for {@link noiSources noise sources}.
-	 * @param data The char[] which will be modified.
+	 * @param data The binary char[] which will be modified.
 	 * @return Returns the modified data.
 	 */
 	public UniDataType doJob(byte task, UniDataType data) {
 		char[] charBinary = data.getCharBinary();
 		environment.Run.originalCode = new String(charBinary);
-				
-		short segmentWidth = 0;
-		boolean blockDistanceFound = false;
-		while (!blockDistanceFound) {
-			if (charBinary[segmentWidth] != '-' ) {
-				segmentWidth++;
-			} else {
-				blockDistanceFound = true;
-			}
-		}
 		
 		Random random = new Random();
-		float changeRateRelative = 256 / changeRate;
-		short r;
+		int r;
 		
-		for (int i = 0; i < charBinary.length - 1; i += segmentWidth + 1) {
-			r = (short) (random.nextInt(256) + 1);
-			if (r <= changeRateRelative) {
-				short charNum = (short) random.nextInt(segmentWidth);
-				int k = i + charNum;
-				if (charBinary[k] == '1') {
-					charBinary[k] = '0';
+		for (int i = 0; i < charBinary.length - 1; i++) {
+			if (charBinary[i] == '-') i++;
+			
+			r = random.nextInt(1000) + 1;
+			if (r > changeRate) {
+				if (charBinary[i] == '1') {
+					charBinary[i] = '0';
 				} else {
-					charBinary[k] = '1';
+					charBinary[i] = '1';
 				}
 			}
 		}
@@ -110,7 +101,7 @@ public class IndividualChanges implements ExperimentElement {
 		
 		lDescription = new Label();
 		lDescription.setText("This noise source switches characters in the data individually. "
-				+ "Set below how many sections (e.g. ASCII String: one char) of the input should be affected.");
+				+ "Set below how many bits should be affected.");
 		lDescription.setFont(Main.fNormalText);
 		lDescription.setTextFill(Main.cNormal);
 		lDescription.setAlignment(Pos.TOP_LEFT);
@@ -119,41 +110,41 @@ public class IndividualChanges implements ExperimentElement {
 		lDescription.setPrefHeight(Main.calcHeightLabel(lDescription, parentWidth + 10));
 		
 		tgChangeRate = new ToggleGroup();
-			rbCha100 = new RadioButton("= 100%");
-			rbCha100.setLayoutY(lDescription.getPrefHeight() + 30);
-		    rbCha100.setToggleGroup(tgChangeRate);
-		    rbCha100.setFont(Main.fNormalText);
-		    rbCha100.setTextFill(Main.cNormal);
-		    rbCha100.setPrefWidth(parentWidth);
-		    rbCha100.setPrefHeight(Main.calcHeight(rbCha100));
-		    rbCha100.setSelected(true);
-		    rbCha100.setOnAction(new EventHandler<ActionEvent>() {
-				public void handle(ActionEvent t) {changeRate = 1;}
+			rbCha25 = new RadioButton("≈ 25‰");
+			rbCha25.setLayoutY(lDescription.getPrefHeight() + 30);
+		    rbCha25.setToggleGroup(tgChangeRate);
+		    rbCha25.setFont(Main.fNormalText);
+		    rbCha25.setTextFill(Main.cNormal);
+		    rbCha25.setPrefWidth(parentWidth);
+		    rbCha25.setPrefHeight(Main.calcHeight(rbCha25));
+		    rbCha25.setSelected(true);
+		    rbCha25.setOnAction(new EventHandler<ActionEvent>() {
+				public void handle(ActionEvent t) {changeRate = 975;}
 		    });
          
-	        rbCha25 = new RadioButton("≈ 25%");
-	        rbCha25.setLayoutY(rbCha100.getLayoutY() + rbCha100.getPrefHeight() + 15);
-	        rbCha25.setToggleGroup(tgChangeRate);
-	        rbCha25.setFont(Main.fNormalText);
-	        rbCha25.setTextFill(Main.cNormal);
-	        rbCha25.setPrefWidth(parentWidth);
-	        rbCha25.setPrefHeight(Main.calcHeight(rbCha25));
-	        rbCha25.setOnAction(new EventHandler<ActionEvent>() {
-				public void handle(ActionEvent t) {changeRate = 4;}
+	        rbCha15 = new RadioButton("≈ 15‰");
+	        rbCha15.setLayoutY(rbCha25.getLayoutY() + rbCha25.getPrefHeight() + 15);
+	        rbCha15.setToggleGroup(tgChangeRate);
+	        rbCha15.setFont(Main.fNormalText);
+	        rbCha15.setTextFill(Main.cNormal);
+	        rbCha15.setPrefWidth(parentWidth);
+	        rbCha15.setPrefHeight(Main.calcHeight(rbCha15));
+	        rbCha15.setOnAction(new EventHandler<ActionEvent>() {
+				public void handle(ActionEvent t) {changeRate = 98500;}
 		    });
 	        
-	        rbCha0 = new RadioButton("= 0%");
-	        rbCha0.setLayoutY(rbCha25.getLayoutY() + rbCha25.getPrefHeight() + 15);
-	        rbCha0.setToggleGroup(tgChangeRate);
-	        rbCha0.setFont(Main.fNormalText);
-		    rbCha0.setTextFill(Main.cNormal);
-		    rbCha0.setPrefWidth(parentWidth);
-		    rbCha0.setPrefHeight(Main.calcHeight(rbCha0));
-		    rbCha0.setOnAction(new EventHandler<ActionEvent>() {
-				public void handle(ActionEvent t) {changeRate = 257;}
+	        rbCha5 = new RadioButton("≈ 5‰");
+	        rbCha5.setLayoutY(rbCha15.getLayoutY() + rbCha15.getPrefHeight() + 15);
+	        rbCha5.setToggleGroup(tgChangeRate);
+	        rbCha5.setFont(Main.fNormalText);
+		    rbCha5.setTextFill(Main.cNormal);
+		    rbCha5.setPrefWidth(parentWidth);
+		    rbCha5.setPrefHeight(Main.calcHeight(rbCha5));
+		    rbCha5.setOnAction(new EventHandler<ActionEvent>() {
+				public void handle(ActionEvent t) {changeRate = 995;}
 		    });
         
-        root.getChildren().addAll(lDescription, rbCha100, rbCha25, rbCha0);
+        root.getChildren().addAll(lDescription, rbCha25, rbCha15, rbCha5);
         builtGui = true;
 	}
 	
