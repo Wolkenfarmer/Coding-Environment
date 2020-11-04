@@ -2,7 +2,6 @@ package environment.pages.guiElements;
 
 import environment.Main;
 import environment.pages.Homepage;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -148,7 +147,6 @@ public class ModelFactory {
 					lConSelectedItem.setTextFill(Main.cPink);
 					lConSelectedItem.setFont(Main.fSmallTextItalic);
 					lConSelectedItem.setWrapText(true);
-					lConSelectedItem.setPadding(new Insets(-5, 0, 0, 10));
 					lConSelectedItem.setPrefHeight(Main.calcHeightLabel(lConSelectedItem, modelButtonWidth));
 					
 					vbContent.getChildren().addAll(hbConName, liConDiffer, lConSelectedItemHead, lConSelectedItem);

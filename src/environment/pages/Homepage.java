@@ -180,15 +180,15 @@ public class Homepage {
 			vbHeadline = new VBox();
 			vbHeadline.setAlignment(Pos.CENTER_RIGHT);
 				lHeadlineVersion = new Label();
-				lHeadlineVersion.setText("Version 1.0");
+				lHeadlineVersion.setText("Version 0.9");
 				lHeadlineVersion.setTextFill(Main.cNormal);
 				lHeadlineVersion.setFont(Main.fNormalText);
 				lHeadlineVersion.setAlignment(Pos.TOP_RIGHT);
 				
 				lHeadlineBy = new Label();
-				lHeadlineBy.setText("by Wolkenfarmer");
+				lHeadlineBy.setText("By Wolkenfarmer");
 				lHeadlineBy.setTextFill(Main.cNormal);
-				lHeadlineBy.setFont(Main.fSmallText);
+				lHeadlineBy.setFont(Main.fSmallTextItalic);
 				lHeadlineBy.setAlignment(Pos.BOTTOM_RIGHT);
 			vbHeadline.getChildren().addAll(lHeadlineVersion, lHeadlineBy);
 		hbHeading.getChildren().addAll(lHeadline, rHeadlineSpacer, vbHeadline);
