@@ -127,7 +127,8 @@ public class Main extends Application {
 	 * This event handler is used for the direct sub-pages of the home page.*/
 	public static EventHandler<KeyEvent> krlBackHome;
 	/** Boolean which defines whether {@link Homepage#pSetModel} has to be rebuild on the next call of the page or not. 
-	 * Gets changed to true if there is a setup-change of the communication experiment from {@link InfSourcePage}, {@link EnDecoderPage} or TODO 
+	 * Gets changed to true if there is a setup-change of the communication experiment from the {@link InfSourcePage information source page}, 
+	 * the {@link EnDecoderPage en-/decoder page} or the {@link NoiSourcePage noise source page} 
 	 * and back to false when {@link #krlBackHome the page has been reloaded}.*/
 	public static boolean boUpdateSettingsModelHomepage;
 	
@@ -220,29 +221,32 @@ public class Main extends Application {
     
     /** Static reference to the information source "Deselect" in order for {@link environment.pages.InfSourcePage} to have simple access to it.*/
     public static infSources.Deselect infSource_Deselect = new infSources.Deselect();
-    /** Static reference to the information source "User input" in order for {@link environment.pages.InfSourcePage} and
-     * TODO to have simple access to it.*/
+    /** Static reference to the information source "User input" in order for {@link environment.pages.InfSourcePage}, 
+     * {@link environment.Run} and {@link environment.Result} to have simple access to it.*/
     public static UserInput infSource_UserInput = new UserInput();
-    /** Static reference to the information source "Random digit book" in order for {@link environment.pages.InfSourcePage} and 
-     * TODO to have simple access to it.*/
+    /** Static reference to the information source "Random digit book" in order for {@link environment.pages.InfSourcePage}, 
+     * {@link environment.Run} and {@link environment.Result} to have simple access to it.*/
     public static RandomDigitBook infSource_RandomDigitBook = new RandomDigitBook();
-    /** Static reference to the en- / decoder "Deselect" in order for {@link environment.pages.EnDecoderPage} to have simple access to it.*/
+    /** Static reference to the en- / decoder "Deselect" in order for {@link environment.pages.EnDecoderPage}, 
+     * {@link environment.Run} and {@link environment.Result} to have simple access to it.*/
     public static enDecoder.Deselect enDecoder_Deselect = new enDecoder.Deselect();
-    /** Static reference to the pre-en- / post-decoder "Deselect" in order for {@link environment.pages.EnDecoderPage} to have simple access to it.*/
+    /** Static reference to the pre-en- / post-decoder "Deselect" in order for {@link environment.pages.EnDecoderPage}, 
+     * {@link environment.Run} and {@link environment.Result} to have simple access to it.*/
     public static DeselectPrePost enDecoder_DeselectPrePost = new DeselectPrePost();
-    /** Static reference to the en- / decoder "ParityCheck-Code" in order for {@link environment.pages.EnDecoderPage} and
-     * TODO to have simple access to it.*/
+    /** Static reference to the en- / decoder "ParityCheck-Code" in order for {@link environment.pages.EnDecoderPage}, 
+     * {@link environment.Run} and {@link environment.Result} to have simple access to it.*/
     public static ParityCheck enDecoder_Gallager = new ParityCheck();
-    /** Static reference to the en- / decoder "RepetitionCode" in order for {@link environment.pages.EnDecoderPage} and
-     * TODO to have simple access to it.*/
+    /** Static reference to the en- / decoder "RepetitionCode" in order for {@link environment.pages.EnDecoderPage}, 
+     * {@link environment.Run} and {@link environment.Result} to have simple access to it.*/
     public static RepetitionCode enDecoder_Mock = new RepetitionCode();
-    /** Static reference to the noise source "Deselect" in order for {@link environment.pages.NoiSourcePage} to have simple access to it.*/
+    /** Static reference to the noise source "Deselect" in order for {@link environment.pages.NoiSourcePage}, 
+     * {@link environment.Run} and {@link environment.Result} to have simple access to it.*/
     public static noiSources.Deselect noiSource_Deselect = new Deselect();
-    /** Static reference to the noise source "Individual changes" in order for {@link environment.pages.NoiSourcePage} and
-     * TODO to have simple access to it.*/
+    /** Static reference to the noise source "Individual changes" in order for {@link environment.pages.NoiSourcePage}, 
+     * {@link environment.Run} and {@link environment.Result} to have simple access to it.*/
     public static IndividualChanges noiSource_IndividualChanges = new IndividualChanges();
-    /** Static reference to the noise source "Mix-up changes" in order for {@link environment.pages.NoiSourcePage} and 
-     * TODO to have simple access to it.*/
+    /** Static reference to the noise source "Mix-up changes" in order for {@link environment.pages.NoiSourcePage}, 
+     * {@link environment.Run} and {@link environment.Result} to have simple access to it.*/
     public static MixUpChanges noiSource_MixUpChanges = new MixUpChanges();
     
     

@@ -30,8 +30,8 @@ import javafx.util.Callback;
  * The home page of the application with access to every part of the program.
  * Links with {@link #bSetModSource} up to the {@link InfSourcePage information source page}, 
  * with {@link #bSetModEncoder} and {@link #bSetModDecoder} up to the {@link EnDecoderPage en- / decoder page}, 
- * with {@link #bSetModNoise} up to the {@link NoiSourcePage noise source page} and
- * with {@link #bSetModDestination} to the TODO page.
+ * with {@link #bSetModNoise} up to the {@link NoiSourcePage noise source page} and coming soon
+ * with {@link #bSetModDestination} to a TODO page.
  * See {@link #Homepage(Group)} for more information about the GUI.
  * @author Wolkenfarmer
  */
@@ -94,7 +94,7 @@ public class Homepage {
 		/** Label which displays the sub-heading "Last Results". It's part of {@link #pResults}.*/
 		private static Label lResHeading;
 		/** The table displaying the last result below {@link #lResHeading}. 
-		 * It gets the result from TODO
+		 * It gets the result from {@link environment.Result#updateResult()}.
 		 * Contains {@link #tvResTabDescription} and {@link #tvResTabValue} and is part of {@link #pResults}.
 		 * @see environment.pages.css */
 		private static TableView<String[]> tvResTable;
@@ -110,7 +110,10 @@ public class Homepage {
 		 * Contains {@link #bConButRun}, {@link #bConButSaveResult} and {@link #bConButHelp} and is part of {@link #pControls}.*/
 		private static VBox vbConButtons;
 			/** The run button of the controls segment. Uses {@link environment.Main#baGreenButton} as background.
-			 * Contains {@link #hbConButRun} and is part of {@link #vbConButtons}. Links up to TODO*/
+			 * Contains {@link #hbConButRun} and is part of {@link #vbConButtons}. 
+			 * It calls {@link environment.Run#run(environment.ExperimentElement, environment.ExperimentElement, environment.ExperimentElement, 
+			 * environment.ExperimentElement) run} with {@link environment.Main#selectedInfSource}, {@link environment.Main#selectedEnDecoder}, 
+			 * {@link environment.Main#selectedPrePost} and {@link environment.Main#selectedNoiSource}.*/
 			private static Button bConButRun;
 				/** Layout container for the buttons description. This is needed in order to align the heading the center of the button. 
 				 * Contains {@link #lConButRun} and is part of {@link #bConButRun}.*/
@@ -118,7 +121,7 @@ public class Homepage {
 					/** Label which displays {@link #bConButRun}'s description "Run". It's part of {@link #hbConButRun}.*/
 					private static Label lConButRun;
 			/** The save last results button of the controls segment. Uses {@link environment.Main#baBrownButton} as background.
-			 * Contains {@link #hbConButSaveResult} and is part of {@link #vbConButtons}. Links up to TODO*/
+			 * Contains {@link #hbConButSaveResult} and is part of {@link #vbConButtons}. It's functionality is currently a TODO .*/
 			private static Button bConButSaveResult;
 				/** Layout container for the buttons description. This is needed in order to align the heading the center of the button. 
 				 * Contains {@link #lConButSaveResult} and is part of {@link #bConButSaveResult}.*/
@@ -126,7 +129,7 @@ public class Homepage {
 					/** Label which displays {@link #bConButSaveResult}'s description "Save last result". It's part of {@link #hbConButSaveResult}.*/
 					private static Label lConButSaveResult;
 			/** The help button of the controls segment. Uses {@link environment.Main#baPurpleButton} as background.
-			 * Contains {@link #hbConButHelp} and is part of {@link #vbConButtons}. Links up to TODO*/
+			 * Contains {@link #hbConButHelp} and is part of {@link #vbConButtons}. It's functionality is currently a TODO .*/
 			private static Button bConButHelp;
 				/** Layout container for the buttons description. This is needed in order to align the heading the center of the button. 
 				 * Contains {@link #lConButHelp} and is part of {@link #bConButHelp}.*/
