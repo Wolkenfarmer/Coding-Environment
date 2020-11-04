@@ -136,7 +136,8 @@ public class Result {
 					changedCharsM++;
 					
 					if (originalMessage.charAt(iOrM) == correctedMessage.charAt(iCoM)) correctedCharsM++;
-					if (correctedFlaggedMessage.charAt(iCfM) == '_') flaggedCharsM++;
+					if (correctedFlaggedMessage.charAt(iCfM) == '_' && 
+							changedMessage.charAt(iChM) != '_' && correctedMessage.charAt(iCoM) != '_') flaggedCharsM++;
 					
 					if (!Run.oneUnitPerChar) {
 						try {

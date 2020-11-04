@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import enDecoder.DeselectPrePost;
 import enDecoder.ParityCheck;
-import enDecoder.Mock;
+import enDecoder.RepetitionCode;
 import environment.pages.EnDecoderPage;
 import environment.pages.Homepage;
 import environment.pages.InfSourcePage;
@@ -233,9 +233,9 @@ public class Main extends Application {
     /** Static reference to the en- / decoder "ParityCheck-Code" in order for {@link environment.pages.EnDecoderPage} and
      * TODO to have simple access to it.*/
     public static ParityCheck enDecoder_Gallager = new ParityCheck();
-    /** Static reference to the en- / decoder "Mock" in order for {@link environment.pages.EnDecoderPage} and
+    /** Static reference to the en- / decoder "RepetitionCode" in order for {@link environment.pages.EnDecoderPage} and
      * TODO to have simple access to it.*/
-    public static Mock enDecoder_Mock = new Mock();
+    public static RepetitionCode enDecoder_Mock = new RepetitionCode();
     /** Static reference to the noise source "Deselect" in order for {@link environment.pages.NoiSourcePage} to have simple access to it.*/
     public static noiSources.Deselect noiSource_Deselect = new Deselect();
     /** Static reference to the noise source "Individual changes" in order for {@link environment.pages.NoiSourcePage} and

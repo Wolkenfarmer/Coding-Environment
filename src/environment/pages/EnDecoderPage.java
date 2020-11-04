@@ -92,10 +92,10 @@ public class EnDecoderPage extends SettingsPage {
 		 * Can be used to deactivate the pre-en- / post-decoder.
 		 * It's part of {@link #vbOptButtons}.*/
 		private static OptionButton bOptButDeselect;
-		/** The button showing the {@link enDecoder.ParityCheck ParityCheck-Coder} option under {@link #pOptions option}. 
+		/** The button showing the {@link enDecoder.ParityCheck Binary Parity Check} option under {@link #pOptions option}. 
 		 * It's part of {@link #vbOptButtons}.*/
 		private static OptionButton bOptButGallager;
-		/** The button showing the {@link enDecoder.Mock mock} option under {@link #pOptions option}. 
+		/** The button showing the {@link enDecoder.RepetitionCode Repetition Code} option under {@link #pOptions option}. 
 		 * It's part of {@link #vbOptButtons}.*/
 		private static OptionButton bOptButMock;
 	// Information

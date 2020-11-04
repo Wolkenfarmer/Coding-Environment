@@ -100,7 +100,7 @@ public class IndividualChanges implements ExperimentElement {
 		root.setPrefWidth(parentWidth);
 		
 		lDescription = new Label();
-		lDescription.setText("This noise source switches characters in the data individually. "
+		lDescription.setText("This noise source switches single bits in the data. "
 				+ "Set below how many bits should be affected.");
 		lDescription.setFont(Main.fNormalText);
 		lDescription.setTextFill(Main.cNormal);

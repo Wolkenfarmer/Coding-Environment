@@ -44,13 +44,14 @@ public class ParityCheck implements ExperimentElement {
 	 * It gets set by {@link #rbParSimple} and {@link #rbParCross} and its default is false.*/
 	private static boolean boCrossPC;
 	/** Saves how many units (most likely bytes) will be between each parity check unit.
-	 * Gets used in {@link #doJob(byte, UniDataType)}. E.g. with 4:
+	 * Gets used in {@link #doJob(byte, UniDataType)}. E.g. with 4:<br>
 	 * _011000011 ((encoded) Byte 1)<br>
 	 * _011000101 ((encoded) Byte 2)<br>
 	 * _011000110 ((encoded) Byte 3)<br>
 	 * _011001001 ((encoded) Byte 4)<br>
 	 * _000001001 (Correction unit)<br>
-	 * _011001001 ((encoded) Byte 1)*/
+	 * _011001001 ((encoded) Byte 1)<br><br>
+	 * Currently this variable can only be set manually.*/
 	private static short crossPCDistance = 4;
 
 	/** Label displaying the description for this experiment element. It gets directly attached to {@link #root}.*/
@@ -67,12 +68,13 @@ public class ParityCheck implements ExperimentElement {
 	
 	
 	/** 
-	 * While encoding (task = 0) attaches parity bits or whole parity units to each unit of the input (divided by '-') 
+	 * Does the en- and decoding of the message with error detection and correction.<br>
+	 * While encoding (task = 0) it attaches parity bits or whole parity units to each unit of the input (divided by '-') 
 	 * and while decoding (task = 1) checks whether the parity bits and parity units still sum up correctly 
 	 * and otherwise detects or even corrects the made changes and ultimately reverses the changes made while encoding.
-	 * It either does a simple binary parity check or a cross binary parity check depending on {@link #boCrossPC}.
+	 * It either does a simple binary parity check or a cross binary parity check depending on {@link #boCrossPC}.<br>
 	 * In addition, a copy of the data with no corrected or flagged units will be decoded 
-	 * and set as {@link environment.Run#changedMessage} via {@link #reverseEncoding(String[])}, as well as a version of the decoded data with only corrected 
+	 * and set as {@link environment.Run#changedMessage} via {@link #decodeSimple(String[])}, as well as a version of the decoded data with only corrected 
 	 * and not flagged units as {@link environment.Run#changedMessage} and the decoded data with flagged and corrected units as
 	 * {@link environment.Run#correctedFlaggedMessage} for later comparison in the end.<br><br>
 	 * 
@@ -85,20 +87,20 @@ public class ParityCheck implements ExperimentElement {
 	 * 
 	 * <dt><span class="strong">Decoding:</span></dt><dd>
 	 * <strong>Simple:</strong> Checks whether there is still an even number of ones in every unit and if not, flags the character. 
-	 * In addition, it reverses the changes made while encoding (not via {@link #reverseEncoding(String[])} for better performance).<br>
+	 * In addition, it reverses the changes made while encoding (not via {@link #decodeSimple(String[])} for better performance).<br>
 	 * <strong>Cross:</strong> Checks whether there is still an even number of ones in every column of the segment.
 	 * If it detect exactly one changed row (unit with non-fitting parity bit) and one changed column, it will assume there was one change
 	 * and reverses the bit of the changed column in the changed row. However, if multiple changes get detected, 
-	 * it just flags the changed rows and not the whole segment. Ultimately, {@link #reverseEncoding(String[])} gets called.<br>
+	 * it just flags the changed rows and not the whole segment. Ultimately, {@link #decodeSimple(String[])} gets called.</dd>
 	 * 
-	 * <dt><span class="strong">apiNote:</span></dt><dd>
+	 * <dt><span class="strong">Note:</span></dt><dd>
 	 * The method assumes that the length of every unit is equally long, but is not specified to UTF8 
 	 * (except for distinct {@link environment.Run#flagSignBinary flag-sign}) 
 	 * and the in-method reverse-encoding of the simple parity check decoding.</dd>
 	 * </dl>
 	 * @param task Defines whether the input (data) should be encoded (task = 0) or decoded (task = 1).
 	 * @param data The String[](binary) which will be modified.
-	 * @return Returns the modified data with flagged characters.
+	 * @return Returns the modified data with corrected and flagged characters.
 	 * @see <a href="https://en.wikipedia.org/wiki/Parity_bit">Wikipedia about a simple binary parity check</a>
 	 */
 	public UniDataType doJob(byte task, UniDataType data) {
@@ -120,7 +122,7 @@ public class ParityCheck implements ExperimentElement {
 			if (boCrossPC) {
 				int numNewUnits = message.length / crossPCDistance;
 				int addedNewUnits = 0;
-				String[] stringBATemp = new String[message.length + numNewUnits];
+				String[] code = new String[message.length + numNewUnits];
 				StringBuilder sb;
 				
 				// adding the new units to the String[](binary)
@@ -128,33 +130,34 @@ public class ParityCheck implements ExperimentElement {
 					if (i % (crossPCDistance) == 0 && i != 0) {
 						addedNewUnits++;
 					} 
-					stringBATemp[i + addedNewUnits] = message[i];
+					code[i + addedNewUnits] = message[i];
 				}
-				message = stringBATemp;
 				
 				// filling the new units
 				for (int i = 0; i < numNewUnits; i++) {
-					int[] ones = new int[message[0].length()];
+					int[] ones = new int[code[0].length()];
 					for (int k = 0; k < crossPCDistance; k++) {
-						for (int j = 0; j < message[0].length(); j++) {
-							if (message[k + (i * crossPCDistance) + i].charAt(j) == '1') {
+						for (int j = 0; j < code[0].length(); j++) {
+							if (code[k + (i * crossPCDistance) + i].charAt(j) == '1') {
 								ones[j]++;
 							}
 						}
 					}
 					
 					sb = new StringBuilder();
-					for (int k = 0; k < message[0].length(); k++) {
+					for (int k = 0; k < code[0].length(); k++) {
 						if (ones[k] % 2 == 1) {
 							sb.append('1');
 						} else {
 							sb.append('0');
 						}
 					}
-					message[crossPCDistance * (i + 1) + i] = sb.toString();
+					code[crossPCDistance * (i + 1) + i] = sb.toString();
 				}
+				data.setStringBinaryArray(code);
+			} else {
+				data.setStringBinaryArray(message);
 			}
-			data.setStringBinaryArray(message);
 			
 		} else {
 			String[] messageCF = data.getStringBinaryArray();
@@ -163,7 +166,7 @@ public class ParityCheck implements ExperimentElement {
 			UniDataType changedMessage = new UniDataType();
 			UniDataType correctedMessage = new UniDataType();
 			UniDataType correctedFlaggedMessage = new UniDataType();
-			changedMessage.setStringBinaryArray(reverseEncoding(messageCF.clone()));
+			changedMessage.setStringBinaryArray(decodeSimple(messageCF.clone()));
 			environment.Run.changedMessage = changedMessage.getStringUnicode();
 
 			
@@ -248,8 +251,8 @@ public class ParityCheck implements ExperimentElement {
 				}
 				
 				
-				messageCF = reverseEncoding(messageCF);
-				messageC = reverseEncoding(messageC);
+				messageCF = decodeSimple(messageCF);
+				messageC = decodeSimple(messageC);
 			}
 			
 			correctedMessage.setStringBinaryArray(messageC);
@@ -264,37 +267,36 @@ public class ParityCheck implements ExperimentElement {
 	
 	
 	/**
-	 * Reverses the encoding made by {@link #doJob(byte, UniDataType)} (task 0). 
+	 * Reverses the encoding made by {@link #doJob(byte, UniDataType)} (task 0) with neither error detection nor correction.<br>
 	 * Checks whether {@link #boCrossPC parity cross check} was enabled during encoding and therefore either just trims every unit to 8 bits or
-	 * removed the added parity units beforehand.
+	 * additionally removes the added parity units beforehand.
 	 * 
 	 * <dl>
-	 * <dt><span class="strong">apiNote:</span></dt><dd>
-	 * It's important to note, that this decoding will only work if the native length of the units is 8 bits long as in UTF8.</dd>
+	 * <dt><span class="strong">Note:</span></dt><dd>
+	 * This decoding will only work if the native length of the units is 8 bits long as in UTF8.</dd>
 	 * </dl>
-	 * @param stringBA The encoded String[] to be decoded.
+	 * @param stringBA The encoded String[](binary) to be decoded.
 	 * @return Returns the decoded input without adding any new corrections or flags.
 	 */
-	public String[] reverseEncoding(String[] stringBA) {
+	public String[] decodeSimple(String[] stringBA) {
 		if (boCrossPC) {
 			int numNewUnits = stringBA.length / (crossPCDistance + 1);
 			int removedNewUnits = 0;
-			String[] stringBATemp = new String[stringBA.length - numNewUnits];
-			for (int i = 0; i < stringBATemp.length; i++) {
+			String[] stringBANew = new String[stringBA.length - numNewUnits];
+			for (int i = 0; i < stringBANew.length; i++) {
 				if (i % (crossPCDistance) == 0 && i != 0) {
 					removedNewUnits++;
 				} 
-				stringBATemp[i] = stringBA[i + removedNewUnits].substring(0, 8);
+				stringBANew[i] = stringBA[i + removedNewUnits].substring(0, 8);
 			}
-			stringBA = stringBATemp;
+			return stringBANew;
 			
 		} else {
 			for (int i = 0; i < stringBA.length; i++) {
 				stringBA[i] = stringBA[i].substring(0, 8);
 			}
+			return stringBA;
 		}
-		
-		return stringBA;
 	}
 	
 
@@ -304,8 +306,9 @@ public class ParityCheck implements ExperimentElement {
 		root.setPrefWidth(parentWidth);
 		
 		lDescription = new Label();
-		lDescription.setText("This en- / decoder attaches parity bits. Choose either the simple or cross parity check, "
-				+ "which are both described below");
+		lDescription.setText("This en- / decoder attaches parity bits.\n"
+				+ "Choose either the simple or the cross parity check.\n"
+				+ "The number of units for each parity unit in case of the cross parity check can currently only be set via code.");
 		lDescription.setFont(Main.fNormalText);
 		lDescription.setTextFill(Main.cNormal);
 		lDescription.setAlignment(Pos.TOP_LEFT);
