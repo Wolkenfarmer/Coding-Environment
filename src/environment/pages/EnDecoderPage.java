@@ -94,10 +94,10 @@ public class EnDecoderPage extends SettingsPage {
 		private static OptionButton bOptButDeselect;
 		/** The button showing the {@link enDecoder.ParityCheck Binary Parity Check} option under {@link #pOptions option}. 
 		 * It's part of {@link #vbOptButtons}.*/
-		private static OptionButton bOptButGallager;
+		private static OptionButton bOptButParityCheck;
 		/** The button showing the {@link enDecoder.RepetitionCode Repetition Code} option under {@link #pOptions option}. 
 		 * It's part of {@link #vbOptButtons}.*/
-		private static OptionButton bOptButMock;
+		private static OptionButton bOptButRepetitionCode;
 	// Information
 			
 	
@@ -213,17 +213,17 @@ public class EnDecoderPage extends SettingsPage {
 			vbOptButtons.setPrefWidth(pOptions.getPrefWidth());
 			vbOptButtons.setLayoutY(Main.distanceToSubheading);
 			vbOptButtons.setSpacing(20);
-				bOptButDeselect = new OptionButton(pOptions.getPrefWidth(), Main.enDecoder_DeselectPrePost.getName());
-				bOptButGallager = new OptionButton(pOptions.getPrefWidth(), Main.enDecoder_Gallager.getName());
-				bOptButMock = new OptionButton(pOptions.getPrefWidth(), Main.enDecoder_Mock.getName());
-			vbOptButtons.getChildren().addAll(bOptButDeselect, bOptButGallager, bOptButMock);
+				//bOptButDeselect = new OptionButton(pOptions.getPrefWidth(), Main.enDecoder_DeselectPrePost.getName());
+				bOptButParityCheck = new OptionButton(pOptions.getPrefWidth(), Main.enDecoder_ParityCheck.getName());
+				bOptButRepetitionCode = new OptionButton(pOptions.getPrefWidth(), Main.enDecoder_RepetitionCode.getName());
+			vbOptButtons.getChildren().addAll(bOptButParityCheck, bOptButRepetitionCode);
 	    pOptions.getChildren().addAll(lOptHeading, vbOptButtons);
 	    
 	    
 	    pInformation = new InformationSegment((byte) 1, Main.pos1 * 3, pOptions.getLayoutY(), Main.calcHeight(pOptions));
-	    	bOptButDeselect.setOnActionW(Main.enDecoder_DeselectPrePost, this, pInformation);
-		    bOptButGallager.setOnActionW(Main.enDecoder_Gallager, this, pInformation);
-		    bOptButMock.setOnActionW(Main.enDecoder_Mock, this, pInformation);
+	    	//bOptButDeselect.setOnActionW(Main.enDecoder_DeselectPrePost, this, pInformation);
+		    bOptButParityCheck.setOnActionW(Main.enDecoder_ParityCheck, this, pInformation);
+		    bOptButRepetitionCode.setOnActionW(Main.enDecoder_RepetitionCode, this, pInformation);
 		    
 		
 		addListener();

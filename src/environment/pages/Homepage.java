@@ -121,7 +121,8 @@ public class Homepage {
 					/** Label which displays {@link #bConButRun}'s description "Run". It's part of {@link #hbConButRun}.*/
 					private static Label lConButRun;
 			/** The save last results button of the controls segment. Uses {@link environment.Main#baBrownButton} as background.
-			 * Contains {@link #hbConButSaveResult} and is part of {@link #vbConButtons}. It's functionality is currently a TODO .*/
+			 * Contains {@link #hbConButSaveResult} and is part of {@link #vbConButtons}. It's functionality is currently a TODO and 
+			 * therefore the button is invisible.*/
 			private static Button bConButSaveResult;
 				/** Layout container for the buttons description. This is needed in order to align the heading the center of the button. 
 				 * Contains {@link #lConButSaveResult} and is part of {@link #bConButSaveResult}.*/
@@ -129,7 +130,8 @@ public class Homepage {
 					/** Label which displays {@link #bConButSaveResult}'s description "Save last result". It's part of {@link #hbConButSaveResult}.*/
 					private static Label lConButSaveResult;
 			/** The help button of the controls segment. Uses {@link environment.Main#baPurpleButton} as background.
-			 * Contains {@link #hbConButHelp} and is part of {@link #vbConButtons}. It's functionality is currently a TODO .*/
+			 * Contains {@link #hbConButHelp} and is part of {@link #vbConButtons}. It's functionality is currently a TODO and 
+			 * therefore the button is invisible.*/
 			private static Button bConButHelp;
 				/** Layout container for the buttons description. This is needed in order to align the heading the center of the button. 
 				 * Contains {@link #lConButHelp} and is part of {@link #bConButHelp}.*/
@@ -233,7 +235,7 @@ public class Homepage {
 			tvResTable = new TableView<String[]>();
 			tvResTable.setLayoutY(Main.distanceToSubheading);
 			tvResTable.setPrefHeight(Main.stageHeight - pResults.getLayoutY() - tvResTable.getLayoutY() - Main.pos1 / 3);
-			tvResTable.setMinHeight(250 - tvResTable.getLayoutY());							// Minimum height -> ends with pControls
+			tvResTable.setMinHeight(250 - tvResTable.getLayoutY());					// Minimum height -> ends with pControls (assuming 3 buttons)
 			tvResTable.setPrefWidth(Main.stageWidth / 2);
 			    tvResTabDescription = new TableColumn<>("Description");
 			    tvResTabDescription.setResizable(true);
@@ -307,6 +309,7 @@ public class Homepage {
 				bConButRun.setGraphic(hbConButRun);
 				
 				bConButSaveResult = new Button();
+				bConButSaveResult.setVisible(false);
 				bConButSaveResult.setPrefWidth(vbConButtons.getPrefWidth() - 1);
 				bConButSaveResult.setPrefHeight(50);
 				bConButSaveResult.setBackground(Main.baBrownButton);
@@ -323,6 +326,7 @@ public class Homepage {
 				bConButSaveResult.setGraphic(hbConButSaveResult);
 				
 				bConButHelp = new Button();
+				bConButHelp.setVisible(false);
 				bConButHelp.setPrefWidth(vbConButtons.getPrefWidth() - 1);
 				bConButHelp.setPrefHeight(50);
 				bConButHelp.setBackground(Main.baPurpleButton);
@@ -465,8 +469,8 @@ public class Homepage {
 		bSetModSource.setOnMouseExited(Main.evButExited);
 		bSetModNoise.setOnMouseEntered(Main.evButEntered);
 		bSetModNoise.setOnMouseExited(Main.evButExited);
-		bSetModDestination.setOnMouseEntered(Main.evButEntered);
-		bSetModDestination.setOnMouseExited(Main.evButExited);
+//		bSetModDestination.setOnMouseEntered(Main.evButEntered);
+//		bSetModDestination.setOnMouseExited(Main.evButExited);
 		
 		bSetModDecoder.setOnAction(evEnDecoderPressed);
 		bSetModDecoder.addEventHandler(MouseEvent.MOUSE_ENTERED, evEnDecoderEntered);

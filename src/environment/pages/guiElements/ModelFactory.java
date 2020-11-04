@@ -154,9 +154,9 @@ public class ModelFactory {
 					vbContent.getChildren().addAll(hbConName, liConDiffer, lConSelectedItemHead, lConSelectedItem);
 				} else {
 					lConSub = new Label();
-					lConSub.setText("compare in- & output");
+					lConSub.setText("in development");
 					lConSub.setTextFill(Main.cNormal);
-					lConSub.setFont(Main.fSmallText);
+					lConSub.setFont(Main.fSmallTextItalic);
 					lConSub.setWrapText(true);
 					lConSub.setPrefHeight(Main.calcHeightLabel(lConSub, modelButtonWidth));
 					

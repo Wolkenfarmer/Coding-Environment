@@ -235,10 +235,10 @@ public class Main extends Application {
     public static DeselectPrePost enDecoder_DeselectPrePost = new DeselectPrePost();
     /** Static reference to the en- / decoder "ParityCheck-Code" in order for {@link environment.pages.EnDecoderPage}, 
      * {@link environment.Run} and {@link environment.Result} to have simple access to it.*/
-    public static ParityCheck enDecoder_Gallager = new ParityCheck();
+    public static ParityCheck enDecoder_ParityCheck = new ParityCheck();
     /** Static reference to the en- / decoder "RepetitionCode" in order for {@link environment.pages.EnDecoderPage}, 
      * {@link environment.Run} and {@link environment.Result} to have simple access to it.*/
-    public static RepetitionCode enDecoder_Mock = new RepetitionCode();
+    public static RepetitionCode enDecoder_RepetitionCode = new RepetitionCode();
     /** Static reference to the noise source "Deselect" in order for {@link environment.pages.NoiSourcePage}, 
      * {@link environment.Run} and {@link environment.Result} to have simple access to it.*/
     public static noiSources.Deselect noiSource_Deselect = new Deselect();

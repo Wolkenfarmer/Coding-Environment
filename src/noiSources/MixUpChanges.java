@@ -38,8 +38,8 @@ public class MixUpChanges implements ExperimentElement {
 		root.setPrefWidth(parentWidth);
 		
 		mock = new Label();
-		mock.setText("Mix-up-changes-GUI has been loaded!");
-		mock.setFont(environment.Main.fNormalText);
+		mock.setText("Currently in development...");
+		mock.setFont(environment.Main.fNormalTextItalic);
 		mock.setTextFill(environment.Main.cNormal);
 		mock.setPrefWidth(root.getPrefWidth());
 		mock.setWrapText(true);
