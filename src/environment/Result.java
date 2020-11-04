@@ -274,6 +274,9 @@ public class Result {
 		resultElement[1] = Main.selectedNoiSource.getName();
 		resultTableContent.add(resultElement.clone());
 		
+		resultElement[0] = "Repetitions";
+		resultElement[1] = "" + Run.repeat;
+		resultTableContent.add(resultElement.clone());
 		
 		resultElement[0] = "Changes in code";
 		resultElement[1] = "" + String.format("%.2f", changes / Run.repeat);

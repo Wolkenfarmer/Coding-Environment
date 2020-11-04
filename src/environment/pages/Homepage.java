@@ -251,7 +251,7 @@ public class Homepage {
 			    tvResTabValue.setResizable(true);
 			    tvResTabValue.setSortable(false);
 			    tvResTabDescription.setMinWidth(200);
-			    tvResTabValue.prefWidthProperty().bind(tvResTable.widthProperty().subtract(tvResTabDescription.getPrefWidth() + 20));
+			    tvResTabValue.prefWidthProperty().bind(tvResTable.widthProperty().subtract(tvResTabDescription.getMinWidth() + 20));
 			    tvResTabValue.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<String[], String>, ObservableValue<String>>() {
 			        public ObservableValue<String> call(TableColumn.CellDataFeatures<String[], String> p) {
 			            String[] x = p.getValue();
