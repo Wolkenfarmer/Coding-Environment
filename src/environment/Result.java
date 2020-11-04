@@ -86,7 +86,7 @@ public class Result {
 	 * or even completely avoided in case of high change-rates.<br>
 	 * If it is sure that every unit will define exactly one character, {@link Run#oneUnitPerChar} can be turned to true, 
 	 * which will deactivate this correction.<br>
-	 * If there is still an StringIndexOutOfBoundsException, it will be caught.<br>
+	 * If there is still an StringIndexOutOfBoundsException, it will be caught, this particular run rerun and its current data erased.<br>
 	 * Ultimately, with a higher message length the risk of having false message check-positions increases, 
 	 * which is why long messages should be avoided and instead a higher {@link Run#repeat repeat}-number should be used.</dd>
 	 * 
@@ -128,10 +128,9 @@ public class Result {
 		}
 		
 		
-		for (int i = 0; i < originalMessage.length(); i++) {
-			information++;
-			
-			try {
+		try {
+			for (int i = 0; i < originalMessage.length(); i++) {
+				information++;
 				if (originalMessage.charAt(iOrM) != changedMessage.charAt(iChM)) {
 					changedCharsM++;
 					
@@ -219,32 +218,42 @@ public class Result {
 					}
 				}
 				
-			} catch (StringIndexOutOfBoundsException e) {
-				
-				System.out.println("Communication experiment exception - changed message shorter than original one and not alignable\n" + e);
-				System.out.println("\nlog: original message:              " + originalMessage);
-				System.out.println("log: original encoded code:         " + originalCode);
-				System.out.println("log: changed encoded code:          " + changedCode);
-				System.out.println("log: changed message:               " + changedMessage);
+				iOrM++;
+				iChM++;
+				iCoM++;
+				iCfM++;
 			}
 			
-			iOrM++;
-			iChM++;
-			iCoM++;
-			iCfM++;
+		} catch (StringIndexOutOfBoundsException e) {
+			
+			Run.repeated--;
+			changesM = 0;
+			changedCharsM = 0;
+			correctedCharsM = 0;
+			mistakenlyCorrectedCharsM = 0;
+			flaggedCharsM = 0;
+			mistakenlyFlaggedCharsM = 0;
+			information = 0;
+			
+			
+			System.out.println("Communication experiment exception - changed message shorter than original one and not alignable\n" + e);
+			System.out.println("\nlog: original message:              " + originalMessage);
+			System.out.println("log: original encoded code:         " + originalCode);
+			System.out.println("log: changed encoded code:          " + changedCode);
+			System.out.println("log: changed message:               " + changedMessage);
 		}
 			
-			informationWithoutCoding += information - (changedCharsM * 2);
-			informationWithCodingCo += information - ((changedCharsM - (correctedCharsM - mistakenlyCorrectedCharsM)) * 2);
-			informationWithCodingCf += information - ((changedCharsM - (correctedCharsM - mistakenlyCorrectedCharsM)) * 2)
-					+ (flaggedCharsM - mistakenlyFlaggedCharsM) - mistakenlyFlaggedCharsM;
-			
-			changes += changesM;
-			changedChars += changedCharsM;
-			correctedChars += correctedCharsM;
-			mistakenlyCorrectedChars += mistakenlyCorrectedCharsM;
-			flaggedChars += flaggedCharsM;
-			mistakenlyFlaggedChars += mistakenlyFlaggedCharsM;
+		informationWithoutCoding += information - (changedCharsM * 2);
+		informationWithCodingCo += information - ((changedCharsM - (correctedCharsM - mistakenlyCorrectedCharsM)) * 2);
+		informationWithCodingCf += information - ((changedCharsM - (correctedCharsM - mistakenlyCorrectedCharsM)) * 2)
+				+ (flaggedCharsM - mistakenlyFlaggedCharsM) - mistakenlyFlaggedCharsM;
+		
+		changes += changesM;
+		changedChars += changedCharsM;
+		correctedChars += correctedCharsM;
+		mistakenlyCorrectedChars += mistakenlyCorrectedCharsM;
+		flaggedChars += flaggedCharsM;
+		mistakenlyFlaggedChars += mistakenlyFlaggedCharsM;
 	}
 	
 	

@@ -37,7 +37,7 @@ public class RepetitionCode implements ExperimentElement {
 	/** Saves how often each character should be repeated during encoding. Gets used in {@link #doJob(byte, UniDataType)}. E.g. with 3:<br>
 	 * 1011 would be 111000111111<br> 
 	 * Currently this variable can only be set manually.*/
-	private static int repNumber = 2;
+	private static int repNumber = 5;
 	
 	/** Label displaying the description for this experiment element. It gets directly attached to {@link #root}.*/
 	private static Label lDescription;

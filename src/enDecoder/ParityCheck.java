@@ -52,7 +52,7 @@ public class ParityCheck implements ExperimentElement {
 	 * _000001001 (Correction unit)<br>
 	 * _011001001 ((encoded) Byte 1)<br><br>
 	 * Currently this variable can only be set manually.*/
-	private static short crossPCDistance = 4;
+	private static short crossPCDistance = 8;
 
 	/** Label displaying the description for this experiment element. It gets directly attached to {@link #root}.*/
 	private static Label lDescription;
@@ -168,7 +168,7 @@ public class ParityCheck implements ExperimentElement {
 			UniDataType correctedFlaggedMessage = new UniDataType();
 			changedMessage.setStringBinaryArray(decodeSimple(messageCF.clone()));
 			environment.Run.changedMessage = changedMessage.getStringUnicode();
-
+	
 			
 			if (!boCrossPC) {
 				for (int i = 0; i < messageCF.length; i++) {

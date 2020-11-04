@@ -130,7 +130,7 @@ public class IndividualChanges implements ExperimentElement {
 	        rbCha15.setPrefWidth(parentWidth);
 	        rbCha15.setPrefHeight(Main.calcHeight(rbCha15));
 	        rbCha15.setOnAction(new EventHandler<ActionEvent>() {
-				public void handle(ActionEvent t) {changeRate = 98500;}
+				public void handle(ActionEvent t) {changeRate = 985;}
 		    });
 	        
 	        rbCha5 = new RadioButton("≈ 5‰");

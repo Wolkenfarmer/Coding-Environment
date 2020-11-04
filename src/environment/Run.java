@@ -9,7 +9,8 @@ public class Run {
 	/** Saves the number of times the communication experiment should be repeated before evaluation. 
 	 * This is how often the experiment will be run if {@link environment.pages.Homepage#bConButRun run} gets pressed.
 	 * Currently this variable can only be set manually.*/
-	public static int repeat = 1000;
+	public static int repeat = 10000;
+	public static int repeated = 0;
 	/** Defines the interpretation rule for message-version-comparison in {@link Result}. 
 	 * If set to true, no check-position corrections will be made. 
 	 * This is only recommended if just basic characters got used in the example of Unicode text 
@@ -56,7 +57,7 @@ public class Run {
 	public static void run(ExperimentElement infSource, ExperimentElement prePost, ExperimentElement enDecoder, ExperimentElement noiSource) {
 		UniDataType data = new UniDataType();
 				
-		for (int i = 0; i < repeat; i++) {
+		for (repeated = 0; repeated < repeat; repeated++) {
 			data = infSource.doJob((byte) 0, data);
 			//data = prePost.doJob((byte) 0, data);
 			data = enDecoder.doJob((byte) 0, data);
