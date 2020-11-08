@@ -5,9 +5,17 @@ import java.util.Collections;
 import java.util.List;
 
 import environment.ExperimentElement;
+import environment.Main;
 import environment.UniDataType;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
 /**
  * The {@link enDecoder en- / decoder} "Repetition Code" which is selectable on the {@link environment.pages.EnDecoderPage en- / decoder page}.
@@ -36,11 +44,17 @@ public class RepetitionCode implements ExperimentElement {
 	
 	/** Saves how often each character should be repeated during encoding. Gets used in {@link #doJob(byte, UniDataType)}. E.g. with 3:<br>
 	 * 1011 would be 111000111111<br> 
-	 * Currently this variable can only be set manually.*/
-	private static int repNumber = 5;
+	 * This variable gets set by {@link #tfRepeat} in {@link #save()}.*/
+	private static int repNumber;
 	
 	/** Label displaying the description for this experiment element. It gets directly attached to {@link #root}.*/
 	private static Label lDescription;
+	/** The text field where the user can enter the desired amount of {@link #repNumber repetitions} for the next communication experiment. 
+	 * Every character which is not a digit will automatically be replaced by "". It gets directly attached to {@link #root}.*/
+	private static TextField tfRepeat;
+	/** Label displaying the different exceptions for wrong {@link #tfRepeat} input. 
+	 * It gets updated to fit the current input in {@link #save()}. It gets directly attached to {@link #root}.*/
+	private static Label lException;
 	
 	
 	/** 
@@ -184,19 +198,68 @@ public class RepetitionCode implements ExperimentElement {
 		
 		lDescription = new Label();
 		lDescription.setText("This en-/decoder repeats each bit of the input multiple times.\n"
-				+ "The number of repetitions can currently only be set via code.");
-		lDescription.setFont(environment.Main.fNormalText);
-		lDescription.setTextFill(environment.Main.cNormal);
+				+ "The number of repetitions can be entered below. "
+				+ "The number of repetitions has to be between 1 and 20 (inclusively). "
+				+ "Please note that higher numbers can cause a considerably longer computing time.");
+		lDescription.setFont(Main.fNormalText);
+		lDescription.setTextFill(Main.cNormal);
 		lDescription.setPrefWidth(root.getPrefWidth());
 		lDescription.setWrapText(true);
+		
+		tfRepeat = new TextField();
+        tfRepeat.setFont(Main.fNormalText);
+        tfRepeat.setPromptText("Repetitions");
+        tfRepeat.setStyle("-fx-text-inner-color: WHITESMOKE;");
+        tfRepeat.setBackground(new Background(new BackgroundFill(Color.grayRgb(90), new CornerRadii(5),  null)));
+        tfRepeat.setFocusTraversable(false);
+        tfRepeat.setPrefHeight(30);
+        tfRepeat.setPrefWidth(130);
+        tfRepeat.setMaxWidth(root.getPrefWidth());
+        tfRepeat.setLayoutY(Main.calcHeightLabel(lDescription, root.getPrefWidth()));
+        tfRepeat.textProperty().addListener(new ChangeListener<String>() {
+		    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+		        if (!newValue.matches("\\d*")) {
+		        	tfRepeat.setText(newValue.replaceAll("[^\\d]", ""));
+		        }
+		    }
+		});
+        
+        lException = new Label();
+        lException.setText("Exception: The number of repetitions has to be between 1 and 20 (inclusively).\n"
+        		+ "2 got set instead of \"" + tfRepeat.getText() + "\".");
+        lException.setFont(Main.fNormalTextItalic);
+        lException.setTextFill(Main.cPink);
+        lException.setPrefWidth(root.getPrefWidth());
+        lException.setLayoutY(tfRepeat.getLayoutY() + tfRepeat.getPrefHeight() + 20);
+        lException.setWrapText(true);
+        lException.setVisible(false);
         
         builtGui = true;
-        root.getChildren().addAll(lDescription);
+        root.getChildren().addAll(lDescription, tfRepeat, lException);
 	}
 	
 	
-	/** @see environment.ExperimentElement#save()*/
+	/** 
+	 * Checks whether the given number in {@link #tfRepeat} is correct and if not, it updates {@link #lException} accordingly.
+	 * @see environment.ExperimentElement#save()*/
 	public void save() {
+		if (!tfRepeat.getText().equals("")) {
+			int newRepNumber = Integer.parseInt(tfRepeat.getText());
+			if (Integer.parseInt(tfRepeat.getText()) > 20 || Integer.parseInt(tfRepeat.getText()) < 1) {
+				repNumber = 3;
+				lException.setText("Exception: The number of repetitions has to be between 1 and 20 (inclusively).\n"
+        		+ "3 got set instead of \"" + tfRepeat.getText() + "\".");
+				lException.setVisible(true);
+			} else {
+				repNumber = newRepNumber;
+				lException.setVisible(false);
+			}
+		} else {
+			repNumber = 3;
+			lException.setText("Warning: Please enter a repetition number. 3 got set instead of nothing.");
+			lException.setVisible(true);
+		}
+		
 		System.out.println(name + " saved!");
 	}
 	
