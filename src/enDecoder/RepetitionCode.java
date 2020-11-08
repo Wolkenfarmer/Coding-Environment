@@ -80,7 +80,7 @@ public class RepetitionCode implements ExperimentElement {
 	 * Then it gets the index of the integer with the highest value and 
 	 * prints the character found in the character list with this index in the decoded message String[](binary).
 	 * This way, always the character which is represented most in each repetition block will make up corrected character in the result.<br>
-	 * However, it could still be, that there were originally multiple equal highest numbers in the integer list, 
+	 * However, it's still possible that there were originally multiple equal highest numbers in the integer list, 
 	 * meaning that multiple characters were represented equally. 
 	 * For this case, the integer list gets sorted afterwards and the two highest numbers get compared. 
 	 * If they are equal, the whole block - a unit of binary characters - will be flagged / replaced by 

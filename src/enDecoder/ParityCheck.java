@@ -71,7 +71,7 @@ public class ParityCheck implements ExperimentElement {
 	 * Does the en- and decoding of the message with error detection and correction.<br>
 	 * While encoding (task = 0) it attaches parity bits or whole parity units to each unit of the input (divided by '-') 
 	 * and while decoding (task = 1) checks whether the parity bits and parity units still sum up correctly 
-	 * and otherwise detects or even corrects the made changes and ultimately reverses the changes made while encoding.
+	 * and otherwise detects or even corrects the changes made and ultimately reverses them while encoding.
 	 * It either does a simple binary parity check or a cross binary parity check depending on {@link #boCrossPC}.<br>
 	 * In addition, a copy of the data with no corrected or flagged units will be decoded 
 	 * and set as {@link environment.Run#changedMessage} via {@link #decodeSimple(String[])}, as well as a version of the decoded data with only corrected 
@@ -80,8 +80,8 @@ public class ParityCheck implements ExperimentElement {
 	 * 
 	 * <dl>
 	 * <dt><span class="strong">Encoding</span></dt><dd>
-	 * It counts the ones of every unit (divided by '-') and attaches a parity bit at the end so that there is a even number of ones in every unit.
-	 * In the case of the cross parity check, after every {@link #crossPCDistance} units a parity unit gets attached 
+	 * It counts the ones of every unit (separated by '-') and attaches a parity bit at the end so that there is an even number of ones in every unit.
+	 * In the case of the cross-parity check, after every {@link #crossPCDistance} units a parity unit gets attached 
 	 * so that the number of ones in the first digit of every unit is even in every segment ({@link #crossPCDistance} units + parity unit).
 	 * If the  number of initial units can't be divided by {@link #crossPCDistance}, the rest will just get parity bits attached.</dd>
 	 * 
@@ -89,12 +89,12 @@ public class ParityCheck implements ExperimentElement {
 	 * <strong>Simple:</strong> Checks whether there is still an even number of ones in every unit and if not, flags the character. 
 	 * In addition, it reverses the changes made while encoding (not via {@link #decodeSimple(String[])} for better performance).<br>
 	 * <strong>Cross:</strong> Checks whether there is still an even number of ones in every column of the segment.
-	 * If it detect exactly one changed row (unit with non-fitting parity bit) and one changed column, it will assume there was one change
+	 * If it detects exactly one changed row (unit with non-fitting parity bit) and one changed column, it will assume there was one change
 	 * and reverses the bit of the changed column in the changed row. However, if multiple changes get detected, 
 	 * it just flags the changed rows and not the whole segment. Ultimately, {@link #decodeSimple(String[])} gets called.</dd>
 	 * 
 	 * <dt><span class="strong">Note:</span></dt><dd>
-	 * The method assumes that the length of every unit is equally long, but is not specified to UTF8 
+	 * The method assumes that the length of every unit is equally long but is not specified to UTF8 
 	 * (except for distinct {@link environment.Run#flagSignBinary flag-sign}) 
 	 * and the in-method reverse-encoding of the simple parity check decoding.</dd>
 	 * </dl>

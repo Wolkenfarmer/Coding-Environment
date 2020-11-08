@@ -38,7 +38,7 @@ public class Result {
 	/** Saves the number of mistakenly flagged characters in the {@link Run#correctedFlaggedMessage corrected+flagged message} 
 	 * in comparison to the {@link Run#originalMessage original message}.*/
 	private static double mistakenlyFlaggedChars;
-	/** Saves the information content of the {@link Run#originalMessage original message}, which is equivalent to it's length. 
+	/** Saves the information content of the {@link Run#originalMessage original message}, which is equivalent to its length. 
 	 * @see #addResult(String, String, String, String, String, String) addResult's Note 2 for further information on the term "information"*/
 	private static int information;
 	/** Saves the information content of the {@link Run#changedMessage changed message}.
@@ -73,16 +73,16 @@ public class Result {
 	 * <dl>
 	 * <dt><span class="strong">Note 1:</span></dt><dd>
 	 * The correction of the different check-positions is needed, because in some cases - like in Unicode - 
-	 * multiple binary units describe one character 
-	 * and if there was a special change, this originally one characters gets interpreted as multiple ones or the reverse case 
-	 * (which the program can't handle currently). Moreover, the responsible could have been corrected, 
+	 * multiple bytes describe one character 
+	 * and if there was a special change, one character gets interpreted as multiple ones or the reverse case. 
+	 * Moreover, the responsible change could have been corrected, 
 	 * or a at first harmless change in this regard triggers a flag-algorithm, 
-	 * which is why none message-version can be directly aligned to the other one and each version has it's own check-position.
+	 * which is why no message-version can be directly aligned to the other and each version has its own check-position.
 	 * They get corrected by checking where the next (or two next) character(s) of the original message can be found on the versions. 
-	 * However, currently only the next 4 and 1 previous characters get double checked (2 characters have to align afterwards correctly) 
+	 * However, only the previous character and the next 4 get double checked currently. (2 characters have to align afterwards correctly) 
 	 * (and if the distance is above 1 character even triple-checked with the next next character of the original message). 
 	 * These limitations are in order to avoid wrong positioning in highly repetitive messages. 
-	 * Still, this is not perfect, which is why complex Unicode characters for example should be obviated as last character in the message 
+	 * Still, this is not perfect, which is why for example complex Unicode characters should be obviated as last character in the message 
 	 * or even completely avoided in case of high change-rates.<br>
 	 * If it is sure that every unit will define exactly one character, {@link Run#oneUnitPerChar} can be turned to true, 
 	 * which will deactivate this correction.<br>

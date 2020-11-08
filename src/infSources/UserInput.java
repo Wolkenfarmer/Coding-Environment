@@ -211,8 +211,8 @@ public class UserInput implements ExperimentElement {
 		
         lDescription = new Label();
         lDescription.setText("Enter your text above.\n"
-        		+ "Note that only Unicode characters are supported and that the maximum lenght is 2'147'483'647 (2^30 - 1) "
-        		+ "characters in binary represantation ('a' would be 8 bits).\n"
+        		+ "Note that only Unicode characters are supported and that the maximum length is 2'147'483'647 (2^30 - 1) "
+        		+ "characters in binary representation ('a' would be 8 bits).\n"
         		+ "To check whether the given text meets the requirements you can press the \"Check input\" button above. "
         		+ "\"Checked\" is green, if the given text got recently checked and it was okay, it's brown if the text was not checked yet"
         		+ "and it's red if it got checked and the it did not meet the requirements.\n"

@@ -37,7 +37,7 @@ public class IndividualChanges implements ExperimentElement {
 	
 	/** Saves the set probability of changing a bit in the data. 
 	 * 1000 equals 0‰, 975 25‰, 900 1% and so on (a bit will be changed if a random int between 1 and 1000 is bigger 
-	 * than the this variable's value. It gets set by {@link #tgChangeRate} and it's standard is 975.*/
+	 * than this variable's value. It gets set by {@link #tgChangeRate} and its standard is 975.*/
 	private static float changeRate = 975;
 	
 	/** Label displaying the description for this experiment element. It gets directly attached to {@link #root}.*/
@@ -59,7 +59,7 @@ public class IndividualChanges implements ExperimentElement {
 	/** 
 	 * Modifies the input accordingly to {@link #changeRate}.
 	 * It iterates through every bit of the message randomly changing single bits according to the set {@link #changeRate change rate}.
-	 * The '-' pieces dividing each unit in the {@link environment.UniDataType#charBinary char binary array} however won't be touched 
+	 * However, the '-' pieces dividing each unit in the {@link environment.UniDataType#charBinary char binary array} won't be touched 
 	 * due to being crucial for later decoding and them not existing in normal data transfers 
 	 * (therefore: still representative communication experiment).
 	 * In addition, a pre-changed and post-changed version will be set as {@link environment.Run#originalCode original code} and

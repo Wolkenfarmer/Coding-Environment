@@ -10,6 +10,10 @@ public class Run {
 	 * This is how often the experiment will be run if {@link environment.pages.Homepage#bConButRun run} gets pressed.
 	 * Currently this variable can only be set manually.*/
 	public static int repeat = 10000;
+	/** Saves the number of times the communication experiment was already repeated.
+	 * Gets incremented in {@link #run(ExperimentElement, ExperimentElement, ExperimentElement, ExperimentElement)} and 
+	 * - if an evaluation had a caught error - decremented in 
+	 * {@link environment.Result#addResult(String, String, String, String, String, String)}.*/
 	public static int repeated = 0;
 	/** Defines the interpretation rule for message-version-comparison in {@link Result}. 
 	 * If set to true, no check-position corrections will be made. 
