@@ -215,7 +215,7 @@ public class RepetitionCode implements ExperimentElement {
         tfRepeat.setPrefHeight(30);
         tfRepeat.setPrefWidth(130);
         tfRepeat.setMaxWidth(root.getPrefWidth());
-        tfRepeat.setLayoutY(Main.calcHeightLabel(lDescription, root.getPrefWidth()));
+        tfRepeat.setLayoutY(Main.calcHeightLabel(lDescription, parentWidth + 10));
         tfRepeat.textProperty().addListener(new ChangeListener<String>() {
 		    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 		        if (!newValue.matches("\\d*")) {

@@ -308,7 +308,8 @@ public class ParityCheck implements ExperimentElement {
 		lDescription = new Label();
 		lDescription.setText("This en- / decoder attaches parity bits.\n"
 				+ "Choose either the simple or the cross parity check.\n"
-				+ "The number of units for each parity unit in case of the cross parity check can currently only be set via code.");
+				+ "The number of units for each parity unit in case of the cross parity check can currently only be set via code."
+				+ "Therefore it is set to eight by default.");
 		lDescription.setFont(Main.fNormalText);
 		lDescription.setTextFill(Main.cNormal);
 		lDescription.setAlignment(Pos.TOP_LEFT);

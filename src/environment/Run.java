@@ -9,7 +9,7 @@ public class Run {
 	/** Saves the number of times the communication experiment should be repeated before evaluation. 
 	 * This is how often the experiment will be run if {@link environment.pages.Homepage#bConButRun run} gets pressed.
 	 * Currently this variable can only be set manually.*/
-	public static int repeat = 10000;
+	public static int repeat = 1000;
 	/** Saves the number of times the communication experiment was already repeated.
 	 * Gets incremented in {@link #run(ExperimentElement, ExperimentElement, ExperimentElement, ExperimentElement)} and 
 	 * - if an evaluation had a caught error - decremented in 
@@ -19,7 +19,7 @@ public class Run {
 	 * If set to true, no check-position corrections will be made. 
 	 * This is only recommended if just basic characters got used in the example of Unicode text 
 	 * and might improve the change-counting-accuracy a bit. Currently this variable can only be set manually.*/
-	public static boolean oneUnitPerChar = true;
+	public static boolean oneUnitPerChar = false;
 	/** The character '_' in Unicode (binary) which will replace changed but not correctable units in {@link #correctedFlaggedMessage}.
 	 * Currently this variable can only be set manually.*/
 	public static String flagSignBinary = "01011111";
