@@ -52,7 +52,7 @@ import javafx.stage.Stage;
  * and hosts the instances to the pages and experiment elements (like {@link de.wolkenfarmer.input_handlers.UserInput}).
  * Ultimately, {@link de.wolkenfarmer.environment.pages.Home} gets called.
  * @author Wolkenfarmer
- * @version 1.0
+ * @version 0.2
 */
 public class Main extends Application {
 	/**
