@@ -1,7 +1,10 @@
 package de.wolkenfarmer.noise_sources;
 
+import de.wolkenfarmer.Constants;
 import de.wolkenfarmer.environment.ExperimentElement;
+import de.wolkenfarmer.environment.Run;
 import de.wolkenfarmer.environment.UniDataType;
+
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
@@ -31,8 +34,8 @@ public class Deselect implements ExperimentElement {
 	/** Sets the necessary message-versions in {@link de.wolkenfarmer.environment.Run} for a flawless data analysis.
 	 * @see de.wolkenfarmer.environment.ExperimentElement#doJob(byte, UniDataType)*/
 	public UniDataType doJob(byte task, UniDataType data) {
-		de.wolkenfarmer.environment.Run.originalCode = data.getStringBinary();
-		de.wolkenfarmer.environment.Run.changedCode = data.getStringBinary();
+		Run.originalCode = data.getStringBinary();
+		Run.changedCode = data.getStringBinary();
 		return data;
 	}
 
@@ -44,8 +47,8 @@ public class Deselect implements ExperimentElement {
 		
 		l = new Label();
 		l.setText("\"Save & add\" this option in order to disable the noise source for the communication experiment.");
-		l.setFont(de.wolkenfarmer.environment.Main.fNormalText);
-		l.setTextFill(de.wolkenfarmer.environment.Main.cNormal);
+		l.setFont(Constants.F_NORMAL);
+		l.setTextFill(Constants.C_NORMAL);
 		l.setPrefWidth(root.getPrefWidth());
 		l.setWrapText(true);
         

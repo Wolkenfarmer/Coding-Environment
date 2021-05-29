@@ -1,11 +1,13 @@
 package de.wolkenfarmer.environment.pages;
 
-import java.util.Arrays;
-
+import de.wolkenfarmer.Constants;
 import de.wolkenfarmer.environment.Main;
 import de.wolkenfarmer.environment.Run;
 import de.wolkenfarmer.environment.pages.gui_elements.Arrow;
 import de.wolkenfarmer.environment.pages.gui_elements.ModelFactory;
+
+import java.util.Arrays;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -63,19 +65,19 @@ public class Home {
 		 * Contains {@link #bSetModInput}, {@link #bSetModEncoder}, {@link #bSetModNoise}, {@link #bSetModDecoder} 
 		 * and {@link #bSetModDestination} */
 		private static Pane pSetModel;
-			/** Input handler button of the model in settings. Uses {@link de.wolkenfarmer.environment.Main#baNormalButton} as background.
+			/** Input handler button of the model in settings. Uses {@link de.wolkenfarmer.environment.Main#BG_GRAY} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to {@link InputHandler}.*/
 			static Button bSetModInput;
-			/** Encoder button of the model in settings. Uses {@link de.wolkenfarmer.environment.Main#baNormalButton} as background.
+			/** Encoder button of the model in settings. Uses {@link de.wolkenfarmer.environment.Main#BG_GRAY} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to {@link Transcoder}*/
 			static Button bSetModEncoder;
-			/** Noise source button of the model in settings. Uses {@link de.wolkenfarmer.environment.Main#baNormalButton} as background.
+			/** Noise source button of the model in settings. Uses {@link de.wolkenfarmer.environment.Main#BG_GRAY} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to {@link NoiseSource}*/
 			static Button bSetModNoise;
-			/** Decoder button of the model in settings. Uses {@link de.wolkenfarmer.environment.Main#baNormalButton} as background.
+			/** Decoder button of the model in settings. Uses {@link de.wolkenfarmer.environment.Main#BG_GRAY} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to {@link Transcoder}*/
 			static Button bSetModDecoder;
-			/** Destination button of the model in settings. Uses {@link de.wolkenfarmer.environment.Main#baNormalButton} as background.
+			/** Destination button of the model in settings. Uses {@link de.wolkenfarmer.environment.Main#BG_GRAY} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
 			private static Button bSetModDestination;
 			/** Relation for the model in settings. Connects {@link #bSetModInput} with {@link #bSetModEncoder}.
@@ -110,7 +112,7 @@ public class Home {
 		/** Layout container for the buttons below {@link #lConHeading}. 
 		 * Contains {@link #bConButRun}, {@link #bConButSaveResult} and {@link #bConButHelp} and is part of {@link #pControls}.*/
 		private static VBox vbConButtons;
-			/** The run button of the controls segment. Uses {@link de.wolkenfarmer.environment.Main#baGreenButton} as background.
+			/** The run button of the controls segment. Uses {@link de.wolkenfarmer.environment.Main#BG_GREEN} as background.
 			 * Contains {@link #hbConButRun} and is part of {@link #vbConButtons}. 
 			 * It calls 
 			 * {@link de.wolkenfarmer.environment.Run#run(de.wolkenfarmer.environment.ExperimentElement, 
@@ -124,7 +126,7 @@ public class Home {
 				private static HBox hbConButRun;
 					/** Label which displays {@link #bConButRun}'s description "Run". It's part of {@link #hbConButRun}.*/
 					private static Label lConButRun;
-			/** The save last results button of the controls segment. Uses {@link de.wolkenfarmer.environment.Main#baBrownButton} as background.
+			/** The save last results button of the controls segment. Uses {@link de.wolkenfarmer.environment.Main#BG_BROWN} as background.
 			 * Contains {@link #hbConButSaveResult} and is part of {@link #vbConButtons}. It's functionality is currently a TODO and 
 			 * therefore the button is invisible.*/
 			private static Button bConButSaveResult;
@@ -134,7 +136,7 @@ public class Home {
 					/** Label which displays {@link #bConButSaveResult}'s description "Save last result". 
 					 * It's part of {@link #hbConButSaveResult}.*/
 					private static Label lConButSaveResult;
-			/** The help button of the controls segment. Uses {@link de.wolkenfarmer.environment.Main#baPurpleButton} as background.
+			/** The help button of the controls segment. Uses {@link de.wolkenfarmer.environment.Main#BG_PURPLE} as background.
 			 * Contains {@link #hbConButHelp} and is part of {@link #vbConButtons}. It's functionality is currently a TODO and 
 			 * therefore the button is invisible.*/
 			private static Button bConButHelp;
@@ -175,8 +177,8 @@ public class Home {
 		hbHeading.setPrefWidth(Main.contentWidth);
 			lHeadline = new Label();
 			lHeadline.setText("Coding Environment");
-			lHeadline.setTextFill(Main.cNormal);
-			lHeadline.setFont(Main.fHeadline);
+			lHeadline.setTextFill(Constants.C_NORMAL);
+			lHeadline.setFont(Constants.F_HEADING_BOLD);
 			lHeadline.setAlignment(Pos.CENTER_LEFT);
 			
 			rHeadlineSpacer = new Region();
@@ -185,15 +187,15 @@ public class Home {
 			vbHeadline = new VBox();
 			vbHeadline.setAlignment(Pos.CENTER_RIGHT);
 				lHeadlineVersion = new Label();
-				lHeadlineVersion.setText("Version 0.9");
-				lHeadlineVersion.setTextFill(Main.cNormal);
-				lHeadlineVersion.setFont(Main.fNormalText);
+				lHeadlineVersion.setText("Version 0.2");
+				lHeadlineVersion.setTextFill(Constants.C_NORMAL);
+				lHeadlineVersion.setFont(Constants.F_NORMAL);
 				lHeadlineVersion.setAlignment(Pos.TOP_RIGHT);
 				
 				lHeadlineBy = new Label();
 				lHeadlineBy.setText("By Wolkenfarmer");
-				lHeadlineBy.setTextFill(Main.cNormal);
-				lHeadlineBy.setFont(Main.fSmallTextItalic);
+				lHeadlineBy.setTextFill(Constants.C_NORMAL);
+				lHeadlineBy.setFont(Constants.F_SMALL_ITALIC);
 				lHeadlineBy.setAlignment(Pos.BOTTOM_RIGHT);
 			vbHeadline.getChildren().addAll(lHeadlineVersion, lHeadlineBy);
 		hbHeading.getChildren().addAll(lHeadline, rHeadlineSpacer, vbHeadline);
@@ -201,15 +203,15 @@ public class Home {
 		
 		pSettings = new Pane();
 		pSettings.setLayoutX(Main.pos1);
-		pSettings.setLayoutY(hbHeading.getLayoutY() + Main.distanceToHeading);
+		pSettings.setLayoutY(hbHeading.getLayoutY() + Constants.I_DISTANCE_HEADING);
 		pSettings.setPrefWidth(Main.contentWidth);
 			lSetHeading = new Label();
 			lSetHeading.setText("Settings");
-			lSetHeading.setTextFill(Main.cNormal);
-			lSetHeading.setFont(Main.fSubheading);
+			lSetHeading.setTextFill(Constants.C_NORMAL);
+			lSetHeading.setFont(Constants.F_SUBHEADING);
 			
 			pSetModel = new Pane();
-			pSetModel.setLayoutY(Main.distanceToSubheading);
+			pSetModel.setLayoutY(Constants.I_DISTANCE_SUBHEADING);
 				cSetModFactory = new ModelFactory(Main.contentWidth); 
 				bSetModInput = cSetModFactory.buildButton(0, 0, (byte) 0);
 				bSetModEncoder = cSetModFactory.buildButton(3, 0, (byte) 1);
@@ -228,17 +230,17 @@ public class Home {
 		
 		pResults = new Pane();
 		pResults.setLayoutX(Main.pos1);
-		pResults.setLayoutY(pSettings.getLayoutY() + Main.calcHeight(pSettings) + Main.distanceToSegment);
+		pResults.setLayoutY(pSettings.getLayoutY() + Main.calcHeight(pSettings) + Constants.I_DISTANCE_SEGMENT);
 		pResults.setPrefWidth(Main.stageWidth / 2);
 			lResHeading = new Label();
 			lResHeading.setText("Last Results");
-			lResHeading.setTextFill(Main.cNormal);
-			lResHeading.setFont(Main.fSubheading);
+			lResHeading.setTextFill(Constants.C_NORMAL);
+			lResHeading.setFont(Constants.F_SUBHEADING);
 			pResults.getChildren().add(lResHeading);
 			
 			
 			tvResTable = new TableView<String[]>();
-			tvResTable.setLayoutY(Main.distanceToSubheading);
+			tvResTable.setLayoutY(Constants.I_DISTANCE_SUBHEADING);
 			tvResTable.setPrefHeight(Main.stageHeight - pResults.getLayoutY() - tvResTable.getLayoutY() - Main.pos1 / 3);
 			tvResTable.setMinHeight(250 - tvResTable.getLayoutY());					// Minimum height -> ends with pControls (assuming 3 buttons)
 			tvResTable.setPrefWidth(Main.stageWidth / 2);
@@ -290,23 +292,23 @@ public class Home {
 		pControls.setPrefWidth(Main.stageWidth / 8 * 1.5);
 			lConHeading = new Label();
 			lConHeading.setText("Controls");
-			lConHeading.setTextFill(Main.cNormal);
-			lConHeading.setFont(Main.fSubheading);			
+			lConHeading.setTextFill(Constants.C_NORMAL);
+			lConHeading.setFont(Constants.F_SUBHEADING);			
 			
 			vbConButtons = new VBox();
 			vbConButtons.setPrefWidth(pControls.getPrefWidth());
-			vbConButtons.setLayoutY(Main.distanceToSubheading);
+			vbConButtons.setLayoutY(Constants.I_DISTANCE_SUBHEADING);
 			vbConButtons.setSpacing(20);
 				bConButRun = new Button();
 				bConButRun.setPrefWidth(vbConButtons.getPrefWidth() - 1);
 				bConButRun.setPrefHeight(50);
-				bConButRun.setBackground(Main.baGreenButton);
-				bConButRun.setBorder(Main.boNormal);
+				bConButRun.setBackground(Constants.BG_GREEN);
+				bConButRun.setBorder(Constants.B_NORMAL);
 					hbConButRun = new HBox();
 						lConButRun = new Label();
 						lConButRun.setText("Run");
-						lConButRun.setTextFill(Main.cNormal);
-						lConButRun.setFont(Main.fNormalText);
+						lConButRun.setTextFill(Constants.C_NORMAL);
+						lConButRun.setFont(Constants.F_NORMAL);
 						lConButRun.setWrapText(false);
 						lConButRun.setTextAlignment(TextAlignment.CENTER);
 					hbConButRun.getChildren().add(lConButRun);
@@ -317,13 +319,13 @@ public class Home {
 				bConButSaveResult.setVisible(false);
 				bConButSaveResult.setPrefWidth(vbConButtons.getPrefWidth() - 1);
 				bConButSaveResult.setPrefHeight(50);
-				bConButSaveResult.setBackground(Main.baBrownButton);
-				bConButSaveResult.setBorder(Main.boNormal);
+				bConButSaveResult.setBackground(Constants.BG_BROWN);
+				bConButSaveResult.setBorder(Constants.B_NORMAL);
 					hbConButSaveResult = new HBox();
 						lConButSaveResult = new Label();
 						lConButSaveResult.setText("Save last result");
-						lConButSaveResult.setTextFill(Main.cNormal);
-						lConButSaveResult.setFont(Main.fNormalText);
+						lConButSaveResult.setTextFill(Constants.C_NORMAL);
+						lConButSaveResult.setFont(Constants.F_NORMAL);
 						lConButSaveResult.setWrapText(false);
 						lConButSaveResult.setTextAlignment(TextAlignment.CENTER);
 					hbConButSaveResult.getChildren().add(lConButSaveResult);
@@ -334,13 +336,13 @@ public class Home {
 				bConButHelp.setVisible(false);
 				bConButHelp.setPrefWidth(vbConButtons.getPrefWidth() - 1);
 				bConButHelp.setPrefHeight(50);
-				bConButHelp.setBackground(Main.baPurpleButton);
-				bConButHelp.setBorder(Main.boNormal);
+				bConButHelp.setBackground(Constants.BG_PURPLE);
+				bConButHelp.setBorder(Constants.B_NORMAL);
 					hbConButHelp = new HBox();
 						lConButHelp = new Label();
 						lConButHelp.setText("Help");
-						lConButHelp.setTextFill(Main.cNormal);
-						lConButHelp.setFont(Main.fNormalText);
+						lConButHelp.setTextFill(Constants.C_NORMAL);
+						lConButHelp.setFont(Constants.F_NORMAL);
 						lConButHelp.setWrapText(false);
 						lConButHelp.setTextAlignment(TextAlignment.CENTER);
 					hbConButHelp.getChildren().add(lConButHelp);
@@ -370,8 +372,8 @@ public class Home {
 				Run.run(Main.selectedInputHandler, Main.selectedPrePost, Main.selectedTranscoder, Main.selectedNoiSource);
 	        }
 	    });
-		bConButRun.setOnMouseEntered(Main.evButGreEntered);
-		bConButRun.setOnMouseExited(Main.evButGreExited);
+		bConButRun.setOnMouseEntered(Constants.EH_BUTTON_GREEN_ENTERED);
+		bConButRun.setOnMouseExited(Constants.EH_BUTTON_GREEN_EXITED);
 		
 		bConButSaveResult.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent t) {
@@ -380,12 +382,12 @@ public class Home {
 	    });
 		bConButSaveResult.setOnMouseEntered(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {
-				bConButSaveResult.setBackground(Main.baBrownFocusedButton);
+				bConButSaveResult.setBackground(Constants.BG_BROWN_DARK);
 			}
 	    });
 		bConButSaveResult.setOnMouseExited(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {
-				bConButSaveResult.setBackground(Main.baBrownButton);
+				bConButSaveResult.setBackground(Constants.BG_BROWN);
 			}
 		});
 		
@@ -396,12 +398,12 @@ public class Home {
 	    });
 		bConButHelp.setOnMouseEntered(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {
-				bConButHelp.setBackground(Main.baPurpleFocusedButton);
+				bConButHelp.setBackground(Constants.BG_PURPLE_DARK);
 			}
 	    });
 		bConButHelp.setOnMouseExited(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {
-				bConButHelp.setBackground(Main.baPurpleButton);
+				bConButHelp.setBackground(Constants.BG_PURPLE);
 			}
 		});
 	}
@@ -459,21 +461,21 @@ public class Home {
 		
 		bSetModEncoder.setOnMouseEntered(evTranscoderEntered = new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {
-				bSetModEncoder.setBackground(Main.baNormalFocusedButton);
-				bSetModDecoder.setBackground(Main.baNormalFocusedButton);
+				bSetModEncoder.setBackground(Constants.BG_GRAY_DARK);
+				bSetModDecoder.setBackground(Constants.BG_GRAY_DARK);
 			}
 		});
 		bSetModEncoder.setOnMouseExited(evTranscoderExited = new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {
-				bSetModEncoder.setBackground(Main.baNormalButton);
-				bSetModDecoder.setBackground(Main.baNormalButton);
+				bSetModEncoder.setBackground(Constants.BG_GRAY);
+				bSetModDecoder.setBackground(Constants.BG_GRAY);
 			}
 		});
 		
-		bSetModInput.setOnMouseEntered(Main.evButEntered);
-		bSetModInput.setOnMouseExited(Main.evButExited);
-		bSetModNoise.setOnMouseEntered(Main.evButEntered);
-		bSetModNoise.setOnMouseExited(Main.evButExited);
+		bSetModInput.setOnMouseEntered(Constants.EH_BUTTON_GRAY_ENTERED);
+		bSetModInput.setOnMouseExited(Constants.EH_BUTTON_GRAY_EXITED);
+		bSetModNoise.setOnMouseEntered(Constants.EH_BUTTON_GRAY_ENTERED);
+		bSetModNoise.setOnMouseExited(Constants.EH_BUTTON_GRAY_EXITED);
 //		bSetModDestination.setOnMouseEntered(Main.evButEntered);
 //		bSetModDestination.setOnMouseExited(Main.evButExited);
 		
@@ -511,7 +513,7 @@ public class Home {
 			pSetModel.getChildren().addAll(bSetModInput, bSetModEncoder, bSetModNoise, bSetModDecoder, bSetModDestination);
 			pSettings.getChildren().add(pSetModel);
 			
-			pResults.setLayoutY(pSettings.getLayoutY() + Main.calcHeight(pSettings) + Main.distanceToSegment);
+			pResults.setLayoutY(pSettings.getLayoutY() + Main.calcHeight(pSettings) + Constants.I_DISTANCE_SEGMENT);
 			tvResTable.setPrefHeight(Main.stageHeight - pResults.getLayoutY() - tvResTable.getLayoutY() - Main.pos1 / 3);
 			pControls.setLayoutY(pResults.getLayoutY());
 		}

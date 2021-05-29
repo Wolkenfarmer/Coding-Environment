@@ -1,8 +1,10 @@
 package de.wolkenfarmer.environment.pages.gui_elements;
 
+import de.wolkenfarmer.Constants;
 import de.wolkenfarmer.environment.ExperimentElement;
 import de.wolkenfarmer.environment.Main;
 import de.wolkenfarmer.environment.pages.Settings;
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -41,27 +43,28 @@ public class OverviewButton extends Button {
 	 */
 	public OverviewButton(double width, String heading, String selectedItem) {
 		this.setPrefWidth(width);
-		this.setBackground(Main.baNormalButton);
-		this.setBorder(Main.boNormal);
+		this.setBackground(Constants.BG_GRAY);
+		this.setBorder(Constants.B_NORMAL);
 			vbContent = new VBox();
 			vbContent.setSpacing(5);
 				lHeading = new Label();
 				lHeading.setText(heading);
-				lHeading.setTextFill(Main.cNormal);
-				lHeading.setFont(Main.fNormalText);
+				lHeading.setTextFill(Constants.C_NORMAL);
+				lHeading.setFont(Constants.F_NORMAL);
 				lHeading.setWrapText(true);
 				lHeading.setTextAlignment(TextAlignment.CENTER);
 				lHeading.setAlignment(Pos.CENTER);
 				
 				lSelectedItem = new Label();
 				lSelectedItem.setText(selectedItem);
-				lSelectedItem.setTextFill(Main.cPink);
-				lSelectedItem.setFont(Main.fSmallText);
+				lSelectedItem.setTextFill(Constants.C_PINK);
+				lSelectedItem.setFont(Constants.F_SMALL);
 				lSelectedItem.setWrapText(true);
 				lSelectedItem.setTextAlignment(TextAlignment.CENTER);
 				lSelectedItem.setAlignment(Pos.CENTER);
 			this.width = width - 10;
-			vbContent.setPrefHeight(Main.calcHeightLabel(lHeading, this.width) + Main.calcHeightLabel(lSelectedItem, this.width) + vbContent.getSpacing() + 8);
+			vbContent.setPrefHeight(Main.calcHeightLabel(lHeading, this.width) + Main.calcHeightLabel(lSelectedItem, this.width) + 
+					vbContent.getSpacing() + 8);
 			vbContent.getChildren().addAll(lHeading, lSelectedItem);
 			vbContent.setAlignment(Pos.CENTER);
 		this.setPrefHeight(vbContent.getPrefHeight() + 2);

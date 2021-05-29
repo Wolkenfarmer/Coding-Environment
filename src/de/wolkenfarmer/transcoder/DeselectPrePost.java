@@ -1,7 +1,9 @@
 package de.wolkenfarmer.transcoder;
 
+import de.wolkenfarmer.Constants;
 import de.wolkenfarmer.environment.ExperimentElement;
 import de.wolkenfarmer.environment.UniDataType;
+
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
@@ -41,8 +43,8 @@ public class DeselectPrePost implements ExperimentElement {
 		
 		l = new Label();
 		l.setText("\"Save & add\" this option in order to disable the pre- / post-transcoder for the communication experiment.");
-		l.setFont(de.wolkenfarmer.environment.Main.fNormalText);
-		l.setTextFill(de.wolkenfarmer.environment.Main.cNormal);
+		l.setFont(Constants.F_NORMAL);
+		l.setTextFill(Constants.C_NORMAL);
 		l.setPrefWidth(root.getPrefWidth());
 		l.setWrapText(true);
         

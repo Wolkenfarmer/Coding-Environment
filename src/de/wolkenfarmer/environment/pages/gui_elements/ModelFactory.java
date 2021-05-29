@@ -1,7 +1,9 @@
 package de.wolkenfarmer.environment.pages.gui_elements;
 
+import de.wolkenfarmer.Constants;
 import de.wolkenfarmer.environment.Main;
 import de.wolkenfarmer.environment.pages.Home;
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -81,8 +83,8 @@ public class ModelFactory {
 		b.setLayoutX(layoutZoneX * modelZoneWidth);
 		b.setLayoutY(layoutZoneY * modelZoneHeight);
 		b.setPrefWidth(modelButtonWidth);
-		b.setBackground(Main.baNormalButton);
-		b.setBorder(Main.boNormal);
+		b.setBackground(Constants.BG_GRAY);
+		b.setBorder(Constants.B_NORMAL);
 			vbContent = new VBox();
 			vbContent.setSpacing(10);
 				hbConName = new HBox();
@@ -106,8 +108,8 @@ public class ModelFactory {
 					default:
 						lConName.setText("button type not found");
 					}
-					lConName.setTextFill(Main.cNormal);
-					lConName.setFont(Main.fNormalText);
+					lConName.setTextFill(Constants.C_NORMAL);
+					lConName.setFont(Constants.F_NORMAL);
 					lConName.setWrapText(true);
 					lConName.setTextAlignment(TextAlignment.CENTER);
 					lConName.setPrefHeight(Main.calcHeightLabel(lConName, modelButtonWidth));
@@ -116,15 +118,15 @@ public class ModelFactory {
 				hbConName.getChildren().add(lConName);
 				
 				liConDiffer = new Line();
-				liConDiffer.setStroke(Main.cNormal);
+				liConDiffer.setStroke(Constants.C_NORMAL);
 				liConDiffer.setEndX(modelButtonWidth - 40);
 				liConDiffer.setTranslateX(8);
 				
 				if (type != 4) {
 					lConSelectedItemHead = new Label();
 					lConSelectedItemHead.setText("selected item:");
-					lConSelectedItemHead.setTextFill(Main.cNormal);
-					lConSelectedItemHead.setFont(Main.fSmallText);
+					lConSelectedItemHead.setTextFill(Constants.C_NORMAL);
+					lConSelectedItemHead.setFont(Constants.F_SMALL);
 					lConSelectedItemHead.setWrapText(true);
 					lConSelectedItemHead.setPrefHeight(Main.calcHeightLabel(lConSelectedItemHead, modelButtonWidth));
 					
@@ -144,8 +146,8 @@ public class ModelFactory {
 					default:
 						lConSelectedItem.setText("button type not found");
 					}
-					lConSelectedItem.setTextFill(Main.cPink);
-					lConSelectedItem.setFont(Main.fSmallTextItalic);
+					lConSelectedItem.setTextFill(Constants.C_PINK);
+					lConSelectedItem.setFont(Constants.F_SMALL_ITALIC);
 					lConSelectedItem.setWrapText(true);
 					lConSelectedItem.setPrefHeight(Main.calcHeightLabel(lConSelectedItem, modelButtonWidth));
 					
@@ -153,8 +155,8 @@ public class ModelFactory {
 				} else {
 					lConSub = new Label();
 					lConSub.setText("in development");
-					lConSub.setTextFill(Main.cNormal);
-					lConSub.setFont(Main.fSmallTextItalic);
+					lConSub.setTextFill(Constants.C_NORMAL);
+					lConSub.setFont(Constants.F_SMALL_ITALIC);
 					lConSub.setWrapText(true);
 					lConSub.setPrefHeight(Main.calcHeightLabel(lConSub, modelButtonWidth));
 					

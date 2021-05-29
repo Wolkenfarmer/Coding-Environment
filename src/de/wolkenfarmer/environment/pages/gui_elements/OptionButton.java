@@ -1,9 +1,11 @@
 package de.wolkenfarmer.environment.pages.gui_elements;
 
+import de.wolkenfarmer.Constants;
 import de.wolkenfarmer.environment.ExperimentElement;
 import de.wolkenfarmer.environment.Main;
 import de.wolkenfarmer.environment.pages.Transcoder;
 import de.wolkenfarmer.environment.pages.Settings;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -22,10 +24,10 @@ import javafx.scene.text.TextAlignment;
 public class OptionButton extends Button {
 	/**
 	 * Saves the current mode of the button and defines it's current look.<br>
-	 * 0: Not set as any element for the communication experiment. Uses {@link Main#baNormalButton}.<br>
-	 * 1: Set as the element for the communication experiment. Uses {@link Main#baGreenButton}.<br>
+	 * 0: Not set as any element for the communication experiment. Uses {@link Main#BG_GRAY}.<br>
+	 * 1: Set as the element for the communication experiment. Uses {@link Main#BG_GREEN}.<br>
 	 * 2: At the moment only used in {@link Transcoder} if the experiment element is set as pre- / post-transcoder and not as e- / decoder.
-	 * Uses {@link Main#baBrownButton}.
+	 * Uses {@link Main#BG_BROWN}.
 	 * */
 	private byte currentMode = 0;
 	/** Layout container for the content of the option button. Contains {@link #l}.*/
@@ -42,12 +44,12 @@ public class OptionButton extends Button {
 		 */
 	public OptionButton(double width, String heading) {
 		this.setPrefWidth(width);
-		this.setBorder(Main.boNormal);
+		this.setBorder(Constants.B_NORMAL);
 			hb = new HBox();
 				l = new Label();
 				l.setText(heading);
-				l.setTextFill(Main.cNormal);
-				l.setFont(Main.fNormalText);
+				l.setTextFill(Constants.C_NORMAL);
+				l.setFont(Constants.F_NORMAL);
 				l.setWrapText(true);
 				l.setTextAlignment(TextAlignment.CENTER);
 				l.setAlignment(Pos.CENTER);
@@ -105,21 +107,21 @@ public class OptionButton extends Button {
 	public void setMode(byte mode) {
 		switch (mode) {
 		case 0:
-			this.setBackground(Main.baNormalButton);
-			this.setOnMouseEntered(Main.evButEntered);
-			this.setOnMouseExited(Main.evButExited);
+			this.setBackground(Constants.BG_GRAY);
+			this.setOnMouseEntered(Constants.EH_BUTTON_GRAY_ENTERED);
+			this.setOnMouseExited(Constants.EH_BUTTON_GRAY_EXITED);
 			currentMode = 0;
 			break;
 		case 1:
-			this.setBackground(Main.baGreenButton);
-			this.setOnMouseEntered(Main.evButGreEntered);
-			this.setOnMouseExited(Main.evButGreExited);
+			this.setBackground(Constants.BG_GREEN);
+			this.setOnMouseEntered(Constants.EH_BUTTON_GREEN_ENTERED);
+			this.setOnMouseExited(Constants.EH_BUTTON_GREEN_EXITED);
 			currentMode = 1;
 			break;
 		case 2:
-			this.setBackground(Main.baBrownButton);
-			this.setOnMouseEntered(Main.evButBroEntered);
-			this.setOnMouseExited(Main.evButBroExited);
+			this.setBackground(Constants.BG_BROWN);
+			this.setOnMouseEntered(Constants.EH_BUTTON_BROWN_ENTERED);
+			this.setOnMouseExited(Constants.EH_BUTTON_BROWN_EXITED);
 			currentMode = 2;
 			break;
 		default:
@@ -128,15 +130,15 @@ public class OptionButton extends Button {
 	}
 	
 	/**
-	 * Sets the border of the to {@link Main#boSelected} if selected or {@link Main#boNormal} if not.
+	 * Sets the border of the to {@link Main#B_SELECTED} if selected or {@link Main#B_NORMAL} if not.
 	 * Gets called from {@link #setOnActionW(ExperimentElement, Settings, InformationSegment)}.
 	 * @param selected Defines whether the button is now selected or not.
 	 */
 	public void setSelected(boolean selected) {
 		if (selected) {
-			this.setBorder(Main.boSelected);
+			this.setBorder(Constants.B_SELECTED);
 		} else {
-			this.setBorder(Main.boNormal);
+			this.setBorder(Constants.B_NORMAL);
 		}
 	}
 	

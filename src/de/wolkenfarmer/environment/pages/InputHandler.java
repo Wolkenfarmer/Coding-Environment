@@ -1,10 +1,12 @@
 package de.wolkenfarmer.environment.pages;
 
+import de.wolkenfarmer.Constants;
 import de.wolkenfarmer.environment.Main;
 import de.wolkenfarmer.environment.pages.gui_elements.Arrow;
 import de.wolkenfarmer.environment.pages.gui_elements.InformationSegment;
 import de.wolkenfarmer.environment.pages.gui_elements.OptionButton;
 import de.wolkenfarmer.environment.pages.gui_elements.OverviewButton;
+
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -73,14 +75,14 @@ public class InputHandler extends Settings {
 		tfHeading.setPrefWidth(Main.contentWidth);
 			lHeaHome = new Label();
 			lHeaHome.setText("CE \\  ");
-			lHeaHome.setTextFill(Main.cNormal);
-			lHeaHome.setFont(Main.fHeadline);
+			lHeaHome.setTextFill(Constants.C_NORMAL);
+			lHeaHome.setFont(Constants.F_HEADING_BOLD);
 			lHeaHome.setAlignment(Pos.CENTER_LEFT);
 				
 			lHeaHere = new Label();
 			lHeaHere.setText("Input Handler");
-			lHeaHere.setTextFill(Main.cNormal);
-			lHeaHere.setFont(Main.fHeading);
+			lHeaHere.setTextFill(Constants.C_NORMAL);
+			lHeaHere.setFont(Constants.F_HEADING);
 			lHeaHere.setAlignment(Pos.CENTER_LEFT);
 		tfHeading.getChildren().addAll(lHeaHome, lHeaHere);
 		
@@ -88,17 +90,17 @@ public class InputHandler extends Settings {
 		
 		pOverview = new Pane();
 		pOverview.setLayoutX(Main.pos1);
-		pOverview.setLayoutY(tfHeading.getLayoutY() + Main.distanceToHeading);
+		pOverview.setLayoutY(tfHeading.getLayoutY() + Constants.I_DISTANCE_HEADING);
 		pOverview.setPrefWidth(Main.contentWidth);
 			lOveHeading = new Label();
 			lOveHeading.setText("Overview");
-			lOveHeading.setTextFill(Main.cNormal);
-			lOveHeading.setFont(Main.fSubheading);
+			lOveHeading.setTextFill(Constants.C_NORMAL);
+			lOveHeading.setFont(Constants.F_SUBHEADING);
 			
 			segmentWidth = pOverview.getPrefWidth() / 3;
 			
 			pOveModel = new Pane();
-			pOveModel.setLayoutY(Main.distanceToSubheading);
+			pOveModel.setLayoutY(Constants.I_DISTANCE_SUBHEADING);
 				bOveModInput = new OverviewButton(segmentWidth, "Input Handler", Main.selectedInputHandler.getName());
 				bOveModInput.setLayoutX(segmentWidth);
 				
@@ -112,16 +114,16 @@ public class InputHandler extends Settings {
 		
 		pOptions = new Pane();
 		pOptions.setLayoutX(Main.pos1);
-		pOptions.setLayoutY(pOverview.getLayoutY() + Main.calcHeight(pOverview) + Main.distanceToSegment);
+		pOptions.setLayoutY(pOverview.getLayoutY() + Main.calcHeight(pOverview) + Constants.I_DISTANCE_SEGMENT);
 		pOptions.setPrefWidth(Main.stageWidth / 8 * 1.5);
 			lOptHeading = new Label();
 			lOptHeading.setText("Options");
-			lOptHeading.setTextFill(Main.cNormal);
-			lOptHeading.setFont(Main.fSubheading);			
+			lOptHeading.setTextFill(Constants.C_NORMAL);
+			lOptHeading.setFont(Constants.F_SUBHEADING);			
 			
 			vbOptButtons = new VBox();
 			vbOptButtons.setPrefWidth(pOptions.getPrefWidth());
-			vbOptButtons.setLayoutY(Main.distanceToSubheading);
+			vbOptButtons.setLayoutY(Constants.I_DISTANCE_SUBHEADING);
 			vbOptButtons.setSpacing(20);
 				bOptButUserInput = new OptionButton(pOptions.getPrefWidth(), Main.inputHandler_UserInput.getName());
 				bOptButBook = new OptionButton(pOptions.getPrefWidth(), Main.inputHandler_RandomDigitBook.getName());

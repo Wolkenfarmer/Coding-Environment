@@ -1,6 +1,7 @@
 package de.wolkenfarmer.environment.pages.gui_elements;
 
-import de.wolkenfarmer.environment.Main;
+import de.wolkenfarmer.Constants;
+
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -44,16 +45,16 @@ public class Arrow extends Group {
     public Arrow getArrow(double startX, double startY, double endX, double endY, double lenghtHead, double widthHead, 
     		boolean vertical, String name, double labelWidth) {
     	line = new Line();
-    	line.setStroke(Main.cNormal);
+    	line.setStroke(Constants.C_NORMAL);
     	headL = new Line();
-    	headL.setStroke(Main.cNormal);
+    	headL.setStroke(Constants.C_NORMAL);
     	headR = new Line();
-    	headR.setStroke(Main.cNormal);
+    	headR.setStroke(Constants.C_NORMAL);
     	    	
     	hbDescription = new HBox();
     	description = new Label();
-    	description.setFont(Main.fSmallText);
-    	description.setTextFill(Main.cNormal);
+    	description.setFont(Constants.F_SMALL);
+    	description.setTextFill(Constants.C_NORMAL);
     	description.setText(name);
     	
     	

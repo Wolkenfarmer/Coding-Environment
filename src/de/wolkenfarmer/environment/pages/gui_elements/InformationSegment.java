@@ -1,11 +1,13 @@
 package de.wolkenfarmer.environment.pages.gui_elements;
 
+import de.wolkenfarmer.Constants;
 import de.wolkenfarmer.environment.ExperimentElement;
 import de.wolkenfarmer.environment.Main;
 import de.wolkenfarmer.environment.pages.Transcoder;
 import de.wolkenfarmer.environment.pages.Home;
 import de.wolkenfarmer.environment.pages.InputHandler;
 import de.wolkenfarmer.environment.pages.Settings;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -66,16 +68,16 @@ public class InformationSegment extends Pane {
 		this.setLayoutY(layoutY);
 		this.setPrefWidth(Main.stageWidth / 2);
 			bHeaSav = new Button();
-			bHeaSav.setBorder(Main.boNormal);
-			bHeaSav.setBackground(Main.baGreenButton);
+			bHeaSav.setBorder(Constants.B_NORMAL);
+			bHeaSav.setBackground(Constants.BG_GREEN);
 			bHeaSav.setMaxHeight(50);
-			bHeaSav.setOnMouseEntered(Main.evButGreEntered);
-			bHeaSav.setOnMouseExited(Main.evButGreExited);
+			bHeaSav.setOnMouseEntered(Constants.EH_BUTTON_GREEN_ENTERED);
+			bHeaSav.setOnMouseExited(Constants.EH_BUTTON_GREEN_EXITED);
 				hbHeaSavContent = new HBox();
 					lHeaSavContent = new Label();
 					lHeaSavContent.setText("save & add");
-					lHeaSavContent.setTextFill(Main.cNormal);
-					lHeaSavContent.setFont(Main.fNormalText);
+					lHeaSavContent.setTextFill(Constants.C_NORMAL);
+					lHeaSavContent.setFont(Constants.F_NORMAL);
 					lHeaSavContent.setWrapText(true);
 					lHeaSavContent.setTextAlignment(TextAlignment.CENTER);
 					lHeaSavContent.setAlignment(Pos.CENTER);
@@ -87,19 +89,19 @@ public class InformationSegment extends Pane {
 			
 			lHeading = new Label();
 			lHeading.setText("Information");
-			lHeading.setTextFill(Main.cNormal);
-			lHeading.setFont(Main.fSubheading);
+			lHeading.setTextFill(Constants.C_NORMAL);
+			lHeading.setFont(Constants.F_SUBHEADING);
 			lHeading.setPrefWidth(bHeaSav.getLayoutX());
 			
 			
 			pInfContent = new Pane();
-			pInfContent.setLayoutY(Main.distanceToSubheading);
+			pInfContent.setLayoutY(Constants.I_DISTANCE_SUBHEADING);
 			pInfContent.setPrefWidth(this.getPrefWidth());
 			pInfContent.setMinHeight(minHeight - pInfContent.getLayoutY());
 				lInfConDefault = new Label();
 				lInfConDefault.setText("No option picked");
-				lInfConDefault.setTextFill(Main.cPink);
-				lInfConDefault.setFont(Main.fNormalTextItalic);
+				lInfConDefault.setTextFill(Constants.C_PINK);
+				lInfConDefault.setFont(Constants.F_NORMAL_ITALIC);
 			pInfContent.getChildren().add(lInfConDefault);
 		this.getChildren().addAll(bHeaSav, lHeading, pInfContent);
 	}

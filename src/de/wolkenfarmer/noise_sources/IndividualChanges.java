@@ -1,10 +1,12 @@
 package de.wolkenfarmer.noise_sources;
 
-import java.util.Random;
-
+import de.wolkenfarmer.Constants;
 import de.wolkenfarmer.environment.ExperimentElement;
 import de.wolkenfarmer.environment.Main;
 import de.wolkenfarmer.environment.UniDataType;
+
+import java.util.Random;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -104,8 +106,8 @@ public class IndividualChanges implements ExperimentElement {
 		lDescription = new Label();
 		lDescription.setText("This noise source switches single bits in the data. "
 				+ "Set below how many bits should be affected.");
-		lDescription.setFont(Main.fNormalText);
-		lDescription.setTextFill(Main.cNormal);
+		lDescription.setFont(Constants.F_NORMAL);
+		lDescription.setTextFill(Constants.C_NORMAL);
 		lDescription.setAlignment(Pos.TOP_LEFT);
 		lDescription.setWrapText(true);
 		lDescription.setPrefWidth(root.getPrefWidth());
@@ -115,8 +117,8 @@ public class IndividualChanges implements ExperimentElement {
 			rbCha25 = new RadioButton("≈ 25‰");
 			rbCha25.setLayoutY(lDescription.getPrefHeight() + 30);
 		    rbCha25.setToggleGroup(tgChangeRate);
-		    rbCha25.setFont(Main.fNormalText);
-		    rbCha25.setTextFill(Main.cNormal);
+		    rbCha25.setFont(Constants.F_NORMAL);
+		    rbCha25.setTextFill(Constants.C_NORMAL);
 		    rbCha25.setPrefWidth(parentWidth);
 		    rbCha25.setPrefHeight(Main.calcHeight(rbCha25));
 		    rbCha25.setSelected(true);
@@ -127,8 +129,8 @@ public class IndividualChanges implements ExperimentElement {
 	        rbCha15 = new RadioButton("≈ 15‰");
 	        rbCha15.setLayoutY(rbCha25.getLayoutY() + rbCha25.getPrefHeight() + 15);
 	        rbCha15.setToggleGroup(tgChangeRate);
-	        rbCha15.setFont(Main.fNormalText);
-	        rbCha15.setTextFill(Main.cNormal);
+	        rbCha15.setFont(Constants.F_NORMAL);
+	        rbCha15.setTextFill(Constants.C_NORMAL);
 	        rbCha15.setPrefWidth(parentWidth);
 	        rbCha15.setPrefHeight(Main.calcHeight(rbCha15));
 	        rbCha15.setOnAction(new EventHandler<ActionEvent>() {
@@ -138,8 +140,8 @@ public class IndividualChanges implements ExperimentElement {
 	        rbCha5 = new RadioButton("≈ 5‰");
 	        rbCha5.setLayoutY(rbCha15.getLayoutY() + rbCha15.getPrefHeight() + 15);
 	        rbCha5.setToggleGroup(tgChangeRate);
-	        rbCha5.setFont(Main.fNormalText);
-		    rbCha5.setTextFill(Main.cNormal);
+	        rbCha5.setFont(Constants.F_NORMAL);
+		    rbCha5.setTextFill(Constants.C_NORMAL);
 		    rbCha5.setPrefWidth(parentWidth);
 		    rbCha5.setPrefHeight(Main.calcHeight(rbCha5));
 		    rbCha5.setOnAction(new EventHandler<ActionEvent>() {

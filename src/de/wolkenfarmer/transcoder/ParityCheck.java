@@ -1,10 +1,12 @@
 package de.wolkenfarmer.transcoder;
 
-import java.util.ArrayList;
-
+import de.wolkenfarmer.Constants;
 import de.wolkenfarmer.environment.ExperimentElement;
 import de.wolkenfarmer.environment.Main;
 import de.wolkenfarmer.environment.UniDataType;
+
+import java.util.ArrayList;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -315,8 +317,8 @@ public class ParityCheck implements ExperimentElement {
 				+ "Choose either the simple or the cross parity check.\n"
 				+ "The number of units for each parity unit in case of the cross parity check can currently only be set via code."
 				+ "Therefore it is set to eight by default.");
-		lDescription.setFont(Main.fNormalText);
-		lDescription.setTextFill(Main.cNormal);
+		lDescription.setFont(Constants.F_NORMAL);
+		lDescription.setTextFill(Constants.C_NORMAL);
 		lDescription.setAlignment(Pos.TOP_LEFT);
 		lDescription.setWrapText(true);
 		lDescription.setPrefWidth(root.getPrefWidth());
@@ -326,8 +328,8 @@ public class ParityCheck implements ExperimentElement {
 			rbParSimple = new RadioButton("Simple parity check");
 			rbParSimple.setLayoutY(lDescription.getPrefHeight() + 30);
 		    rbParSimple.setToggleGroup(tgChangeRate);
-		    rbParSimple.setFont(Main.fNormalText);
-		    rbParSimple.setTextFill(Main.cNormal);
+		    rbParSimple.setFont(Constants.F_NORMAL);
+		    rbParSimple.setTextFill(Constants.C_NORMAL);
 		    rbParSimple.setPrefWidth(parentWidth);
 		    rbParSimple.setPrefHeight(Main.calcHeight(rbParSimple));
 		    rbParSimple.setSelected(true);
@@ -338,8 +340,8 @@ public class ParityCheck implements ExperimentElement {
 	        rbParCross = new RadioButton("Cross parity check");
 	        rbParCross.setLayoutY(rbParSimple.getLayoutY() + rbParSimple.getPrefHeight() + 15);
 	        rbParCross.setToggleGroup(tgChangeRate);
-	        rbParCross.setFont(Main.fNormalText);
-	        rbParCross.setTextFill(Main.cNormal);
+	        rbParCross.setFont(Constants.F_NORMAL);
+	        rbParCross.setTextFill(Constants.C_NORMAL);
 	        rbParCross.setPrefWidth(parentWidth);
 	        rbParCross.setPrefHeight(Main.calcHeight(rbParCross));
 	        rbParCross.setOnAction(new EventHandler<ActionEvent>() {

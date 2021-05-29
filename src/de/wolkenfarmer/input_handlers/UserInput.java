@@ -1,8 +1,11 @@
 package de.wolkenfarmer.input_handlers;
 
+import de.wolkenfarmer.Constants;
 import de.wolkenfarmer.environment.ExperimentElement;
 import de.wolkenfarmer.environment.Main;
+import de.wolkenfarmer.environment.Run;
 import de.wolkenfarmer.environment.UniDataType;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -93,10 +96,10 @@ public class UserInput implements ExperimentElement {
 	 */
 	public UniDataType doJob(byte task, UniDataType data) {
 		if (input.equals("")) {
-			input = de.wolkenfarmer.environment.Run.standardUnicodeMessage;
+			input = Run.standardUnicodeMessage;
 		}
 		data.setStringUnicode(input);
-		de.wolkenfarmer.environment.Run.originalMessage = input;
+		Run.originalMessage = input;
 		return data;
 	}
 	
@@ -107,7 +110,7 @@ public class UserInput implements ExperimentElement {
 		root.setPrefWidth(parentWidth);
 		
 		taUserText = new TextArea();
-        taUserText.setFont(Main.fNormalText);
+        taUserText.setFont(Constants.F_NORMAL);
         taUserText.setPromptText("User input");
         taUserText.setStyle("-fx-text-inner-color: WHITESMOKE;");
         taUserText.setPrefHeight(200);
@@ -115,11 +118,11 @@ public class UserInput implements ExperimentElement {
         taUserText.textProperty().addListener(new ChangeListener<String>() {
 		    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 		    	if (boSavedRed == false) {
-		    		bSaved.setBackground(Main.baRedButton);
+		    		bSaved.setBackground(Constants.BG_RED);
 		    		boSavedRed = true;
 		    	}
 		    	if (boUnchecked == false) {
-		    		bChecked.setBackground(Main.baBrownButton);
+		    		bChecked.setBackground(Constants.BG_BROWN);
 		    		boUnchecked = true;
 		    	}
 		    }
@@ -134,13 +137,13 @@ public class UserInput implements ExperimentElement {
 	        w1 = root.getPrefWidth() / 4;
 	        
 	        bCheckInput = new Button();
-	        bCheckInput.setBackground(Main.baNormalButton);
-	        bCheckInput.setBorder(Main.boNormal);
+	        bCheckInput.setBackground(Constants.BG_GRAY);
+	        bCheckInput.setBorder(Constants.B_NORMAL);
 				hbCheckInput = new HBox();
 					lCheckInput = new Label();
 					lCheckInput.setText("Check input");
-					lCheckInput.setTextFill(Main.cNormal);
-					lCheckInput.setFont(Main.fNormalText);
+					lCheckInput.setTextFill(Constants.C_NORMAL);
+					lCheckInput.setFont(Constants.F_NORMAL);
 					lCheckInput.setWrapText(false);
 					lCheckInput.setTextAlignment(TextAlignment.CENTER);
 					lCheckInput.setAlignment(Pos.CENTER);
@@ -151,8 +154,8 @@ public class UserInput implements ExperimentElement {
 			bCheckInput.setPrefWidth(w + 20);
 			bCheckInput.setPrefHeight(40);
 			bCheckInput.setGraphic(hbCheckInput);
-			bCheckInput.setOnMouseEntered(Main.evButEntered);
-			bCheckInput.setOnMouseExited(Main.evButExited);
+			bCheckInput.setOnMouseEntered(Constants.EH_BUTTON_GRAY_ENTERED);
+			bCheckInput.setOnMouseExited(Constants.EH_BUTTON_GRAY_EXITED);
 			bCheckInput.setOnAction(new EventHandler<ActionEvent>() {
 				public void handle(ActionEvent t) {
 					check.setStringUnicode(taUserText.getText());
@@ -160,9 +163,9 @@ public class UserInput implements ExperimentElement {
 					check.getStringBinary();
 					String c2 = check.getStringUnicode();
 					if (c1.equals(c2)) {
-						bChecked.setBackground(Main.baGreenButton);
+						bChecked.setBackground(Constants.BG_GREEN);
 					} else {
-						bChecked.setBackground(Main.baRedButton);
+						bChecked.setBackground(Constants.BG_RED);
 					}
 					boUnchecked = false;
 		        }
@@ -172,13 +175,13 @@ public class UserInput implements ExperimentElement {
 			HBox.setHgrow(rSpacer, Priority.ALWAYS);
 			
 			bChecked = new Button();
-			bChecked.setBackground(Main.baBrownButton);
-			bChecked.setBorder(Main.boNotInteractive);
+			bChecked.setBackground(Constants.BG_BROWN);
+			bChecked.setBorder(Constants.B_NOT_INTERACTIVE);
 				hbChecked = new HBox();
 					lChecked = new Label();
 					lChecked.setText("Checked");
-					lChecked.setTextFill(Main.cLightGray);
-					lChecked.setFont(Main.fNormalTextItalic);
+					lChecked.setTextFill(Constants.C_GRAY_LIGHT);
+					lChecked.setFont(Constants.F_NORMAL_ITALIC);
 					lChecked.setWrapText(false);
 					lChecked.setTextAlignment(TextAlignment.CENTER);
 					lChecked.setAlignment(Pos.CENTER);
@@ -191,13 +194,13 @@ public class UserInput implements ExperimentElement {
 			bChecked.setGraphic(hbChecked);
 			
 			bSaved = new Button();
-			bSaved.setBackground(Main.baRedButton);
-			bSaved.setBorder(Main.boNotInteractive);
+			bSaved.setBackground(Constants.BG_RED);
+			bSaved.setBorder(Constants.B_NOT_INTERACTIVE);
 				hbSaved = new HBox();
 					lSaved = new Label();
 					lSaved.setText("Saved");
-					lSaved.setTextFill(Main.cLightGray);
-					lSaved.setFont(Main.fNormalTextItalic);
+					lSaved.setTextFill(Constants.C_GRAY_LIGHT);
+					lSaved.setFont(Constants.F_NORMAL_ITALIC);
 					lSaved.setWrapText(false);
 					lSaved.setTextAlignment(TextAlignment.CENTER);
 					lSaved.setAlignment(Pos.CENTER);
@@ -220,8 +223,8 @@ public class UserInput implements ExperimentElement {
         		+ "and it's red if it got checked and the it did not meet the requirements.\n"
         		+ "\"Saved\" is green if the text was recently saved and red if the current text was not saved yet.\n\n"
         		+ "\"https://loremipsum.de\" is highly recommend for mock-text.");	
-        lDescription.setFont(de.wolkenfarmer.environment.Main.fNormalText);
-        lDescription.setTextFill(de.wolkenfarmer.environment.Main.cNormal);
+        lDescription.setFont(Constants.F_NORMAL);
+        lDescription.setTextFill(Constants.C_NORMAL);
         lDescription.setLayoutY(hbControls.getLayoutY() + Main.calcHeight(hbControls) + 30);
         lDescription.setPrefWidth(root.getPrefWidth());
         lDescription.setPrefHeight(Main.calcHeightLabel(lDescription, lDescription.getPrefWidth()));
@@ -241,13 +244,13 @@ public class UserInput implements ExperimentElement {
 		check.getStringBinary();
 		String c2 = check.getStringUnicode();
 		if (c1.equals(c2)) {
-			bChecked.setBackground(Main.baGreenButton);
+			bChecked.setBackground(Constants.BG_GREEN);
 		} else {
-			bChecked.setBackground(Main.baRedButton);
+			bChecked.setBackground(Constants.BG_RED);
 		}
 
 		input = taUserText.getText();
-		bSaved.setBackground(Main.baGreenButton);
+		bSaved.setBackground(Constants.BG_GREEN);
 		boSavedRed = false;
 		boUnchecked = false;
 		System.out.println(name + " saved!");

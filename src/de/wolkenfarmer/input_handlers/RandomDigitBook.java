@@ -1,7 +1,9 @@
 package de.wolkenfarmer.input_handlers;
 
+import de.wolkenfarmer.Constants;
 import de.wolkenfarmer.environment.ExperimentElement;
 import de.wolkenfarmer.environment.UniDataType;
+
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
@@ -40,8 +42,8 @@ public class RandomDigitBook implements ExperimentElement {
 		
 		mock = new Label();
 		mock.setText("Currently in development...");
-		mock.setFont(de.wolkenfarmer.environment.Main.fNormalTextItalic);
-		mock.setTextFill(de.wolkenfarmer.environment.Main.cNormal);
+		mock.setFont(Constants.F_NORMAL_ITALIC);
+		mock.setTextFill(Constants.C_NORMAL);
 		mock.setPrefWidth(root.getPrefWidth());
 		mock.setWrapText(true);
         

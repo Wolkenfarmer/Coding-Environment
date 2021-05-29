@@ -1,12 +1,14 @@
 package de.wolkenfarmer.transcoder;
 
+import de.wolkenfarmer.Constants;
+import de.wolkenfarmer.environment.ExperimentElement;
+import de.wolkenfarmer.environment.Main;
+import de.wolkenfarmer.environment.UniDataType;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import de.wolkenfarmer.environment.ExperimentElement;
-import de.wolkenfarmer.environment.Main;
-import de.wolkenfarmer.environment.UniDataType;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Label;
@@ -204,13 +206,13 @@ public class RepetitionCode implements ExperimentElement {
 				+ "The number of repetitions can be entered below. "
 				+ "The number of repetitions has to be between 1 and 20 (inclusively). "
 				+ "Please note that higher numbers can cause a considerably longer computing time.");
-		lDescription.setFont(Main.fNormalText);
-		lDescription.setTextFill(Main.cNormal);
+		lDescription.setFont(Constants.F_NORMAL);
+		lDescription.setTextFill(Constants.C_NORMAL);
 		lDescription.setPrefWidth(root.getPrefWidth());
 		lDescription.setWrapText(true);
 		
 		tfRepeat = new TextField();
-        tfRepeat.setFont(Main.fNormalText);
+        tfRepeat.setFont(Constants.F_NORMAL);
         tfRepeat.setPromptText("Repetitions");
         tfRepeat.setStyle("-fx-text-inner-color: WHITESMOKE;");
         tfRepeat.setBackground(new Background(new BackgroundFill(Color.grayRgb(90), new CornerRadii(5),  null)));
@@ -230,8 +232,8 @@ public class RepetitionCode implements ExperimentElement {
         lException = new Label();
         lException.setText("Exception: The number of repetitions has to be between 1 and 20 (inclusively).\n"
         		+ "2 got set instead of \"" + tfRepeat.getText() + "\".");
-        lException.setFont(Main.fNormalTextItalic);
-        lException.setTextFill(Main.cPink);
+        lException.setFont(Constants.F_NORMAL_ITALIC);
+        lException.setTextFill(Constants.C_PINK);
         lException.setPrefWidth(root.getPrefWidth());
         lException.setLayoutY(tfRepeat.getLayoutY() + tfRepeat.getPrefHeight() + 20);
         lException.setWrapText(true);

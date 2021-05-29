@@ -1,7 +1,5 @@
 package de.wolkenfarmer.environment;
 
-import java.util.ArrayList;
-
 import de.wolkenfarmer.environment.pages.Transcoder;
 import de.wolkenfarmer.environment.pages.gui_elements.OverviewButton;
 import de.wolkenfarmer.environment.pages.Home;
@@ -15,12 +13,14 @@ import de.wolkenfarmer.noise_sources.MixUpChanges;
 import de.wolkenfarmer.transcoder.DeselectPrePost;
 import de.wolkenfarmer.transcoder.ParityCheck;
 import de.wolkenfarmer.transcoder.RepetitionCode;
+
+import java.util.ArrayList;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -30,26 +30,15 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 /**
  * Main class hosting the JavaFX Application.
  * Gets called on start of the program and is the base for the JavaFX application.
  * Builds the stage (window) with some basic setup like full screen mode or the {@link #scrollbar scroll bar} along with its calculations.
- * In addition, this class provides the program with some unified layouts like the {@link #fHeadline headline font} 
- * and hosts the instances to the pages and experiment elements (like {@link de.wolkenfarmer.input_handlers.UserInput}).
+ * In addition, this class hosts the instances to the pages and experiment elements (like {@link de.wolkenfarmer.input_handlers.UserInput}).
  * Ultimately, {@link de.wolkenfarmer.environment.pages.Home} gets called.
  * @author Wolkenfarmer
  * @version 0.2
@@ -119,8 +108,8 @@ public class Main extends Application {
 	
 	/** Input handling. This ArrayList gets filled / used in {@link #start(Stage)} by the scene listeners.*/
 	public static ArrayList<String> input = new ArrayList<String>();
-	/** Input handling. This unified event handler checks the {@link #input input} for (Esc) and closes the program when pressed.
-	 * This event handler is only used for the {@link Home home page}.
+	/** Input handling. This event handler checks the {@link #input input} for (Esc) and closes the program when pressed.
+	 * It is only used for the {@link Home home page}.
 	 * @see de.wolkenfarmer.environment.pages.Home#reload(Group, boolean) */
 	public static EventHandler<KeyEvent> krlClose;
 	/** Input handling. This event handler checks the {@link #input input} for (Esc) and passes back to the {@link Home home page} 
@@ -132,79 +121,8 @@ public class Main extends Application {
 	 * and back to false when {@link #krlBackHome the page has been reloaded}.*/
 	public static boolean boUpdateSettingsModelHomepage;
 	
-	/** Standard distance from subheadings to the content below them.*/
-	public static int distanceToHeading = 80;
-	/** Standard distance from subheadings to the content below them.*/
-	public static int distanceToSubheading = 60;
-	/** Standard distance from segments to one another.*/
-	public static int distanceToSegment = 50;
-	/** Unified referenceable color for layouts.*/
-	public static Color cNormal = Color.WHITESMOKE;
-	/** Unified referenceable color for layouts.*/
-	public static Color cPink = Color.rgb(250, 80, 130);
-	/** Unified referenceable color for layouts.*/
-	public static Color cYellow = Color.YELLOW;
-	/** Unified referenceable color for layouts.*/
-	public static Color cLightGray = Color.grayRgb(230);
-	/** Unified referenceable color for layouts.*/
-	public static Color cDarkGray = Color.grayRgb(20);
-	/** Unified referenceable font for layouts.*/
-	public static Font fHeadline = Font.font("Arial", FontWeight.BOLD, 50);
-	/** Unified referenceable font for layouts.*/
-	public static Font fHeading = new Font("Arial", 50);
-	/** Unified referenceable font for layouts.*/
-	public static Font fSubheading = new Font("Arial", 35);
-    /** Unified referenceable font for layouts.*/
-    public static Font fNormalText = new Font("Arial", 20);
-    /** Unified referenceable font for layouts.*/
-    public static Font fNormalTextItalic = Font.font("Arial", FontPosture.ITALIC, 20);
-    /** Unified referenceable font for layouts.*/
-    public static Font fSmallText = new Font("Arial", 15);
-	/** Unified referenceable font for layouts.*/
-    public static Font fSmallTextItalic = Font.font("Arial", FontPosture.ITALIC, 15);
-	/** Unified referenceable corner radius for layouts.*/
-    public static CornerRadii crNormalbo = new CornerRadii(10);
-    /** Unified referenceable corner radius for layouts.*/
-    public static CornerRadii crNormalBa = new CornerRadii(12);
-    /** Unified referenceable button background for layouts.*/
-    public static Background baTransparent = new Background (new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY,  Insets.EMPTY));
-	/** Unified referenceable button background for layouts.*/
-    public static Background baNormalButton = new Background (new BackgroundFill(Color.grayRgb(90), crNormalBa,  null));
-	/** Unified referenceable button background (focused) for layouts.*/
-    public static Background baNormalFocusedButton = new Background (new BackgroundFill(Color.grayRgb(70), crNormalBa,  null));
-	/** Unified referenceable button background (green) for layouts.*/
-    public static Background baGreenButton = new Background (new BackgroundFill(Color.rgb(0, 90, 0), crNormalBa,  null));
-	/** Unified referenceable button background (green, focused) for layouts.*/
-    public static Background baGreenFocusedButton = new Background (new BackgroundFill(Color.rgb(0, 70, 0), crNormalBa,  null));
-    /** Unified referenceable button background (brown) for layouts.*/
-    public static Background baBrownButton = new Background (new BackgroundFill(Color.rgb(100, 50 , 0), crNormalBa,  null));
-	/** Unified referenceable button background (brown, focused) for layouts.*/
-    public static Background baBrownFocusedButton = new Background (new BackgroundFill(Color.rgb(80, 30, 0), crNormalBa,  null));
-    /** Unified referenceable button background (purple) for layouts.*/
-    public static Background baPurpleButton = new Background (new BackgroundFill(Color.rgb(90, 0 , 60), crNormalBa,  null));
-	/** Unified referenceable button background (purple, focused) for layouts.*/
-    public static Background baPurpleFocusedButton = new Background (new BackgroundFill(Color.rgb(70, 30, 40), crNormalBa,  null));
-    /** Unified referenceable button background (red) for layouts.*/
-    public static Background baRedButton = new Background (new BackgroundFill(Color.rgb(120, 0, 0), crNormalBa,  null));
-	/** Unified referenceable Border for layouts.*/
-    public static Border boNormal = new Border(new BorderStroke(cNormal, BorderStrokeStyle.SOLID, crNormalbo, BorderWidths.DEFAULT));
-    /** Unified referenceable Border for layouts.*/
-    public static Border boSelected = new Border(new BorderStroke(cYellow, BorderStrokeStyle.SOLID, crNormalbo, new BorderWidths(4)));
-    /** Unified referenceable Border for layouts.*/
-    public static Border boNotInteractive = new Border(new BorderStroke(cDarkGray, BorderStrokeStyle.SOLID, crNormalbo, new BorderWidths(2)));
-    /** Unified referenceable event handler for changing the background of a normal button when the mouse enters it.*/
-    public static EventHandler<MouseEvent> evButEntered;
-    /** Unified referenceable event handler for changing the background of a normal button when the mouse exits it.*/
-    public static EventHandler<MouseEvent> evButExited;
-	/** Unified referenceable event handler for changing the background of a green button when the mouse enters it.*/
-    public static EventHandler<MouseEvent> evButGreEntered;
-	/** Unified referenceable event handler for changing the background of a green button when the mouse exits it.*/
-    public static EventHandler<MouseEvent> evButGreExited;
-	/** Unified referenceable event handler for changing the background of a brown button when the mouse enters it.*/
-    public static EventHandler<MouseEvent> evButBroEntered;
-	/** Unified referenceable event handler for changing the background of a brown button when the mouse exits it.*/
-    public static EventHandler<MouseEvent> evButBroExited;
 
+    
     /** Static reference to the home page in order for the pages to have simple access to one another. 
      * It gets initialized in {@link #start(Stage)}.*/
     public static Home home;
@@ -300,13 +218,14 @@ public class Main extends Application {
 		launch(args);
 	}
 
+	
 	/**
 	 * Builds and starts the JavaFX application.
 	 * Sets up the stage and links it up to the {@link #scene}. 
 	 * Both are modified with some basic setup like full-screen mode or the {@link #scrollbar scroll bar} 
 	 * (which gets added via the {@link #sbRoot scroll bar root} to the scene). 
-	 * In addition, the keyboard, scroll bar and some basic button listeners are written here and 
-	 * {@link #krlClose} and scroll bar listeners get added to the scene.
+	 * In addition, the keyboard ({@link #krlClose}, {@link #krlBackHome}) and scroll bar listeners are written here and 
+	 * get added to the scene.
 	 * Lastly, the {@link de.wolkenfarmer.environment.pages.Home home page} gets called.
 	 * @param stage Makes up the window and is required for a JavaFX application.
 	 * @see <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/application/Application.html#start-javafx.stage.Stage-">
@@ -410,37 +329,6 @@ public class Main extends Application {
 			}
 		});		
 		
-		
-		evButEntered = new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent e) {
-				((Region) e.getSource()).setBackground(Main.baNormalFocusedButton);
-			}
-		};
-		evButExited = new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent e) {
-				((Region) e.getSource()).setBackground(Main.baNormalButton);
-			}
-		};
-		evButGreEntered = new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent e) {
-				((Region) e.getSource()).setBackground(Main.baGreenFocusedButton);
-			}
-		};
-		evButGreExited = new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent e) {
-				((Region) e.getSource()).setBackground(Main.baGreenButton);
-			}
-		};
-		evButBroEntered = new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent e) {
-				((Region) e.getSource()).setBackground(Main.baBrownFocusedButton);
-			}
-		};
-		evButBroExited = new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent e) {
-				((Region) e.getSource()).setBackground(Main.baBrownButton);
-			}
-		};
 		
 		home = new Home(root);
 	}
