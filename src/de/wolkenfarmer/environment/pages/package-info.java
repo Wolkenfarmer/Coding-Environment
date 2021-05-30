@@ -1,13 +1,13 @@
 /**
- * Contains the different pages of the environment as well as its CSS and GUI elements.
+ * Contains the different pages of the environment as well as its CSS and GUI elements. <br>
  * Its {@link de.wolkenfarmer.environment.pages.Home home page} links up to the different sub-pages 
  * {@link de.wolkenfarmer.environment.pages.InputHandler input handler page},
  * {@link de.wolkenfarmer.environment.pages.Transcoder transcoder page},
  * {@link de.wolkenfarmer.environment.pages.NoiseSource noise source page} and soon the
- * destination page, of which the first three extend {@link de.wolkenfarmer.environment.pages.Settings}.<br>
- * In addition, it contains the packages {@link de.wolkenfarmer.environment.pages.gui_elements}, 
- * which helps the pages to build and process / update it's GUI accordingly,
- * and {@link de.wolkenfarmer.environment.pages.css}, which contains CSS style sheets which get added to the scene 
+ * destination page, of which the first three extend from the {@link de.wolkenfarmer.environment.pages.Settings settings page}.<br>
+ * In addition, it contains the packages {@link de.wolkenfarmer.environment.pages.gui_elements GUI elements}, 
+ * which helps the pages to build and process / update its GUI accordingly,
+ * and {@link de.wolkenfarmer.environment.pages.css CSS}, which contains CSS style sheets which get added to the scene 
  * and specify the look of the program in some aspects.
  * <p>
  * The GUI objects are mostly declared named after the following scheme: 

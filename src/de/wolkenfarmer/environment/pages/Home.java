@@ -65,19 +65,19 @@ public class Home {
 		 * Contains {@link #bSetModInput}, {@link #bSetModEncoder}, {@link #bSetModNoise}, {@link #bSetModDecoder} 
 		 * and {@link #bSetModDestination} */
 		private static Pane pSetModel;
-			/** Input handler button of the model in settings. Uses {@link de.wolkenfarmer.environment.Main#BG_GRAY} as background.
+			/** Input handler button of the model in settings. Uses {@link Constants#BG_GRAY} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to {@link InputHandler}.*/
 			static Button bSetModInput;
-			/** Encoder button of the model in settings. Uses {@link de.wolkenfarmer.environment.Main#BG_GRAY} as background.
+			/** Encoder button of the model in settings. Uses {@link Constants#BG_GRAY} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to {@link Transcoder}*/
 			static Button bSetModEncoder;
-			/** Noise source button of the model in settings. Uses {@link de.wolkenfarmer.environment.Main#BG_GRAY} as background.
+			/** Noise source button of the model in settings. Uses {@link Constants#BG_GRAY} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to {@link NoiseSource}*/
 			static Button bSetModNoise;
-			/** Decoder button of the model in settings. Uses {@link de.wolkenfarmer.environment.Main#BG_GRAY} as background.
+			/** Decoder button of the model in settings. Uses {@link Constants#BG_GRAY} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to {@link Transcoder}*/
 			static Button bSetModDecoder;
-			/** Destination button of the model in settings. Uses {@link de.wolkenfarmer.environment.Main#BG_GRAY} as background.
+			/** Destination button of the model in settings. Uses {@link Constants#BG_GRAY} as background.
 			 * It's part of {@link #pSetModel} and this again of {@link #pSettings}. Links up to TODO*/
 			private static Button bSetModDestination;
 			/** Relation for the model in settings. Connects {@link #bSetModInput} with {@link #bSetModEncoder}.
@@ -112,7 +112,7 @@ public class Home {
 		/** Layout container for the buttons below {@link #lConHeading}. 
 		 * Contains {@link #bConButRun}, {@link #bConButSaveResult} and {@link #bConButHelp} and is part of {@link #pControls}.*/
 		private static VBox vbConButtons;
-			/** The run button of the controls segment. Uses {@link de.wolkenfarmer.environment.Main#BG_GREEN} as background.
+			/** The run button of the controls segment. Uses {@link Constants#BG_GREEN} as background.
 			 * Contains {@link #hbConButRun} and is part of {@link #vbConButtons}. 
 			 * It calls 
 			 * {@link de.wolkenfarmer.environment.Run#run(de.wolkenfarmer.environment.ExperimentElement, 
@@ -126,7 +126,7 @@ public class Home {
 				private static HBox hbConButRun;
 					/** Label which displays {@link #bConButRun}'s description "Run". It's part of {@link #hbConButRun}.*/
 					private static Label lConButRun;
-			/** The save last results button of the controls segment. Uses {@link de.wolkenfarmer.environment.Main#BG_BROWN} as background.
+			/** The save last results button of the controls segment. Uses {@link Constants#BG_BROWN} as background.
 			 * Contains {@link #hbConButSaveResult} and is part of {@link #vbConButtons}. It's functionality is currently a TODO and 
 			 * therefore the button is invisible.*/
 			private static Button bConButSaveResult;
@@ -136,8 +136,8 @@ public class Home {
 					/** Label which displays {@link #bConButSaveResult}'s description "Save last result". 
 					 * It's part of {@link #hbConButSaveResult}.*/
 					private static Label lConButSaveResult;
-			/** The help button of the controls segment. Uses {@link de.wolkenfarmer.environment.Main#BG_PURPLE} as background.
-			 * Contains {@link #hbConButHelp} and is part of {@link #vbConButtons}. It's functionality is currently a TODO and 
+			/** The help button of the controls segment. Uses {@link Constants#BG_PURPLE} as background.
+			 * Contains {@link #hbConButHelp} and is part of {@link #vbConButtons}. Its functionality is currently a TODO and 
 			 * therefore the button is invisible.*/
 			private static Button bConButHelp;
 				/** Layout container for the buttons description. This is needed in order to align the heading the center of the button. 

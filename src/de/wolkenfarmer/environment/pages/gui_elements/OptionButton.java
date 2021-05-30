@@ -23,11 +23,11 @@ import javafx.scene.text.TextAlignment;
  */
 public class OptionButton extends Button {
 	/**
-	 * Saves the current mode of the button and defines it's current look.<br>
-	 * 0: Not set as any element for the communication experiment. Uses {@link Main#BG_GRAY}.<br>
-	 * 1: Set as the element for the communication experiment. Uses {@link Main#BG_GREEN}.<br>
+	 * Saves the current mode of the button and defines its current look. <br>
+	 * 0: Not set as any element for the communication experiment. Uses {@link Constants#BG_GRAY}.<br>
+	 * 1: Set as the element for the communication experiment. Uses {@link Constants#BG_GREEN}.<br>
 	 * 2: At the moment only used in {@link Transcoder} if the experiment element is set as pre- / post-transcoder and not as e- / decoder.
-	 * Uses {@link Main#BG_BROWN}.
+	 * Uses {@link Constants#BG_BROWN}.
 	 * */
 	private byte currentMode = 0;
 	/** Layout container for the content of the option button. Contains {@link #l}.*/
@@ -130,7 +130,7 @@ public class OptionButton extends Button {
 	}
 	
 	/**
-	 * Sets the border of the to {@link Main#B_SELECTED} if selected or {@link Main#B_NORMAL} if not.
+	 * Sets the border of the to {@link Constants#B_SELECTED} if selected or {@link Constants#B_NORMAL} if not.
 	 * Gets called from {@link #setOnActionW(ExperimentElement, Settings, InformationSegment)}.
 	 * @param selected Defines whether the button is now selected or not.
 	 */
