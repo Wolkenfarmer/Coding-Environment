@@ -24,6 +24,7 @@ import javafx.scene.text.FontWeight;
  * Constants are not supposed to be modified during runtime which is why they are all final. 
  * In additions, they are all static for minor performance improvements.
  * @author Wolkenfarmer
+ * @since 0.2
  */
 public final class Constants {
 	/** Standard distance from headings to the content below them.*/
