@@ -164,11 +164,9 @@ public class Transcoder extends Settings {
 					bOveModDecoder.setLayoutX(segmentWidthEnDe * 5);
 					
 					double y = bOveModEncoder.getHeightW() / 2;
-					aOveModRelToEn = new Arrow().getArrow(0, y, segmentWidthEnDe, y, 15, 10, false, "message", 0);
-					aOveModRelEnToDe = new Arrow().getArrow(segmentWidthEnDe * 3, y, segmentWidthEnDe * 5, y, 
-							15, 10, false, "signal / channel", 0);
-					aOveModRelDeTo = new Arrow().getArrow(segmentWidthEnDe * 7, y, segmentWidthEnDe * 8, y, 
-							15, 10, false, "message", 0);
+					aOveModRelToEn = new Arrow(0, y, segmentWidthEnDe, y, 15, 10, false, "message", 0);
+					aOveModRelEnToDe = new Arrow(segmentWidthEnDe * 3, y, segmentWidthEnDe * 5, y, 15, 10, false, "signal / channel", 0);
+					aOveModRelDeTo = new Arrow(segmentWidthEnDe * 7, y, segmentWidthEnDe * 8, y, 15, 10, false, "message", 0);
 					
 					ovePrePostDisplaying = false;
 				} else {
@@ -186,15 +184,11 @@ public class Transcoder extends Settings {
 					} else {
 						y = y1;
 					}
-					aOveModRelToEn = new Arrow().getArrow(0, y, segmentWidthPrePost, y, 10, 10, false, "message", 0);
-					aOveModRelEnToEn = new Arrow().getArrow(segmentWidthPrePost * 3, y, segmentWidthPrePost * 4, y, 10, 10, 
-							false, "", 0);
-					aOveModRelEnToDe = new Arrow().getArrow(segmentWidthPrePost * 6, y, segmentWidthPrePost * 8, y, 10, 10, 
-							false, "signal / channel", 0);
-					aOveModRelDeToDe = new Arrow().getArrow(segmentWidthPrePost * 10, y, segmentWidthPrePost * 11, y, 10, 10, 
-							false, "", 0);
-					aOveModRelDeTo = new Arrow().getArrow(segmentWidthPrePost * 13, y, segmentWidthPrePost * 14, y, 10, 10, 
-							false, "message", 0);
+					aOveModRelToEn = new Arrow(0, y, segmentWidthPrePost, y, 10, 10, false, "message", 0);
+					aOveModRelEnToEn = new Arrow(segmentWidthPrePost * 3, y, segmentWidthPrePost * 4, y, 10, 10, false, "", 0);
+					aOveModRelEnToDe = new Arrow(segmentWidthPrePost * 6, y, segmentWidthPrePost * 8, y, 10, 10, false, "signal / channel", 0);
+					aOveModRelDeToDe = new Arrow(segmentWidthPrePost * 10, y, segmentWidthPrePost * 11, y, 10, 10, false, "", 0);
+					aOveModRelDeTo = new Arrow(segmentWidthPrePost * 13, y, segmentWidthPrePost * 14, y, 10, 10, false, "message", 0);
 					
 					
 					pOveModel.getChildren().addAll(bOveModPreencoder, aOveModRelEnToEn, aOveModRelDeToDe, bOveModPostdecoder);
@@ -277,10 +271,8 @@ public class Transcoder extends Settings {
 				y = y1;
 			}
 			pOveModel.getChildren().removeAll(aOveModRelEnToEn, aOveModRelDeToDe);
-			aOveModRelEnToEn = new Arrow().getArrow(segmentWidthPrePost * 3, y, segmentWidthPrePost * 4, y, 10, 10, 
-					false, "", 0);
-			aOveModRelDeToDe = new Arrow().getArrow(segmentWidthPrePost * 10, y, segmentWidthPrePost * 11, y, 10, 10, 
-					false, "", 0);
+			aOveModRelEnToEn = new Arrow(segmentWidthPrePost * 3, y, segmentWidthPrePost * 4, y, 10, 10, false, "", 0);
+			aOveModRelDeToDe = new Arrow(segmentWidthPrePost * 10, y, segmentWidthPrePost * 11, y, 10, 10, false, "", 0);
 			pOveModel.getChildren().addAll(aOveModRelEnToEn, aOveModRelDeToDe);
 			break;
 		case 2:						// view-setup: !pre-/post- -> pre-/post-
@@ -301,15 +293,11 @@ public class Transcoder extends Settings {
 				y = y1;
 			}
 			pOveModel.getChildren().removeAll(aOveModRelToEn, aOveModRelEnToDe, aOveModRelDeTo);
-			aOveModRelToEn = new Arrow().getArrow(0, y, segmentWidthPrePost, y, 10, 10, false, "message", 0);
-			aOveModRelEnToEn = new Arrow().getArrow(segmentWidthPrePost * 3, y, segmentWidthPrePost * 4, y, 10, 10, 
-					false, "", 0);
-			aOveModRelEnToDe = new Arrow().getArrow(segmentWidthPrePost * 6, y, segmentWidthPrePost * 8, y, 10, 10, 
-					false, "signal / channel", 0);
-			aOveModRelDeToDe = new Arrow().getArrow(segmentWidthPrePost * 10, y, segmentWidthPrePost * 11, y, 10, 10, 
-					false, "", 0);
-			aOveModRelDeTo = new Arrow().getArrow(segmentWidthPrePost * 13, y, segmentWidthPrePost * 14, y, 10, 10, 
-					false, "message", 0);
+			aOveModRelToEn = new Arrow(0, y, segmentWidthPrePost, y, 10, 10, false, "message", 0);
+			aOveModRelEnToEn = new Arrow(segmentWidthPrePost * 3, y, segmentWidthPrePost * 4, y, 10, 10, false, "", 0);
+			aOveModRelEnToDe = new Arrow(segmentWidthPrePost * 6, y, segmentWidthPrePost * 8, y, 10, 10, false, "signal / channel", 0);
+			aOveModRelDeToDe = new Arrow(segmentWidthPrePost * 10, y, segmentWidthPrePost * 11, y, 10, 10, false, "", 0);
+			aOveModRelDeTo = new Arrow(segmentWidthPrePost * 13, y, segmentWidthPrePost * 14, y, 10, 10, false, "message", 0);
 			
 			pOveModel.getChildren().addAll(aOveModRelToEn, bOveModPreencoder, aOveModRelEnToEn, aOveModRelEnToDe, 
 					aOveModRelDeToDe, bOveModPostdecoder, aOveModRelDeTo);
@@ -325,9 +313,9 @@ public class Transcoder extends Settings {
 			
 			y = bOveModEncoder.getHeightW() / 2;
 			pOveModel.getChildren().removeAll(aOveModRelToEn, aOveModRelEnToDe, aOveModRelDeTo);
-			aOveModRelToEn = new Arrow().getArrow(0, y, segmentWidthEnDe, y, 15, 10, false, "message", 0);
-			aOveModRelEnToDe = new Arrow().getArrow(segmentWidthEnDe * 3, y, segmentWidthEnDe * 5, y, 15, 10, false, "signal / channel", 0);
-			aOveModRelDeTo = new Arrow().getArrow(segmentWidthEnDe * 7, y, segmentWidthEnDe * 8, y, 15, 10, false, "message", 0);
+			aOveModRelToEn = new Arrow(0, y, segmentWidthEnDe, y, 15, 10, false, "message", 0);
+			aOveModRelEnToDe = new Arrow(segmentWidthEnDe * 3, y, segmentWidthEnDe * 5, y, 15, 10, false, "signal / channel", 0);
+			aOveModRelDeTo = new Arrow(segmentWidthEnDe * 7, y, segmentWidthEnDe * 8, y, 15, 10, false, "message", 0);
 			
 			pOveModel.getChildren().addAll(aOveModRelToEn, aOveModRelEnToDe, aOveModRelDeTo);
 			ovePrePostDisplaying = false;

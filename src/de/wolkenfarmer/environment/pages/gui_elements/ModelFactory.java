@@ -195,7 +195,6 @@ public class ModelFactory {
 			endY = startY;
 		}
 		
-		Arrow a = new Arrow();
-		return a.getArrow(startX, startY, endX, endY, 10, 10, vertical, name, 0);
+		return new Arrow(startX, startY, endX, endY, 10, 10, vertical, name, 0);
 	}
 }

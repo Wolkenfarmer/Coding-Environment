@@ -105,8 +105,8 @@ public class InputHandler extends Settings {
 				bOveModInput.setLayoutX(segmentWidth);
 				
 				double y = bOveModInput.getHeightW() / 2;
-				aOveModRelToIn = new Arrow().getArrow(0, y, segmentWidth, y, 15, 10, false, "you", 0);
-				aOveModRelInTo = new Arrow().getArrow(segmentWidth * 2, y, segmentWidth * 3, y, 15, 10, false, "message", 0);
+				aOveModRelToIn = new Arrow(0, y, segmentWidth, y, 15, 10, false, "you", 0);
+				aOveModRelInTo = new Arrow(segmentWidth * 2, y, segmentWidth * 3, y, 15, 10, false, "message", 0);
 			pOveModel.getChildren().addAll(aOveModRelToIn, bOveModInput, aOveModRelInTo);
 		pOverview.getChildren().addAll(lOveHeading, pOveModel);
 		
@@ -157,7 +157,7 @@ public class InputHandler extends Settings {
 		
 		double y = bOveModInput.getHeightW() / 2;
 		pOveModel.getChildren().remove(aOveModRelInTo);
-		aOveModRelInTo = new Arrow().getArrow(segmentWidth * 2, y, segmentWidth * 3, y, 15, 10, false, "message", 0);
+		aOveModRelInTo = new Arrow(segmentWidth * 2, y, segmentWidth * 3, y, 15, 10, false, "message", 0);
 		pOveModel.getChildren().add(aOveModRelInTo);
 	}
 }

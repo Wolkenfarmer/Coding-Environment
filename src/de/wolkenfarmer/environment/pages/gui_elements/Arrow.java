@@ -9,11 +9,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.shape.Line;
 
 /**
- * A template class to create arrows.
+ * A labeled arrow.
  * They can either be created horizontal (from left to right) or vertical (from bottom to top or top to bottom).
  * The arrows have a non-solid head and can be labeled (if horizontal).
  * The arrows get used in {@link de.wolkenfarmer.environment.pages.gui_elements.ModelFactory#buildRelation(float, float, short, boolean, String)} 
- * to be shown in {@link de.wolkenfarmer.environment.pages.Home#pSetModel} and used in the different {@link de.wolkenfarmer.environment.pages.Settings settings pages}
+ * to be shown in {@link de.wolkenfarmer.environment.pages.Home#pSetModel} and used in the different 
+ * {@link de.wolkenfarmer.environment.pages.Settings settings pages}
  * constructors and {@link de.wolkenfarmer.environment.pages.Settings#updateOveModel(byte)}.
  * @author Wolkenfarmer
  */
@@ -30,7 +31,7 @@ public class Arrow extends Group {
     private Label description;
 
     /**
-     * Creates and gives the arrow specified by it's arguments.
+     * Creates the arrow specified by the following arguments.
      * @param startX Defines the x-Coordinate of the start.
      * @param startY Defines the x-Coordinate of the start.
      * @param endX Defines the x-Coordinate of the end.
@@ -40,9 +41,9 @@ public class Arrow extends Group {
      * @param vertical Defines whether the arrow should be displayed horizontal (from left to right) or vertical (from bottom to top).
      * @param name The description of the arrow which will be displayed above it (only if horizontal).
      * @param labelWidth Only used for vertical arrows to determine the space for {@link #description}.
-     * @return Returns the finished arrow.
+     * @since 0.2
      */
-    public Arrow getArrow(double startX, double startY, double endX, double endY, double lenghtHead, double widthHead, 
+    public Arrow(double startX, double startY, double endX, double endY, double lenghtHead, double widthHead, 
     		boolean vertical, String name, double labelWidth) {
     	line = new Line();
     	line.setStroke(Constants.C_NORMAL);
@@ -106,7 +107,5 @@ public class Arrow extends Group {
         
     	hbDescription.getChildren().add(description);
         this.getChildren().addAll(line, headL, headR, hbDescription);
-        
-        return this;
     }
 }
