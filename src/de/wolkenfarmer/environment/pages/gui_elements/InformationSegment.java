@@ -3,9 +3,7 @@ package de.wolkenfarmer.environment.pages.gui_elements;
 import de.wolkenfarmer.Constants;
 import de.wolkenfarmer.environment.ExperimentElement;
 import de.wolkenfarmer.environment.Main;
-import de.wolkenfarmer.environment.pages.Transcoder;
 import de.wolkenfarmer.environment.pages.Home;
-import de.wolkenfarmer.environment.pages.InputHandler;
 import de.wolkenfarmer.environment.pages.Settings;
 
 import javafx.event.ActionEvent;
@@ -19,7 +17,7 @@ import javafx.scene.text.TextAlignment;
 
 /**
  * The information segment for the {@link Settings settings pages}.
- * The segment gets build in {@link #InformationSegment(byte, double, double, double) the constructor}.
+ * The segment gets build in {@link #InformationSegment(double) the constructor}.
  * In addition, the segment gets updated to display always the currently selected option {@link OptionButton} 
  * in {@link Settings#vbOptButtons} using {@link #getContent()}.
  * @author Wolkenfarmer
@@ -27,8 +25,8 @@ import javafx.scene.text.TextAlignment;
 public class InformationSegment extends Pane {
 	/** Saves the type of the segment in order for the {@link #bHeaSav button's} action handler to know what communication element 
 	 * should be changed / updated. The individual types belong to the {@link Settings settings page}.<br>
-	 * 0: {@link InputHandler}<br>
-	 * 1: {@link Transcoder}<br>
+	 * 0: {@link de.wolkenfarmer.environment.pages.InputHandler}<br>
+	 * 1: {@link de.wolkenfarmer.environment.pages.Transcoder}<br>
 	 * 2: {@link de.wolkenfarmer.environment.pages.NoiseSource} */
 	private byte refType;
 		/** Label which displays the subheading "Information" by default, but gets updated to fit the currently picked 
@@ -54,18 +52,11 @@ public class InformationSegment extends Pane {
 		
 
 	/**
-	 * Builds the information segment for the {@link Settings settings pages}.
-	 * For building it's content layoutX and layoutY needs to be set, because the segment gets directly added to 
-	 * the {@link Settings#root settings pages' root}.
-	 * @param refType Overwrites {@link #refType}.
-	 * @param layoutX The layoutX for the segment.
-	 * @param layoutY The layoutY for the segment.
+	 * Builds the information segment for the {@link Settings settings pages}. <br>
 	 * @param minHeight The minimum height of the segment.
+	 * @since 0.2
 	 */
-	public InformationSegment(byte refType, double layoutX, double layoutY, double minHeight) {
-		this.refType = refType;
-		this.setLayoutX(layoutX);
-		this.setLayoutY(layoutY);
+	public InformationSegment(double minHeight) {
 		this.setPrefWidth(Main.stageWidth / 2);
 			bHeaSav = new Button();
 			bHeaSav.setBorder(Constants.B_NORMAL);
@@ -108,8 +99,20 @@ public class InformationSegment extends Pane {
 	
 	
 	/**
-	 * Re-sets the heading of the information segment to fit the currently selected {@link ExperimentElement}.
-	 * Gets called from {@link OptionButton#setOnActionW(ExperimentElement, Settings, InformationSegment)}.
+	 * Resets the information segment to default. <br>
+	 * Sets the {@link #pInfContent content container} to only have {@link #lInfConDefault} as its content and resets {@link #lHeading}.
+	 * @since 0.2
+	 */
+	public void setContentDefault() {
+		lHeading.setText("Information");
+		pInfContent.getChildren().clear();
+		pInfContent.getChildren().add(lInfConDefault);
+	}
+	
+	
+	/**
+	 * Resets the heading of the information segment to fit the currently selected {@link ExperimentElement}. <br>
+	 * Gets called from {@link OptionButton#setOnActionW(ExperimentElement)}.
 	 * @param newName The new name of the segment.
 	 */
 	public void setHeading(String newName) {
@@ -118,19 +121,28 @@ public class InformationSegment extends Pane {
 	
 	
 	/**
-	 * Updates the on action event handler of {@link #bHeaSav} to fit the currently selected {@link ExperimentElement experiment element}.
-	 * This method gets called by {@link OptionButton#setOnActionW(ExperimentElement, Settings, InformationSegment)}.
+	 * Sets the {@link #refType reference type} for the information segment. <br>
+	 * @param newRefType The new reference type.
+	 * @since 0.2
+	 */
+	public void setRefType(byte newRefType) {
+		refType = newRefType;
+	}
+	
+	
+	/**
+	 * Updates the on action event handler of {@link #bHeaSav} to fit the currently selected {@link ExperimentElement experiment element}. <br>
+	 * This method gets called by {@link OptionButton#setOnActionW(ExperimentElement)}.
 	 * Depending on the {@link #refType} the corresponding selection for the communication experiment in {@link Main} gets changed.
-	 * In addition, the mode of the {@link OptionButton}'s gets changed as well as the {@link Home#pSetModel home page's settings model} on
-	 * it's next build by setting {@link Main#boUpdateSettingsModelHomepage} to true and the corresponding page's
+	 * In addition, the mode of the {@link OptionButton}s gets changed as well as the {@link Home#pSetModel home pages settings model} on
+	 * its next build by setting {@link Main#boUpdateSettingsModelHomepage} to true and the corresponding pages
 	 * {@link Settings#pOverview overview model}. 
 	 * Moreover {@link ExperimentElement#save()} gets called beforehand.
 	 * @param reference The currently selected {@link ExperimentElement experiment element} to be added to the communication experiment.
 	 * @param optButton The {@link OptionButton option button} which called this method and represents the experiment element.
-	 * @param page The {@link Settings settings page} where the corresponding other option buttons are and 
-	 * the overview model has to be {@link Settings#updateOveModel(byte) updated}.
+	 * @since 0.2
 	 */
-	public void setSaveAddReference(ExperimentElement reference, OptionButton optButton, Settings page) {
+	public void setSaveAddReference(ExperimentElement reference, OptionButton optButton) {
 		bHeaSav.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent t) {
 				System.out.println("\"Save & add\" got pressed!");
@@ -140,30 +152,30 @@ public class InformationSegment extends Pane {
 				switch (refType) {
 				case 0: // input handler
 					Main.selectedInputHandler = reference;
-					page.updateOveModel((byte) 0);
+					Settings.updateOveModel((byte) 0, (byte) 0);
 					
-					for (int i = 0; i < page.vbOptButtons.getChildren().size(); i++) {
-						if (((OptionButton) page.vbOptButtons.getChildren().get(i)).getMode() == 1) {
-							((OptionButton) page.vbOptButtons.getChildren().get(i)).setMode((byte) 0);
+					for (int i = 0; i < Settings.vbOptButtons.getChildren().size(); i++) {
+						if (((OptionButton) Settings.vbOptButtons.getChildren().get(i)).getMode() == 1) {
+							((OptionButton) Settings.vbOptButtons.getChildren().get(i)).setMode((byte) 0);
 						}
 					}
 					optButton.setMode((byte) 1);
 					break;
-				case 1: // EnDecoder	
+				case 1: // Transcoder	
 					if (reference.getType() == 0) {
 						Main.selectedTranscoder = reference;
 						
 						if (optButton.getMode() == 2) {
 							Main.selectedPrePost = Main.transcoder_DeselectPrePost;
-							((Transcoder) page).selectDeselectOption();
-							page.updateOveModel((byte) 3);
+//							Transcoder.selectDeselectOption();
+							Settings.updateOveModel((byte) 1, (byte) 3);
 						} else {
-							page.updateOveModel((byte) 0);
+							Settings.updateOveModel((byte) 1, (byte) 0);
 						}
 						
-						for (int i = 0; i < page.vbOptButtons.getChildren().size(); i++) {
-							if (((OptionButton) page.vbOptButtons.getChildren().get(i)).getMode() == 1) {
-								((OptionButton) page.vbOptButtons.getChildren().get(i)).setMode((byte) 0);
+						for (int i = 0; i < Settings.vbOptButtons.getChildren().size(); i++) {
+							if (((OptionButton) Settings.vbOptButtons.getChildren().get(i)).getMode() == 1) {
+								((OptionButton) Settings.vbOptButtons.getChildren().get(i)).setMode((byte) 0);
 							}
 						}
 						optButton.setMode((byte) 1);
@@ -172,20 +184,20 @@ public class InformationSegment extends Pane {
 						
 						if (optButton.getMode() == 1) {
 							Main.selectedTranscoder = Main.transcoder_Deselect;
-							page.updateOveModel((byte) 0);
+							Settings.updateOveModel((byte) 1, (byte) 0);
 						}
 						
-						if (!Transcoder.ovePrePostDisplaying) {
-							if (reference != Main.transcoder_DeselectPrePost) {
-								page.updateOveModel((byte) 2);		
-							}
-						} else {
-							page.updateOveModel((byte) 3);	
-						}
+//						if (!Transcoder.ovePrePostDisplaying) {
+//							if (reference != Main.transcoder_DeselectPrePost) {
+//								Settings.updateOveModel((byte) 1, (byte) 2);		
+//							}
+//						} else {
+//							Settings.updateOveModel((byte) 1, (byte) 3);	
+//						}
 						
-						for (int i = 0; i < page.vbOptButtons.getChildren().size(); i++) {
-							if (((OptionButton) page.vbOptButtons.getChildren().get(i)).getMode() == 2) {
-								((OptionButton) page.vbOptButtons.getChildren().get(i)).setMode((byte) 0);
+						for (int i = 0; i < Settings.vbOptButtons.getChildren().size(); i++) {
+							if (((OptionButton) Settings.vbOptButtons.getChildren().get(i)).getMode() == 2) {
+								((OptionButton) Settings.vbOptButtons.getChildren().get(i)).setMode((byte) 0);
 							}
 						}
 						optButton.setMode((byte) 2);
@@ -193,11 +205,11 @@ public class InformationSegment extends Pane {
 					break;
 				case 2: // noise source
 					Main.selectedNoiSource = reference;
-					page.updateOveModel((byte) 0);
+					Settings.updateOveModel((byte) 2, (byte) 0);
 					
-					for (int i = 0; i < page.vbOptButtons.getChildren().size(); i++) {
-						if (((OptionButton) page.vbOptButtons.getChildren().get(i)).getMode() == 1) {
-							((OptionButton) page.vbOptButtons.getChildren().get(i)).setMode((byte) 0);
+					for (int i = 0; i < Settings.vbOptButtons.getChildren().size(); i++) {
+						if (((OptionButton) Settings.vbOptButtons.getChildren().get(i)).getMode() == 1) {
+							((OptionButton) Settings.vbOptButtons.getChildren().get(i)).setMode((byte) 0);
 						}
 					}
 					optButton.setMode((byte) 1);
@@ -213,7 +225,8 @@ public class InformationSegment extends Pane {
 	
 	
 	/**
-	 * Gives the content if the segment to be updated when another {@link OptionButton} gets selected.
+	 * Removes all elements from the {@link #pInfContent content layout container} and returns the empty container. <br>
+	 * Usually gets called by {@link OptionButton#setOnActionW(ExperimentElement)}.
 	 * @return Return {@link #pInfContent}.
 	 */
 	public Pane getContent() {

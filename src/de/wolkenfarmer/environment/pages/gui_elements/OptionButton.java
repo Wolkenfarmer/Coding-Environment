@@ -3,7 +3,7 @@ package de.wolkenfarmer.environment.pages.gui_elements;
 import de.wolkenfarmer.Constants;
 import de.wolkenfarmer.environment.ExperimentElement;
 import de.wolkenfarmer.environment.Main;
-import de.wolkenfarmer.environment.pages.Transcoder;
+//import de.wolkenfarmer.environment.pages.Transcoder;
 import de.wolkenfarmer.environment.pages.Settings;
 
 import javafx.event.ActionEvent;
@@ -15,10 +15,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.TextAlignment;
 
 /**
- * The option button for the {@link Settings#vbOptButtons settings pages' options-segments}.
- * It's action listener gets set in {@link #setOnActionW(ExperimentElement, Settings, InformationSegment)}.
+ * The option button for the {@link Settings#vbOptButtons settings pages options-segments}. <br>
+ * Its action listener gets set in {@link #setOnActionW(ExperimentElement)}.
  * It's able to display the name of the {@link ExperimentElement} experiment element. 
- * It's height gets correctly calculated to fit the given text and gets updated if needed. 
+ * Its height gets correctly calculated to fit the given text and gets updated if needed. 
  * @author Wolkenfarmer
  */
 public class OptionButton extends Button {
@@ -26,8 +26,8 @@ public class OptionButton extends Button {
 	 * Saves the current mode of the button and defines its current look. <br>
 	 * 0: Not set as any element for the communication experiment. Uses {@link Constants#BG_GRAY}.<br>
 	 * 1: Set as the element for the communication experiment. Uses {@link Constants#BG_GREEN}.<br>
-	 * 2: At the moment only used in {@link Transcoder} if the experiment element is set as pre- / post-transcoder and not as e- / decoder.
-	 * Uses {@link Constants#BG_BROWN}.
+	 * 2: At the moment only used in the {@link de.wolkenfarmer.environment.pages.Transcoder transcoder page} 
+	 * if the experiment element is set as pre- / post-transcoder and not as e- / decoder. Uses {@link Constants#BG_BROWN}.
 	 * */
 	private byte currentMode = 0;
 	/** Layout container for the content of the option button. Contains {@link #l}.*/
@@ -37,7 +37,7 @@ public class OptionButton extends Button {
 		
 	
 		/**
-		 * Builds the option button accordingly to the width and with the provided texts. 
+		 * Builds the option button accordingly to the width and with the provided texts. <br>
 		 * The overview button's height gets scaled in order to fit the included text needed height. 
 		 * @param width The {@link #width width} of the button.
 		 * @param heading The text for the {@link #l heading} of the button.
@@ -64,44 +64,43 @@ public class OptionButton extends Button {
 	
 	
 	/**
-	 * Sets the the on action event handler for the option button.
+	 * Sets the the on action event handler for the option button. <br>
 	 * If pressed, {@link #setSelected(boolean)} gets set to true for this button and 
 	 * to false for the previously selected option button on the {@link Settings page}.
-	 * In addition, the {@link InformationSegment} of the page gets updated to display 
+	 * In addition, the {@link Settings#pInformation information segment} of the settings page gets updated to display 
 	 * the content of the {@link ExperimentElement experiment element} connected to this button via 
 	 * {@link ExperimentElement#getGui()} (if {@link ExperimentElement#getBuiltGui()} returns false, 
 	 * {@link ExperimentElement#buildGui(double)} will be called before)
-	 * and {@link InformationSegment#setSaveAddReference(ExperimentElement, OptionButton, Settings)} gets called.
+	 * and {@link InformationSegment#setSaveAddReference(ExperimentElement, OptionButton)} gets called.
 	 * @param reference The {@link ExperimentElement experiment element} of which the content should be displayed if pressed.
-	 * @param page The {@link Settings page} of which the button's should be updated and carried on to 
-	 * {@link InformationSegment#setSaveAddReference(ExperimentElement, OptionButton, Settings)}.
-	 * @param infSegment The {@link InformationSegment} of which the content and button's action handler should be updated.
+	 * @since 0.2
 	 */
-	public void setOnActionW(ExperimentElement reference, Settings page, InformationSegment infSegment) {
+	public void setOnActionW(ExperimentElement reference) {
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent t) {
 				System.out.println("Options Button: " + l.getText() + " got pressed!");
 				
-				infSegment.setSaveAddReference(reference, (OptionButton) t.getSource(), page);
+				Settings.pInformation.setSaveAddReference(reference, (OptionButton) t.getSource());
 				
-				for (int i = 0; i < page.vbOptButtons.getChildren().size(); i++) {
-					((OptionButton) page.vbOptButtons.getChildren().get(i)).setSelected(false);
+				for (int i = 0; i < Settings.vbOptButtons.getChildren().size(); i++) {
+					((OptionButton) Settings.vbOptButtons.getChildren().get(i)).setSelected(false);
 				}
 				((OptionButton) t.getSource()).setSelected(true);
 				
 				if (!reference.getBuiltGui()) {
-					reference.buildGui(infSegment.getContent().getPrefWidth());
+					reference.buildGui(Settings.pInformation.getContent().getPrefWidth());
 				} 	
-				infSegment.getContent().getChildren().add(reference.getGui());
-				infSegment.setHeading("Information | " + reference.getName());
-				page.updateHeight();
+				Settings.pInformation.getContent().getChildren().add(reference.getGui());
+				Settings.pInformation.setHeading("Information | " + reference.getName());
+				Settings.updateHeight();
 	        }
 	    });
 	}
 	
 	
 	/**
-	 * Sets the {@link #currentMode current mode} of the option button. Modifies the look of the button.
+	 * Sets the {@link #currentMode current mode} of the option button. <br>
+	 * Modifies the look of the button.
 	 * @param mode The new mode of the button.
 	 */
 	public void setMode(byte mode) {
@@ -130,21 +129,18 @@ public class OptionButton extends Button {
 	}
 	
 	/**
-	 * Sets the border of the to {@link Constants#B_SELECTED} if selected or {@link Constants#B_NORMAL} if not.
-	 * Gets called from {@link #setOnActionW(ExperimentElement, Settings, InformationSegment)}.
+	 * Sets the border of the button to {@link Constants#B_SELECTED} if selected or {@link Constants#B_NORMAL} if not. <br>
+	 * Gets called from {@link #setOnActionW(ExperimentElement)}.
 	 * @param selected Defines whether the button is now selected or not.
 	 */
 	public void setSelected(boolean selected) {
-		if (selected) {
-			this.setBorder(Constants.B_SELECTED);
-		} else {
-			this.setBorder(Constants.B_NORMAL);
-		}
+		if (selected) this.setBorder(Constants.B_SELECTED);
+		else this.setBorder(Constants.B_NORMAL);
 	}
 	
 	
 	/**
-	 * Returns the {@link #currentMode} for {@link #setOnActionW(ExperimentElement, Settings, InformationSegment)}, 
+	 * Returns the {@link #currentMode} for {@link #setOnActionW(ExperimentElement)}, 
 	 * which previously has been set via {@link #setMode(byte)}.
 	 * @return Returns {@link #currentMode}.
 	 */

@@ -1,10 +1,11 @@
 package de.wolkenfarmer.environment;
 
-import de.wolkenfarmer.environment.pages.Transcoder;
 import de.wolkenfarmer.environment.pages.gui_elements.OverviewButton;
 import de.wolkenfarmer.environment.pages.Home;
 import de.wolkenfarmer.environment.pages.InputHandler;
 import de.wolkenfarmer.environment.pages.NoiseSource;
+import de.wolkenfarmer.environment.pages.Settings;
+import de.wolkenfarmer.environment.pages.Transcoder;
 import de.wolkenfarmer.input_handlers.RandomDigitBook;
 import de.wolkenfarmer.input_handlers.UserInput;
 import de.wolkenfarmer.noise_sources.Deselect;
@@ -123,19 +124,12 @@ public class Main extends Application {
 	
 
     
-    /** Static reference to the home page in order for the pages to have simple access to one another. 
-     * It gets initialized in {@link #start(Stage)}.*/
+    /** Static reference to the home page in order for the pages to have simple access to one another. <br>
+     * Is used e.g. in {@link #krlBackHome} and gets initialized in {@link #start(Stage)}.*/
     public static Home home;
-    /** Static reference to the input handler page in order for the pages to have simple access to one another. 
-     * Gets initialized in {@link Home}.*/
-    public static InputHandler inputHandler;
-    /** Static reference to the transcoder page in order for the pages to have simple access to one another. 
-     * Gets initialized in {@link Home}.*/
-    public static Transcoder transcoder;
-    /** Static reference to the noise source page in order for the pages to have simple access to one another. 
-     * Gets initialized in {@link Home}.*/
-    public static NoiseSource noiseSource;
-    
+    /** Static reference to the settings pages in order for the pages to have simple access to one another. <br>
+     * Is used e.g. in {@link Home#addControlsListener} and gets initialized in {@link #start(Stage)}.*/
+    public static Settings settings;
     
     
     /** Static reference to the input handler "Deselect" in order for the 
@@ -329,7 +323,7 @@ public class Main extends Application {
 			}
 		});		
 		
-		
+		settings = new Settings();
 		home = new Home(root);
 	}
 	

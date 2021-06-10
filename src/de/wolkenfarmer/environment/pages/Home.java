@@ -421,11 +421,7 @@ public class Home {
 			public void handle(ActionEvent t) {
 				System.out.println("bSetModInput got pressed!");
 				root.getChildren().clear();
-				if (Main.inputHandler == null) {
-					Main.inputHandler = new InputHandler(root);
-				} else {
-					Main.inputHandler.reload(root);
-				}
+				Main.settings.loadPage(root, (byte) 0);
 	        }
 	    });
 		
@@ -433,11 +429,7 @@ public class Home {
 			public void handle(ActionEvent t) {
 				System.out.println("bSetModEncoder or bSetModDecoder got pressed!");
 				root.getChildren().clear();
-				if (Main.transcoder == null) {
-					Main.transcoder = new Transcoder(root);
-				} else {
-					Main.transcoder.reload(root);
-				}
+				Main.settings.loadPage(root, (byte) 1);
 	        }
 	    });
 		
@@ -445,11 +437,7 @@ public class Home {
 			public void handle(ActionEvent t) {
 				System.out.println("bSetModNoise got pressed!");
 				root.getChildren().clear();
-				if (Main.noiseSource == null) {
-					Main.noiseSource = new NoiseSource(root);
-				} else {
-					Main.noiseSource.reload(root);
-				}
+				Main.settings.loadPage(root, (byte) 2);
 	        }
 	    });
 		

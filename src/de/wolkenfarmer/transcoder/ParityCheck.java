@@ -33,9 +33,7 @@ public class ParityCheck implements ExperimentElement {
 	 * 1: pre- / post-*/
 	private static byte type = 0;
 	/** Layout container which will be attached to {@link de.wolkenfarmer.environment.pages.gui_elements.InformationSegment}
-	 * (gets added via {@link de.wolkenfarmer.environment.pages.gui_elements.OptionButton
-	 * #setOnActionW(ExperimentElement, de.wolkenfarmer.environment.pages.Settings, 
-	 * de.wolkenfarmer.environment.pages.gui_elements.InformationSegment)}).
+	 * (gets added via {@link de.wolkenfarmer.environment.pages.gui_elements.OptionButton#setOnActionW(ExperimentElement)}).
 	 * Its content ({@link #lDescription}, {@link #rbParSimple}, {@link #rbParCross}) gets build in {@link #buildGui(double)}.
 	 * When loading another page, it will be removed from the InformationSegment.
 	 * When loading the page {@link #getGui()} will be used to get the built GUI of the experiment element.*/

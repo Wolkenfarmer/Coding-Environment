@@ -1,6 +1,5 @@
 package de.wolkenfarmer.environment.pages;
 
-import de.wolkenfarmer.Constants;
 import de.wolkenfarmer.environment.ExperimentElement;
 import de.wolkenfarmer.environment.Main;
 import de.wolkenfarmer.environment.pages.gui_elements.Arrow;
@@ -8,244 +7,189 @@ import de.wolkenfarmer.environment.pages.gui_elements.InformationSegment;
 import de.wolkenfarmer.environment.pages.gui_elements.OptionButton;
 import de.wolkenfarmer.environment.pages.gui_elements.OverviewButton;
 
-import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.TextFlow;
-
 /**
- * The transcoder page (a sub-page of the {@link Home home page}).
+ * The settings page 'transcoder page' (a settings sub-page of the {@link Home home page}). <br>
  * The transcoder and pre- / post-transcoder for the communication experiment can be set here.
- * This page extends from {@link Settings} (like {@link InputHandler} and {@link NoiseSource}).
- * See {@link #Transcoder(Group)} for more information about the GUI.
+ * This class extends from {@link Settings} and is just responsible for the transcoder page specific parts 
+ * of the settings page. 
  * @author Wolkenfarmer
  */
 public class Transcoder extends Settings {
-	/** Saves whether the pre- / post-transcoder are displayed at the moment or not. 
-	 * This is important in order to know whether the overview model has to be rebuild or not. Gets updated in {@link #Transcoder(Group)}
-	 * and {@link #updateOveModel(byte)} and used for defining the changed-specification in 
-	 * {@link InformationSegment#setSaveAddReference(ExperimentElement, OptionButton, Settings)} for {@link #reload(Group)}.*/
-	public static boolean ovePrePostDisplaying;
-	/** Saves the width of an segment in {@link #pOveModel} which gets calculated in {@link #Transcoder(Group)}
-	 * in the view case of not displaying the pre- / post-transcoder.*/
-	private double segmentWidthEnDe;
-	/** Saves the width of an segment in {@link #pOveModel} which gets calculated in {@link #Transcoder(Group)}
-	 * in the view case of displaying the pre- / post-transcoder.*/
-	private double segmentWidthPrePost;
-	// Heading
-		/** Label which displays the heading segment "CE \  " (bold). It's part of {@link #tfHeading}.*/
-		private static Label lHeaHome;
-		/** Label which displays the heading segment "En- / Decoder" (not bold). It's part of {@link #tfHeading}.*/
-		private static Label lHeaHere;
 	// Overview
-		/** Label which displays the subheading "Overview". It's part of {@link #pOverview}.*/
-		private static Label lOveHeading;
-		/** Layout container for the overview model. Contains {@link #bOveModEncoder}, {@link #bOveModDecoder}, {@link #aOveModRelToEn},
-		 * {@link #aOveModRelEnToDe} and {@link #aOveModRelDeTo} and in the view case of additionally displaying the pre- / post-transcoder
-		 * additionally {@link #bOveModPreencoder}, {@link #bOveModPostdecoder}, {@link #aOveModRelEnToEn} and {@link #aOveModRelDeToDe}
-		 * and is part of {@link #pOverview}.*/
-		private static Pane pOveModel;
-			/** The button showing the pre-encoder in the overview. It's used as a better rectangle. 
-			 * Won't be used if {@link Main#selectedPrePost} == 0.
-			 * The button gets instantiated in {@link #Transcoder(Group)} and 
-			 * updated in {@link #updateOveModel(byte)} to fit {@link Main#selectedPrePost}. It's part of {@link #pOveModel}.
-			 * @see OverviewButton*/
-			private static OverviewButton bOveModPreencoder;
-			/** The button showing the post-decoder in the overview. It's used as a better rectangle. 
-			 * Won't be used if {@link Main#selectedPrePost} == 0.
-			 * The button gets instantiated in {@link #Transcoder(Group)} and 
-			 * updated in {@link #updateOveModel(byte)} to fit {@link Main#selectedPrePost}. It's part of {@link #pOveModel}.
-			 * @see OverviewButton*/
-			private static OverviewButton bOveModPostdecoder;
-			/** The button showing the encoder in the overview. It's used as a better rectangle.
-			 * The button gets instantiated in {@link #Transcoder(Group)} and 
-			 * updated in {@link #updateOveModel(byte)} to fit {@link Main#selectedTranscoder}. It's part of {@link #pOveModel}.
-			 * @see OverviewButton*/
-			private static OverviewButton bOveModEncoder;
-			/** The button showing the decoder in the overview. It's used as a better rectangle. 
-			 * The button gets instantiated in {@link #Transcoder(Group)} and 
-			 * updated in {@link #updateOveModel(byte)} to fit {@link Main#selectedTranscoder}. It's part of {@link #pOveModel}.
-			 * @see OverviewButton*/
-			private static OverviewButton bOveModDecoder;
-			/** Relations for the model in overview. Connect the start of {@link #pOveModel} with either {@link #bOveModPreencoder} or
-			 * {@link #bOveModEncoder} and is part of {@link #pOveModel}.
-			 * @see Arrow*/
-			private static Arrow aOveModRelToEn;
-			/** Relation for the model in overview. Connects {@link #bOveModPreencoder} with {@link #bOveModEncoder} 
-			 * and is part of {@link #pOveModel}.
-			 * @see Arrow*/
-			private static Arrow aOveModRelEnToEn;
-			/** Relation for the model in overview. Won't be used if {@link Main#selectedPrePost} == 0. 
-			 * Connects {@link #bOveModEncoder} with {@link #bOveModDecoder} and is part of {@link #pOveModel}.
-			 * @see Arrow*/
-			private static Arrow aOveModRelEnToDe;
-			/** Relation for the model in overview. Won't be used if {@link Main#selectedPrePost} == 0. 
-			 * Connects {@link #bOveModDecoder} with {@link #bOveModPostdecoder} and is part of {@link #pOveModel}.
-			 * @see Arrow*/
-			private static Arrow aOveModRelDeToDe;
-			/** Relation for the model in overview. Connects either {@link #bOveModDecoder} or {@link #bOveModPostdecoder} with 
-			 * the end of {@link #pOveModel} and is part of {@link #pOveModel}.
-			 * @see Arrow*/
-			private static Arrow aOveModRelDeTo;
+		/** Saves whether the pre- / post-transcoder is displayed at the moment or not. <br>
+		 * This is important in order to know whether the overview model has to be rebuild or not. Gets updated in {@link #Transcoder()}
+		 * and {@link #updateOveModel(byte)} and used for defining the changed-specification in 
+		 * {@link InformationSegment#setSaveAddReference(ExperimentElement, OptionButton)} for {@link #load()}.*/
+		public static boolean ovePrePostDisplaying;
+		/** Saves the width of an segment in {@link #pOveModel} which gets calculated in {@link #Transcoder()}
+		 * in the view case of not displaying the pre- / post-transcoder.*/
+		private static double segmentWidthEnDe;
+		/** Saves the width of an segment in {@link #pOveModel} which gets calculated in {@link #Transcoder()}
+		 * in the view case of displaying the pre- / post-transcoder.*/
+		private static double segmentWidthPrePost;
+		/** The {@link OverviewButton overview button} showing the {@link Main#selectedPrePost pre-encoder} 
+		 * in the {@link #pOveModel model of the overview}. <br>
+		 * It's used as a better rectangle. Won't be used if {@link Main#selectedPrePost} == 0. 
+		 * The button gets build in the {@link #Transcoder() constructor} and updated in {@link #updateOveModel(byte)}. 
+		 * It gets added to the model.*/
+		private static OverviewButton bOveModPreencoder;
+		/** The {@link OverviewButton overview button} showing the {@link Main#selectedPrePost post-decoder} 
+		 * in the {@link #pOveModel model of the overview}. <br>
+		 * It's used as a better rectangle. Won't be used if {@link Main#selectedPrePost} == 0. 
+		 * The button gets build in the {@link #Transcoder() constructor} and updated in {@link #updateOveModel(byte)}. 
+		 * It gets added to the model.*/
+		private static OverviewButton bOveModPostdecoder;
+		/** The {@link OverviewButton overview button} showing the {@link Main#selectedTranscoder encoder} 
+		 * in the {@link #pOveModel model of the overview}. <br>
+		 * It's used as a better rectangle. The button gets build in the {@link #Transcoder() constructor} 
+		 * and updated in {@link #updateOveModel(byte)}. It gets added to the model.*/
+		private static OverviewButton bOveModEncoder;
+		/** The {@link OverviewButton overview button} showing the {@link Main#selectedTranscoder decoder} 
+		 * in the {@link #pOveModel model of the overview}. <br>
+		 * It's used as a better rectangle. The button gets build in the {@link #Transcoder() constructor} 
+		 * and updated in {@link #updateOveModel(byte)}. It gets added to the model.*/
+		private static OverviewButton bOveModDecoder;
+		/** Relation {@link Arrow arrow} for the {@link #pOveModel model of the overview}. <br>
+		 * Connects the start of {@link #pOveModel} with either {@link #bOveModPreencoder} or {@link #bOveModEncoder}. 
+		 * It gets added to the model.*/
+		private static Arrow aOveModRelToEn;
+		/** Relation {@link Arrow arrow} for the {@link #pOveModel model of the overview}. <br>
+		 * Connects {@link #bOveModPreencoder} with {@link #bOveModEncoder}. It gets added to the model.*/
+		private static Arrow aOveModRelEnToEn;
+		/** Relation {@link Arrow arrow} for the {@link #pOveModel model of the overview}. <br>
+		 * Won't be used if {@link Main#selectedPrePost} == 0.
+		 * Connects {@link #bOveModEncoder} with {@link #bOveModDecoder}. It gets added to the model.*/
+		private static Arrow aOveModRelEnToDe;
+		/** Relation {@link Arrow arrow} for the {@link #pOveModel model of the overview}. <br>
+		 * Won't be used if {@link Main#selectedPrePost} == 0.
+		 * Connects {@link #bOveModDecoder} with {@link #bOveModPostdecoder}. It gets added to the model.*/
+		private static Arrow aOveModRelDeToDe;
+		/** Relation {@link Arrow arrow} for the {@link #pOveModel model of the overview}. <br>
+		 * Connects either {@link #bOveModDecoder} or {@link #bOveModPostdecoder} with the end of {@link #pOveModel}. 
+		 * It gets added to the model.*/
+		private static Arrow aOveModRelDeTo;
+		
 	// Options
-		/** The button showing the {@link de.wolkenfarmer.transcoder.DeselectPrePost deselect} option under {@link #pOptions option}. 
-		 * Can be used to deactivate the pre- / post-transcoder.
-		 * It's part of {@link #vbOptButtons}.*/
+		/** The {@link OptionButton option button} showing the {@link de.wolkenfarmer.transcoder.DeselectPrePost deselect} 
+		 * option under {@link #pOptions options}. <br>
+		 * Can be used to deactivate the pre- / post-transcoder. 
+		 * It gets build in the {@link #Transcoder() constructor} and is part of {@link #vbOptButtons}.*/
 		private static OptionButton bOptButDeselect;
-		/** The button showing the {@link de.wolkenfarmer.transcoder.ParityCheck Binary Parity Check} option under {@link #pOptions option}. 
-		 * It's part of {@link #vbOptButtons}.*/
+		/** The {@link OptionButton option button} showing the {@link de.wolkenfarmer.transcoder.ParityCheck Binary Parity Check} 
+		 * option under {@link #pOptions options}. <br>
+		 * It gets build in the {@link #Transcoder() constructor} and is part of {@link #vbOptButtons}.*/
 		private static OptionButton bOptButParityCheck;
-		/** The button showing the {@link de.wolkenfarmer.transcoder.RepetitionCode Repetition Code} option under {@link #pOptions option}. 
-		 * It's part of {@link #vbOptButtons}.*/
+		/** The {@link OptionButton option button} showing the {@link de.wolkenfarmer.transcoder.RepetitionCode Repetition Code} 
+		 * option under {@link #pOptions options}. <br>
+		 * It gets build in the {@link #Transcoder() constructor} and is part of {@link #vbOptButtons}.*/
 		private static OptionButton bOptButRepetitionCode;
-	// Information
 			
 	
 	/**
-	 * Builds the transcoder page of the application.
-	 * For building it's content and updating the de.wolkenfarmer.environment accordingly to the picked options 
-	 * {@link OverviewButton}, {@link OptionButton} and {@link InformationSegment} get used.
+	 * Builds the transcoder pages specific elements and adds them to the {@link Settings settings page} general setup. <br>
+	 * Consequently, the parts of the {@link Settings#pOveModel overview model} get build here 
+	 * as well as the {@link Settings#vbOptButtons option buttons}.
+	 * In addition, the {@link Settings#lHeaHere heading} gets updated to the pages name.
 	 * There are two different view cases for the overview model depending on whether a 
 	 * {@link Main#selectedPrePost pre- / post-transcoder is selected or not}.
 	 * If there is one selected, they will also be displayed in the model, but if none is selected, they won't.
-	 * The transcoder page gets scaled accordingly to {@link Main#stageWidth}.
-	 * If the height of it's content exceeds {@link Main#stageHeight}, the {@link Main#scrollbar scroll bar} will be displayed.
-	 * @param parent Layout container to attach it's layout parts to.
+	 * @since 0.2
 	 */
-	public Transcoder(Group parent) {
-		root = parent;
+	public Transcoder() {		
+		//Heading
+		lHeaHere.setText("Transcoder");
+
 		
-		tfHeading = new TextFlow();
-		tfHeading.setLayoutX(Main.pos1);
-		tfHeading.setLayoutY(Main.pos1 / 3);
-		tfHeading.setPrefWidth(Main.contentWidth);
-			lHeaHome = new Label();
-			lHeaHome.setText("CE \\  ");
-			lHeaHome.setTextFill(Constants.C_NORMAL);
-			lHeaHome.setFont(Constants.F_HEADING_BOLD);
-			lHeaHome.setAlignment(Pos.CENTER_LEFT);
-				
-			lHeaHere = new Label();
-			lHeaHere.setText("Transcoder");
-			lHeaHere.setTextFill(Constants.C_NORMAL);
-			lHeaHere.setFont(Constants.F_HEADING);
-			lHeaHere.setAlignment(Pos.CENTER_LEFT);
-		tfHeading.getChildren().addAll(lHeaHome, lHeaHere);
+		//Overview
+		segmentWidthEnDe = pOverview.getPrefWidth() / 8;
+		segmentWidthPrePost = pOverview.getPrefWidth() / 14;
 		
-		
-		pOverview = new Pane();
-		pOverview.setLayoutX(Main.pos1);
-		pOverview.setLayoutY(tfHeading.getLayoutY() + Constants.I_DISTANCE_HEADING);
-		pOverview.setPrefWidth(Main.contentWidth);
-			lOveHeading = new Label();
-			lOveHeading.setText("Overview");
-			lOveHeading.setTextFill(Constants.C_NORMAL);
-			lOveHeading.setFont(Constants.F_SUBHEADING);
+			String currentlySelectedEnDecoder = Main.selectedTranscoder.getName();
 			
-			segmentWidthEnDe = pOverview.getPrefWidth() / 8;
-			segmentWidthPrePost = pOverview.getPrefWidth() / 14;
+			bOveModEncoder = new OverviewButton(segmentWidthEnDe * 2, "Encoder", currentlySelectedEnDecoder);
+			bOveModDecoder = new OverviewButton(segmentWidthEnDe * 2, "Decoder", currentlySelectedEnDecoder);
+			bOveModPreencoder = new OverviewButton(segmentWidthPrePost * 2, "Pre-encoder", "");
+			bOveModPreencoder.setLayoutX(segmentWidthPrePost);
+			bOveModPostdecoder = new OverviewButton(segmentWidthPrePost * 2, "Post-decoder", "");
+			bOveModPostdecoder.setLayoutX(segmentWidthPrePost * 11);
 			
-			pOveModel = new Pane();
-			pOveModel.setLayoutY(Constants.I_DISTANCE_SUBHEADING);
-				String currentlySelectedEnDecoder = Main.selectedTranscoder.getName();
+			
+			if (Main.selectedPrePost == Main.transcoder_DeselectPrePost) {
+				bOveModEncoder.setLayoutX(segmentWidthEnDe);
+				bOveModDecoder.setLayoutX(segmentWidthEnDe * 5);
 				
-				bOveModEncoder = new OverviewButton(segmentWidthEnDe * 2, "Encoder", currentlySelectedEnDecoder);
-				bOveModDecoder = new OverviewButton(segmentWidthEnDe * 2, "Decoder", currentlySelectedEnDecoder);
-				bOveModPreencoder = new OverviewButton(segmentWidthPrePost * 2, "Pre-encoder", "");
-				bOveModPreencoder.setLayoutX(segmentWidthPrePost);
-				bOveModPostdecoder = new OverviewButton(segmentWidthPrePost * 2, "Post-decoder", "");
-				bOveModPostdecoder.setLayoutX(segmentWidthPrePost * 11);
+				double y = bOveModEncoder.getHeightW() / 2;
+				aOveModRelToEn = new Arrow(0, y, segmentWidthEnDe, y, 15, 10, false, "message", 0);
+				aOveModRelEnToDe = new Arrow(segmentWidthEnDe * 3, y, segmentWidthEnDe * 5, y, 15, 10, false, "signal / channel", 0);
+				aOveModRelDeTo = new Arrow(segmentWidthEnDe * 7, y, segmentWidthEnDe * 8, y, 15, 10, false, "message", 0);
 				
+				ovePrePostDisplaying = false;
+			} else {
+				bOveModEncoder.setLayoutX(segmentWidthPrePost * 4);
+				bOveModDecoder.setLayoutX(segmentWidthPrePost * 8);
 				
-				if (Main.selectedPrePost == Main.transcoder_DeselectPrePost) {
-					bOveModEncoder.setLayoutX(segmentWidthEnDe);
-					bOveModDecoder.setLayoutX(segmentWidthEnDe * 5);
-					
-					double y = bOveModEncoder.getHeightW() / 2;
-					aOveModRelToEn = new Arrow(0, y, segmentWidthEnDe, y, 15, 10, false, "message", 0);
-					aOveModRelEnToDe = new Arrow(segmentWidthEnDe * 3, y, segmentWidthEnDe * 5, y, 15, 10, false, "signal / channel", 0);
-					aOveModRelDeTo = new Arrow(segmentWidthEnDe * 7, y, segmentWidthEnDe * 8, y, 15, 10, false, "message", 0);
-					
-					ovePrePostDisplaying = false;
+				bOveModPreencoder.setSelectedItem(Main.selectedPrePost.getName());
+				bOveModPostdecoder.setSelectedItem(Main.selectedPrePost.getName());
+				
+				double y;
+				double y1 = bOveModEncoder.getHeightW() / 2;
+				double y2 = bOveModPostdecoder.getHeightW() / 2;
+				if (y1 >= y2) {
+					y = y2;
 				} else {
-					bOveModEncoder.setLayoutX(segmentWidthPrePost * 4);
-					bOveModDecoder.setLayoutX(segmentWidthPrePost * 8);
-					
-					bOveModPreencoder.setSelectedItem(Main.selectedPrePost.getName());
-					bOveModPostdecoder.setSelectedItem(Main.selectedPrePost.getName());
-					
-					double y;
-					double y1 = bOveModEncoder.getHeightW() / 2;
-					double y2 = bOveModPostdecoder.getHeightW() / 2;
-					if (y1 >= y2) {
-						y = y2;
-					} else {
-						y = y1;
-					}
-					aOveModRelToEn = new Arrow(0, y, segmentWidthPrePost, y, 10, 10, false, "message", 0);
-					aOveModRelEnToEn = new Arrow(segmentWidthPrePost * 3, y, segmentWidthPrePost * 4, y, 10, 10, false, "", 0);
-					aOveModRelEnToDe = new Arrow(segmentWidthPrePost * 6, y, segmentWidthPrePost * 8, y, 10, 10, false, "signal / channel", 0);
-					aOveModRelDeToDe = new Arrow(segmentWidthPrePost * 10, y, segmentWidthPrePost * 11, y, 10, 10, false, "", 0);
-					aOveModRelDeTo = new Arrow(segmentWidthPrePost * 13, y, segmentWidthPrePost * 14, y, 10, 10, false, "message", 0);
-					
-					
-					pOveModel.getChildren().addAll(bOveModPreencoder, aOveModRelEnToEn, aOveModRelDeToDe, bOveModPostdecoder);
-					ovePrePostDisplaying = true;
+					y = y1;
 				}
-			pOveModel.getChildren().addAll(aOveModRelToEn, bOveModEncoder, aOveModRelEnToDe, bOveModDecoder, aOveModRelDeTo);
-		pOverview.getChildren().addAll(lOveHeading, pOveModel);
+				aOveModRelToEn = new Arrow(0, y, segmentWidthPrePost, y, 10, 10, false, "message", 0);
+				aOveModRelEnToEn = new Arrow(segmentWidthPrePost * 3, y, segmentWidthPrePost * 4, y, 10, 10, false, "", 0);
+				aOveModRelEnToDe = new Arrow(segmentWidthPrePost * 6, y, segmentWidthPrePost * 8, y, 10, 10, false, "signal / channel", 0);
+				aOveModRelDeToDe = new Arrow(segmentWidthPrePost * 10, y, segmentWidthPrePost * 11, y, 10, 10, false, "", 0);
+				aOveModRelDeTo = new Arrow(segmentWidthPrePost * 13, y, segmentWidthPrePost * 14, y, 10, 10, false, "message", 0);
+				
+				
+				pOveModel.getChildren().addAll(bOveModPreencoder, aOveModRelEnToEn, aOveModRelDeToDe, bOveModPostdecoder);
+				ovePrePostDisplaying = true;
+			}
+		pOveModel.getChildren().addAll(aOveModRelToEn, bOveModEncoder, aOveModRelEnToDe, bOveModDecoder, aOveModRelDeTo);
 		
 		
-		pOptions = new Pane();
-		pOptions.setLayoutX(Main.pos1);
-		pOptions.setLayoutY(pOverview.getLayoutY() + Main.calcHeight(pOverview) + Constants.I_DISTANCE_SEGMENT);
-		pOptions.setPrefWidth(Main.stageWidth / 8 * 1.5);
-			lOptHeading = new Label();
-			lOptHeading.setText("Options");
-			lOptHeading.setTextFill(Constants.C_NORMAL);
-			lOptHeading.setFont(Constants.F_SUBHEADING);			
-			
-			vbOptButtons = new VBox();
-			vbOptButtons.setPrefWidth(pOptions.getPrefWidth());
-			vbOptButtons.setLayoutY(Constants.I_DISTANCE_SUBHEADING);
-			vbOptButtons.setSpacing(20);
-				//bOptButDeselect = new OptionButton(pOptions.getPrefWidth(), Main.transcoder_DeselectPrePost.getName());
-				bOptButParityCheck = new OptionButton(pOptions.getPrefWidth(), Main.transcoder_ParityCheck.getName());
-				bOptButRepetitionCode = new OptionButton(pOptions.getPrefWidth(), Main.transcoder_RepetitionCode.getName());
-			vbOptButtons.getChildren().addAll(bOptButParityCheck, bOptButRepetitionCode);
-	    pOptions.getChildren().addAll(lOptHeading, vbOptButtons);
-	    
-	    
-	    pInformation = new InformationSegment((byte) 1, Main.pos1 * 3, pOptions.getLayoutY(), Main.calcHeight(pOptions));
-	    	//bOptButDeselect.setOnActionW(Main.transcoder_DeselectPrePost, this, pInformation);
-		    bOptButParityCheck.setOnActionW(Main.transcoder_ParityCheck, this, pInformation);
-		    bOptButRepetitionCode.setOnActionW(Main.transcoder_RepetitionCode, this, pInformation);
-		    
+		//Options
+		//bOptButDeselect = new OptionButton(pOptions.getPrefWidth(), Main.transcoder_DeselectPrePost.getName());
+		//bOptButDeselect.setOnActionW(Main.transcoder_DeselectPrePost);
+		bOptButParityCheck = new OptionButton(pOptions.getPrefWidth(), Main.transcoder_ParityCheck.getName());
+		bOptButParityCheck.setOnActionW(Main.transcoder_ParityCheck);
+		bOptButRepetitionCode = new OptionButton(pOptions.getPrefWidth(), Main.transcoder_RepetitionCode.getName());
+		bOptButRepetitionCode.setOnActionW(Main.transcoder_RepetitionCode);
 		
-		addListener();
-		if (Main.calcHeight(pOptions) >= Main.calcHeight(pInformation)) {
-			Main.updateScrollbar(pOptions);
-		} else {
-			Main.updateScrollbar(pInformation);
-		}
-		root.getChildren().addAll(tfHeading, pOverview, pOptions, pInformation);
+		vbOptButtons.getChildren().addAll(bOptButParityCheck, bOptButRepetitionCode);
 	}
 	
 	
 	/**
-	 * Updates the {@link #pOveModel overview model} to fit the {@link Main#selectedTranscoder selected transcoder} as well as the
-	 * {@link Main#selectedPrePost selected pre- / post-transcoder}.
+	 * Readds the transcoder pages specific elements to the {@link Settings settings page} general setup. <br>
+	 * In addition, the {@link Settings#lHeaHere heading} gets updated to the pages name.
+	 * @since 0.2
+	 */
+	static void load() {
+		lHeaHere.setText("Noise Source");
+		if (Main.selectedPrePost != Main.transcoder_DeselectPrePost) 
+			pOveModel.getChildren().addAll(bOveModPreencoder, aOveModRelEnToEn, aOveModRelDeToDe, bOveModPostdecoder);
+		pOveModel.getChildren().addAll(aOveModRelToEn, bOveModEncoder, aOveModRelEnToDe, bOveModDecoder, aOveModRelDeTo);
+		vbOptButtons.getChildren().addAll(bOptButParityCheck, bOptButRepetitionCode);
+	}
+	
+	
+	/**
+	 * Updates the {@link #pOveModel overviews model} to fit the {@link Main#selectedTranscoder selected transcoder} as well as the
+	 * {@link Main#selectedPrePost selected pre- / post-transcoder}. <br>
+	 * For this, multiple layout elements of the overviews model get rebuild if needed.
 	 * This method differentiates between four "changed" cases: <br>
 	 * 0: Only the transcoder changed.<br>
 	 * 1: Only the pre- / post-transcoder changed.<br>
 	 * 2: The pre- / post-transcoder weren't displayed before but now got added. Consequently, the overview model has to be partially rebuild.<br>
 	 * 3: The pre- / post-transcoder were displayed before but now got removed. Consequently, the overview model has to be partially rebuild.
 	 * @param changed Specifies what has to be updated in the model.
-	 * @see Settings
 	 */
-	public void updateOveModel(byte changed) {
+	static void updateOveModel(byte changed) {
 		String currentlySelectedEnDecoder;
 		String currentlySelectedPrePost;
 		
@@ -325,12 +269,11 @@ public class Transcoder extends Settings {
 	
 	
 	/**
-	 * Selects the deselect option for 
-	 * {@link de.wolkenfarmer.environment.pages.gui_elements.InformationSegment#setSaveAddReference(ExperimentElement, OptionButton, Settings)} 
+	 * Selects the deselect option for {@link InformationSegment#setSaveAddReference(ExperimentElement, OptionButton)} 
 	 * if a option previously set as pre- / post-transcoder becomes the transcoder and therefore {@link #bOptButDeselect} has to be set
 	 * even though there is no direct reference to it in this context.
 	 */
-	public void selectDeselectOption() {
+	public static void selectDeselectOption() {
 		bOptButDeselect.setMode((byte) 2);
 	}
 }

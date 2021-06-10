@@ -171,8 +171,7 @@ public class ModelFactory {
 	
 	/**
 	 * Builds the buttons for {@link de.wolkenfarmer.environment.pages.Home#pSetModel}. 
-	 * It uses {@link de.wolkenfarmer.environment.pages.gui_elements.Arrow
-	 * #getArrow(double, double, double, double, double, double, boolean, String, double)} 
+	 * It uses {@link Arrow#Arrow(double, double, double, double, double, double, boolean, String, double) Arrow()} 
 	 * to create the arrow. This method calculates the values to create the arrow via the class and returns it.
 	 * @param layoutZoneX Defines the x coordinate of the start of the arrow multiplied by {@link #modelZoneWidth}.
 	 * @param layoutZoneY Defines the y coordinate of the start of the arrow multiplied by {@link #modelZoneHeight}.

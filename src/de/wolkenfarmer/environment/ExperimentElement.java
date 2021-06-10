@@ -2,7 +2,6 @@ package de.wolkenfarmer.environment;
 
 import de.wolkenfarmer.environment.pages.Home;
 import de.wolkenfarmer.environment.pages.Settings;
-import de.wolkenfarmer.environment.pages.gui_elements.InformationSegment;
 import javafx.scene.layout.Pane;
 
 /**
@@ -28,7 +27,7 @@ public interface ExperimentElement {
 	 * Builds the GUI of the experiment element to be displayed in 
 	 * {@link de.wolkenfarmer.environment.pages.gui_elements.InformationSegment#pInfContent}.
 	 * This method gets called by 
-	 * {@link de.wolkenfarmer.environment.pages.gui_elements.OptionButton#setOnActionW(ExperimentElement, Settings, InformationSegment)}
+	 * {@link de.wolkenfarmer.environment.pages.gui_elements.OptionButton#setOnActionW(ExperimentElement)}
 	 * if {@link #getBuiltGui()} == false.
 	 * The GUI gets scaled accordingly to 
 	 * {@link de.wolkenfarmer.environment.pages.gui_elements.InformationSegment#pInfContent}s width (parentWidth).
@@ -44,7 +43,7 @@ public interface ExperimentElement {
 	/** Loads the GUI of the experiment element to be displayed in 
 	 * {@link de.wolkenfarmer.environment.pages.gui_elements.InformationSegment#pInfContent}.
 	 * This method gets called by 
-	 * {@link de.wolkenfarmer.environment.pages.gui_elements.OptionButton#setOnActionW(ExperimentElement, Settings, InformationSegment)}
+	 * {@link de.wolkenfarmer.environment.pages.gui_elements.OptionButton#setOnActionW(ExperimentElement)}
 	 * if {@link #getBuiltGui()} == false.
 	 * @return Returns the Pane (/root) containing the GUI.*/
 	public Pane getGui();

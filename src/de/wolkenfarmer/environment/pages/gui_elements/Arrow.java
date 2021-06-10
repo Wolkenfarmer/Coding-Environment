@@ -14,8 +14,7 @@ import javafx.scene.shape.Line;
  * The arrows have a non-solid head and can be labeled (if horizontal).
  * The arrows get used in {@link de.wolkenfarmer.environment.pages.gui_elements.ModelFactory#buildRelation(float, float, short, boolean, String)} 
  * to be shown in {@link de.wolkenfarmer.environment.pages.Home#pSetModel} and used in the different 
- * {@link de.wolkenfarmer.environment.pages.Settings settings pages}
- * constructors and {@link de.wolkenfarmer.environment.pages.Settings#updateOveModel(byte)}.
+ * {@link de.wolkenfarmer.environment.pages.Settings settings pages}.
  * @author Wolkenfarmer
  */
 public class Arrow extends Group {
