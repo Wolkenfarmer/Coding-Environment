@@ -10,10 +10,10 @@
  * It's added to the {@link de.wolkenfarmer.environment.Main#scene main scene}.
  * This style sheet was mostly taken from the link in "See Also".
  * <p>
- * scrollbar.css: 
+ * scrollBar.css: 
  * Defines the appearance of scroll bars.<br>
  * Gets used for nested scroll bars (like in the {@link de.wolkenfarmer.environment.pages.Home#tvResTable result table} on the home page)
- * and the main {@link de.wolkenfarmer.environment.Main#scrollbar scroll bar}. 
+ * and the main {@link de.wolkenfarmer.environment.Main#scrollBar scroll bar}. 
  * It's added to the {@link de.wolkenfarmer.environment.Main#scene main scene}.
  * <p>
  * textArea.css: 

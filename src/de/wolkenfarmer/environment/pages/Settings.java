@@ -169,7 +169,7 @@ public class Settings {
 	 * In addition, {@link #pInformation} type gets changed by calling {@link InformationSegment#setRefType(byte)} 
 	 * and reseted by calling {@link InformationSegment#setContentDefault()} .
 	 * Afterwards it calls {@link #recalculateDistances()} to fit the layout distances to the newly loaded elements and 
-	 * {@link #updateHeight()} to update the {@link Main#scrollbar scroll bar}.
+	 * {@link #updateHeight()} to update the {@link Main#scrollBar scroll bar}.
 	 * Lastly, {@link Main#krlBackHome} gets attached to the scene and {@link #root} added to the {@link Main#root parent root}.
 	 * @param parent The parent root to which the root of the settings page gets added to.
 	 * @param page The number of the page which should get loaded. See "Also See" for further information.
@@ -257,7 +257,7 @@ public class Settings {
 	
 	/**
 	 * Calculates the height of the currently loaded page and calls {@link Main#updateScrollbar(javafx.scene.layout.Region)} with it. <br>
-	 * Therefore it updates the {@link Main#scrollbar scroll bar}.
+	 * Therefore it updates the {@link Main#scrollBar scroll bar}.
 	 * Gets called when either the {@link de.wolkenfarmer.environment.pages.gui_elements.OptionButton
 	 * #setOnActionW(ExperimentElement) information segment's content changed} or another  
 	 * {@link #loadPage(Group, byte) settings page got loaded}. 

@@ -165,7 +165,7 @@ public class Home {
 	 * The home page gets scaled accordingly to {@link Main#stageHeight} and {@link Main#stageWidth}.
 	 * Normally, the height of {@link #pResults} gets calculated in order to not exceed the screen's size, 
 	 * but if the screen is too small to even fit {@link #pControls} on it, the controls height will be the minimum height of results 
-	 * and {@link Main#scrollbar scroll bar} will be displayed.
+	 * and {@link Main#scrollBar scroll bar} will be displayed.
 	 * @param parent Layout container to attach it's layout parts to.
 	 */
 	public Home(Group parent) {

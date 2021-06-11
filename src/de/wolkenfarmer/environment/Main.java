@@ -38,7 +38,7 @@ import javafx.stage.Stage;
 /**
  * Main class hosting the JavaFX Application.
  * Gets called on start of the program and is the base for the JavaFX application.
- * Builds the stage (window) with some basic setup like full screen mode or the {@link #scrollbar scroll bar} along with its calculations.
+ * Builds the stage (window) with some basic setup like full screen mode or the {@link #scrollBar scroll bar} along with its calculations.
  * In addition, this class hosts the instances to the pages and experiment elements (like {@link de.wolkenfarmer.input_handlers.UserInput}).
  * Ultimately, {@link de.wolkenfarmer.environment.pages.Home} gets called.
  * @author Wolkenfarmer
@@ -53,7 +53,7 @@ public class Main extends Application {
 	 */
 	public static Scene scene;
 	/**
-	 * Layout group to contains the {@link #scrollbar scroll bar} and start up the {@link #scene scene}. 
+	 * Layout group to contains the {@link #scrollBar scroll bar} and start up the {@link #scene scene}. 
 	 * This layout group needs to be separate from {@link #root}, 
 	 * because the root gets moved along its y-axis while scrolling / using the scroll bar, 
 	 * while the scroll bar itself should not move in sbRoot.
@@ -64,7 +64,7 @@ public class Main extends Application {
 	 * Layout group to contain the content of the pages (like {@link de.wolkenfarmer.environment.pages.Home}).
 	 * The root gets carried from one page to another when loading them in order to connect its layout-elements to it.
 	 * This layout group needs to be separate from the {@link #sbRoot scroll bar root}, 
-	 * because root gets moved along its y axis during {@link #scrollbar scrolling}, 
+	 * because root gets moved along its y axis during {@link #scrollBar scrolling}, 
 	 * while the scroll bar itself should not move in sbRoot.
 	*/
 	public static Group root;
@@ -72,7 +72,7 @@ public class Main extends Application {
 	 * The scroll bar for all pages nested in the {@link #sbRoot scroll bar root}. 
 	 * EventHandler and Listener with its calculations are in {@link #start(Stage)}.
 	 */
-	public static ScrollBar scrollbar;
+	public static ScrollBar scrollBar;
 	/**
 	 * A dummyScene in order to calculate the dimensions of layout objects while building. 
 	 * The scene gets connected with {@link #dummyRoot dummy root} in {@link #start(Stage)}. 
@@ -98,7 +98,7 @@ public class Main extends Application {
 	 */
 	public static double stageWidth;
 	/** Describes the height of content of each page. 
-	 * This value gets calculated for each page in order for the {@link #scrollbar scroll bar} to compute its movement space correctly.*/
+	 * This value gets calculated for each page in order for the {@link #scrollBar scroll bar} to compute its movement space correctly.*/
 	public static double contentHeight;
 	/** Describes the layoutX from where the content of the pages start. This gets used for the layout calculations of the pages' contents.*/
 	public static double pos1;
@@ -216,7 +216,7 @@ public class Main extends Application {
 	/**
 	 * Builds and starts the JavaFX application.
 	 * Sets up the stage and links it up to the {@link #scene}. 
-	 * Both are modified with some basic setup like full-screen mode or the {@link #scrollbar scroll bar} 
+	 * Both are modified with some basic setup like full-screen mode or the {@link #scrollBar scroll bar} 
 	 * (which gets added via the {@link #sbRoot scroll bar root} to the scene). 
 	 * In addition, the keyboard ({@link #krlClose}, {@link #krlBackHome}) and scroll bar listeners are written here and 
 	 * get added to the scene.
@@ -230,7 +230,7 @@ public class Main extends Application {
 		root = new Group();
 		scene = new Scene(sbRoot, Color.grayRgb(40));
 		scene.getStylesheets().addAll("de/wolkenfarmer/environment/pages/css/tableView.css", 
-				"de/wolkenfarmer/environment/pages/css/scrollbar.css", 
+				"de/wolkenfarmer/environment/pages/css/scrollBar.css", 
 				"de/wolkenfarmer/environment/pages/css/textArea.css");
 		dummyScene = new Scene(dummyRoot = new Group());
 		        
@@ -250,13 +250,13 @@ public class Main extends Application {
 		pos7 = stageWidth / 8 * 7;
 		contentWidth = pos7 - pos1;
 		
-		scrollbar = new ScrollBar();
-        scrollbar.setOrientation(Orientation.VERTICAL);
-        scrollbar.setMin(0);
-        scrollbar.setPrefWidth(20);
-        scrollbar.setPrefHeight(scene.getHeight());
-        scrollbar.setLayoutX(scene.getWidth()-scrollbar.getWidth());
-        sbRoot.getChildren().addAll(scrollbar, root);
+		scrollBar = new ScrollBar();
+        scrollBar.setOrientation(Orientation.VERTICAL);
+        scrollBar.setMin(0);
+        scrollBar.setPrefWidth(20);
+        scrollBar.setPrefHeight(scene.getHeight());
+        scrollBar.setLayoutX(scene.getWidth()-scrollBar.getWidth());
+        sbRoot.getChildren().addAll(scrollBar, root);
         		
 		
 		// listener
@@ -287,7 +287,7 @@ public class Main extends Application {
         };
 		
 		// scroll bar
-		scrollbar.addEventHandler(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
+		scrollBar.addEventHandler(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {
 				if(e.getY() > 0 && e.getY() < scene.getHeight()) {
 					double i = (contentHeight - scene.getHeight()) * (e.getY() / scene.getHeight());
@@ -296,28 +296,28 @@ public class Main extends Application {
 					} else {
 						i = i + ((i - ((contentHeight - scene.getHeight()) * 0.5)) * (1 / (scene.getHeight() * 0.02)));
 					}
-					scrollbar.setValue(i);
-					if (scrollbar.getValue() < 0) {
-						scrollbar.setValue(0);
-					} else if (scrollbar.getValue() > (contentHeight - scene.getHeight())) {
-						scrollbar.setValue(contentHeight - scene.getHeight());
+					scrollBar.setValue(i);
+					if (scrollBar.getValue() < 0) {
+						scrollBar.setValue(0);
+					} else if (scrollBar.getValue() > (contentHeight - scene.getHeight())) {
+						scrollBar.setValue(contentHeight - scene.getHeight());
 					}
 				}
 			}
 		});		
-		scrollbar.valueProperty().addListener(new ChangeListener<Number>() {
+		scrollBar.valueProperty().addListener(new ChangeListener<Number>() {
 		    public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
-		    	root.setLayoutY(-scrollbar.getValue());
+		    	root.setLayoutY(-scrollBar.getValue());
 		    }
 		});
 		scene.addEventHandler(ScrollEvent.SCROLL, new EventHandler<ScrollEvent>() {
 			public void handle(ScrollEvent e) {				
-				if (scrollbar.isVisible()) {
-					scrollbar.setValue(scrollbar.getValue() - e.getDeltaY());
-					if (scrollbar.getValue() < 0) {
-						scrollbar.setValue(0);
-					} else if (scrollbar.getValue() > (contentHeight - scene.getHeight())) {
-						scrollbar.setValue(contentHeight - scene.getHeight());
+				if (scrollBar.isVisible()) {
+					scrollBar.setValue(scrollBar.getValue() - e.getDeltaY());
+					if (scrollBar.getValue() < 0) {
+						scrollBar.setValue(0);
+					} else if (scrollBar.getValue() > (contentHeight - scene.getHeight())) {
+						scrollBar.setValue(contentHeight - scene.getHeight());
 					}
 				}
 			}
@@ -413,7 +413,7 @@ public class Main extends Application {
 	
 	
 	/**
-	 * Updates the {@link #scrollbar scroll bar} when loading another page. Firstly it resets the layout of {@link #root}, 
+	 * Updates the {@link #scrollBar scroll bar} when loading another page. Firstly it resets the layout of {@link #root}, 
 	 * secondly it calculates the new {@link #contentHeight}, then sets the new values for the scroll bar and lastly sets 
 	 * it's visibility (appears only if the content height is bigger than the screen's height). 
 	 * However, if the screen is big enough, the scroll bar won't be displayed, because the content's height gets set to fit it perfectly. 
@@ -421,14 +421,14 @@ public class Main extends Application {
 	 */
 	public static void updateScrollbar(Region lastObject) {
 		root.setLayoutY(0);
-		scrollbar.setValue(0);
+		scrollBar.setValue(0);
 		contentHeight = lastObject.getLayoutY() + calcHeight(lastObject) + pos1 / 3;
-		scrollbar.setMax(contentHeight - scene.getHeight());
-		scrollbar.setBlockIncrement(contentHeight);
+		scrollBar.setMax(contentHeight - scene.getHeight());
+		scrollBar.setBlockIncrement(contentHeight);
         if (scene.getHeight() >= contentHeight) {
-        	scrollbar.setVisible(false);
+        	scrollBar.setVisible(false);
         } else {
-        	scrollbar.setVisible(true);
+        	scrollBar.setVisible(true);
         }
 	}
 }
