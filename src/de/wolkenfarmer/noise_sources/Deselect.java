@@ -62,16 +62,10 @@ public class Deselect implements ExperimentElement {
 	/** @return {@link #builtGui}
 	 * @see de.wolkenfarmer.environment.ExperimentElement#getBuiltGui()*/
 	public boolean getBuiltGui() {return builtGui;}
-	/** Differs between being called from the {@link de.wolkenfarmer.environment.pages.Home home page} and the 
-	 * {@link de.wolkenfarmer.environment.pages.Transcoder transcoder page}. 
-	 * In the second case it displays "Deselect", because "nothing selected" would be weird button name.
-	 * However, getting the calling method from the StackTrace for differentiating between the corresponding 
-	 * {@link de.wolkenfarmer.environment.pages.gui_elements.OverviewButton overview button} and {@link de.wolkenfarmer.environment.pages.gui_elements.OverviewButton option button}
-	 * doesn't work because of the unreasonable universe.
-	 * @return {@link #name}
-	 * @see de.wolkenfarmer.environment.ExperimentElement#getName()*/
-	public String getName() {
-		if (Thread.currentThread().getStackTrace()[2].getClassName() == "de.wolkenfarmer.environment.pages.NoiseSource") {
+	/** @return {@link #name}
+	 * @see de.wolkenfarmer.environment.ExperimentElement#getName(boolean)*/
+	public String getName(boolean optionButton) {
+		if (optionButton) {
 			return "Deselect";
 		} else {
 			return name;

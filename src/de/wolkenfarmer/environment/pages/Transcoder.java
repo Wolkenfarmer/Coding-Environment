@@ -104,7 +104,7 @@ public class Transcoder extends Settings {
 		segmentWidthEnDe = pOverview.getPrefWidth() / 8;
 		segmentWidthPrePost = pOverview.getPrefWidth() / 14;
 		
-			String currentlySelectedEnDecoder = Main.selectedTranscoder.getName();
+			String currentlySelectedEnDecoder = Main.selectedTranscoder.getName(false);
 			
 			bOveModEncoder = new OverviewButton(segmentWidthEnDe * 2, "Encoder", currentlySelectedEnDecoder);
 			bOveModDecoder = new OverviewButton(segmentWidthEnDe * 2, "Decoder", currentlySelectedEnDecoder);
@@ -128,8 +128,8 @@ public class Transcoder extends Settings {
 				bOveModEncoder.setLayoutX(segmentWidthPrePost * 4);
 				bOveModDecoder.setLayoutX(segmentWidthPrePost * 8);
 				
-				bOveModPreencoder.setSelectedItem(Main.selectedPrePost.getName());
-				bOveModPostdecoder.setSelectedItem(Main.selectedPrePost.getName());
+				bOveModPreencoder.setSelectedItem(Main.selectedPrePost.getName(false));
+				bOveModPostdecoder.setSelectedItem(Main.selectedPrePost.getName(false));
 				
 				double y;
 				double y1 = bOveModEncoder.getHeightW() / 2;
@@ -155,9 +155,9 @@ public class Transcoder extends Settings {
 		//Options
 		//bOptButDeselect = new OptionButton(pOptions.getPrefWidth(), Main.transcoder_DeselectPrePost.getName());
 		//bOptButDeselect.setOnActionW(Main.transcoder_DeselectPrePost);
-		bOptButParityCheck = new OptionButton(pOptions.getPrefWidth(), Main.transcoder_ParityCheck.getName());
+		bOptButParityCheck = new OptionButton(pOptions.getPrefWidth(), Main.transcoder_ParityCheck.getName(true));
 		bOptButParityCheck.setOnActionW(Main.transcoder_ParityCheck);
-		bOptButRepetitionCode = new OptionButton(pOptions.getPrefWidth(), Main.transcoder_RepetitionCode.getName());
+		bOptButRepetitionCode = new OptionButton(pOptions.getPrefWidth(), Main.transcoder_RepetitionCode.getName(true));
 		bOptButRepetitionCode.setOnActionW(Main.transcoder_RepetitionCode);
 		
 		vbOptButtons.getChildren().addAll(bOptButParityCheck, bOptButRepetitionCode);
@@ -193,8 +193,8 @@ public class Transcoder extends Settings {
 		String currentlySelectedEnDecoder;
 		String currentlySelectedPrePost;
 		
-		currentlySelectedEnDecoder = Main.selectedTranscoder.getName();
-		currentlySelectedPrePost = Main.selectedPrePost.getName();
+		currentlySelectedEnDecoder = Main.selectedTranscoder.getName(false);
+		currentlySelectedPrePost = Main.selectedPrePost.getName(false);
 		
 		double y, y1, y2;
 		

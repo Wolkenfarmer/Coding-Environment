@@ -276,13 +276,13 @@ public class Result {
 		ObservableList<String[]> resultTableContent = FXCollections.observableArrayList();
 		
 		resultElement[0] = "Used input handler";
-		resultElement[1] = Main.selectedInputHandler.getName();
+		resultElement[1] = Main.selectedInputHandler.getName(false);
 		resultTableContent.add(resultElement.clone());
 		resultElement[0] = "Used transcoder";
-		resultElement[1] = Main.selectedTranscoder.getName();
+		resultElement[1] = Main.selectedTranscoder.getName(false);
 		resultTableContent.add(resultElement.clone());
 		resultElement[0] = "Used noise source";
-		resultElement[1] = Main.selectedNoiSource.getName();
+		resultElement[1] = Main.selectedNoiSource.getName(false);
 		resultTableContent.add(resultElement.clone());
 		
 		resultElement[0] = "Repetitions";

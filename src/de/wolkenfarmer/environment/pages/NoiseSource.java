@@ -57,7 +57,7 @@ public class NoiseSource extends Settings {
 		segmentWidth = pOverview.getPrefWidth() / 4;
 		
 		pOveModel.setLayoutY(Constants.I_DISTANCE_SUBHEADING);
-			bOveModSource = new OverviewButton(segmentWidth, "Noise Source", Main.selectedNoiSource.getName());
+			bOveModSource = new OverviewButton(segmentWidth, "Noise Source", Main.selectedNoiSource.getName(false));
 			
 			double y = bOveModSource.getHeightW() / 2;
 			aOveModRelNoToCh = new Arrow(segmentWidth, y, segmentWidth * 3, y, 15, 10, false, "noise", 0);
@@ -65,11 +65,11 @@ public class NoiseSource extends Settings {
 		pOveModel.getChildren().addAll(bOveModSource, aOveModRelNoToCh, aOveModRelEnToDe);	
 		
 		//Options
-		bOptButDeselect = new OptionButton(pOptions.getPrefWidth(), Main.noiSource_Deselect.getName());
+		bOptButDeselect = new OptionButton(pOptions.getPrefWidth(), Main.noiSource_Deselect.getName(true));
 		bOptButDeselect.setOnActionW(Main.noiSource_Deselect);
-		bOptButIndChanges = new OptionButton(pOptions.getPrefWidth(), Main.noiSource_IndividualChanges.getName());
+		bOptButIndChanges = new OptionButton(pOptions.getPrefWidth(), Main.noiSource_IndividualChanges.getName(true));
 		bOptButIndChanges.setOnActionW(Main.noiSource_IndividualChanges);
-		bOptButMixUpChanges = new OptionButton(pOptions.getPrefWidth(), Main.noiSource_MixUpChanges.getName());
+		bOptButMixUpChanges = new OptionButton(pOptions.getPrefWidth(), Main.noiSource_MixUpChanges.getName(true));
 		bOptButMixUpChanges.setOnActionW(Main.noiSource_MixUpChanges);
 		
 		vbOptButtons.getChildren().addAll(bOptButDeselect, bOptButIndChanges, bOptButMixUpChanges);
@@ -94,6 +94,6 @@ public class NoiseSource extends Settings {
 	 * @param changed Currently not used for this page.
 	 */
 	static void updateOveModel(byte changed) {
-		bOveModSource.setSelectedItem(Main.selectedNoiSource.getName());
+		bOveModSource.setSelectedItem(Main.selectedNoiSource.getName(false));
 	}
 }

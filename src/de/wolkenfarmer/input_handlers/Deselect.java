@@ -41,8 +41,14 @@ public class Deselect implements ExperimentElement {
 	 * @see de.wolkenfarmer.environment.ExperimentElement#getBuiltGui()*/
 	public boolean getBuiltGui() {return builtGui;}
 	/** @return {@link #name}
-	 * @see de.wolkenfarmer.environment.ExperimentElement#getName()*/
-	public String getName() {return name;}
+	 * @see de.wolkenfarmer.environment.ExperimentElement#getName(boolean)*/
+	public String getName(boolean optionButton) {
+		if (optionButton) {
+			return "Deselect";
+		} else {
+			return name;
+		}
+	}
 	/** @return {@link #type}
 	 * @see de.wolkenfarmer.environment.ExperimentElement#getType()*/
 	public byte getType() {return type;}

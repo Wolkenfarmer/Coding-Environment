@@ -11,7 +11,7 @@ import javafx.scene.layout.Pane;
  */
 public interface ExperimentElement {
 	/**
-	 * Makes the experiment element fulfill it's purpose of either giving the information, or en- / decoding it or altering it (noise source).
+	 * Makes the experiment element fulfill it's purpose of either giving the information, or en- / decoding it or altering it (noise source). <br>
 	 * Gets called by {@link de.wolkenfarmer.environment.Run#run(ExperimentElement, ExperimentElement, ExperimentElement, ExperimentElement)}.
 	 * @param task Specifies the requested task from this experiment element. 
 	 * Currently only used for the {@link de.wolkenfarmer.transcoder transcoder}
@@ -25,7 +25,7 @@ public interface ExperimentElement {
 	public UniDataType doJob(byte task, UniDataType data);
 	/**
 	 * Builds the GUI of the experiment element to be displayed in 
-	 * {@link de.wolkenfarmer.environment.pages.gui_elements.InformationSegment#pInfContent}.
+	 * {@link de.wolkenfarmer.environment.pages.gui_elements.InformationSegment#pInfContent}. <br>
 	 * This method gets called by 
 	 * {@link de.wolkenfarmer.environment.pages.gui_elements.OptionButton#setOnActionW(ExperimentElement)}
 	 * if {@link #getBuiltGui()} == false.
@@ -41,18 +41,22 @@ public interface ExperimentElement {
 	 */
 	public void save();
 	/** Loads the GUI of the experiment element to be displayed in 
-	 * {@link de.wolkenfarmer.environment.pages.gui_elements.InformationSegment#pInfContent}.
+	 * {@link de.wolkenfarmer.environment.pages.gui_elements.InformationSegment#pInfContent}. <br>
 	 * This method gets called by 
 	 * {@link de.wolkenfarmer.environment.pages.gui_elements.OptionButton#setOnActionW(ExperimentElement)}
 	 * if {@link #getBuiltGui()} == false.
 	 * @return Returns the Pane (/root) containing the GUI.*/
 	public Pane getGui();
-	/** Gives the buildGui boolean. Indicates, whether the GUI has yet to be build or not.
+	/** Gives the buildGui boolean. <br>
+	 * Indicates, whether the GUI has yet to be build or not.
 	 * @return builtGui boolean*/
 	public boolean getBuiltGui();
-	/** Gives the name.
+	/** Returns the name of the experiment element. <br>
+	 * The name can vary depending on whether this gets displayed on the option button or not. 
+	 * This gets used e.g. for the deselect options.
+	 * @param optionButton Specifies whether the method call comes for naming an option button or not.
 	 * @return name*/
-	public String getName();
+	public String getName(boolean optionButton);
 	/** Gives the type of the experiment element (currently only used for differentiating between transcoder and pre- / post-transcoder.
 	 * @return type*/
 	public byte getType();

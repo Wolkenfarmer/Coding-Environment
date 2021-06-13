@@ -50,7 +50,7 @@ public class InputHandler extends Settings {
 		//Overview
 		segmentWidth = pOverview.getPrefWidth() / 3;
 		
-		bOveModInput = new OverviewButton(segmentWidth, "Input Handler", Main.selectedInputHandler.getName());
+		bOveModInput = new OverviewButton(segmentWidth, "Input Handler", Main.selectedInputHandler.getName(false));
 		bOveModInput.setLayoutX(segmentWidth);
 		
 		double y = bOveModInput.getHeightW() / 2;
@@ -60,9 +60,9 @@ public class InputHandler extends Settings {
 		pOveModel.getChildren().addAll(aOveModRelToIn, bOveModInput, aOveModRelInTo);
 		
 		//Options
-		bOptButUserInput = new OptionButton(pOptions.getPrefWidth(), Main.inputHandler_UserInput.getName());
+		bOptButUserInput = new OptionButton(pOptions.getPrefWidth(), Main.inputHandler_UserInput.getName(true));
 		bOptButUserInput.setOnActionW(Main.inputHandler_UserInput);
-		bOptButBook = new OptionButton(pOptions.getPrefWidth(), Main.inputHandler_RandomDigitBook.getName());
+		bOptButBook = new OptionButton(pOptions.getPrefWidth(), Main.inputHandler_RandomDigitBook.getName(true));
 		bOptButBook.setOnActionW(Main.inputHandler_RandomDigitBook);
 		
 		vbOptButtons.getChildren().addAll(bOptButUserInput, bOptButBook);
@@ -88,6 +88,6 @@ public class InputHandler extends Settings {
 	 * @param changed Currently not used for this page.
 	 */
 	static void updateOveModel(byte changed) {
-		bOveModInput.setSelectedItem(Main.selectedInputHandler.getName());
+		bOveModInput.setSelectedItem(Main.selectedInputHandler.getName(false));
 	}
 }

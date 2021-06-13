@@ -134,14 +134,14 @@ public class ModelFactory {
 					lConSelectedItem.setText("nothing selected");
 					switch (type) {
 					case 0:	
-						lConSelectedItem.setText(Main.selectedInputHandler.getName());
+						lConSelectedItem.setText(Main.selectedInputHandler.getName(false));
 						break;
 					case 1:
 					case 3:
-						lConSelectedItem.setText(Main.selectedTranscoder.getName());
+						lConSelectedItem.setText(Main.selectedTranscoder.getName(false));
 						break;
 					case 2:
-						lConSelectedItem.setText(Main.selectedNoiSource.getName());
+						lConSelectedItem.setText(Main.selectedNoiSource.getName(false));
 						break;
 					default:
 						lConSelectedItem.setText("button type not found");

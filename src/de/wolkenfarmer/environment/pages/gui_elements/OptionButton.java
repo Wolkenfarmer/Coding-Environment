@@ -91,7 +91,7 @@ public class OptionButton extends Button {
 					reference.buildGui(Settings.pInformation.getContent().getPrefWidth());
 				} 	
 				Settings.pInformation.getContent().getChildren().add(reference.getGui());
-				Settings.pInformation.setHeading("Information | " + reference.getName());
+				Settings.pInformation.setHeading("Information | " + reference.getName(true));
 				Settings.updateHeight();
 	        }
 	    });
