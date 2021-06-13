@@ -96,7 +96,6 @@ public class IndividualChanges implements ExperimentElement {
 	}
 	
 	
-	/** @see de.wolkenfarmer.environment.ExperimentElement#buildGui(double)*/
 	public void buildGui(double parentWidth) {
 		root = new Pane();
 		root.setPrefWidth(parentWidth);
@@ -151,23 +150,18 @@ public class IndividualChanges implements ExperimentElement {
 	}
 	
 	
-	/** @see de.wolkenfarmer.environment.ExperimentElement#save()*/
 	public void save() {
 		System.out.println(name + " saved!");
 	}
 	
 	
-	/** @see de.wolkenfarmer.environment.ExperimentElement#getGui()*/
 	public Pane getGui() {return root;}
-	/** @return {@link #builtGui}
-	 * @see de.wolkenfarmer.environment.ExperimentElement#getBuiltGui()*/
+	/** @return {@link #builtGui}*/
 	public boolean getBuiltGui() {return builtGui;}
-	/** @return {@link #name}
-	 * @see de.wolkenfarmer.environment.ExperimentElement#getName(boolean)*/
+	/** @return {@link #name}*/
 	public String getName(boolean optionButton) {
 		return name;
 	}
-	/** @return {@link #type}
-	 * @see de.wolkenfarmer.environment.ExperimentElement#getType()*/
+	/** @return {@link #type}*/
 	public byte getType() {return type;}
 }

@@ -30,11 +30,9 @@ public class DeselectPrePost implements ExperimentElement {
 	private static Label l;
 
 	
-	/** @see de.wolkenfarmer.environment.ExperimentElement#doJob(byte, UniDataType)*/
 	public UniDataType doJob(byte task, UniDataType data) {return data;}
 	
 	
-	/** @see de.wolkenfarmer.environment.ExperimentElement#buildGui(double)*/
 	public void buildGui(double parentWidth) {
 		root = new Pane();
 		root.setPrefWidth(parentWidth);
@@ -51,15 +49,11 @@ public class DeselectPrePost implements ExperimentElement {
 	}
 	
 
-	/** @see de.wolkenfarmer.environment.ExperimentElement#save()*/
 	public void save() {}
-	/** @see de.wolkenfarmer.environment.ExperimentElement#getGui()*/
 	public Pane getGui() {return root;}
-	/** @return {@link #builtGui}
-	 * @see de.wolkenfarmer.environment.ExperimentElement#getBuiltGui()*/
+	/** @return {@link #builtGui}*/
 	public boolean getBuiltGui() {return builtGui;}
-	/** @return {@link #name}
-	 * @see de.wolkenfarmer.environment.ExperimentElement#getName(boolean)*/
+	/** @return Returns either {@link #name} or if option button is true "Deselect pre- / post".*/
 	public String getName(boolean optionButton) {
 		if (optionButton) {
 			return "Deselect pre- / post";
@@ -67,7 +61,6 @@ public class DeselectPrePost implements ExperimentElement {
 			return name;
 		}
 	}
-	/** @return {@link #type}
-	 * @see de.wolkenfarmer.environment.ExperimentElement#getType()*/
+	/** @return {@link #type}*/
 	public byte getType() {return type;}
 }

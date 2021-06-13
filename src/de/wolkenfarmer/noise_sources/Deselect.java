@@ -29,8 +29,7 @@ public class Deselect implements ExperimentElement {
 	private static Label l;
 	
 	
-	/** Sets the necessary message-versions in {@link de.wolkenfarmer.environment.Run} for a flawless data analysis.
-	 * @see de.wolkenfarmer.environment.ExperimentElement#doJob(byte, UniDataType)*/
+	/** Sets the necessary message-versions in {@link de.wolkenfarmer.environment.Run} for a flawless data analysis.*/
 	public UniDataType doJob(byte task, UniDataType data) {
 		Run.originalCode = data.getStringBinary();
 		Run.changedCode = data.getStringBinary();
@@ -38,7 +37,6 @@ public class Deselect implements ExperimentElement {
 	}
 
 	
-	/** @see de.wolkenfarmer.environment.ExperimentElement#buildGui(double)*/
 	public void buildGui(double parentWidth) {
 		root = new Pane();
 		root.setPrefWidth(parentWidth);
@@ -55,15 +53,11 @@ public class Deselect implements ExperimentElement {
 	}
 	
 
-	/** @see de.wolkenfarmer.environment.ExperimentElement#save()*/
 	public void save() {}
-	/** @see de.wolkenfarmer.environment.ExperimentElement#getGui()*/
 	public Pane getGui() {return root;}
-	/** @return {@link #builtGui}
-	 * @see de.wolkenfarmer.environment.ExperimentElement#getBuiltGui()*/
+	/** @return {@link #builtGui}*/
 	public boolean getBuiltGui() {return builtGui;}
-	/** @return {@link #name}
-	 * @see de.wolkenfarmer.environment.ExperimentElement#getName(boolean)*/
+	/** @return Returns either {@link #name} or if option button is true "Deselect".*/
 	public String getName(boolean optionButton) {
 		if (optionButton) {
 			return "Deselect";
@@ -71,7 +65,6 @@ public class Deselect implements ExperimentElement {
 			return name;
 		}
 	}
-	/** @return {@link #type}
-	 * @see de.wolkenfarmer.environment.ExperimentElement#getType()*/
+	/** @return {@link #type}*/
 	public byte getType() {return type;}
 }

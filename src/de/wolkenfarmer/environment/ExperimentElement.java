@@ -11,7 +11,7 @@ import javafx.scene.layout.Pane;
  */
 public interface ExperimentElement {
 	/**
-	 * Makes the experiment element fulfill it's purpose of either giving the information, or en- / decoding it or altering it (noise source). <br>
+	 * Makes the experiment element fulfill its purpose of either giving the information, or en- / decoding it or altering it (noise source). <br>
 	 * Gets called by {@link de.wolkenfarmer.environment.Run#run(ExperimentElement, ExperimentElement, ExperimentElement, ExperimentElement)}.
 	 * @param task Specifies the requested task from this experiment element. 
 	 * Currently only used for the {@link de.wolkenfarmer.transcoder transcoder}
