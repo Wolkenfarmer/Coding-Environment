@@ -11,8 +11,6 @@ import javafx.scene.layout.Pane;
 public class Deselect implements ExperimentElement {
 	/** Name of this experiment element.*/
 	private static String name = "nothing selected";
-	/** Defines the type of this transcoder.*/
-	private static byte type = 0;
 	/** Layout container which will be attached to {@link de.wolkenfarmer.environment.pages.gui_elements.InformationSegment}
 	 * (gets added via {@link de.wolkenfarmer.environment.pages.gui_elements.OptionButton#setOnActionW(ExperimentElement)}).
 	 * Its content (-) gets build in {@link #buildGui(double)}.
@@ -39,12 +37,7 @@ public class Deselect implements ExperimentElement {
 	public boolean getBuiltGui() {return builtGui;}
 	/** @return Returns either {@link #name} or if option button is true "Deselect".*/
 	public String getName(boolean optionButton) {
-		if (optionButton) {
-			return "Deselect";
-		} else {
-			return name;
-		}
+		if (optionButton) return "Deselect";
+		else return name;
 	}
-	/** @return {@link #type}*/
-	public byte getType() {return type;}
 }

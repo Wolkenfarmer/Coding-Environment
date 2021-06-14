@@ -15,8 +15,6 @@ import javafx.scene.layout.Pane;
 public class RandomDigitBook implements ExperimentElement {
 	/** Name of this experiment element.*/
 	private static String name = "Random digit book";
-	/** Defines the type of this input handler. This variable has for input handlers currently no use-case.*/
-	private static byte type = 0;
 	/** Layout container which will be attached to {@link de.wolkenfarmer.environment.pages.gui_elements.InformationSegment}
 	 * (gets added via {@link de.wolkenfarmer.environment.pages.gui_elements.OptionButton#setOnActionW(ExperimentElement)}).
 	 * Its content ({@link #mock}) gets build in {@link #buildGui(double)}.
@@ -59,6 +57,4 @@ public class RandomDigitBook implements ExperimentElement {
 	public boolean getBuiltGui() {return builtGui;}
 	/** @return {@link #name}*/
 	public String getName(boolean optionButton) {return name;}
-	/** @return {@link #type}*/
-	public byte getType() {return type;}
 }

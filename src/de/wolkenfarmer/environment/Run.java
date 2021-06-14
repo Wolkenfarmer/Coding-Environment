@@ -3,7 +3,7 @@ package de.wolkenfarmer.environment;
 /**
  * Runs the communication experiment with the selected {@link ExperimentElement experiment elements}.
  * @author Wolkenfarmer
- * @see #run(ExperimentElement, ExperimentElement, ExperimentElement, ExperimentElement) See run() for more information.
+ * @see #run(ExperimentElement, ExperimentElement, ExperimentElement) See run() for more information.
  */
 public class Run {
 	/** Saves the number of times the communication experiment should be repeated before evaluation. 
@@ -11,7 +11,7 @@ public class Run {
 	 * Currently this variable can only be set manually.*/
 	public static int repeat = 1000;
 	/** Saves the number of times the communication experiment was already repeated.
-	 * Gets incremented in {@link #run(ExperimentElement, ExperimentElement, ExperimentElement, ExperimentElement)} and 
+	 * Gets incremented in {@link #run(ExperimentElement, ExperimentElement, ExperimentElement)} and 
 	 * - if an evaluation had a caught error - decremented in 
 	 * {@link de.wolkenfarmer.environment.Result#addResult(String, String, String, String, String, String)}.*/
 	public static int repeated = 0;
@@ -54,24 +54,20 @@ public class Run {
 	 * converting the given data type to the requested one.
 	 * 
 	 * @param inputHandler The {@link de.wolkenfarmer.input_handlers input handler} which provides the data for this experiment
-	 * @param prePost The {@link de.wolkenfarmer.transcoder pre- / post-transcoder} which prepares the data for the transcoder. 
 	 * @param transcoder The {@link de.wolkenfarmer.transcoder transcoder} which will encode then given data 
 	 * from inputHandler for the channel and afterwards decode it again for the destination. 
 	 * During the decoding most changes through the noise source should hopefully be detected or even corrected.
 	 * @param noiseSource The {@link de.wolkenfarmer.noise_sources noise source} 
 	 * which will alter the data between en- and decoder in the channel a bit.
 	 */
-	public static void run(ExperimentElement inputHandler, ExperimentElement prePost, ExperimentElement transcoder, 
-			ExperimentElement noiseSource) {
+	public static void run(ExperimentElement inputHandler, ExperimentElement transcoder, ExperimentElement noiseSource) {
 		UniDataType data = new UniDataType();
 				
 		for (repeated = 0; repeated < repeat; repeated++) {
 			data = inputHandler.doJob((byte) 0, data);
-			//data = prePost.doJob((byte) 0, data);
 			data = transcoder.doJob((byte) 0, data);
 			data = noiseSource.doJob((byte) 0, data);
 			data = transcoder.doJob((byte) 1, data);
-			//data = prePost.doJob((byte) 1, data);
 			
 			Result.addResult(originalMessage, originalCode, changedCode, changedMessage, correctedMessage, correctedFlaggedMessage);
 			

@@ -234,20 +234,19 @@ public class Settings {
 	/**
 	 * Passes the update {@link #pOveModel overview's model} call on to the settings pages. <br>
 	 * @param page The number of the page whose model has to be updated.
-	 * @param changed Specifies what has to be updated in the specific model.
 	 * @see #loadedPage page number description
 	 * @since 0.2
 	 */
-	public static void updateOveModel(byte page, byte changed) {
+	public static void updateOveModel(byte page) {
 		switch (page) {
 		case 0: 
-			InputHandler.updateOveModel(changed);
+			InputHandler.updateOveModel();
 			break;
 		case 1: 
-			Transcoder.updateOveModel(changed);
+			Transcoder.updateOveModel();
 			break;
 		case 2: 
-			NoiseSource.updateOveModel(changed);
+			NoiseSource.updateOveModel();
 			break;
 		default:
 			System.out.println("Error: Page " + page + " doesn't exist.");

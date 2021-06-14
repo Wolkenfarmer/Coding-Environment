@@ -26,8 +26,7 @@ public class OptionButton extends Button {
 	 * Saves the current mode of the button and defines its current look. <br>
 	 * 0: Not set as any element for the communication experiment. Uses {@link Constants#BG_GRAY}.<br>
 	 * 1: Set as the element for the communication experiment. Uses {@link Constants#BG_GREEN}.<br>
-	 * 2: At the moment only used in the {@link de.wolkenfarmer.environment.pages.Transcoder transcoder page} 
-	 * if the experiment element is set as pre- / post-transcoder and not as e- / decoder. Uses {@link Constants#BG_BROWN}.
+	 * 2: Has currently no use case. Uses {@link Constants#BG_BROWN}.
 	 * */
 	private byte currentMode = 0;
 	/** Layout container for the content of the option button. Contains {@link #l}.*/
@@ -36,12 +35,12 @@ public class OptionButton extends Button {
 		private Label l;
 		
 	
-		/**
-		 * Builds the option button accordingly to the width and with the provided texts. <br>
-		 * The overview button's height gets scaled in order to fit the included text needed height. 
-		 * @param width The {@link #width width} of the button.
-		 * @param heading The text for the {@link #l heading} of the button.
-		 */
+	/**
+	 * Builds the option button accordingly to the width and with the provided texts. <br>
+	 * The overview button's height gets scaled in order to fit the included text needed height. 
+	 * @param width The {@link #width width} of the button.
+	 * @param heading The text for the {@link #l heading} of the button.
+	 */
 	public OptionButton(double width, String heading) {
 		this.setPrefWidth(width);
 		this.setBorder(Constants.B_NORMAL);
@@ -117,7 +116,7 @@ public class OptionButton extends Button {
 			this.setOnMouseExited(Constants.EH_BUTTON_GREEN_EXITED);
 			currentMode = 1;
 			break;
-		case 2:
+		case 2:																// currently not used
 			this.setBackground(Constants.BG_BROWN);
 			this.setOnMouseEntered(Constants.EH_BUTTON_BROWN_ENTERED);
 			this.setOnMouseExited(Constants.EH_BUTTON_BROWN_EXITED);

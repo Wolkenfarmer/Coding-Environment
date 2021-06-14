@@ -12,7 +12,7 @@ import javafx.scene.layout.Pane;
 public interface ExperimentElement {
 	/**
 	 * Makes the experiment element fulfill its purpose of either giving the information, or en- / decoding it or altering it (noise source). <br>
-	 * Gets called by {@link de.wolkenfarmer.environment.Run#run(ExperimentElement, ExperimentElement, ExperimentElement, ExperimentElement)}.
+	 * Gets called by {@link de.wolkenfarmer.environment.Run#run(ExperimentElement, ExperimentElement, ExperimentElement)}.
 	 * @param task Specifies the requested task from this experiment element. 
 	 * Currently only used for the {@link de.wolkenfarmer.transcoder transcoder}
 	 * to specify whether the data should be encoded (0) or decoded (1). 
@@ -55,9 +55,7 @@ public interface ExperimentElement {
 	 * The name can vary depending on whether this gets displayed on the option button or not. 
 	 * This gets used e.g. for the deselect options.
 	 * @param optionButton Specifies whether the method call comes for naming an option button or not.
-	 * @return name*/
+	 * @return name
+	 * @since 0.2*/
 	public String getName(boolean optionButton);
-	/** Gives the type of the experiment element (currently only used for differentiating between transcoder and pre- / post-transcoder.
-	 * @return type*/
-	public byte getType();
 }

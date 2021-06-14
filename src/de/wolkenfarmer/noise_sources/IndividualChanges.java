@@ -26,8 +26,6 @@ import javafx.scene.layout.Pane;
 public class IndividualChanges implements ExperimentElement {
 	/** Name of this experiment element.*/
 	private static String name = "Individual changes";
-	/** Defines the type of this input handler. This variable has for noise sources currently no use-case.*/
-	private static byte type = 0;
 	/** Layout container which will be attached to {@link de.wolkenfarmer.environment.pages.gui_elements.InformationSegment}
 	 * (gets added via {@link de.wolkenfarmer.environment.pages.gui_elements.OptionButton#setOnActionW(ExperimentElement)}).
 	 * It's content ({@link #lDescription}, {@link #rbCha25}, {@link #rbCha15}, {@link #rbCha5}) gets build in {@link #buildGui(double)}.
@@ -159,9 +157,5 @@ public class IndividualChanges implements ExperimentElement {
 	/** @return {@link #builtGui}*/
 	public boolean getBuiltGui() {return builtGui;}
 	/** @return {@link #name}*/
-	public String getName(boolean optionButton) {
-		return name;
-	}
-	/** @return {@link #type}*/
-	public byte getType() {return type;}
+	public String getName(boolean optionButton) {return name;}
 }

@@ -116,10 +116,8 @@ public class Home {
 			 * Contains {@link #hbConButRun} and is part of {@link #vbConButtons}. 
 			 * It calls 
 			 * {@link de.wolkenfarmer.environment.Run#run(de.wolkenfarmer.environment.ExperimentElement, 
-			 * de.wolkenfarmer.environment.ExperimentElement, de.wolkenfarmer.environment.ExperimentElement, 
-			 * de.wolkenfarmer.environment.ExperimentElement) run} with {@link de.wolkenfarmer.environment.Main#selectedInputHandler}, 
-			 * {@link de.wolkenfarmer.environment.Main#selectedTranscoder}, 
-			 * {@link de.wolkenfarmer.environment.Main#selectedPrePost} and {@link de.wolkenfarmer.environment.Main#selectedNoiSource}.*/
+			 * de.wolkenfarmer.environment.ExperimentElement, de.wolkenfarmer.environment.ExperimentElement) run} 
+			 * with {@link Main#selectedInputHandler}, {@link Main#selectedTranscoder}, and {@link Main#selectedNoiSource}.*/
 			private static Button bConButRun;
 				/** Layout container for the buttons description. This is needed in order to align the heading the center of the button. 
 				 * Contains {@link #lConButRun} and is part of {@link #bConButRun}.*/
@@ -369,7 +367,7 @@ public class Home {
 		bConButRun.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent t) {
 				System.out.println("bConButRun got pressed!");
-				Run.run(Main.selectedInputHandler, Main.selectedPrePost, Main.selectedTranscoder, Main.selectedNoiSource);
+				Run.run(Main.selectedInputHandler, Main.selectedTranscoder, Main.selectedNoiSource);
 	        }
 	    });
 		bConButRun.setOnMouseEntered(Constants.EH_BUTTON_GREEN_ENTERED);

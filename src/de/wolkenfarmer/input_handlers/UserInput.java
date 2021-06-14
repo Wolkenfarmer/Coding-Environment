@@ -30,8 +30,6 @@ import javafx.scene.text.TextAlignment;
 public class UserInput implements ExperimentElement {
 	/** Name of this experiment element.*/
 	private static String name = "User input";
-	/** Defines the type of this input handler. This variable has for input handlers currently no use-case.*/
-	private static byte type = 0;
 	/** Layout container which will be attached to {@link de.wolkenfarmer.environment.pages.gui_elements.InformationSegment}
 	 * (gets added via {@link de.wolkenfarmer.environment.pages.gui_elements.OptionButton#setOnActionW(ExperimentElement)}).
 	 * Its content ({@link #taUserText}, {@link #hbControls}, {@link #lDescription}) gets build in {@link #buildGui(double)}.
@@ -258,6 +256,4 @@ public class UserInput implements ExperimentElement {
 	public boolean getBuiltGui() {return builtGui;}
 	/** @return {@link #name}*/
 	public String getName(boolean optionButton) {return name;}
-	/** @return {@link #type}*/
-	public byte getType() {return type;}
 }

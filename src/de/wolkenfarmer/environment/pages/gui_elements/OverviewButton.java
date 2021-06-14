@@ -83,7 +83,7 @@ public class OverviewButton extends Button {
 	
 	/**
 	 * Re-sets the {@link #lSelectedItem selected item} and rescales the height of the button accordingly. 
-	 * Gets called when changing the selected item in {@link Settings#vbOptButtons} with {@link Settings#updateOveModel(byte, byte)}.
+	 * Gets called when changing the selected item in {@link Settings#vbOptButtons} with {@link Settings#updateOveModel(byte)}.
 	 * @param selectedItem The text of the new selected item.
 	 */
 	public void setSelectedItem(String selectedItem) {

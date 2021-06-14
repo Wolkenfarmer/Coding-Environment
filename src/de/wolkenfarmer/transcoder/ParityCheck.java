@@ -28,10 +28,6 @@ import javafx.scene.layout.Pane;
 public class ParityCheck implements ExperimentElement {
 	/** Name of this experiment element.*/
 	private static String name = "Binary Parity Check";
-	/** Defines whether this is an transcoder or a pre- / post-transcoder. This experiment element is only an transcoder.
-	 * 0: transcoder
-	 * 1: pre- / post-*/
-	private static byte type = 0;
 	/** Layout container which will be attached to {@link de.wolkenfarmer.environment.pages.gui_elements.InformationSegment}
 	 * (gets added via {@link de.wolkenfarmer.environment.pages.gui_elements.OptionButton#setOnActionW(ExperimentElement)}).
 	 * Its content ({@link #lDescription}, {@link #rbParSimple}, {@link #rbParCross}) gets build in {@link #buildGui(double)}.
@@ -42,7 +38,7 @@ public class ParityCheck implements ExperimentElement {
 	public static boolean builtGui;
 	
 	/** Saves whether the simple (false) or the cross (true) parity check should be used on the next 
-	 * {@link de.wolkenfarmer.environment.Run#run(ExperimentElement, ExperimentElement, ExperimentElement, ExperimentElement) run} 
+	 * {@link de.wolkenfarmer.environment.Run#run(ExperimentElement, ExperimentElement, ExperimentElement) run} 
 	 * of the communication experiment.
 	 * It gets set by {@link #rbParSimple} and {@link #rbParCross} and its default is false.*/
 	private static boolean boCrossPC;
@@ -360,6 +356,4 @@ public class ParityCheck implements ExperimentElement {
 	public boolean getBuiltGui() {return builtGui;}
 	/** @return {@link #name}*/
 	public String getName(boolean optionButton) {return name;}
-	/** @return {@link #type}*/
-	public byte getType() {return type;}
 }

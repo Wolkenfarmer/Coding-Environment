@@ -1,6 +1,5 @@
 package de.wolkenfarmer.environment.pages;
 
-import de.wolkenfarmer.Constants;
 import de.wolkenfarmer.environment.Main;
 import de.wolkenfarmer.environment.pages.gui_elements.Arrow;
 import de.wolkenfarmer.environment.pages.gui_elements.OptionButton;
@@ -55,8 +54,6 @@ public class NoiseSource extends Settings {
 			
 		//Overview
 		segmentWidth = pOverview.getPrefWidth() / 4;
-		
-		pOveModel.setLayoutY(Constants.I_DISTANCE_SUBHEADING);
 			bOveModSource = new OverviewButton(segmentWidth, "Noise Source", Main.selectedNoiSource.getName(false));
 			
 			double y = bOveModSource.getHeightW() / 2;
@@ -91,9 +88,8 @@ public class NoiseSource extends Settings {
 	/**
 	 * Updates the {@link #pOveModel overviews model} to fit the {@link Main#selectedNoiSource currently selected noise source}. <br>
 	 * For this, {@link #bOveModSource}s {@link OverviewButton#setSelectedItem(String)} gets called.
-	 * @param changed Currently not used for this page.
 	 */
-	static void updateOveModel(byte changed) {
+	static void updateOveModel() {
 		bOveModSource.setSelectedItem(Main.selectedNoiSource.getName(false));
 	}
 }

@@ -49,14 +49,12 @@ public class InputHandler extends Settings {
 		
 		//Overview
 		segmentWidth = pOverview.getPrefWidth() / 3;
-		
-		bOveModInput = new OverviewButton(segmentWidth, "Input Handler", Main.selectedInputHandler.getName(false));
-		bOveModInput.setLayoutX(segmentWidth);
-		
-		double y = bOveModInput.getHeightW() / 2;
-		aOveModRelToIn = new Arrow(0, y, segmentWidth, y, 15, 10, false, "you", 0);
-		aOveModRelInTo = new Arrow(segmentWidth * 2, y, segmentWidth * 3, y, 15, 10, false, "message", 0);
-		
+			bOveModInput = new OverviewButton(segmentWidth, "Input Handler", Main.selectedInputHandler.getName(false));
+			bOveModInput.setLayoutX(segmentWidth);
+			
+			double y = bOveModInput.getHeightW() / 2;
+			aOveModRelToIn = new Arrow(0, y, segmentWidth, y, 15, 10, false, "you", 0);
+			aOveModRelInTo = new Arrow(segmentWidth * 2, y, segmentWidth * 3, y, 15, 10, false, "message", 0);
 		pOveModel.getChildren().addAll(aOveModRelToIn, bOveModInput, aOveModRelInTo);
 		
 		//Options
@@ -85,9 +83,8 @@ public class InputHandler extends Settings {
 	/**
 	 * Updates the {@link #pOveModel overviews model} to fit the {@link Main#selectedInputHandler currently selected input handler}. <br>
 	 * For this, {@link #bOveModInput}s {@link OverviewButton#setSelectedItem(String)} gets called.
-	 * @param changed Currently not used for this page.
 	 */
-	static void updateOveModel(byte changed) {
+	static void updateOveModel() {
 		bOveModInput.setSelectedItem(Main.selectedInputHandler.getName(false));
 	}
 }

@@ -11,7 +11,6 @@ import de.wolkenfarmer.input_handlers.UserInput;
 import de.wolkenfarmer.noise_sources.Deselect;
 import de.wolkenfarmer.noise_sources.IndividualChanges;
 import de.wolkenfarmer.noise_sources.MixUpChanges;
-import de.wolkenfarmer.transcoder.DeselectPrePost;
 import de.wolkenfarmer.transcoder.ParityCheck;
 import de.wolkenfarmer.transcoder.RepetitionCode;
 
@@ -146,10 +145,6 @@ public class Main extends Application {
      * {@link de.wolkenfarmer.environment.pages.Transcoder transcoder page}, 
      * {@link de.wolkenfarmer.environment.Run} and {@link de.wolkenfarmer.environment.Result} to have simple access to it.*/
     public static de.wolkenfarmer.transcoder.Deselect transcoder_Deselect = new de.wolkenfarmer.transcoder.Deselect();
-    /** Static reference to the pre- / post-transcoder "Deselect" in order for the 
-     * {@link de.wolkenfarmer.environment.pages.Transcoder transcoder page}, 
-     * {@link de.wolkenfarmer.environment.Run} and {@link de.wolkenfarmer.environment.Result} to have simple access to it.*/
-    public static DeselectPrePost transcoder_DeselectPrePost = new DeselectPrePost();
     /** Static reference to the transcoder "ParityCheck-Code" in order for the 
      * {@link de.wolkenfarmer.environment.pages.Transcoder transcoder page}, 
      * {@link de.wolkenfarmer.environment.Run} and {@link de.wolkenfarmer.environment.Result} to have simple access to it.*/
@@ -172,30 +167,18 @@ public class Main extends Application {
     public static MixUpChanges noiSource_MixUpChanges = new MixUpChanges();
     
     
-    /**
-     * Saves the selected input handler for further use in the {@link de.wolkenfarmer.environment environment} 
+    /** Saves the selected input handler for further use in the {@link de.wolkenfarmer.environment environment} 
      * This input handler will be used for the {@link Run communication experiment} and for providing the
-     * displayed text in {@link Home#bSetModInput} and {@link OverviewButton#lSelectedItem} (if instantiated from {@link InputHandler}).
-     */
+     * displayed text in {@link Home#bSetModInput} and {@link OverviewButton#lSelectedItem} (if instantiated from {@link InputHandler}).*/
     public static ExperimentElement selectedInputHandler = inputHandler_Deselect;
-    /**
-     * Saves the selected transcoder for further use in the {@link de.wolkenfarmer.environment environment} 
+    /** Saves the selected transcoder for further use in the {@link de.wolkenfarmer.environment environment} 
      * This transcoder will be used for the {@link Run communication experiment} and for providing the
      * displayed text in {@link Home#bSetModEncoder} / {@link Home#bSetModDecoder} and {@link OverviewButton#lSelectedItem}
-     * (if instantiated from {@link Transcoder}).
-     */
+     * (if instantiated from {@link Transcoder}).*/
     public static ExperimentElement selectedTranscoder = transcoder_Deselect;
-    /**
-     * Saves the selected pre- / post-transcoder for further use in the {@link de.wolkenfarmer.environment environment} 
-     * This pre- / post-transcoder will be used for the {@link Run communication experiment} and for providing the
-     * displayed text in {@link OverviewButton#lSelectedItem} (if instantiated from {@link Transcoder}).
-     */
-    public static ExperimentElement selectedPrePost = transcoder_DeselectPrePost;
-    /**
-	 * Saves the selected noise source for further use in the {@link de.wolkenfarmer.environment environment} 
+    /** Saves the selected noise source for further use in the {@link de.wolkenfarmer.environment environment} 
 	 * This noise source will be used for the {@link Run communication experiment} and for providing the
-	 * displayed text in {@link Home#bSetModNoise} and {@link OverviewButton#lSelectedItem} (if instantiated from {@link NoiseSource}).<br>
-	 */
+	 * displayed text in {@link Home#bSetModNoise} and {@link OverviewButton#lSelectedItem} (if instantiated from {@link NoiseSource}).*/
     public static ExperimentElement selectedNoiSource = noiSource_Deselect;
     
     

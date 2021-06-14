@@ -34,7 +34,7 @@ public class InformationSegment extends Pane {
 		 * It gets directly attached to the pane.*/
 		private Label lHeading;
 		/** The "save and add" button. If pressed, the currently selected {@link OptionButton} gets added to the communication experiment.
-		 * For this, either {@link Main#selectedInputHandler} or {@link Main#selectedTranscoder} or {@link Main#selectedPrePost} or
+		 * For this, either {@link Main#selectedInputHandler} or {@link Main#selectedTranscoder} or
 		 * {@link Main#selectedNoiSource} gets updated, as well as the {@link OverviewButton} in the corresponding {@link Settings},
 		 * the {@link OptionButton}'s and {@link Home#pSetModel}.
 		 * Additionally, the {@link ExperimentElement experiment element} gets saved beforehand.
@@ -152,71 +152,26 @@ public class InformationSegment extends Pane {
 				switch (refType) {
 				case 0: // input handler
 					Main.selectedInputHandler = reference;
-					Settings.updateOveModel((byte) 0, (byte) 0);
-					
-					for (int i = 0; i < Settings.vbOptButtons.getChildren().size(); i++) {
-						if (((OptionButton) Settings.vbOptButtons.getChildren().get(i)).getMode() == 1) {
-							((OptionButton) Settings.vbOptButtons.getChildren().get(i)).setMode((byte) 0);
-						}
-					}
-					optButton.setMode((byte) 1);
+					Settings.updateOveModel((byte) 0);
 					break;
 				case 1: // Transcoder	
-					if (reference.getType() == 0) {
-						Main.selectedTranscoder = reference;
-						
-						if (optButton.getMode() == 2) {
-							Main.selectedPrePost = Main.transcoder_DeselectPrePost;
-//							Transcoder.selectDeselectOption();
-							Settings.updateOveModel((byte) 1, (byte) 3);
-						} else {
-							Settings.updateOveModel((byte) 1, (byte) 0);
-						}
-						
-						for (int i = 0; i < Settings.vbOptButtons.getChildren().size(); i++) {
-							if (((OptionButton) Settings.vbOptButtons.getChildren().get(i)).getMode() == 1) {
-								((OptionButton) Settings.vbOptButtons.getChildren().get(i)).setMode((byte) 0);
-							}
-						}
-						optButton.setMode((byte) 1);
-					} else {
-						Main.selectedPrePost = reference;
-						
-						if (optButton.getMode() == 1) {
-							Main.selectedTranscoder = Main.transcoder_Deselect;
-							Settings.updateOveModel((byte) 1, (byte) 0);
-						}
-						
-//						if (!Transcoder.ovePrePostDisplaying) {
-//							if (reference != Main.transcoder_DeselectPrePost) {
-//								Settings.updateOveModel((byte) 1, (byte) 2);		
-//							}
-//						} else {
-//							Settings.updateOveModel((byte) 1, (byte) 3);	
-//						}
-						
-						for (int i = 0; i < Settings.vbOptButtons.getChildren().size(); i++) {
-							if (((OptionButton) Settings.vbOptButtons.getChildren().get(i)).getMode() == 2) {
-								((OptionButton) Settings.vbOptButtons.getChildren().get(i)).setMode((byte) 0);
-							}
-						}
-						optButton.setMode((byte) 2);
-					}
+					Main.selectedTranscoder = reference;
+					Settings.updateOveModel((byte) 1);
 					break;
 				case 2: // noise source
 					Main.selectedNoiSource = reference;
-					Settings.updateOveModel((byte) 2, (byte) 0);
-					
-					for (int i = 0; i < Settings.vbOptButtons.getChildren().size(); i++) {
-						if (((OptionButton) Settings.vbOptButtons.getChildren().get(i)).getMode() == 1) {
-							((OptionButton) Settings.vbOptButtons.getChildren().get(i)).setMode((byte) 0);
-						}
-					}
-					optButton.setMode((byte) 1);
+					Settings.updateOveModel((byte) 2);
 					break;
 				default:
 					System.out.println("Type not found");
 				}
+				
+				for (int i = 0; i < Settings.vbOptButtons.getChildren().size(); i++) {
+					if (((OptionButton) Settings.vbOptButtons.getChildren().get(i)).getMode() == 1) {
+						((OptionButton) Settings.vbOptButtons.getChildren().get(i)).setMode((byte) 0);
+					}
+				}
+				optButton.setMode((byte) 1);
 								
 				Main.boUpdateSettingsModelHomepage = true;
 	        }

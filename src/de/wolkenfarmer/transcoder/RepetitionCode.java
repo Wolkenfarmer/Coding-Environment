@@ -31,10 +31,6 @@ import javafx.scene.paint.Color;
 public class RepetitionCode implements ExperimentElement {
 	/** Name of this experiment element.*/
 	private static String name = "Repetition Code";
-	/** Defines whether this is an transcoder or a pre- / post-transcoder. This experiment element is only an transcoder.
-	 * 0: transcoder
-	 * 1: pre- / post-*/
-	private static byte type = 0;
 	/** Layout container which will be attached to {@link de.wolkenfarmer.environment.pages.gui_elements.InformationSegment}
 	 * (gets added via {@link de.wolkenfarmer.environment.pages.gui_elements.OptionButton#setOnActionW(ExperimentElement)}).
 	 * Its content ({@link #lDescription}) gets build in {@link #buildGui(double)}.
@@ -270,6 +266,4 @@ public class RepetitionCode implements ExperimentElement {
 	public boolean getBuiltGui() {return builtGui;}
 	/** @return {@link #name}*/
 	public String getName(boolean optionButton) {return name;}
-	/** @return {@link #type}*/
-	public byte getType() {return type;}
 }
