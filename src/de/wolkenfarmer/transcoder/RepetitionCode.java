@@ -3,6 +3,7 @@ package de.wolkenfarmer.transcoder;
 import de.wolkenfarmer.Constants;
 import de.wolkenfarmer.environment.ExperimentElement;
 import de.wolkenfarmer.environment.Main;
+import de.wolkenfarmer.environment.Run;
 import de.wolkenfarmer.environment.UniDataType;
 
 import java.util.ArrayList;
@@ -60,10 +61,10 @@ public class RepetitionCode implements ExperimentElement {
 	 * During encoding (task 0) each bit of the message will be repeated {@link #repNumber} times. 
 	 * Therefore, the different repetitions can be compared against each other and error detection and correction can occur.<br>
 	 * In addition, a copy of the data with no corrected or flagged units will be decoded 
-	 * and set as {@link de.wolkenfarmer.environment.Run#changedMessage} via {@link #decodeSimple(String[])}, 
+	 * and set as {@link Run#changedMessage} via {@link #decodeSimple(String[])}, 
 	 * as well as a version of the decoded data with only corrected 
-	 * and not flagged units as {@link de.wolkenfarmer.environment.Run#changedMessage} and the decoded data with flagged and corrected units as
-	 * {@link de.wolkenfarmer.environment.Run#correctedFlaggedMessage} for later comparison in the end.<br><br>
+	 * and not flagged units as {@link Run#changedMessage} and the decoded data with flagged and corrected units as
+	 * {@link Run#correctedFlaggedMessage} for later comparison in the end.<br><br>
 	 * 
 	 * <dl>
 	 * <dt><span class="strong">Encoding</span></dt><dd>
@@ -83,7 +84,7 @@ public class RepetitionCode implements ExperimentElement {
 	 * meaning that multiple characters were represented equally. 
 	 * For this case, the integer list gets sorted afterwards and the two highest numbers get compared. 
 	 * If they are equal, the whole block - a unit of binary characters - will be flagged / replaced by 
-	 * {@link de.wolkenfarmer.environment.Run#flagSignBinary}. 
+	 * {@link Run#flagSignBinary}. 
 	 * The just corrected message will always show the character sorted highest during the integer list sorting.</dd>
 	 * 
 	 * <dt><span class="strong">Note:</span></dt><dd>
@@ -121,7 +122,7 @@ public class RepetitionCode implements ExperimentElement {
 			UniDataType correctedMessage = new UniDataType();
 			UniDataType correctedFlaggedMessage = new UniDataType();
 			changedMessage.setStringBinaryArray(decodeSimple(codeCf.clone()));
-			de.wolkenfarmer.environment.Run.changedMessage = changedMessage.getStringUnicode();
+			Run.changedMessage = changedMessage.getStringUnicode();
 			
 			
 			for (int i = 0; i < codeCf.length; i++) {
@@ -134,7 +135,8 @@ public class RepetitionCode implements ExperimentElement {
 					
 					for (int j = 0; j < repNumber; j++) {
 						if (characters.contains(codeCf[i].charAt(j + k))) {
-							numFound.set(characters.indexOf(codeCf[i].charAt(j + k)), numFound.get(characters.indexOf(codeCf[i].charAt(j + k))) + 1);
+							numFound.set(characters.indexOf(codeCf[i].charAt(j + k)), 
+									numFound.get(characters.indexOf(codeCf[i].charAt(j + k))) + 1);
 						} else {
 							characters.add(codeCf[i].charAt(j + k));
 							numFound.add(1);
@@ -152,7 +154,7 @@ public class RepetitionCode implements ExperimentElement {
 				
 				codeCo[i] = sb.toString();
 				if (flag) {
-					codeCf[i] = de.wolkenfarmer.environment.Run.flagSignBinary;
+					codeCf[i] = Run.flagSignBinary;
 				} else {
 					codeCf[i] = sb.toString();
 				}
@@ -160,8 +162,8 @@ public class RepetitionCode implements ExperimentElement {
 			
 			correctedMessage.setStringBinaryArray(codeCo);
 			correctedFlaggedMessage.setStringBinaryArray(codeCf);
-			de.wolkenfarmer.environment.Run.correctedMessage = correctedMessage.getStringUnicode();
-			de.wolkenfarmer.environment.Run.correctedFlaggedMessage = correctedFlaggedMessage.getStringUnicode();
+			Run.correctedMessage = correctedMessage.getStringUnicode();
+			Run.correctedFlaggedMessage = correctedFlaggedMessage.getStringUnicode();
 			data.setStringBinaryArray(codeCf);
 		}
 		

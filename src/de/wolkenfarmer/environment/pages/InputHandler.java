@@ -26,6 +26,11 @@ public class InputHandler extends Settings {
 		 * Displays "message". Connects {@link #bOveModInput} with the right side of the model. It gets added to the model.*/
 		private static Arrow aOveModRelInTo;
 	// Options
+		/** The {@link OptionButton option button} showing the {@link de.wolkenfarmer.input_handlers.Deselect deselect} 
+		 * option under {@link #pOptions options}. <br>
+		 * Can be used to deactivate the transcoder. 
+		 * It gets build in the {@link #InputHandler() constructor} and is part of {@link #vbOptButtons}.*/
+		private static OptionButton bOptButDeselect;
 		/** The {@link OptionButton option button} showing the {@link de.wolkenfarmer.input_handlers.UserInput user input} 
 		 * option under {@link #pOptions options}. <br>
 		 * It gets instantiated in {@link #load} and is part of {@link #vbOptButtons}.*/
@@ -58,12 +63,15 @@ public class InputHandler extends Settings {
 		pOveModel.getChildren().addAll(aOveModRelToIn, bOveModInput, aOveModRelInTo);
 		
 		//Options
+		bOptButDeselect = new OptionButton(pOptions.getPrefWidth(), Main.inputHandler_Deselect.getName(true));
+		bOptButDeselect.setOnActionW(Main.inputHandler_Deselect);
+		bOptButDeselect.setMode((byte) 1);
 		bOptButUserInput = new OptionButton(pOptions.getPrefWidth(), Main.inputHandler_UserInput.getName(true));
 		bOptButUserInput.setOnActionW(Main.inputHandler_UserInput);
 		bOptButBook = new OptionButton(pOptions.getPrefWidth(), Main.inputHandler_RandomDigitBook.getName(true));
 		bOptButBook.setOnActionW(Main.inputHandler_RandomDigitBook);
 		
-		vbOptButtons.getChildren().addAll(bOptButUserInput, bOptButBook);
+		vbOptButtons.getChildren().addAll(bOptButDeselect, bOptButUserInput, bOptButBook);
 	}
 		
 		
@@ -76,7 +84,7 @@ public class InputHandler extends Settings {
 	static void load() {
 		lHeaHere.setText("Input Handler");
 		pOveModel.getChildren().addAll(aOveModRelToIn, bOveModInput, aOveModRelInTo);
-		vbOptButtons.getChildren().addAll(bOptButUserInput, bOptButBook);
+		vbOptButtons.getChildren().addAll(bOptButDeselect, bOptButUserInput, bOptButBook);
 	}
 	
 

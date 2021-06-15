@@ -41,7 +41,6 @@ public class Transcoder extends Settings {
 		 * option under {@link #pOptions options}. <br>
 		 * Can be used to deactivate the transcoder. 
 		 * It gets build in the {@link #Transcoder() constructor} and is part of {@link #vbOptButtons}.*/
-		@SuppressWarnings("unused")
 		private static OptionButton bOptButDeselect;
 		/** The {@link OptionButton option button} showing the {@link de.wolkenfarmer.transcoder.ParityCheck Binary Parity Check} 
 		 * option under {@link #pOptions options}. <br>
@@ -83,14 +82,15 @@ public class Transcoder extends Settings {
 		
 		
 		//Options
-		//bOptButDeselect = new OptionButton(pOptions.getPrefWidth(), Main.transcoder_Deselect.getName(true));
-		//bOptButDeselect.setOnActionW(Main.transcoder_Deselect);
+		bOptButDeselect = new OptionButton(pOptions.getPrefWidth(), Main.transcoder_Deselect.getName(true));
+		bOptButDeselect.setOnActionW(Main.transcoder_Deselect);
+		bOptButDeselect.setMode((byte) 1);
 		bOptButParityCheck = new OptionButton(pOptions.getPrefWidth(), Main.transcoder_ParityCheck.getName(true));
 		bOptButParityCheck.setOnActionW(Main.transcoder_ParityCheck);
 		bOptButRepetitionCode = new OptionButton(pOptions.getPrefWidth(), Main.transcoder_RepetitionCode.getName(true));
 		bOptButRepetitionCode.setOnActionW(Main.transcoder_RepetitionCode);
 		
-		vbOptButtons.getChildren().addAll(bOptButParityCheck, bOptButRepetitionCode);
+		vbOptButtons.getChildren().addAll(bOptButDeselect, bOptButParityCheck, bOptButRepetitionCode);
 	}
 	
 	
@@ -102,7 +102,7 @@ public class Transcoder extends Settings {
 	static void load() {
 		lHeaHere.setText("Transcoder");
 		pOveModel.getChildren().addAll(aOveModRelToEn, bOveModEncoder, aOveModRelEnToDe, bOveModDecoder, aOveModRelDeTo);
-		vbOptButtons.getChildren().addAll(bOptButParityCheck, bOptButRepetitionCode);
+		vbOptButtons.getChildren().addAll(bOptButDeselect, bOptButParityCheck, bOptButRepetitionCode);
 	}
 	
 	

@@ -1,11 +1,16 @@
 package de.wolkenfarmer.input_handlers;
 
+import de.wolkenfarmer.Constants;
 import de.wolkenfarmer.environment.ExperimentElement;
+import de.wolkenfarmer.environment.Run;
 import de.wolkenfarmer.environment.UniDataType;
+
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
 /**
- * The input handler if none is selected. 
+ * The input handler if none is selected. <br>
+ * If this input handler is ticked for the communication experiment, the standard input message will be used.
  * @author Wolkenfarmer
  */
 public class Deselect implements ExperimentElement {
@@ -13,22 +18,41 @@ public class Deselect implements ExperimentElement {
 	private static String name = "nothing selected";
 	/** Layout container which will be attached to {@link de.wolkenfarmer.environment.pages.gui_elements.InformationSegment}
 	 * (gets added via {@link de.wolkenfarmer.environment.pages.gui_elements.OptionButton#setOnActionW(ExperimentElement)}).
-	 * Its content (-) gets build in {@link #buildGui(double)}.
+	 * Its content ({@link #l}) gets build in {@link #buildGui(double)}.
 	 * When loading another page, it will be removed from the InformationSegment.
 	 * When loading the page {@link #getGui()} will be used to get the built GUI of the experiment element.*/
 	private static Pane root;
-	/** Shows whether the UI has yet to be build ({@link #buildGui}) or is already built and has only to be attached ({@link #getGui()}).*/
-	private static boolean builtGui;
+	/** Shows whether the UI has yet to be build ({@link #buildGui}) or is already build and has only to be attached ({@link #getGui()}).*/
+	public static boolean builtGui;
+	/** Label which explains the function of this element. It will be directly attached to {@link #root}.*/
+	private static Label l;
 
 	
-	/** Sets the necessary message-version in {@link de.wolkenfarmer.environment.Run} for a flawless data analysis 
-	 * and sets the {@link de.wolkenfarmer.environment.Run#standardUnicodeMessage} as input.*/
+	/** Sets the necessary message-version in {@link Run} for a flawless data analysis 
+	 * and sets the {@link Run#standardUnicodeMessage} as input.*/
 	public UniDataType doJob(byte task, UniDataType data) {
-		data.setStringUnicode(de.wolkenfarmer.environment.Run.standardUnicodeMessage);
-		de.wolkenfarmer.environment.Run.originalMessage = de.wolkenfarmer.environment.Run.standardUnicodeMessage;
+		data.setStringUnicode(Run.standardUnicodeMessage); 
+		Run.originalMessage = Run.standardUnicodeMessage;
 		return data;
 	}
-	public void buildGui(double parentWidth) {}
+	
+	
+	public void buildGui(double parentWidth) {
+		root = new Pane();
+		root.setPrefWidth(parentWidth);
+		
+		l = new Label();
+		l.setText("\"Save & add\" this option in order to fall back to the default input \"Hello World!\".");
+		l.setFont(Constants.F_NORMAL);
+		l.setTextFill(Constants.C_NORMAL);
+		l.setPrefWidth(root.getPrefWidth());
+		l.setWrapText(true);
+        
+        builtGui = true;
+        root.getChildren().addAll(l);
+	}
+	
+	
 	public void save() {}
 	public Pane getGui() {return root;}
 	/** @return {@link #builtGui}*/

@@ -86,8 +86,8 @@ public class UserInput implements ExperimentElement {
 	
 	
 	/** 
-	 * Returns the {@link #input} and sets the {@link de.wolkenfarmer.environment.Run#originalMessage original message in Run}.
-	 * If the input is empty, the {@link de.wolkenfarmer.environment.Run#standardUnicodeMessage standard Unicode message} will be used. 
+	 * Returns the {@link #input} and sets the {@link Run#originalMessage original message in Run}.
+	 * If the input is empty, the {@link Run#standardUnicodeMessage standard Unicode message} will be used. 
 	 * @return Returns the input String.
 	 */
 	public UniDataType doJob(byte task, UniDataType data) {

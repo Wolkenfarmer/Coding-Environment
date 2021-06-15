@@ -3,6 +3,7 @@ package de.wolkenfarmer.transcoder;
 import de.wolkenfarmer.Constants;
 import de.wolkenfarmer.environment.ExperimentElement;
 import de.wolkenfarmer.environment.Main;
+import de.wolkenfarmer.environment.Run;
 import de.wolkenfarmer.environment.UniDataType;
 
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class ParityCheck implements ExperimentElement {
 	public static boolean builtGui;
 	
 	/** Saves whether the simple (false) or the cross (true) parity check should be used on the next 
-	 * {@link de.wolkenfarmer.environment.Run#run(ExperimentElement, ExperimentElement, ExperimentElement) run} 
+	 * {@link Run#run(ExperimentElement, ExperimentElement, ExperimentElement) run} 
 	 * of the communication experiment.
 	 * It gets set by {@link #rbParSimple} and {@link #rbParCross} and its default is false.*/
 	private static boolean boCrossPC;
@@ -73,10 +74,10 @@ public class ParityCheck implements ExperimentElement {
 	 * and otherwise detects or even corrects the changes made and ultimately reverses them while encoding.
 	 * It either does a simple binary parity check or a cross binary parity check depending on {@link #boCrossPC}.<br>
 	 * In addition, a copy of the data with no corrected or flagged units will be decoded 
-	 * and set as {@link de.wolkenfarmer.environment.Run#changedMessage} via {@link #decodeSimple(String[])}, 
+	 * and set as {@link Run#changedMessage} via {@link #decodeSimple(String[])}, 
 	 * as well as a version of the decoded data with only corrected 
-	 * and not flagged units as {@link de.wolkenfarmer.environment.Run#changedMessage} and the decoded data with flagged and corrected units as
-	 * {@link de.wolkenfarmer.environment.Run#correctedFlaggedMessage} for later comparison in the end.<br><br>
+	 * and not flagged units as {@link Run#changedMessage} and the decoded data with flagged and corrected units as
+	 * {@link Run#correctedFlaggedMessage} for later comparison in the end.<br><br>
 	 * 
 	 * <dl>
 	 * <dt><span class="strong">Encoding</span></dt><dd>
@@ -96,7 +97,7 @@ public class ParityCheck implements ExperimentElement {
 	 * 
 	 * <dt><span class="strong">Note:</span></dt><dd>
 	 * The method assumes that the length of every unit is equally long but is not specified to UTF8 
-	 * (except for distinct {@link de.wolkenfarmer.environment.Run#flagSignBinary flag-sign}) 
+	 * (except for distinct {@link Run#flagSignBinary flag-sign}) 
 	 * and the in-method reverse-encoding of the simple parity check decoding.</dd>
 	 * </dl>
 	 * @param task Defines whether the input (data) should be encoded (task = 0) or decoded (task = 1).
@@ -168,7 +169,7 @@ public class ParityCheck implements ExperimentElement {
 			UniDataType correctedMessage = new UniDataType();
 			UniDataType correctedFlaggedMessage = new UniDataType();
 			changedMessage.setStringBinaryArray(decodeSimple(messageCF.clone()));
-			de.wolkenfarmer.environment.Run.changedMessage = changedMessage.getStringUnicode();
+			Run.changedMessage = changedMessage.getStringUnicode();
 	
 			
 			if (!boCrossPC) {
@@ -182,7 +183,7 @@ public class ParityCheck implements ExperimentElement {
 					messageC[i] = messageC[i].substring(0, 8);
 					
 					if (ones % 2 == 1) {
-						messageCF[i] = de.wolkenfarmer.environment.Run.flagSignBinary;
+						messageCF[i] = Run.flagSignBinary;
 					}
 				}
 				
@@ -234,7 +235,7 @@ public class ParityCheck implements ExperimentElement {
 						// Flagging if more than one change got detected
 					} else if (incorrectColumns.size() > 0 || incorrectRows.size() > 0) {
 						for (int k = 0; k < incorrectRows.size(); k++) {
-							messageCF[incorrectRows.get(k) + (i * (crossPCDistance + 1))] = de.wolkenfarmer.environment.Run.flagSignBinary;
+							messageCF[incorrectRows.get(k) + (i * (crossPCDistance + 1))] = Run.flagSignBinary;
 						}
 					}
 					
@@ -247,7 +248,7 @@ public class ParityCheck implements ExperimentElement {
 						if (messageCF[i].charAt(k) == '1') ones++;
 					}
 					if (ones % 2 == 1) {
-						messageCF[i] = de.wolkenfarmer.environment.Run.flagSignBinary;
+						messageCF[i] = Run.flagSignBinary;
 					}
 				}
 				
@@ -258,8 +259,8 @@ public class ParityCheck implements ExperimentElement {
 			
 			correctedMessage.setStringBinaryArray(messageC);
 			correctedFlaggedMessage.setStringBinaryArray(messageCF);
-			de.wolkenfarmer.environment.Run.correctedMessage = correctedMessage.getStringUnicode();
-			de.wolkenfarmer.environment.Run.correctedFlaggedMessage = correctedFlaggedMessage.getStringUnicode();
+			Run.correctedMessage = correctedMessage.getStringUnicode();
+			Run.correctedFlaggedMessage = correctedFlaggedMessage.getStringUnicode();
 			data.setStringBinaryArray(messageCF);
 		}
 		

@@ -3,6 +3,7 @@ package de.wolkenfarmer.noise_sources;
 import de.wolkenfarmer.Constants;
 import de.wolkenfarmer.environment.ExperimentElement;
 import de.wolkenfarmer.environment.Main;
+import de.wolkenfarmer.environment.Run;
 import de.wolkenfarmer.environment.UniDataType;
 
 import java.util.Random;
@@ -59,18 +60,18 @@ public class IndividualChanges implements ExperimentElement {
 	/** 
 	 * Modifies the input accordingly to {@link #changeRate}.
 	 * It iterates through every bit of the message randomly changing single bits according to the set {@link #changeRate change rate}.
-	 * However, the '-' pieces dividing each unit in the {@link de.wolkenfarmer.environment.UniDataType#charBinary char binary array} won't be touched 
+	 * However, the '-' pieces dividing each unit in the {@link UniDataType#charBinary char binary array} won't be touched 
 	 * due to being crucial for later decoding and them not existing in normal data transfers 
 	 * (therefore: still representative communication experiment).
-	 * In addition, a pre-changed and post-changed version will be set as {@link de.wolkenfarmer.environment.Run#originalCode original code} and
-	 * {@link de.wolkenfarmer.environment.Run#changedCode changed code}.
+	 * In addition, a pre-changed and post-changed version will be set as {@link Run#originalCode original code} and
+	 * {@link Run#changedCode changed code}.
 	 * @param task Not used for {@link de.wolkenfarmer.noise_sources noise sources}.
 	 * @param data The binary char[] which will be modified.
 	 * @return Returns the modified data.
 	 */
 	public UniDataType doJob(byte task, UniDataType data) {
 		char[] charBinary = data.getCharBinary();
-		de.wolkenfarmer.environment.Run.originalCode = new String(charBinary);
+		Run.originalCode = new String(charBinary);
 		
 		Random random = new Random();
 		int r;
@@ -88,7 +89,7 @@ public class IndividualChanges implements ExperimentElement {
 			}
 		}
 		
-		de.wolkenfarmer.environment.Run.changedCode = new String(charBinary);
+		Run.changedCode = new String(charBinary);
 		data.setCharBinary(charBinary);
 		return data;
 	}
