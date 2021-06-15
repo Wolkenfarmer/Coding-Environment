@@ -99,7 +99,10 @@ public class OptionButton extends Button {
 	
 	/**
 	 * Sets the {@link #currentMode current mode} of the option button. <br>
-	 * Modifies the look of the button.
+	 * Modifies the look of the button. <br>
+	 * 0: gray background<br>
+	 * 1: green background<br>
+	 * 2: brown background (currently not used)
 	 * @param mode The new mode of the button.
 	 */
 	public void setMode(byte mode) {
@@ -116,7 +119,7 @@ public class OptionButton extends Button {
 			this.setOnMouseExited(Constants.EH_BUTTON_GREEN_EXITED);
 			currentMode = 1;
 			break;
-		case 2:																// currently not used
+		case 2:
 			this.setBackground(Constants.BG_BROWN);
 			this.setOnMouseEntered(Constants.EH_BUTTON_BROWN_ENTERED);
 			this.setOnMouseExited(Constants.EH_BUTTON_BROWN_EXITED);

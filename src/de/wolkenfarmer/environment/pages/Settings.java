@@ -208,7 +208,7 @@ public class Settings {
 			System.out.println("Settings page " + page + " has been loaded.");
 			
 		} else {
-			System.out.println("Settings page " + page + "has been reloaded.");
+			System.out.println("Settings page " + page + " has been reloaded.");
 		}
 		
 		updateHeight();

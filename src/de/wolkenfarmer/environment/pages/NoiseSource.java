@@ -64,6 +64,7 @@ public class NoiseSource extends Settings {
 		//Options
 		bOptButDeselect = new OptionButton(pOptions.getPrefWidth(), Main.noiSource_Deselect.getName(true));
 		bOptButDeselect.setOnActionW(Main.noiSource_Deselect);
+		bOptButDeselect.setMode((byte) 1);
 		bOptButIndChanges = new OptionButton(pOptions.getPrefWidth(), Main.noiSource_IndividualChanges.getName(true));
 		bOptButIndChanges.setOnActionW(Main.noiSource_IndividualChanges);
 		bOptButMixUpChanges = new OptionButton(pOptions.getPrefWidth(), Main.noiSource_MixUpChanges.getName(true));
