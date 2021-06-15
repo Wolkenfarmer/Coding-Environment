@@ -40,22 +40,28 @@ public interface ExperimentElement {
 	 * in the {@link Home#pSetModel home-page's settings model}.
 	 */
 	public void save();
-	/** Loads the GUI of the experiment element to be displayed in 
+	/** 
+	 * Loads the GUI of the experiment element to be displayed in 
 	 * {@link de.wolkenfarmer.environment.pages.gui_elements.InformationSegment#pInfContent}. <br>
 	 * This method gets called by 
 	 * {@link de.wolkenfarmer.environment.pages.gui_elements.OptionButton#setOnActionW(ExperimentElement)}
 	 * if {@link #getBuiltGui()} == false.
-	 * @return Returns the Pane (/root) containing the GUI.*/
+	 * @return Returns the Pane (/root) containing the GUI.
+	 */
 	public Pane getGui();
-	/** Gives the buildGui boolean. <br>
+	/** 
+	 * Gives the buildGui boolean. <br>
 	 * Indicates, whether the GUI has yet to be build or not.
-	 * @return builtGui boolean*/
+	 * @return builtGui boolean
+	 */
 	public boolean getBuiltGui();
-	/** Returns the name of the experiment element. <br>
+	/** 
+	 * Returns the name of the experiment element. <br>
 	 * The name can vary depending on whether this gets displayed on the option button or not. 
 	 * This gets used e.g. for the deselect options.
 	 * @param optionButton Specifies whether the method call comes for naming an option button or not.
 	 * @return name
-	 * @since 0.2*/
+	 * @since 0.2
+	 */
 	public String getName(boolean optionButton);
 }

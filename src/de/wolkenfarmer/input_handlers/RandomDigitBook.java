@@ -2,6 +2,7 @@ package de.wolkenfarmer.input_handlers;
 
 import de.wolkenfarmer.Constants;
 import de.wolkenfarmer.environment.ExperimentElement;
+import de.wolkenfarmer.environment.Run;
 import de.wolkenfarmer.environment.UniDataType;
 
 import javafx.scene.control.Label;
@@ -27,7 +28,17 @@ public class RandomDigitBook implements ExperimentElement {
 	private static Label mock;
 	
 	
-	public UniDataType doJob(byte task, UniDataType data) {return data;}
+	/** 
+	 * Returns the {@link Run#standardUnicodeMessage} and sets the {@link Run#originalMessage original message in Run}. <br>
+	 * Due to being in development the standard message will be used.
+	 * @return Returns the input String.
+	 * @since 0.2
+	 */
+	public UniDataType doJob(byte task, UniDataType data) {
+		data.setStringUnicode(Run.standardUnicodeMessage);
+		Run.originalMessage = Run.standardUnicodeMessage;
+		return data;
+	}
 	
 	
 	public void buildGui(double parentWidth) {

@@ -27,7 +27,9 @@ public class Deselect implements ExperimentElement {
 	private static Label l;
 
 	
-	/** Sets the necessary message-versions in {@link Run} for a flawless data analysis.*/
+	/** 
+	 * Sets the necessary message-versions in {@link Run} for a flawless data analysis.
+	 */
 	public UniDataType doJob(byte task, UniDataType data) {
 		if (task != 0) {
 			Run.changedMessage = data.getStringUnicode();
@@ -38,6 +40,9 @@ public class Deselect implements ExperimentElement {
 	}
 	
 	
+	/**
+	 * @since 0.2
+	 */
 	public void buildGui(double parentWidth) {
 		root = new Pane();
 		root.setPrefWidth(parentWidth);

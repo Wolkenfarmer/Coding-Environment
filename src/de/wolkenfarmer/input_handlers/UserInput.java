@@ -86,14 +86,12 @@ public class UserInput implements ExperimentElement {
 	
 	
 	/** 
-	 * Returns the {@link #input} and sets the {@link Run#originalMessage original message in Run}.
+	 * Returns the {@link #input} and sets the {@link Run#originalMessage original message in Run}. <br>
 	 * If the input is empty, the {@link Run#standardUnicodeMessage standard Unicode message} will be used. 
 	 * @return Returns the input String.
 	 */
 	public UniDataType doJob(byte task, UniDataType data) {
-		if (input.equals("")) {
-			input = Run.standardUnicodeMessage;
-		}
+		if (input.equals("")) input = Run.standardUnicodeMessage;
 		data.setStringUnicode(input);
 		Run.originalMessage = input;
 		return data;

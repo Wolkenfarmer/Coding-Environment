@@ -27,7 +27,9 @@ public class Deselect implements ExperimentElement {
 	private static Label l;
 	
 	
-	/** Sets the necessary message-versions in {@link Run} for a flawless data analysis.*/
+	/** 
+	 * Sets the necessary message-versions in {@link Run} for a flawless data analysis.
+	 */
 	public UniDataType doJob(byte task, UniDataType data) {
 		Run.originalCode = data.getStringBinary();
 		Run.changedCode = data.getStringBinary();
