@@ -1,10 +1,12 @@
-package de.wolkenfarmer.environment;
+package de.wolkenfarmer.environment.logic;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
+import de.wolkenfarmer.experiment_elements.ExperimentElement;
+
 /**
- * Universal data type to be handed over from one method to another.
+ * Universal data type to be handed over from one method to another. <br>
  * This class saves the given input and gives it back in the required format {@link #converter(String) converting} it in the process if needed.
  * In addition, it works as an universal data type for the interface {@link ExperimentElement experiment element}
  * in order to be able to get an unknown type from an experiment element.
@@ -29,7 +31,7 @@ public class UniDataType {
 	
 	
 	/**
-	 * Searches for an already set variable and converts it's content into the requested output format. 
+	 * Searches for an already set variable and converts it's content into the requested output format. <br>
 	 * The previously set variable gets set null again in order for the {@link ExperimentElement experiment elements} 
 	 * to have to use the most recently modified data.<br><br>
 	 * 

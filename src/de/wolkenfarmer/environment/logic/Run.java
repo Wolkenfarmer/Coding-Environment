@@ -1,4 +1,6 @@
-package de.wolkenfarmer.environment;
+package de.wolkenfarmer.environment.logic;
+
+import de.wolkenfarmer.experiment_elements.ExperimentElement;
 
 /**
  * Runs the communication experiment with the selected {@link ExperimentElement experiment elements}.
@@ -13,7 +15,7 @@ public class Run {
 	/** Saves the number of times the communication experiment was already repeated.
 	 * Gets incremented in {@link #run(ExperimentElement, ExperimentElement, ExperimentElement)} and 
 	 * - if an evaluation had a caught error - decremented in 
-	 * {@link de.wolkenfarmer.environment.Result#addResult(String, String, String, String, String, String)}.*/
+	 * {@link de.wolkenfarmer.environment.logic.Result#addResult(String, String, String, String, String, String)}.*/
 	public static int repeated = 0;
 	/** Defines the interpretation rule for message-version-comparison in {@link Result}. 
 	 * If set to true, no check-position corrections will be made. 
@@ -26,38 +28,42 @@ public class Run {
 	/** The character '_' which will replace changed but not correctable units in {@link #correctedFlaggedMessage}.
 	 * Currently this variable can only be set manually.*/
 	public static char flagSignUnicode = '_';
-	/** The standard Unicode message, if no {@link de.wolkenfarmer.input_handlers input handler} got selected or it was left empty.
-	 * Currently this variable can only be set manually.*/
+	/** The standard Unicode message, if no {@link de.wolkenfarmer.experiment_elements.input_handlers input handler} 
+	 * got selected or it was left empty. Currently this variable can only be set manually.*/
 	public static String standardUnicodeMessage = "Hello World!";
 	
 	/** The original Message, which neither got en- / decoded or changed by a noise source. 
-	 * It gets set by the {@link de.wolkenfarmer.input_handlers input handler}. */
+	 * It gets set by the {@link de.wolkenfarmer.experiment_elements.input_handlers input handler}. */
 	public static String originalMessage;
-	/** Saves the already encoded but not yet by the {@link de.wolkenfarmer.noise_sources noise source} 
-	 * changed message from the {@link de.wolkenfarmer.noise_sources noise source}.*/
+	/** Saves the already encoded but not yet by the {@link de.wolkenfarmer.experiment_elements.noise_sources noise source} 
+	 * changed message from the {@link de.wolkenfarmer.experiment_elements.noise_sources noise source}.*/
 	public static String originalCode;
-	/** Saves the {@link de.wolkenfarmer.transcoder encoded} and by the {@link de.wolkenfarmer.noise_sources noise source} 
-	 * changed message from the {@link de.wolkenfarmer.noise_sources noise source}.*/
+	/** Saves the {@link de.wolkenfarmer.experiment_elements.transcoder encoded} and by the 
+	 * {@link de.wolkenfarmer.experiment_elements.noise_sources noise source} 
+	 * changed message from the {@link de.wolkenfarmer.experiment_elements.noise_sources noise source}.*/
 	public static String changedCode;
-	/** Saves the by the {@link de.wolkenfarmer.noise_sources noise source} changed message from the {@link de.wolkenfarmer.transcoder encoder}.*/
+	/** Saves the by the {@link de.wolkenfarmer.experiment_elements.noise_sources noise source} changed message from the 
+	 * {@link de.wolkenfarmer.experiment_elements.transcoder encoder}.*/
 	public static String changedMessage;
-	/** Saves the by the transcoder corrected message from the {@link de.wolkenfarmer.transcoder encoder}.*/
+	/** Saves the by the transcoder corrected message from the {@link de.wolkenfarmer.experiment_elements.transcoder encoder}.*/
 	public static String correctedMessage;
-	/** Saves the by the transcoder corrected message with flagged characters from the {@link de.wolkenfarmer.transcoder encoder}.*/
+	/** Saves the by the transcoder corrected message with flagged characters from the 
+	 * {@link de.wolkenfarmer.experiment_elements.transcoder encoder}.*/
 	public static String correctedFlaggedMessage;
 	
 	
 	/**
-	 * Runs the communication experiment with the given {@link ExperimentElement experiment elements}. 
+	 * Runs the communication experiment with the given {@link ExperimentElement experiment elements}. <br>
 	 * In order to cover as much input handlers and transcoder and noise sources as possible, 
 	 * the data from one experiment element will be transferred via {@link UniDataType} to another 
 	 * converting the given data type to the requested one.
 	 * 
-	 * @param inputHandler The {@link de.wolkenfarmer.input_handlers input handler} which provides the data for this experiment
-	 * @param transcoder The {@link de.wolkenfarmer.transcoder transcoder} which will encode then given data 
+	 * @param inputHandler The {@link de.wolkenfarmer.experiment_elements.input_handlers input handler} 
+	 * which provides the data for this experiment
+	 * @param transcoder The {@link de.wolkenfarmer.experiment_elements.transcoder transcoder} which will encode then given data 
 	 * from inputHandler for the channel and afterwards decode it again for the destination. 
 	 * During the decoding most changes through the noise source should hopefully be detected or even corrected.
-	 * @param noiseSource The {@link de.wolkenfarmer.noise_sources noise source} 
+	 * @param noiseSource The {@link de.wolkenfarmer.experiment_elements.noise_sources noise source} 
 	 * which will alter the data between en- and decoder in the channel a bit.
 	 */
 	public static void run(ExperimentElement inputHandler, ExperimentElement transcoder, ExperimentElement noiseSource) {

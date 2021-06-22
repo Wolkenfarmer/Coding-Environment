@@ -1,7 +1,7 @@
-package de.wolkenfarmer.environment.pages.gui_elements;
+package de.wolkenfarmer.environment.gui_elements;
 
 import de.wolkenfarmer.Constants;
-import de.wolkenfarmer.environment.Main;
+import de.wolkenfarmer.environment.logic.Main;
 import de.wolkenfarmer.environment.pages.Home;
 
 import javafx.geometry.Pos;
@@ -68,7 +68,7 @@ public class ModelFactory {
 	
 	/**
 	 * Builds the buttons for {@link de.wolkenfarmer.environment.pages.Home#pSetModel}. 
-	 * It uses the {@link de.wolkenfarmer.environment.Main#calcHeight(Region)} and {@link de.wolkenfarmer.environment.Main#calcHeightLabel(Label, double)} methods 
+	 * It uses the {@link de.wolkenfarmer.environment.logic.Main#calcHeight(Region)} and {@link de.wolkenfarmer.environment.logic.Main#calcHeightLabel(Label, double)} methods 
 	 * for some of it's calculations.<br>
 	 * For setting the text of {@link #lConSelectedItem} {@link Main#selectedInputHandler}, {@link Main#selectedTranscoder} and
 	 * {@link Main#selectedNoiSource} get used depending on the type.

@@ -1,9 +1,9 @@
 package de.wolkenfarmer.environment.pages;
 
-import de.wolkenfarmer.environment.Main;
-import de.wolkenfarmer.environment.pages.gui_elements.Arrow;
-import de.wolkenfarmer.environment.pages.gui_elements.OptionButton;
-import de.wolkenfarmer.environment.pages.gui_elements.OverviewButton;
+import de.wolkenfarmer.environment.gui_elements.Arrow;
+import de.wolkenfarmer.environment.gui_elements.OptionButton;
+import de.wolkenfarmer.environment.gui_elements.OverviewButton;
+import de.wolkenfarmer.environment.logic.Main;
 
 /**
  * The settings page 'input handler page' (a settings sub-page of the {@link Home home page}). <br>
@@ -26,16 +26,16 @@ public class InputHandler extends Settings {
 		 * Displays "message". Connects {@link #bOveModInput} with the right side of the model. It gets added to the model.*/
 		private static Arrow aOveModRelInTo;
 	// Options
-		/** The {@link OptionButton option button} showing the {@link de.wolkenfarmer.input_handlers.Deselect deselect} 
+		/** The {@link OptionButton option button} showing the {@link de.wolkenfarmer.experiment_elements.input_handlers.Deselect deselect} 
 		 * option under {@link #pOptions options}. <br>
 		 * Can be used to deactivate the transcoder. 
 		 * It gets build in the {@link #InputHandler() constructor} and is part of {@link #vbOptButtons}.*/
 		private static OptionButton bOptButDeselect;
-		/** The {@link OptionButton option button} showing the {@link de.wolkenfarmer.input_handlers.UserInput user input} 
+		/** The {@link OptionButton option button} showing the {@link de.wolkenfarmer.experiment_elements.input_handlers.UserInput user input} 
 		 * option under {@link #pOptions options}. <br>
 		 * It gets instantiated in {@link #load} and is part of {@link #vbOptButtons}.*/
 		private static OptionButton bOptButUserInput;
-		/** The {@link OptionButton option button} showing the {@link de.wolkenfarmer.input_handlers.RandomDigitBook random digit book} 
+		/** The {@link OptionButton option button} showing the {@link de.wolkenfarmer.experiment_elements.input_handlers.RandomDigitBook random digit book} 
 		 * option under {@link #pOptions options}. <br>
 		 * It gets instantiated in {@link #load} and is part of {@link #vbOptButtons}.*/
 		private static OptionButton bOptButBook;

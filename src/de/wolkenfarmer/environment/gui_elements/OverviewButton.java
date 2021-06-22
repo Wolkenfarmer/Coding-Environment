@@ -1,10 +1,9 @@
-package de.wolkenfarmer.environment.pages.gui_elements;
+package de.wolkenfarmer.environment.gui_elements;
 
 import de.wolkenfarmer.Constants;
-import de.wolkenfarmer.environment.ExperimentElement;
-import de.wolkenfarmer.environment.Main;
+import de.wolkenfarmer.environment.logic.Main;
 import de.wolkenfarmer.environment.pages.Settings;
-
+import de.wolkenfarmer.experiment_elements.ExperimentElement;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

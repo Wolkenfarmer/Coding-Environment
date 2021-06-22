@@ -1,10 +1,10 @@
 package de.wolkenfarmer.environment.pages;
 
 import de.wolkenfarmer.Constants;
-import de.wolkenfarmer.environment.Main;
-import de.wolkenfarmer.environment.Run;
-import de.wolkenfarmer.environment.pages.gui_elements.Arrow;
-import de.wolkenfarmer.environment.pages.gui_elements.ModelFactory;
+import de.wolkenfarmer.environment.gui_elements.Arrow;
+import de.wolkenfarmer.environment.gui_elements.ModelFactory;
+import de.wolkenfarmer.environment.logic.Main;
+import de.wolkenfarmer.environment.logic.Run;
 
 import java.util.Arrays;
 
@@ -38,7 +38,7 @@ import javafx.util.Callback;
  * @author Wolkenfarmer
  */
 public class Home {
-	/** Layout container representing the given root from {@link de.wolkenfarmer.environment.Main} to attach the GUI-elements to.
+	/** Layout container representing the given root from {@link de.wolkenfarmer.environment.logic.Main} to attach the GUI-elements to.
 	 * It's content ({@link #hbHeading}, {@link #pSettings}, {@link #pControls}, {@link #pResults}) gets build in {@link #Home(Group)}.
 	 * When loading another page its content gets first removed and then the layout container will be given to the other class.
 	 * When reloading the page {@link #reload(Group, boolean)} will be used to reattach  the content to the root.*/
@@ -97,9 +97,9 @@ public class Home {
 		/** Label which displays the subheading "Last Results". It's part of {@link #pResults}.*/
 		private static Label lResHeading;
 		/** The table displaying the last result below {@link #lResHeading}. 
-		 * It gets the result from {@link de.wolkenfarmer.environment.Result#updateResult()}.
+		 * It gets the result from {@link de.wolkenfarmer.environment.logic.Result#updateResult()}.
 		 * Contains {@link #tvResTabDescription} and {@link #tvResTabValue} and is part of {@link #pResults}.
-		 * @see de.wolkenfarmer.environment.pages.css */
+		 * @see de.wolkenfarmer.css */
 		private static TableView<String[]> tvResTable;
 			/** The first column of {@link #tvResTable} displaying the descriptions of the values.*/
 			private static TableColumn<String[], String> tvResTabDescription;
@@ -115,8 +115,8 @@ public class Home {
 			/** The run button of the controls segment. Uses {@link Constants#BG_GREEN} as background.
 			 * Contains {@link #hbConButRun} and is part of {@link #vbConButtons}. 
 			 * It calls 
-			 * {@link de.wolkenfarmer.environment.Run#run(de.wolkenfarmer.environment.ExperimentElement, 
-			 * de.wolkenfarmer.environment.ExperimentElement, de.wolkenfarmer.environment.ExperimentElement) run} 
+			 * {@link de.wolkenfarmer.environment.logic.Run#run(de.wolkenfarmer.experiment_elements.ExperimentElement, 
+			 * de.wolkenfarmer.experiment_elements.ExperimentElement, de.wolkenfarmer.experiment_elements.ExperimentElement) run} 
 			 * with {@link Main#selectedInputHandler}, {@link Main#selectedTranscoder}, and {@link Main#selectedNoiSource}.*/
 			private static Button bConButRun;
 				/** Layout container for the buttons description. This is needed in order to align the heading the center of the button. 
@@ -511,7 +511,7 @@ public class Home {
 	
 	
 	/**
-	 * Updates {@link #tvResTable the result table}. It gets called by {@link de.wolkenfarmer.environment.Result#updateResult()}.
+	 * Updates {@link #tvResTable the result table}. It gets called by {@link de.wolkenfarmer.environment.logic.Result#updateResult()}.
 	 * @param results The new content to e displayed by the table.
 	 */
 	public void updateResultTable(ObservableList<String[]> results) {

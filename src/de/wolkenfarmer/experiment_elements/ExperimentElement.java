@@ -1,50 +1,50 @@
-package de.wolkenfarmer.environment;
+package de.wolkenfarmer.experiment_elements;
 
-import de.wolkenfarmer.environment.pages.Home;
-import de.wolkenfarmer.environment.pages.Settings;
+import de.wolkenfarmer.environment.logic.UniDataType;
+
 import javafx.scene.layout.Pane;
 
 /**
- * Defines the basic methods of the experiment elements ({@link de.wolkenfarmer.transcoder}, 
- * {@link de.wolkenfarmer.input_handlers} and {@link de.wolkenfarmer.noise_sources}).
+ * Defines the basic methods of the experiment elements ({@link de.wolkenfarmer.experiment_elements.transcoder}, 
+ * {@link de.wolkenfarmer.experiment_elements.input_handlers} and {@link de.wolkenfarmer.experiment_elements.noise_sources}).
  * @author Wolkenfarmer
  */
 public interface ExperimentElement {
 	/**
 	 * Makes the experiment element fulfill its purpose of either giving the information, or en- / decoding it or altering it (noise source). <br>
-	 * Gets called by {@link de.wolkenfarmer.environment.Run#run(ExperimentElement, ExperimentElement, ExperimentElement)}.
+	 * Gets called by {@link de.wolkenfarmer.environment.logic.Run#run(ExperimentElement, ExperimentElement, ExperimentElement)}.
 	 * @param task Specifies the requested task from this experiment element. 
-	 * Currently only used for the {@link de.wolkenfarmer.transcoder transcoder}
+	 * Currently only used for the {@link de.wolkenfarmer.experiment_elements.transcoder transcoder}
 	 * to specify whether the data should be encoded (0) or decoded (1). 
-	 * {@link de.wolkenfarmer.input_handlers input handlers} will always set the data and 
-	 * {@link de.wolkenfarmer.noise_sources noise sources} will always alter the data for the communication experiment.
+	 * {@link de.wolkenfarmer.experiment_elements.input_handlers input handlers} will always set the data and 
+	 * {@link de.wolkenfarmer.experiment_elements.noise_sources noise sources} will always alter the data for the communication experiment.
 	 * @param data The data which will be used for the requested task.
 	 * @return Returns the modified {@link UniDataType data} 
-	 * or if a deselect-option (like {@link de.wolkenfarmer.noise_sources.Deselect}) was selected the unmodified data. 
+	 * or if a deselect-option (like {@link de.wolkenfarmer.experiment_elements.noise_sources.Deselect}) was selected the unmodified data. 
 	 */
 	public UniDataType doJob(byte task, UniDataType data);
 	/**
 	 * Builds the GUI of the experiment element to be displayed in 
-	 * {@link de.wolkenfarmer.environment.pages.gui_elements.InformationSegment#pInfContent}. <br>
+	 * {@link de.wolkenfarmer.environment.gui_elements.InformationSegment#pInfContent}. <br>
 	 * This method gets called by 
-	 * {@link de.wolkenfarmer.environment.pages.gui_elements.OptionButton#setOnActionW(ExperimentElement)}
+	 * {@link de.wolkenfarmer.environment.gui_elements.OptionButton#setOnActionW(ExperimentElement)}
 	 * if {@link #getBuiltGui()} == false.
 	 * The GUI gets scaled accordingly to 
-	 * {@link de.wolkenfarmer.environment.pages.gui_elements.InformationSegment#pInfContent}s width (parentWidth).
+	 * {@link de.wolkenfarmer.environment.gui_elements.InformationSegment#pInfContent}s width (parentWidth).
 	 * @param parentWidth The width of the layout container to which the GUI will be attached to.
 	 */
 	public void buildGui(double parentWidth);
 	/**
 	 * Saves the currently set specifications in it's GUI in order to be added "as is" to the communication element and 
-	 * get displayed as set in the {@link Settings#pOverview settings-page's overview model} and 
-	 * in the {@link Home#pSetModel home-page's settings model}.
+	 * get displayed as set in the {@link de.wolkenfarmer.environment.pages.Settings#pOverview settings-page's overview model} and 
+	 * in the {@link de.wolkenfarmer.environment.pages.Home#pSetModel home-page's settings model}.
 	 */
 	public void save();
 	/** 
 	 * Loads the GUI of the experiment element to be displayed in 
-	 * {@link de.wolkenfarmer.environment.pages.gui_elements.InformationSegment#pInfContent}. <br>
+	 * {@link de.wolkenfarmer.environment.gui_elements.InformationSegment#pInfContent}. <br>
 	 * This method gets called by 
-	 * {@link de.wolkenfarmer.environment.pages.gui_elements.OptionButton#setOnActionW(ExperimentElement)}
+	 * {@link de.wolkenfarmer.environment.gui_elements.OptionButton#setOnActionW(ExperimentElement)}
 	 * if {@link #getBuiltGui()} == false.
 	 * @return Returns the Pane (/root) containing the GUI.
 	 */

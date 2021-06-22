@@ -1,4 +1,4 @@
-package de.wolkenfarmer.environment.pages.gui_elements;
+package de.wolkenfarmer.environment.gui_elements;
 
 import de.wolkenfarmer.Constants;
 
@@ -12,7 +12,7 @@ import javafx.scene.shape.Line;
  * A labeled arrow.
  * They can either be created horizontal (from left to right) or vertical (from bottom to top or top to bottom).
  * The arrows have a non-solid head and can be labeled (if horizontal).
- * The arrows get used in {@link de.wolkenfarmer.environment.pages.gui_elements.ModelFactory#buildRelation(float, float, short, boolean, String)} 
+ * The arrows get used in {@link de.wolkenfarmer.environment.gui_elements.ModelFactory#buildRelation(float, float, short, boolean, String)} 
  * to be shown in {@link de.wolkenfarmer.environment.pages.Home#pSetModel} and used in the different 
  * {@link de.wolkenfarmer.environment.pages.Settings settings pages}.
  * @author Wolkenfarmer

@@ -1,10 +1,10 @@
-package de.wolkenfarmer.transcoder;
+package de.wolkenfarmer.experiment_elements.transcoder;
 
 import de.wolkenfarmer.Constants;
-import de.wolkenfarmer.environment.ExperimentElement;
-import de.wolkenfarmer.environment.Main;
-import de.wolkenfarmer.environment.Run;
-import de.wolkenfarmer.environment.UniDataType;
+import de.wolkenfarmer.environment.logic.Main;
+import de.wolkenfarmer.environment.logic.Run;
+import de.wolkenfarmer.environment.logic.UniDataType;
+import de.wolkenfarmer.experiment_elements.ExperimentElement;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,7 +21,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 /**
- * The {@link de.wolkenfarmer.transcoder transcoder} "Repetition Code" which is selectable on the 
+ * The {@link de.wolkenfarmer.experiment_elements.transcoder transcoder} "Repetition Code" which is selectable on the 
  * {@link de.wolkenfarmer.environment.pages.Transcoder transcoder page}.
  * This encoder repeats every given character {@link #repNumber} times.
  * Therefore, the decoder can check whether there is a character out of place in a repetition-segment 
@@ -32,8 +32,8 @@ import javafx.scene.paint.Color;
 public class RepetitionCode implements ExperimentElement {
 	/** Name of this experiment element.*/
 	private static String name = "Repetition Code";
-	/** Layout container which will be attached to {@link de.wolkenfarmer.environment.pages.gui_elements.InformationSegment}
-	 * (gets added via {@link de.wolkenfarmer.environment.pages.gui_elements.OptionButton#setOnActionW(ExperimentElement)}).
+	/** Layout container which will be attached to {@link de.wolkenfarmer.environment.gui_elements.InformationSegment}
+	 * (gets added via {@link de.wolkenfarmer.environment.gui_elements.OptionButton#setOnActionW(ExperimentElement)}).
 	 * Its content ({@link #lDescription}) gets build in {@link #buildGui(double)}.
 	 * When loading another page, it will be removed from the InformationSegment.
 	 * When loading the page {@link #getGui()} will be used to get the built GUI of the experiment element.*/

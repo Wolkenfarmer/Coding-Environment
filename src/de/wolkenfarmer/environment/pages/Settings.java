@@ -1,10 +1,10 @@
 package de.wolkenfarmer.environment.pages;
 
 import de.wolkenfarmer.Constants;
-import de.wolkenfarmer.environment.ExperimentElement;
-import de.wolkenfarmer.environment.Main;
-import de.wolkenfarmer.environment.pages.gui_elements.InformationSegment;
-import de.wolkenfarmer.environment.pages.gui_elements.OptionButton;
+import de.wolkenfarmer.environment.gui_elements.InformationSegment;
+import de.wolkenfarmer.environment.gui_elements.OptionButton;
+import de.wolkenfarmer.environment.logic.Main;
+import de.wolkenfarmer.experiment_elements.ExperimentElement;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -15,7 +15,7 @@ import javafx.scene.text.TextFlow;
 
 /**
  * Sub-page of the @ {@link de.wolkenfarmer.environment.pages.Home home page}, where one can choose the 
- * {@link de.wolkenfarmer.environment.ExperimentElement experiment elements}. <br>
+ * {@link de.wolkenfarmer.experiment_elements.ExperimentElement experiment elements}. <br>
  * It is the base for the {@link de.wolkenfarmer.environment.pages.InputHandler input handler page},
  * the {@link de.wolkenfarmer.environment.pages.Transcoder transcoder page} and 
  * the {@link de.wolkenfarmer.environment.pages.NoiseSource noise source page}. 
@@ -257,7 +257,7 @@ public class Settings {
 	/**
 	 * Calculates the height of the currently loaded page and calls {@link Main#updateScrollbar(javafx.scene.layout.Region)} with it. <br>
 	 * Therefore it updates the {@link Main#scrollBar scroll bar}.
-	 * Gets called when either the {@link de.wolkenfarmer.environment.pages.gui_elements.OptionButton
+	 * Gets called when either the {@link de.wolkenfarmer.environment.gui_elements.OptionButton
 	 * #setOnActionW(ExperimentElement) information segment's content changed} or another  
 	 * {@link #loadPage(Group, byte) settings page got loaded}. 
 	 * @since 0.1

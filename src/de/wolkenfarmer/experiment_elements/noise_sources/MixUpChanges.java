@@ -1,23 +1,21 @@
-package de.wolkenfarmer.input_handlers;
+package de.wolkenfarmer.experiment_elements.noise_sources;
 
 import de.wolkenfarmer.Constants;
-import de.wolkenfarmer.environment.ExperimentElement;
-import de.wolkenfarmer.environment.Run;
-import de.wolkenfarmer.environment.UniDataType;
-
+import de.wolkenfarmer.environment.logic.UniDataType;
+import de.wolkenfarmer.experiment_elements.ExperimentElement;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
 /**
- * For now just a mock class for {@link de.wolkenfarmer.environment.pages.InputHandler}. 
- * Will later be extended to a full version of the random digit book input handler.
+ * For now just a mock class for {@link de.wolkenfarmer.environment.pages.NoiseSource}. 
+ * Will later be extended to a full version of the mix-up changes noise source.
  * @author Wolkenfarmer
  */
-public class RandomDigitBook implements ExperimentElement {
+public class MixUpChanges implements ExperimentElement {
 	/** Name of this experiment element.*/
-	private static String name = "Random digit book";
-	/** Layout container which will be attached to {@link de.wolkenfarmer.environment.pages.gui_elements.InformationSegment}
-	 * (gets added via {@link de.wolkenfarmer.environment.pages.gui_elements.OptionButton#setOnActionW(ExperimentElement)}).
+	private static String name = "Mix-up changes";
+	/** Layout container which will be attached to {@link de.wolkenfarmer.environment.gui_elements.InformationSegment}
+	 * (gets added via {@link de.wolkenfarmer.environment.gui_elements.OptionButton#setOnActionW(ExperimentElement)}).
 	 * Its content ({@link #mock}) gets build in {@link #buildGui(double)}.
 	 * When loading another page, it will be removed from the InformationSegment.
 	 * When loading the page {@link #getGui()} will be used to get the built GUI of the experiment element.*/
@@ -28,18 +26,8 @@ public class RandomDigitBook implements ExperimentElement {
 	private static Label mock;
 	
 	
-	/** 
-	 * Returns the {@link Run#standardUnicodeMessage} and sets the {@link Run#originalMessage original message in Run}. <br>
-	 * Due to being in development the standard message will be used.
-	 * @return Returns the input String.
-	 * @since 0.2
-	 */
-	public UniDataType doJob(byte task, UniDataType data) {
-		data.setStringUnicode(Run.standardUnicodeMessage);
-		Run.originalMessage = Run.standardUnicodeMessage;
-		return data;
-	}
-	
+	public UniDataType doJob(byte task, UniDataType data) {return data;}
+
 	
 	public void buildGui(double parentWidth) {
 		root = new Pane();
@@ -54,7 +42,6 @@ public class RandomDigitBook implements ExperimentElement {
         
         builtGui = true;
         root.getChildren().addAll(mock);
-		
 	}
 	
 	

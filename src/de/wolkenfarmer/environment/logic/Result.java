@@ -1,26 +1,31 @@
-package de.wolkenfarmer.environment;
+package de.wolkenfarmer.environment.logic;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- * Manages the results from {@link Run} and analyzes them.
+ * Manages the results from {@link Run} and analyzes them. <br>
  * Firstly, the results of the each communication experiment run get added and analyzed via 
  * {@link #addResult(String, String, String, String, String, String)}. When all communication experiment {@link Run#repeat runs / run-repeats}
  * got added, {@link #updateResult()} gets called, which calculates the average of each added run, 
- * summarizes the final results in a String[], and lastly updates {@link de.wolkenfarmer.environment.pages.Home#tvResTable the results-table on the home page}.
+ * summarizes the final results in a String[], and lastly updates 
+ * {@link de.wolkenfarmer.environment.pages.Home#tvResTable the results-table on the home page}.
  * This class gets only called by {@link Run}.
  * @author Wolkenfarmer
  */
 public class Result {
-	/** Saves the used {@link de.wolkenfarmer.input_handlers input handler} for the last run of the communication experiment.*/
+	/** Saves the used {@link de.wolkenfarmer.experiment_elements.input_handlers input handler} 
+	 * for the last run of the communication experiment.*/
 	public static String inputeHandler;
-	/** Saves the used {@link de.wolkenfarmer.transcoder transcoder} for the last run of the communication experiment.*/
+	/** Saves the used {@link de.wolkenfarmer.experiment_elements.transcoder transcoder} 
+	 * for the last run of the communication experiment.*/
 	public static String transcoder;
-	/** Saves the used {@link de.wolkenfarmer.noise_sources noise source} for the last run of the communication experiment.*/
+	/** Saves the used {@link de.wolkenfarmer.experiment_elements.noise_sources noise source} 
+	 * for the last run of the communication experiment.*/
 	public static String noiseSource;
 	
-	/** Saves the number of changes in the encoded version of the message made by the {@link de.wolkenfarmer.noise_sources noise source} by comparing
+	/** Saves the number of changes in the encoded version of the message made by the 
+	 * {@link de.wolkenfarmer.experiment_elements.noise_sources noise source} by comparing
 	 * {@link Run#originalCode} and {@link Run#changedCode}.*/
 	private static double changes;
 	/** Saves the number of changed characters in the {@link Run#changedMessage changed message} in comparison to the 
@@ -53,8 +58,8 @@ public class Result {
 	
 	
 	/**
-	 * Adds the given run to the result by analyzing it and incrementing the corresponding variables.<br>
-	 * Firstly, all changes in the encoded message made by the {@link de.wolkenfarmer.noise_sources noise source} 
+	 * Adds the given run to the result by analyzing it and incrementing the corresponding variables. <br>
+	 * Firstly, all changes in the encoded message made by the {@link de.wolkenfarmer.experiment_elements.noise_sources noise source} 
 	 * get counted for {@link #changes}.<br><br>
 	 * 
 	 * Then, it iterates the characters of the original message and counts {@link #information} up by doing so. 
@@ -259,14 +264,15 @@ public class Result {
 	
 	
 	/**
-	 * The results of the experiment as well as its evaluation get combined to a String[]. 
+	 * The results of the experiment as well as its evaluation get combined to a String[]. <br>
 	 * If {@link Run#repeat} != 1, the evaluated values like {@link #changes} get divided 
 	 * by the number of repeats before the evaluation in order to get the average.
 	 * In the end, it prepares the variables, which count the changes in the code and message as well as the information numbers, 
 	 * for the next communication experiment by setting them to 0. This is crucial to them due being static.<br>
 	 * Following information gets included in the result:
-	 * {@link de.wolkenfarmer.input_handlers the used input handler}, {@link de.wolkenfarmer.transcoder the used transcoder}, 
-	 * {@link de.wolkenfarmer.noise_sources the used noise source}, 
+	 * {@link de.wolkenfarmer.experiment_elements.input_handlers the used input handler}, 
+	 * {@link de.wolkenfarmer.experiment_elements.transcoder the used transcoder}, 
+	 * {@link de.wolkenfarmer.experiment_elements.noise_sources the used noise source}, 
 	 * {@link #changes}, {@link #changedChars}, {@link #correctedChars}, {@link #mistakenlyCorrectedChars}, 
 	 * {@link #flaggedChars}, {@link #mistakenlyFlaggedChars}, {@link #information}, {@link #informationWithoutCoding}, 
 	 * {@link #informationWithCodingCo}, {@link #informationWithCodingCf}.
@@ -367,9 +373,9 @@ public class Result {
 	
 	
 	/**
-	 * Prints the results of the last communication experiment into the console. 
+	 * Prints the results of the last communication experiment into the console. <br>
 	 * Only the message-versions and the original as well as the changes code are included. 
-	 * Note that these won't be printed in the console if the .exe-version got started.
+	 * Note that these won't be printed in the console if the .exe version got started.
 	 * @param originalMessage Refers to {@link Run#originalMessage}.
 	 * @param originalCode Refers to {@link Run#originalCode}.
 	 * @param changedCode Refers to {@link Run#changedCode}.

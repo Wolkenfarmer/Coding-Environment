@@ -1,23 +1,21 @@
-package de.wolkenfarmer.input_handlers;
+package de.wolkenfarmer.experiment_elements.transcoder;
 
 import de.wolkenfarmer.Constants;
-import de.wolkenfarmer.environment.ExperimentElement;
-import de.wolkenfarmer.environment.Run;
-import de.wolkenfarmer.environment.UniDataType;
-
+import de.wolkenfarmer.environment.logic.Run;
+import de.wolkenfarmer.environment.logic.UniDataType;
+import de.wolkenfarmer.experiment_elements.ExperimentElement;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
 /**
- * The input handler if none is selected. <br>
- * If this input handler is ticked for the communication experiment, the standard input message will be used.
+ * The transcoder if none is selected. 
  * @author Wolkenfarmer
  */
 public class Deselect implements ExperimentElement {
 	/** Name of this experiment element.*/
 	private static String name = "nothing selected";
-	/** Layout container which will be attached to {@link de.wolkenfarmer.environment.pages.gui_elements.InformationSegment}
-	 * (gets added via {@link de.wolkenfarmer.environment.pages.gui_elements.OptionButton#setOnActionW(ExperimentElement)}).
+	/** Layout container which will be attached to {@link de.wolkenfarmer.environment.gui_elements.InformationSegment}
+	 * (gets added via {@link de.wolkenfarmer.environment.gui_elements.OptionButton#setOnActionW(ExperimentElement)}).
 	 * Its content ({@link #l}) gets build in {@link #buildGui(double)}.
 	 * When loading another page, it will be removed from the InformationSegment.
 	 * When loading the page {@link #getGui()} will be used to get the built GUI of the experiment element.*/
@@ -29,11 +27,14 @@ public class Deselect implements ExperimentElement {
 
 	
 	/** 
-	 * Sets the {@link Run#standardUnicodeMessage} as input.
+	 * Sets the necessary message-versions in {@link Run} for a flawless data analysis.
 	 */
 	public UniDataType doJob(byte task, UniDataType data) {
-		data.setStringUnicode(Run.standardUnicodeMessage); 
-		Run.originalMessage = Run.standardUnicodeMessage;
+		if (task != 0) {
+			Run.changedMessage = data.getStringUnicode();
+			Run.correctedMessage = data.getStringUnicode();
+			Run.correctedFlaggedMessage = data.getStringUnicode();
+		} 
 		return data;
 	}
 	
@@ -46,7 +47,7 @@ public class Deselect implements ExperimentElement {
 		root.setPrefWidth(parentWidth);
 		
 		l = new Label();
-		l.setText("\"Save & add\" this option in order to fall back to the default input \"Hello World!\".");
+		l.setText("\"Save & add\" this option in order to disable the transcoder for the communication experiment.");
 		l.setFont(Constants.F_NORMAL);
 		l.setTextFill(Constants.C_NORMAL);
 		l.setPrefWidth(root.getPrefWidth());

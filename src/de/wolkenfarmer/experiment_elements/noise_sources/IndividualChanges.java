@@ -1,10 +1,10 @@
-package de.wolkenfarmer.noise_sources;
+package de.wolkenfarmer.experiment_elements.noise_sources;
 
 import de.wolkenfarmer.Constants;
-import de.wolkenfarmer.environment.ExperimentElement;
-import de.wolkenfarmer.environment.Main;
-import de.wolkenfarmer.environment.Run;
-import de.wolkenfarmer.environment.UniDataType;
+import de.wolkenfarmer.environment.logic.Main;
+import de.wolkenfarmer.environment.logic.Run;
+import de.wolkenfarmer.environment.logic.UniDataType;
+import de.wolkenfarmer.experiment_elements.ExperimentElement;
 
 import java.util.Random;
 
@@ -17,7 +17,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
 
 /**
- * The {@link de.wolkenfarmer.noise_sources noise source} "individual changes" which is selectable on the 
+ * The {@link de.wolkenfarmer.experiment_elements.noise_sources noise source} "individual changes" which is selectable on the 
  * {@link de.wolkenfarmer.environment.pages.NoiseSource noise source page}.
  * This noise source changes single bits in a char array. 
  * It works with probabilities (see {@link #changeRate}, {@link #tgChangeRate}).
@@ -27,8 +27,8 @@ import javafx.scene.layout.Pane;
 public class IndividualChanges implements ExperimentElement {
 	/** Name of this experiment element.*/
 	private static String name = "Individual changes";
-	/** Layout container which will be attached to {@link de.wolkenfarmer.environment.pages.gui_elements.InformationSegment}
-	 * (gets added via {@link de.wolkenfarmer.environment.pages.gui_elements.OptionButton#setOnActionW(ExperimentElement)}).
+	/** Layout container which will be attached to {@link de.wolkenfarmer.environment.gui_elements.InformationSegment}
+	 * (gets added via {@link de.wolkenfarmer.environment.gui_elements.OptionButton#setOnActionW(ExperimentElement)}).
 	 * It's content ({@link #lDescription}, {@link #rbCha25}, {@link #rbCha15}, {@link #rbCha5}) gets build in {@link #buildGui(double)}.
 	 * When loading another page, it will be removed from the InformationSegment.
 	 * When loading the page {@link #getGui()} will be used to get the built GUI of the experiment element.*/
@@ -65,7 +65,7 @@ public class IndividualChanges implements ExperimentElement {
 	 * (therefore: still representative communication experiment).
 	 * In addition, a pre-changed and post-changed version will be set as {@link Run#originalCode original code} and
 	 * {@link Run#changedCode changed code}.
-	 * @param task Not used for {@link de.wolkenfarmer.noise_sources noise sources}.
+	 * @param task Not used for {@link de.wolkenfarmer.experiment_elements.noise_sources noise sources}.
 	 * @param data The binary char[] which will be modified.
 	 * @return Returns the modified data.
 	 */

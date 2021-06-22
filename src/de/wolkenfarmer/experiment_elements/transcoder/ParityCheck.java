@@ -1,10 +1,10 @@
-package de.wolkenfarmer.transcoder;
+package de.wolkenfarmer.experiment_elements.transcoder;
 
 import de.wolkenfarmer.Constants;
-import de.wolkenfarmer.environment.ExperimentElement;
-import de.wolkenfarmer.environment.Main;
-import de.wolkenfarmer.environment.Run;
-import de.wolkenfarmer.environment.UniDataType;
+import de.wolkenfarmer.environment.logic.Main;
+import de.wolkenfarmer.environment.logic.Run;
+import de.wolkenfarmer.environment.logic.UniDataType;
+import de.wolkenfarmer.experiment_elements.ExperimentElement;
 
 import java.util.ArrayList;
 
@@ -17,7 +17,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
 
 /**
- * The {@link de.wolkenfarmer.transcoder transcoder} "Parity Check" which is selectable on the 
+ * The {@link de.wolkenfarmer.experiment_elements.transcoder transcoder} "Parity Check" which is selectable on the 
  * {@link de.wolkenfarmer.environment.pages.Transcoder transcoder page}.
  * This encoder adds after every unit either a 0 or 1 in a way that every unit has a even number of 1s afterwards.
  * Therefore, the decoder can check whether there is still a even number of 1s and if not, 
@@ -29,8 +29,8 @@ import javafx.scene.layout.Pane;
 public class ParityCheck implements ExperimentElement {
 	/** Name of this experiment element.*/
 	private static String name = "Binary Parity Check";
-	/** Layout container which will be attached to {@link de.wolkenfarmer.environment.pages.gui_elements.InformationSegment}
-	 * (gets added via {@link de.wolkenfarmer.environment.pages.gui_elements.OptionButton#setOnActionW(ExperimentElement)}).
+	/** Layout container which will be attached to {@link de.wolkenfarmer.environment.gui_elements.InformationSegment}
+	 * (gets added via {@link de.wolkenfarmer.environment.gui_elements.OptionButton#setOnActionW(ExperimentElement)}).
 	 * Its content ({@link #lDescription}, {@link #rbParSimple}, {@link #rbParCross}) gets build in {@link #buildGui(double)}.
 	 * When loading another page, it will be removed from the InformationSegment.
 	 * When loading the page {@link #getGui()} will be used to get the built GUI of the experiment element.*/

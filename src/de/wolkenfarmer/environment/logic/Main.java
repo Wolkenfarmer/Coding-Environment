@@ -1,18 +1,18 @@
-package de.wolkenfarmer.environment;
+package de.wolkenfarmer.environment.logic;
 
-import de.wolkenfarmer.environment.pages.gui_elements.OverviewButton;
+import de.wolkenfarmer.environment.gui_elements.OverviewButton;
 import de.wolkenfarmer.environment.pages.Home;
 import de.wolkenfarmer.environment.pages.InputHandler;
 import de.wolkenfarmer.environment.pages.NoiseSource;
 import de.wolkenfarmer.environment.pages.Settings;
 import de.wolkenfarmer.environment.pages.Transcoder;
-import de.wolkenfarmer.input_handlers.RandomDigitBook;
-import de.wolkenfarmer.input_handlers.UserInput;
-import de.wolkenfarmer.noise_sources.Deselect;
-import de.wolkenfarmer.noise_sources.IndividualChanges;
-import de.wolkenfarmer.noise_sources.MixUpChanges;
-import de.wolkenfarmer.transcoder.ParityCheck;
-import de.wolkenfarmer.transcoder.RepetitionCode;
+import de.wolkenfarmer.experiment_elements.ExperimentElement;
+import de.wolkenfarmer.experiment_elements.input_handlers.RandomDigitBook;
+import de.wolkenfarmer.experiment_elements.input_handlers.UserInput;
+import de.wolkenfarmer.experiment_elements.noise_sources.IndividualChanges;
+import de.wolkenfarmer.experiment_elements.noise_sources.MixUpChanges;
+import de.wolkenfarmer.experiment_elements.transcoder.ParityCheck;
+import de.wolkenfarmer.experiment_elements.transcoder.RepetitionCode;
 
 import java.util.ArrayList;
 
@@ -35,18 +35,18 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
- * Main class hosting the JavaFX Application.
+ * Main class hosting the JavaFX Application. <br>
  * Gets called on start of the program and is the base for the JavaFX application.
  * Builds the stage (window) with some basic setup like full screen mode or the {@link #scrollBar scroll bar} along with its calculations.
- * In addition, this class hosts the instances to the pages and experiment elements (like {@link de.wolkenfarmer.input_handlers.UserInput}).
- * Ultimately, {@link de.wolkenfarmer.environment.pages.Home} gets called.
+ * In addition, this class hosts the instances to the pages and experiment elements (like {@link UserInput}).
+ * Ultimately, {@link Home} gets called.
  * @author Wolkenfarmer
  * @version 0.2
 */
 public class Main extends Application {
 	/**
 	 * The scene for {@link #start(Stage)}.
-	 * Uses the style sheets from {@link de.wolkenfarmer.environment.pages.css}.
+	 * Uses the style sheets from {@link de.wolkenfarmer.css}.
 	 * @see	<a href="https://www.educba.com/javafx-applications/">JavaFX Application basic structure</a>
 	 * @see	<a href="https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html">JavaFX CSS support</a>
 	 */
@@ -60,7 +60,7 @@ public class Main extends Application {
 	*/
 	static Group sbRoot;
 	/**
-	 * Layout group to contain the content of the pages (like {@link de.wolkenfarmer.environment.pages.Home}).
+	 * Layout group to contain the content of the pages (like {@link Home}).
 	 * The root gets carried from one page to another when loading them in order to connect its layout-elements to it.
 	 * This layout group needs to be separate from the {@link #sbRoot scroll bar root}, 
 	 * because root gets moved along its y axis during {@link #scrollBar scrolling}, 
@@ -110,7 +110,7 @@ public class Main extends Application {
 	public static ArrayList<String> input = new ArrayList<String>();
 	/** Input handling. This event handler checks the {@link #input input} for (Esc) and closes the program when pressed.
 	 * It is only used for the {@link Home home page}.
-	 * @see de.wolkenfarmer.environment.pages.Home#reload(Group, boolean) */
+	 * @see Home#reload(Group, boolean) */
 	public static EventHandler<KeyEvent> krlClose;
 	/** Input handling. This event handler checks the {@link #input input} for (Esc) and passes back to the {@link Home home page} 
 	 * when pressed. This event handler is used for the direct sub-pages of the home page.*/
@@ -131,39 +131,35 @@ public class Main extends Application {
     public static Settings settings;
     
     
-    /** Static reference to the input handler "Deselect" in order for the 
-     * {@link de.wolkenfarmer.environment.pages.InputHandler input handler page} to have simple access to it.*/
-    public static de.wolkenfarmer.input_handlers.Deselect inputHandler_Deselect = new de.wolkenfarmer.input_handlers.Deselect();
-    /** Static reference to the input handler "User input" in order for {@link de.wolkenfarmer.environment.pages.InputHandler}, 
-     * {@link de.wolkenfarmer.environment.Run} and {@link de.wolkenfarmer.environment.Result} to have simple access to it.*/
+    /** Static reference to the input handler "Deselect" in order for {@link InputHandler}, 
+     * {@link Run} and {@link Result} to have simple access to it.*/
+    public static de.wolkenfarmer.experiment_elements.input_handlers.Deselect inputHandler_Deselect = 
+    		new de.wolkenfarmer.experiment_elements.input_handlers.Deselect();
+    /** Static reference to the input handler "User input" in order for {@link InputHandler}, 
+     * {@link Run} and {@link Result} to have simple access to it.*/
     public static UserInput inputHandler_UserInput = new UserInput();
-    /** Static reference to the input handler "Random digit book" in order for the 
-     * {@link de.wolkenfarmer.environment.pages.InputHandler input handler page}, 
-     * {@link de.wolkenfarmer.environment.Run} and {@link de.wolkenfarmer.environment.Result} to have simple access to it.*/
+    /** Static reference to the input handler "Random digit book" in order for {@link InputHandler}, 
+     * {@link Run} and {@link Result} to have simple access to it.*/
     public static RandomDigitBook inputHandler_RandomDigitBook = new RandomDigitBook();
-    /** Static reference to the transcoder "Deselect" in order for the 
-     * {@link de.wolkenfarmer.environment.pages.Transcoder transcoder page}, 
-     * {@link de.wolkenfarmer.environment.Run} and {@link de.wolkenfarmer.environment.Result} to have simple access to it.*/
-    public static de.wolkenfarmer.transcoder.Deselect transcoder_Deselect = new de.wolkenfarmer.transcoder.Deselect();
-    /** Static reference to the transcoder "ParityCheck-Code" in order for the 
-     * {@link de.wolkenfarmer.environment.pages.Transcoder transcoder page}, 
-     * {@link de.wolkenfarmer.environment.Run} and {@link de.wolkenfarmer.environment.Result} to have simple access to it.*/
+    /** Static reference to the transcoder "Deselect" in order for the {@link Transcoder transcoder page}, 
+     * {@link Run} and {@link Result} to have simple access to it.*/
+    public static de.wolkenfarmer.experiment_elements.transcoder.Deselect transcoder_Deselect = 
+    		new de.wolkenfarmer.experiment_elements.transcoder.Deselect();
+    /** Static reference to the transcoder "ParityCheck-Code" in order for the {@link Transcoder transcoder page}, 
+     * {@link Run} and {@link Result} to have simple access to it.*/
     public static ParityCheck transcoder_ParityCheck = new ParityCheck();
-    /** Static reference to the transcoder "RepetitionCode" in order for the 
-     * {@link de.wolkenfarmer.environment.pages.Transcoder transcoder page}, 
-     * {@link de.wolkenfarmer.environment.Run} and {@link de.wolkenfarmer.environment.Result} to have simple access to it.*/
+    /** Static reference to the transcoder "RepetitionCode" in order for the {@link Transcoder transcoder page}, 
+     * {@link Run} and {@link Result} to have simple access to it.*/
     public static RepetitionCode transcoder_RepetitionCode = new RepetitionCode();
-    /** Static reference to the noise source "Deselect" in order for the 
-     * {@link de.wolkenfarmer.environment.pages.NoiseSource noise source page}, 
-     * {@link de.wolkenfarmer.environment.Run} and {@link de.wolkenfarmer.environment.Result} to have simple access to it.*/
-    public static de.wolkenfarmer.noise_sources.Deselect noiSource_Deselect = new Deselect();
-    /** Static reference to the noise source "Individual changes" in order for the 
-     * {@link de.wolkenfarmer.environment.pages.NoiseSource noise source page}, 
-     * {@link de.wolkenfarmer.environment.Run} and {@link de.wolkenfarmer.environment.Result} to have simple access to it.*/
+    /** Static reference to the noise source "Deselect" in order for the {@link NoiseSource noise source page}, 
+     * {@link Run} and {@link Result} to have simple access to it.*/
+    public static de.wolkenfarmer.experiment_elements.noise_sources.Deselect noiSource_Deselect = 
+    		new de.wolkenfarmer.experiment_elements.noise_sources.Deselect();
+    /** Static reference to the noise source "Individual changes" in order for the {@link NoiseSource noise source page}, 
+     * {@link Run} and {@link Result} to have simple access to it.*/
     public static IndividualChanges noiSource_IndividualChanges = new IndividualChanges();
-    /** Static reference to the noise source "Mix-up changes" in order for the 
-     * {@link de.wolkenfarmer.environment.pages.NoiseSource noise source page}, 
-     * {@link de.wolkenfarmer.environment.Run} and {@link de.wolkenfarmer.environment.Result} to have simple access to it.*/
+    /** Static reference to the noise source "Mix-up changes" in order for the {@link NoiseSource noise source page}, 
+     * {@link Run} and {@link Result} to have simple access to it.*/
     public static MixUpChanges noiSource_MixUpChanges = new MixUpChanges();
     
     
@@ -203,7 +199,7 @@ public class Main extends Application {
 	 * (which gets added via the {@link #sbRoot scroll bar root} to the scene). 
 	 * In addition, the keyboard ({@link #krlClose}, {@link #krlBackHome}) and scroll bar listeners are written here and 
 	 * get added to the scene.
-	 * Lastly, the {@link de.wolkenfarmer.environment.pages.Home home page} gets called.
+	 * Lastly, the {@link Home home page} gets called.
 	 * @param stage Makes up the window and is required for a JavaFX application.
 	 * @see <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/application/Application.html#start-javafx.stage.Stage-">
 	 * JavaFX Application start() documentation</a>
@@ -212,9 +208,9 @@ public class Main extends Application {
 		sbRoot = new Group();
 		root = new Group();
 		scene = new Scene(sbRoot, Color.grayRgb(40));
-		scene.getStylesheets().addAll("de/wolkenfarmer/environment/pages/css/tableView.css", 
-				"de/wolkenfarmer/environment/pages/css/scrollBar.css", 
-				"de/wolkenfarmer/environment/pages/css/textArea.css");
+		scene.getStylesheets().addAll("de/wolkenfarmer/css/tableView.css", 
+				"de/wolkenfarmer/css/scrollBar.css", 
+				"de/wolkenfarmer/css/textArea.css");
 		dummyScene = new Scene(dummyRoot = new Group());
 		        
 		stage = new Stage();

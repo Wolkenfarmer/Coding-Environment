@@ -1,9 +1,9 @@
 package de.wolkenfarmer.environment.pages;
 
-import de.wolkenfarmer.environment.Main;
-import de.wolkenfarmer.environment.pages.gui_elements.Arrow;
-import de.wolkenfarmer.environment.pages.gui_elements.OptionButton;
-import de.wolkenfarmer.environment.pages.gui_elements.OverviewButton;
+import de.wolkenfarmer.environment.gui_elements.Arrow;
+import de.wolkenfarmer.environment.gui_elements.OptionButton;
+import de.wolkenfarmer.environment.gui_elements.OverviewButton;
+import de.wolkenfarmer.environment.logic.Main;
 
 /**
  * The settings page 'transcoder page' (a settings sub-page of the {@link Home home page}). <br>
@@ -37,16 +37,16 @@ public class Transcoder extends Settings {
 		private static Arrow aOveModRelDeTo;
 		
 	// Options
-		/** The {@link OptionButton option button} showing the {@link de.wolkenfarmer.transcoder.Deselect deselect} 
+		/** The {@link OptionButton option button} showing the {@link de.wolkenfarmer.experiment_elements.transcoder.Deselect deselect} 
 		 * option under {@link #pOptions options}. <br>
 		 * Can be used to deactivate the transcoder. 
 		 * It gets build in the {@link #Transcoder() constructor} and is part of {@link #vbOptButtons}.*/
 		private static OptionButton bOptButDeselect;
-		/** The {@link OptionButton option button} showing the {@link de.wolkenfarmer.transcoder.ParityCheck Binary Parity Check} 
+		/** The {@link OptionButton option button} showing the {@link de.wolkenfarmer.experiment_elements.transcoder.ParityCheck Binary Parity Check} 
 		 * option under {@link #pOptions options}. <br>
 		 * It gets build in the {@link #Transcoder() constructor} and is part of {@link #vbOptButtons}.*/
 		private static OptionButton bOptButParityCheck;
-		/** The {@link OptionButton option button} showing the {@link de.wolkenfarmer.transcoder.RepetitionCode Repetition Code} 
+		/** The {@link OptionButton option button} showing the {@link de.wolkenfarmer.experiment_elements.transcoder.RepetitionCode Repetition Code} 
 		 * option under {@link #pOptions options}. <br>
 		 * It gets build in the {@link #Transcoder() constructor} and is part of {@link #vbOptButtons}.*/
 		private static OptionButton bOptButRepetitionCode;

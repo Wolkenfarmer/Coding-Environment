@@ -1,17 +1,18 @@
 /**
- * Contains the different pages of the environment as well as its CSS and GUI elements. <br>
+ * Contains the different pages / Handles the GUI of the environment. <br>
+ * The pages utilize the GUI elements of the {@link de.wolkenfarmer.environment.gui_elements dedicated package}. 
+ * Moreover, the pages represent the view and the controller at the same time.
+ * Consequently, the user can set up the program as well as view the results here.
+ * <p>
  * Its {@link de.wolkenfarmer.environment.pages.Home home page} links up to the different sub-pages 
  * {@link de.wolkenfarmer.environment.pages.InputHandler input handler page},
- * {@link de.wolkenfarmer.environment.pages.Transcoder transcoder page},
- * {@link de.wolkenfarmer.environment.pages.NoiseSource noise source page} and soon the
- * destination page, of which the first three extend from the {@link de.wolkenfarmer.environment.pages.Settings settings page}.<br>
- * In addition, it contains the packages {@link de.wolkenfarmer.environment.pages.gui_elements GUI elements}, 
- * which helps the pages to build and process / update its GUI accordingly,
- * and {@link de.wolkenfarmer.environment.pages.css CSS}, which contains CSS style sheets which get added to the scene 
- * and specify the look of the program in some aspects.
- * <p>
- * The GUI objects are mostly declared named after the following scheme: 
- * (the dots in the beginning are only for layout purposes for Javadoc and represent tabulator spaces)<br>
+ * {@link de.wolkenfarmer.environment.pages.Transcoder transcoder page} and
+ * {@link de.wolkenfarmer.environment.pages.NoiseSource noise source page}, 
+ * which extend from the {@link de.wolkenfarmer.environment.pages.Settings settings page}.
+ * <p>&nbsp;</p>
+ * 
+ * The GUI objects are mostly declared named after the following scheme 
+ * (the dots in the beginning are only for layout purposes for Javadoc and represent tabulator spaces): <br> 
  * . 1a_Container (contains node 2A, 2C and container 2B)<br>
  * . . . 2a_Node (is contained by / part of container 1) <br>
  * . . . 2b_Container (is contained by / part of container 1 and contains node 3)<br>
@@ -26,6 +27,7 @@
  * . . . . . 1a2b3Node<br>
  * . . . 1a2cNode<br>
  * . 1bContainer ... 
+ * 
  * @author Wolkenfarmer
  */
 package de.wolkenfarmer.environment.pages;

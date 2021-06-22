@@ -1,11 +1,10 @@
-package de.wolkenfarmer.input_handlers;
+package de.wolkenfarmer.experiment_elements.input_handlers;
 
 import de.wolkenfarmer.Constants;
-import de.wolkenfarmer.environment.ExperimentElement;
-import de.wolkenfarmer.environment.Main;
-import de.wolkenfarmer.environment.Run;
-import de.wolkenfarmer.environment.UniDataType;
-
+import de.wolkenfarmer.environment.logic.Main;
+import de.wolkenfarmer.environment.logic.Run;
+import de.wolkenfarmer.environment.logic.UniDataType;
+import de.wolkenfarmer.experiment_elements.ExperimentElement;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -21,7 +20,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.text.TextAlignment;
 
 /**
- * The {@link de.wolkenfarmer.input_handlers input handler} user input which is selectable on the 
+ * The {@link de.wolkenfarmer.experiment_elements.input_handlers input handler} user input which is selectable on the 
  * {@link de.wolkenfarmer.environment.pages.InputHandler input handler page}.
  * This input handler accepts written text which can be entered in {@link #taUserText}. 
  * To check whether the entered text is valid {@link #bCheckInput} can be pressed.
@@ -30,8 +29,8 @@ import javafx.scene.text.TextAlignment;
 public class UserInput implements ExperimentElement {
 	/** Name of this experiment element.*/
 	private static String name = "User input";
-	/** Layout container which will be attached to {@link de.wolkenfarmer.environment.pages.gui_elements.InformationSegment}
-	 * (gets added via {@link de.wolkenfarmer.environment.pages.gui_elements.OptionButton#setOnActionW(ExperimentElement)}).
+	/** Layout container which will be attached to {@link de.wolkenfarmer.environment.gui_elements.InformationSegment}
+	 * (gets added via {@link de.wolkenfarmer.environment.gui_elements.OptionButton#setOnActionW(ExperimentElement)}).
 	 * Its content ({@link #taUserText}, {@link #hbControls}, {@link #lDescription}) gets build in {@link #buildGui(double)}.
 	 * When loading another page, it will be removed from the InformationSegment.
 	 * When loading the page {@link #getGui()} will be used to get the built GUI of the experiment element.*/
