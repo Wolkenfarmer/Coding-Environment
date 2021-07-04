@@ -35,10 +35,6 @@ public class InputHandler extends Settings {
 		 * option under {@link #pOptions options}. <br>
 		 * It gets instantiated in {@link #load} and is part of {@link #vbOptButtons}.*/
 		private static OptionButton bOptButUserInput;
-		/** The {@link OptionButton option button} showing the {@link de.wolkenfarmer.experiment_elements.input_handlers.RandomDigitBook random digit book} 
-		 * option under {@link #pOptions options}. <br>
-		 * It gets instantiated in {@link #load} and is part of {@link #vbOptButtons}.*/
-		private static OptionButton bOptButBook;
 			
 	
 	/**
@@ -68,10 +64,8 @@ public class InputHandler extends Settings {
 		bOptButDeselect.setMode((byte) 1);
 		bOptButUserInput = new OptionButton(pOptions.getPrefWidth(), Main.inputHandler_UserInput.getName(true));
 		bOptButUserInput.setOnActionW(Main.inputHandler_UserInput);
-		bOptButBook = new OptionButton(pOptions.getPrefWidth(), Main.inputHandler_RandomDigitBook.getName(true));
-		bOptButBook.setOnActionW(Main.inputHandler_RandomDigitBook);
 		
-		vbOptButtons.getChildren().addAll(bOptButDeselect, bOptButUserInput, bOptButBook);
+		vbOptButtons.getChildren().addAll(bOptButDeselect, bOptButUserInput);
 	}
 		
 		
@@ -84,7 +78,7 @@ public class InputHandler extends Settings {
 	static void load() {
 		lHeaHere.setText("Input Handler");
 		pOveModel.getChildren().addAll(aOveModRelToIn, bOveModInput, aOveModRelInTo);
-		vbOptButtons.getChildren().addAll(bOptButDeselect, bOptButUserInput, bOptButBook);
+		vbOptButtons.getChildren().addAll(bOptButDeselect, bOptButUserInput);
 	}
 	
 

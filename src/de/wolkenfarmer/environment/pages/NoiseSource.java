@@ -35,10 +35,6 @@ public class NoiseSource extends Settings {
 		 * option under {@link #pOptions options}. <br>
 		 * It gets instantiated in {@link #load} and is part of {@link #vbOptButtons}.*/
 		private static OptionButton bOptButIndChanges;
-		/** The {@link OptionButton option button} showing the {@link de.wolkenfarmer.experiment_elements.noise_sources.MixUpChanges mix up changes} 
-		 * option under {@link #pOptions options}. <br>
-		 * It gets instantiated in {@link #load} and is part of {@link #vbOptButtons}.*/
-		private static OptionButton bOptButMixUpChanges;
 	
 		
 	/**
@@ -67,10 +63,8 @@ public class NoiseSource extends Settings {
 		bOptButDeselect.setMode((byte) 1);
 		bOptButIndChanges = new OptionButton(pOptions.getPrefWidth(), Main.noiSource_IndividualChanges.getName(true));
 		bOptButIndChanges.setOnActionW(Main.noiSource_IndividualChanges);
-		bOptButMixUpChanges = new OptionButton(pOptions.getPrefWidth(), Main.noiSource_MixUpChanges.getName(true));
-		bOptButMixUpChanges.setOnActionW(Main.noiSource_MixUpChanges);
 		
-		vbOptButtons.getChildren().addAll(bOptButDeselect, bOptButIndChanges, bOptButMixUpChanges);
+		vbOptButtons.getChildren().addAll(bOptButDeselect, bOptButIndChanges);
 	}
 	
 	
@@ -82,7 +76,7 @@ public class NoiseSource extends Settings {
 	static void load() {
 		lHeaHere.setText("Noise Source");
 		pOveModel.getChildren().addAll(bOveModSource, aOveModRelNoToCh, aOveModRelEnToDe);
-		vbOptButtons.getChildren().addAll(bOptButDeselect, bOptButIndChanges, bOptButMixUpChanges);
+		vbOptButtons.getChildren().addAll(bOptButDeselect, bOptButIndChanges);
 	}
 	
 	

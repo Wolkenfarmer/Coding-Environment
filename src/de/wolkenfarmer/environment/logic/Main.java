@@ -7,10 +7,8 @@ import de.wolkenfarmer.environment.pages.NoiseSource;
 import de.wolkenfarmer.environment.pages.Settings;
 import de.wolkenfarmer.environment.pages.Transcoder;
 import de.wolkenfarmer.experiment_elements.ExperimentElement;
-import de.wolkenfarmer.experiment_elements.input_handlers.RandomDigitBook;
 import de.wolkenfarmer.experiment_elements.input_handlers.UserInput;
 import de.wolkenfarmer.experiment_elements.noise_sources.IndividualChanges;
-import de.wolkenfarmer.experiment_elements.noise_sources.MixUpChanges;
 import de.wolkenfarmer.experiment_elements.transcoder.ParityCheck;
 import de.wolkenfarmer.experiment_elements.transcoder.RepetitionCode;
 
@@ -138,9 +136,6 @@ public class Main extends Application {
     /** Static reference to the input handler "User input" in order for {@link InputHandler}, 
      * {@link Run} and {@link Result} to have simple access to it.*/
     public static UserInput inputHandler_UserInput = new UserInput();
-    /** Static reference to the input handler "Random digit book" in order for {@link InputHandler}, 
-     * {@link Run} and {@link Result} to have simple access to it.*/
-    public static RandomDigitBook inputHandler_RandomDigitBook = new RandomDigitBook();
     /** Static reference to the transcoder "Deselect" in order for the {@link Transcoder transcoder page}, 
      * {@link Run} and {@link Result} to have simple access to it.*/
     public static de.wolkenfarmer.experiment_elements.transcoder.Deselect transcoder_Deselect = 
@@ -158,9 +153,6 @@ public class Main extends Application {
     /** Static reference to the noise source "Individual changes" in order for the {@link NoiseSource noise source page}, 
      * {@link Run} and {@link Result} to have simple access to it.*/
     public static IndividualChanges noiSource_IndividualChanges = new IndividualChanges();
-    /** Static reference to the noise source "Mix-up changes" in order for the {@link NoiseSource noise source page}, 
-     * {@link Run} and {@link Result} to have simple access to it.*/
-    public static MixUpChanges noiSource_MixUpChanges = new MixUpChanges();
     
     
     /** Saves the selected input handler for further use in the {@link de.wolkenfarmer.environment environment} 
