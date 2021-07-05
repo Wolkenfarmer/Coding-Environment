@@ -26,18 +26,7 @@ import javafx.scene.layout.Pane;
  * @author Wolkenfarmer
  * @see #doJob(byte, UniDataType) doJob() for further information
  */
-public class ParityCheck implements ExperimentElement {
-	/** Name of this experiment element.*/
-	private static String name = "Binary Parity Check";
-	/** Layout container which will be attached to {@link de.wolkenfarmer.environment.gui_elements.InformationSegment}
-	 * (gets added via {@link de.wolkenfarmer.environment.gui_elements.OptionButton#setOnActionW(ExperimentElement)}).
-	 * Its content ({@link #lDescription}, {@link #rbParSimple}, {@link #rbParCross}) gets build in {@link #buildGui(double)}.
-	 * When loading another page, it will be removed from the InformationSegment.
-	 * When loading the page {@link #getGui()} will be used to get the built GUI of the experiment element.*/
-	private static Pane root;
-	/** Shows whether the UI has yet to be build ({@link #buildGui}) or is already build and has only to be attached ({@link #getGui()}).*/
-	public static boolean builtGui;
-	
+public class ParityCheck extends ExperimentElement {
 	/** Saves whether the simple (false) or the cross (true) parity check should be used on the next 
 	 * {@link Run#run(ExperimentElement, ExperimentElement, ExperimentElement) run} 
 	 * of the communication experiment.
@@ -65,6 +54,13 @@ public class ParityCheck implements ExperimentElement {
 	/** The radio button of {@link #tgChangeRate} which represents the cross parity check.
 	 * It sets {@link #boCrossPC} to true and is directly attached to {@link #root}.*/
 	private static RadioButton rbParCross;
+	
+	
+	/**
+	 * Sets the {@link #name name} of the experiment element.
+	 * @since 0.2
+	 */
+	public ParityCheck() {name = "Binary Parity Check";}
 	
 	
 	/** 
@@ -345,16 +341,4 @@ public class ParityCheck implements ExperimentElement {
         root.getChildren().addAll(lDescription, rbParSimple, rbParCross);
         builtGui = true;
 	}
-
-	
-	public void save() {
-		System.out.println(name + " saved!");
-	}
-	
-	
-	public Pane getGui() {return root;}
-	/** @return {@link #builtGui}*/
-	public boolean getBuiltGui() {return builtGui;}
-	/** @return {@link #name}*/
-	public String getName(boolean optionButton) {return name;}
 }

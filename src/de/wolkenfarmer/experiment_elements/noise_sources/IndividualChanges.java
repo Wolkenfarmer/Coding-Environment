@@ -24,18 +24,7 @@ import javafx.scene.layout.Pane;
  * @author Wolkenfarmer
  * @see #doJob(byte, UniDataType) doJob() for further information
  */
-public class IndividualChanges implements ExperimentElement {
-	/** Name of this experiment element.*/
-	private static String name = "Individual changes";
-	/** Layout container which will be attached to {@link de.wolkenfarmer.environment.gui_elements.InformationSegment}
-	 * (gets added via {@link de.wolkenfarmer.environment.gui_elements.OptionButton#setOnActionW(ExperimentElement)}).
-	 * It's content ({@link #lDescription}, {@link #rbCha25}, {@link #rbCha15}, {@link #rbCha5}) gets build in {@link #buildGui(double)}.
-	 * When loading another page, it will be removed from the InformationSegment.
-	 * When loading the page {@link #getGui()} will be used to get the built GUI of the experiment element.*/
-	private static Pane root;
-	/** Shows whether the UI has yet to be build ({@link #buildGui}) or is already build and has only to be attached ({@link #getGui()}).*/
-	public static boolean builtGui;
-	
+public class IndividualChanges extends ExperimentElement {
 	/** Saves the set probability of changing a bit in the data. 
 	 * 1000 equals 0‰, 975 25‰, 900 1% and so on (a bit will be changed if a random int between 1 and 1000 is bigger 
 	 * than this variable's value. It gets set by {@link #tgChangeRate} and its standard is 975.*/
@@ -55,6 +44,13 @@ public class IndividualChanges implements ExperimentElement {
 	/** The radio button of {@link #tgChangeRate} which represents the {@link #changeRate change rate} of 5‰. 
 	 * It's directly attached to {@link #root}.*/
 	private static RadioButton rbCha5;
+	
+	
+	/**
+	 * Sets the {@link #name name} of the experiment element.
+	 * @since 0.2
+	 */
+	public IndividualChanges() {name = "Individual changes";}
 	
 	
 	/** 
@@ -147,16 +143,4 @@ public class IndividualChanges implements ExperimentElement {
         root.getChildren().addAll(lDescription, rbCha25, rbCha15, rbCha5);
         builtGui = true;
 	}
-	
-	
-	public void save() {
-		System.out.println(name + " saved!");
-	}
-	
-	
-	public Pane getGui() {return root;}
-	/** @return {@link #builtGui}*/
-	public boolean getBuiltGui() {return builtGui;}
-	/** @return {@link #name}*/
-	public String getName(boolean optionButton) {return name;}
 }

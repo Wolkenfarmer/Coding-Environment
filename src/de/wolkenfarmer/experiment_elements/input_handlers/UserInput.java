@@ -26,18 +26,7 @@ import javafx.scene.text.TextAlignment;
  * To check whether the entered text is valid {@link #bCheckInput} can be pressed.
  * @author Wolkenfarmer
  */
-public class UserInput implements ExperimentElement {
-	/** Name of this experiment element.*/
-	private static String name = "User input";
-	/** Layout container which will be attached to {@link de.wolkenfarmer.environment.gui_elements.InformationSegment}
-	 * (gets added via {@link de.wolkenfarmer.environment.gui_elements.OptionButton#setOnActionW(ExperimentElement)}).
-	 * Its content ({@link #taUserText}, {@link #hbControls}, {@link #lDescription}) gets build in {@link #buildGui(double)}.
-	 * When loading another page, it will be removed from the InformationSegment.
-	 * When loading the page {@link #getGui()} will be used to get the built GUI of the experiment element.*/
-	private static Pane root;
-	/** Shows whether the UI has yet to be build ({@link #buildGui}) or is already build and has only to be attached ({@link #getGui()}).*/
-	private static boolean builtGui;
-	
+public class UserInput extends ExperimentElement {
 	/** Contains the input which will be used for the communication experiment if {@link #doJob(byte, UniDataType)} gets called.
 	 * Gets overwritten in {@link #save()}.*/
 	private static String input;
@@ -84,6 +73,13 @@ public class UserInput implements ExperimentElement {
 	private static Label lDescription;
 	
 	
+	/**
+	 * Sets the {@link #name name} of the experiment element.
+	 * @since 0.2
+	 */
+	public UserInput() {name = "User input";}
+	
+	
 	/** 
 	 * Returns the {@link #input} and sets the {@link Run#originalMessage original message in Run}. <br>
 	 * If the input is empty, the {@link Run#standardUnicodeMessage standard Unicode message} will be used. 
@@ -119,7 +115,6 @@ public class UserInput implements ExperimentElement {
 		    	}
 		    }
 		});
-        
         
         hbControls = new HBox();
         hbControls.setLayoutY(taUserText.getPrefHeight() + 20);
@@ -229,6 +224,7 @@ public class UserInput implements ExperimentElement {
 	}
 	
 	
+	@Override
 	public void save() {
 		check.setStringUnicode(taUserText.getText());
 		String c1 = check.getStringUnicode();
@@ -246,11 +242,4 @@ public class UserInput implements ExperimentElement {
 		boUnchecked = false;
 		System.out.println(name + " saved!");
 	}
-
-
-	public Pane getGui() {return root;}
-	/** @return {@link #builtGui}*/
-	public boolean getBuiltGui() {return builtGui;}
-	/** @return {@link #name}*/
-	public String getName(boolean optionButton) {return name;}
 }

@@ -27,7 +27,7 @@ public class NoiseSource extends Settings {
 		 * Displays "signal / channel". Connects the top with the bottom of the model. It gets added to the model.*/
 		private static Arrow aOveModRelEnToDe;
 	// Options
-		/** The {@link OptionButton option button} showing the {@link de.wolkenfarmer.experiment_elements.noise_sources.Deselect deselect} 
+		/** The {@link OptionButton option button} showing the {@link de.wolkenfarmer.experiment_elements.noise_sources.DeselectNoiseSource deselect} 
 		 * option under {@link #pOptions options}. <br>
 		 * It gets instantiated in {@link #load} and is part of {@link #vbOptButtons}.*/
 		private static OptionButton bOptButDeselect;

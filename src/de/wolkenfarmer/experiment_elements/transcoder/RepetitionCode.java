@@ -29,18 +29,7 @@ import javafx.scene.paint.Color;
  * @author Wolkenfarmer
  * @see #doJob(byte, UniDataType) doJob() for further information
  */
-public class RepetitionCode implements ExperimentElement {
-	/** Name of this experiment element.*/
-	private static String name = "Repetition Code";
-	/** Layout container which will be attached to {@link de.wolkenfarmer.environment.gui_elements.InformationSegment}
-	 * (gets added via {@link de.wolkenfarmer.environment.gui_elements.OptionButton#setOnActionW(ExperimentElement)}).
-	 * Its content ({@link #lDescription}) gets build in {@link #buildGui(double)}.
-	 * When loading another page, it will be removed from the InformationSegment.
-	 * When loading the page {@link #getGui()} will be used to get the built GUI of the experiment element.*/
-	private static Pane root;
-	/** Shows whether the UI has yet to be build ({@link #buildGui}) or is already build and has only to be attached ({@link #getGui()}).*/
-	public static boolean builtGui;
-	
+public class RepetitionCode extends ExperimentElement {
 	/** Saves how often each character should be repeated during encoding. Gets used in {@link #doJob(byte, UniDataType)}. E.g. with 3:<br>
 	 * 1011 would be 111000111111<br> 
 	 * This variable gets set by {@link #tfRepeat} in {@link #save()}.*/
@@ -54,6 +43,13 @@ public class RepetitionCode implements ExperimentElement {
 	/** Label displaying the different exceptions for wrong {@link #tfRepeat} input. 
 	 * It gets updated to fit the current input in {@link #save()}. It gets directly attached to {@link #root}.*/
 	private static Label lException;
+	
+	
+	/**
+	 * Sets the {@link #name name} of the experiment element.
+	 * @since 0.2
+	 */
+	public RepetitionCode() {name = "Repetition Code";}
 	
 	
 	/** 
@@ -240,7 +236,9 @@ public class RepetitionCode implements ExperimentElement {
 	
 	
 	/** 
-	 * Checks whether the given number in {@link #tfRepeat} is correct and if not, it updates {@link #lException} accordingly.*/
+	 * Checks whether the given number in {@link #tfRepeat} is correct and if not, it updates {@link #lException} accordingly.
+	 */
+	@Override
 	public void save() {
 		if (!tfRepeat.getText().equals("")) {
 			int newRepNumber = Integer.parseInt(tfRepeat.getText());
@@ -261,11 +259,4 @@ public class RepetitionCode implements ExperimentElement {
 		
 		System.out.println(name + " saved!");
 	}
-	
-	
-	public Pane getGui() {return root;}
-	/** @return {@link #builtGui}*/
-	public boolean getBuiltGui() {return builtGui;}
-	/** @return {@link #name}*/
-	public String getName(boolean optionButton) {return name;}
 }

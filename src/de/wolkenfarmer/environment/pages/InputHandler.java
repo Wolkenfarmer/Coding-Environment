@@ -26,7 +26,7 @@ public class InputHandler extends Settings {
 		 * Displays "message". Connects {@link #bOveModInput} with the right side of the model. It gets added to the model.*/
 		private static Arrow aOveModRelInTo;
 	// Options
-		/** The {@link OptionButton option button} showing the {@link de.wolkenfarmer.experiment_elements.input_handlers.Deselect deselect} 
+		/** The {@link OptionButton option button} showing the {@link de.wolkenfarmer.experiment_elements.input_handlers.DeselectInputHandler deselect} 
 		 * option under {@link #pOptions options}. <br>
 		 * Can be used to deactivate the transcoder. 
 		 * It gets build in the {@link #InputHandler() constructor} and is part of {@link #vbOptButtons}.*/
@@ -61,9 +61,11 @@ public class InputHandler extends Settings {
 		//Options
 		bOptButDeselect = new OptionButton(pOptions.getPrefWidth(), Main.inputHandler_Deselect.getName(true));
 		bOptButDeselect.setOnActionW(Main.inputHandler_Deselect);
+		System.out.println(Main.inputHandler_Deselect.getName(true));
 		bOptButDeselect.setMode((byte) 1);
 		bOptButUserInput = new OptionButton(pOptions.getPrefWidth(), Main.inputHandler_UserInput.getName(true));
 		bOptButUserInput.setOnActionW(Main.inputHandler_UserInput);
+		System.out.println(Main.inputHandler_UserInput.getName(true));
 		
 		vbOptButtons.getChildren().addAll(bOptButDeselect, bOptButUserInput);
 	}

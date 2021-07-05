@@ -2,14 +2,15 @@
  * Contains all experiment elements which can be utilized by the {@link de.wolkenfarmer.environment environment} 
  * for the communication experiment. <br>
  * The {@link de.wolkenfarmer.experiment_elements.ExperimentElement experiment element} class provides a base for every experiment element 
- * regardless of its type for easier access inside the environment.<br>
+ * regardless of its type for easier access inside the environment. In a similar fashion, the 
+ * {@link de.wolkenfarmer.experiment_elements.Deselect deselect} child class provides the base setup for every deselect experiment element.<br>
  * There are three types of experiment elements, which all perform different tasks and are in their dedicated packages 
  * while having the same structure.
  * <p>
  * Currently the experiment elements do not get automatically mapped by the environment. 
  * Therefore, new elements have to be manually added to the environment via code.
  * <p>
- * For further information see the dedicated package descriptions below "See Also" as well as the nested class explanation.
+ * For further information see the dedicated package descriptions below "See Also" as well as the nested class explanations.
  * 
  * @author Wolkenfarmer
  * @see de.wolkenfarmer.experiment_elements.input_handlers input handlers

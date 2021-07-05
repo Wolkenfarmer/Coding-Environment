@@ -37,7 +37,7 @@ public class Transcoder extends Settings {
 		private static Arrow aOveModRelDeTo;
 		
 	// Options
-		/** The {@link OptionButton option button} showing the {@link de.wolkenfarmer.experiment_elements.transcoder.Deselect deselect} 
+		/** The {@link OptionButton option button} showing the {@link de.wolkenfarmer.experiment_elements.transcoder.DeselectTranscoder deselect} 
 		 * option under {@link #pOptions options}. <br>
 		 * Can be used to deactivate the transcoder. 
 		 * It gets build in the {@link #Transcoder() constructor} and is part of {@link #vbOptButtons}.*/

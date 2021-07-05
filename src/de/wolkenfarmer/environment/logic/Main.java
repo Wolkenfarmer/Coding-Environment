@@ -7,10 +7,9 @@ import de.wolkenfarmer.environment.pages.NoiseSource;
 import de.wolkenfarmer.environment.pages.Settings;
 import de.wolkenfarmer.environment.pages.Transcoder;
 import de.wolkenfarmer.experiment_elements.ExperimentElement;
-import de.wolkenfarmer.experiment_elements.input_handlers.UserInput;
-import de.wolkenfarmer.experiment_elements.noise_sources.IndividualChanges;
-import de.wolkenfarmer.experiment_elements.transcoder.ParityCheck;
-import de.wolkenfarmer.experiment_elements.transcoder.RepetitionCode;
+import de.wolkenfarmer.experiment_elements.input_handlers.*;
+import de.wolkenfarmer.experiment_elements.noise_sources.*;
+import de.wolkenfarmer.experiment_elements.transcoder.*;
 
 import java.util.ArrayList;
 
@@ -129,27 +128,24 @@ public class Main extends Application {
     public static Settings settings;
     
     
-    /** Static reference to the input handler "Deselect" in order for {@link InputHandler}, 
+    /** Static reference to the input handler "DeselectInputHandler" in order for {@link InputHandler}, 
      * {@link Run} and {@link Result} to have simple access to it.*/
-    public static de.wolkenfarmer.experiment_elements.input_handlers.Deselect inputHandler_Deselect = 
-    		new de.wolkenfarmer.experiment_elements.input_handlers.Deselect();
+    public static DeselectInputHandler inputHandler_Deselect = new DeselectInputHandler();
     /** Static reference to the input handler "User input" in order for {@link InputHandler}, 
      * {@link Run} and {@link Result} to have simple access to it.*/
     public static UserInput inputHandler_UserInput = new UserInput();
-    /** Static reference to the transcoder "Deselect" in order for the {@link Transcoder transcoder page}, 
+    /** Static reference to the transcoder "DeselectInputHandler" in order for the {@link Transcoder transcoder page}, 
      * {@link Run} and {@link Result} to have simple access to it.*/
-    public static de.wolkenfarmer.experiment_elements.transcoder.Deselect transcoder_Deselect = 
-    		new de.wolkenfarmer.experiment_elements.transcoder.Deselect();
+    public static DeselectTranscoder transcoder_Deselect = new DeselectTranscoder();
     /** Static reference to the transcoder "ParityCheck-Code" in order for the {@link Transcoder transcoder page}, 
      * {@link Run} and {@link Result} to have simple access to it.*/
     public static ParityCheck transcoder_ParityCheck = new ParityCheck();
     /** Static reference to the transcoder "RepetitionCode" in order for the {@link Transcoder transcoder page}, 
      * {@link Run} and {@link Result} to have simple access to it.*/
     public static RepetitionCode transcoder_RepetitionCode = new RepetitionCode();
-    /** Static reference to the noise source "Deselect" in order for the {@link NoiseSource noise source page}, 
+    /** Static reference to the noise source "DeselectInputHandler" in order for the {@link NoiseSource noise source page}, 
      * {@link Run} and {@link Result} to have simple access to it.*/
-    public static de.wolkenfarmer.experiment_elements.noise_sources.Deselect noiSource_Deselect = 
-    		new de.wolkenfarmer.experiment_elements.noise_sources.Deselect();
+    public static DeselectNoiseSource noiSource_Deselect = new DeselectNoiseSource();
     /** Static reference to the noise source "Individual changes" in order for the {@link NoiseSource noise source page}, 
      * {@link Run} and {@link Result} to have simple access to it.*/
     public static IndividualChanges noiSource_IndividualChanges = new IndividualChanges();
